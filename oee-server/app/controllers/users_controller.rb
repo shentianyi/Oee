@@ -7,8 +7,8 @@ class UsersController < ApplicationController
     if current_user && current_user.admin?
       @users=User.all.paginate(:page => params[:page])
     else
-      render :json => "404 页面未找到"
-      # render file: "#{Rails.root}/public/404.html" , status: 404
+      # render :json => "404 页面未找到"
+      render file: "#{Rails.root}/public/404.html" , status: 404
     end
   end
 
@@ -35,15 +35,15 @@ class UsersController < ApplicationController
     else
       render json: {content: @user.errors.messages.values.uniq.join('/'), result: false}
     end
-    #   respond_to do |format|
-    #     if @user.save
-    #       format.html { redirect_to @user, notice: 'User was successfully created.' }
-    #       format.json { render :show, status: :created, user: @user }
-    #     else
-    #       # format.html { render :new }
-    #       format.json { render json: @user.errors, status: :unprocessable_entity }
-    #     end
+    # respond_to do |format|
+    #   if @user.save
+    #     format.html { redirect_to @user, notice: 'User was successfully created.' }
+    #     format.json { render :show, status: :created, user: @user }
+    #   else
+    #     # format.html { render :new }
+    #     format.json { render json: @user.errors, status: :unprocessable_entity }
     #   end
+    # end
   end
 
   # PATCH/PUT /users/1
@@ -78,6 +78,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :role, :is_system, :email, :encrypted_password, :reset_password_token, :reset_password_sent_at, :remember_created_at, :sign_in_count, :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :last_sign_in_ip, :failed_attempts, :unlock_token, :locked_at)
+      params.require(:user).permit(:name, :role, :is_system, :email, :encrypted_password, :password, :password_confirmation)
     end
 end

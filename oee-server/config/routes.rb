@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: {
-                       sessions: 'users/sessions' #, registrations: 'users/registrations'
-                   }
+
+  post 'users', to: 'users#create'
+  devise_for :users, controllers: {sessions: 'users/sessions'}, path: 'auth', path_names: { sign_in: 'login', sign_out: 'logout'}
+
   resources :users
+
   root to: "welcome#index"
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

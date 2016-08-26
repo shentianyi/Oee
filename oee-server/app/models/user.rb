@@ -1,6 +1,13 @@
 class User < ApplicationRecord
   extend Devise::Models
 
+
+  validates_presence_of :name, :message => "请输入完整的用户信息!"
+  validates_presence_of :email, :message => "请输入完整的用户信息!"
+  validates_presence_of :password, :message => "请输入完整的用户信息!"
+  validates_uniqueness_of :email, :message => "邮箱已被注册!"
+
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,

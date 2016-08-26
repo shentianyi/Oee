@@ -18,7 +18,7 @@ module OeeServer
     config.autoload_paths += Dir["#{config.root}/services/**/"]
     config.autoload_paths += Dir[Rails.root.join('app','models','{**}')]
 
-    # config.i18n.default_locale = "zh"
+    config.i18n.default_locale = "zh"
 
 
   end

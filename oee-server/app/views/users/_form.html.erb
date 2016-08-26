@@ -16,10 +16,10 @@
     <%= f.text_field :name %>
   </div>
 
-  <div class="field">
-    <%= f.label :role %>
-    <%= f.number_field :role %>
-  </div>
+    <div class="field">
+      <%= f.label :role %>
+      <%= f.select(:role, Role.menu, {include_blank: false}, :class => 'col-md-6', :style => 'margin:0 0 0 30px;') %>
+    </div>
 
   <div class="field">
     <%= f.label :email %>
