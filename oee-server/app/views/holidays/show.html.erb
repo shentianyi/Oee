@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Holiday:</strong>
+  <%= @holiday.holiday %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @holiday.type %>
+</p>
+
+<p>
+  <strong>Remark:</strong>
+  <%= @holiday.remark %>
+</p>
+
+<%= link_to 'Edit', edit_holiday_path(@holiday) %> |
+<%= link_to 'Back', holidays_path %>

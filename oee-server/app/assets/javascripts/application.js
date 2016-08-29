@@ -11,6 +11,11 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery-1.11.2.min
+//= require jquery.ui/jquery-ui-1.9.1.custom.min
+//= require jquery.ui/jquery.datetimepicker
+//= require jquery.file.upload/jquery.iframe-transport
+//= require jquery.file.upload/jquery.fileupload
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
