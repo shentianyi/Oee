@@ -1,8 +1,8 @@
 module FileHandler
   module Excel
-    class HolidayHandler<Base
+    class WorkTimeHandler<Base
       HEADERS=[
-          'holiday', 'type', 'remark', 'operation'
+          'machine_type_id', 'craft_id', 'wire_length', 'std_time', 'operation'
       ]
 
       def self.import(file)
@@ -19,25 +19,30 @@ module FileHandler
                 row = {}
                 HEADERS.each_with_index do |k, i|
                   row[k] = book.cell(line, i+1).to_s.strip
-                  # row[k] = row[k].sub(/\.0/, '') if k=='nr'
+                  row[k] = row[k].sub(/\.0/, '') if k=='oee_nr'
                 end
 
-                if ['update', 'UPDATE'].include?(row['operation']) && s=Holiday.find_by_holiday(row['holiday'])
-                  s.update(row['type'].blank? ? row.except('operation', 'type') : row.except('operation'))
-                elsif ['delete', 'DELETE'].include?(row['operation']) && s=Holiday.find_by_holiday(row['holiday'])
-                  s.destroy
+                mt = MachineType.find_by_nr(row['machine_type_id'])
+                craft = Craft.find_by_nr(row['craft_id'])
+                row['machine_type_id'] = mt.id
+                row['craft_id'] = craft.id
+
+
+                if ['update', 'UPDATE'].include?(row['operation']) && wt = WorkTime.where(machine_type_id: mt.id, craft_id: craft.id, wire_length: row['wire_length'].to_f).first
+                  wt.update(row.except('operation'))
+                elsif ['delete', 'DELETE'].include?(row['operation']) && wt = WorkTime.where(machine_type_id: mt.id, craft_id: craft.id, wire_length: row['wire_length'].to_f).first
+                  wt.destroy
                 else
-                  s =Holiday.new(row['type'].blank? ? row.except('operation', 'type') : row.except('operation'))
+                  s =WorkTime.new(row.except('operation'))
                   unless s.save
                     puts s.errors.to_json
                     raise s.errors.to_json
                   end
                 end
-
               end
             end
             msg.result = true
-            msg.content = "导入节假日信息成功！"
+            msg.content = "导入标准工时信息成功！"
           rescue => e
             puts e.backtrace
             msg.result = false
@@ -86,17 +91,47 @@ module FileHandler
       def self.validate_row(row, line)
         msg = Message.new(contents: [])
 
-        if row['holiday'].blank?
-          msg.contents<<"节假日不可为空"
+        mt = nil
+        if row['machine_type_id'].blank?
+          msg.contents<<"机器类型不可为空"
         else
-          h=Holiday.find_by_holiday(row['holiday'])
+          unless mt=MachineType.find_by_nr(row['machine_type_id'])
+            msg.contents<<"机器类型:#{row['machine_type_id']}不存在"
+          end
+        end
+
+        craft=nil
+        if row['craft_id'].blank?
+          msg.contents<<"工艺号不可为空"
+        else
+          unless craft=Craft.find_by_nr(row['craft_id'])
+            msg.contents<<"工艺号:#{row['craft_id']}已存在"
+          end
+        end
+
+        if row['wire_length'].blank?
+          msg.contents<<"线长不可为空"
+        end
+
+        unless ['delete', 'DELETE'].include?(row['operation'])
+          if row['std_time'].blank?
+            msg.contents<<"工时不可为空"
+          else
+            if row['std_time'].to_f <= 0
+              msg.contents<<"工时不合法"
+            end
+          end
+        end
+
+        if mt && craft && row['wire_length'].present?
+          wt = WorkTime.where(machine_type_id: mt.id, craft_id: craft.id, wire_length: row['wire_length'].to_f).first
           if ['update', 'delete', 'UPDATE', 'DELETE'].include?(row['operation'])
-            if h.blank?
-              msg.contents<<"节假日:#{row['holiday']}未找到"
+            if wt.blank?
+              msg.contents<<"机器类型：#{row['machine_type_id']}-工艺号：#{row['craft_id']}-线长：#{row['wire_length']}对应的标准工时未找到"
             end
           else
-            if h.present?
-              msg.contents<<"节假日:#{row['holiday']}已登记"
+            if wt.present?
+              msg.contents<<"机器类型：#{row['machine_type_id']}-工艺号：#{row['craft_id']}-线长：#{row['wire_length']}对应的标准工时已存在"
             end
           end
         end

@@ -1,0 +1,27 @@
+<%= form_for(craft) do |f| %>
+  <% if craft.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(craft.errors.count, "error") %> prohibited this craft from being saved:</h2>
+
+      <ul>
+      <% craft.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :nr %>
+    <%= f.text_field :nr %>
+  </div>
+
+  <div class="field">
+    <%= f.label :description %>
+    <%= f.text_field :description %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

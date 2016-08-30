@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nr: MyString
+  machine_type: one
+  oee_nr: MyString
+  department: one
+  status: 1
+  remark: MyString
+
+two:
+  nr: MyString
+  machine_type: two
+  oee_nr: MyString
+  department: two
+  status: 1
+  remark: MyString

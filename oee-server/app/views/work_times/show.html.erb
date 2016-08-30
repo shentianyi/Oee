@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Machine type:</strong>
+  <%= @work_time.machine_type %>
+</p>
+
+<p>
+  <strong>Craft:</strong>
+  <%= @work_time.craft %>
+</p>
+
+<p>
+  <strong>Wire length:</strong>
+  <%= @work_time.wire_length %>
+</p>
+
+<p>
+  <strong>Std time:</strong>
+  <%= @work_time.std_time %>
+</p>
+
+<%= link_to 'Edit', edit_work_time_path(@work_time) %> |
+<%= link_to 'Back', work_times_path %>

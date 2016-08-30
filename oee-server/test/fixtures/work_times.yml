@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  machine_type: one
+  craft: one
+  wire_length: 1
+  std_time: 1.5
+
+two:
+  machine_type: two
+  craft: two
+  wire_length: 1
+  std_time: 1.5

@@ -1,0 +1,50 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Work Times</h1>
+<div>
+  <%= link_to '导入数据', import_work_times_path, :class => 'btn btn-primary'%>
+</div>
+
+
+<div class="col-sm-12">
+  <div class="digg_pagination">
+    <div class="page_info">
+      <%= page_entries_info @work_times %>
+    </div>
+    <%= will_paginate @work_times, :container => false %>
+  </div>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>NO.</th>
+      <th>Machine type</th>
+      <th>Craft</th>
+      <th>Wire length</th>
+      <th>Std time</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @work_times.each_with_index do |work_time, index| %>
+      <tr>
+        <td><%= index+@work_times.offset+1 %></td>
+        <td><%= work_time.machine_type.nr %></td>
+        <td><%= work_time.craft.nr %></td>
+        <td><%= work_time.wire_length %></td>
+        <td><%= work_time.std_time %></td>
+        <!--<td><%= link_to 'Show', work_time %></td>-->
+        <td><%= link_to 'Edit', edit_work_time_path(work_time) %></td>
+        <td><%= link_to 'Destroy', work_time, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="digg_pagination">
+  <%= will_paginate @work_times, :container => false %>
+</div>
+
+<!--<%= link_to 'New Work Time', new_work_time_path %>-->

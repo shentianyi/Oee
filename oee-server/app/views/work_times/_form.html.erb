@@ -1,0 +1,37 @@
+<%= form_for(work_time) do |f| %>
+  <% if work_time.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(work_time.errors.count, "error") %> prohibited this work_time from being saved:</h2>
+
+      <ul>
+      <% work_time.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :machine_type_id %>
+    <%= f.text_field :machine_type_id %>
+  </div>
+
+  <div class="field">
+    <%= f.label :craft_id %>
+    <%= f.text_field :craft_id %>
+  </div>
+
+  <div class="field">
+    <%= f.label :wire_length %>
+    <%= f.number_field :wire_length %>
+  </div>
+
+  <div class="field">
+    <%= f.label :std_time %>
+    <%= f.text_field :std_time %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

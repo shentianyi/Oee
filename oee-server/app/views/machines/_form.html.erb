@@ -1,0 +1,47 @@
+<%= form_for(machine) do |f| %>
+  <% if machine.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(machine.errors.count, "error") %> prohibited this machine from being saved:</h2>
+
+      <ul>
+      <% machine.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :nr %>
+    <%= f.text_field :nr %>
+  </div>
+
+  <div class="field">
+    <%= f.label :machine_type_id %>
+    <%= f.select(:machine_type_id, MachineType.all.collect{ |mt| [mt.nr, mt.id]}, {include_blank: true}) %>
+  </div>
+
+  <div class="field">
+    <%= f.label :oee_nr %>
+    <%= f.text_field :oee_nr %>
+  </div>
+
+  <div class="field">
+    <%= f.label :department_id %>
+    <%= f.select(:department_id, Department.all.collect{ |d| [d.nr, d.id]}, {include_blank: true}) %>
+  </div>
+
+  <div class="field">
+    <%= f.label :status %>
+    <%= f.select(:status, MachineStatus.menu, {include_blank: true}) %>
+  </div>
+
+  <div class="field">
+    <%= f.label :remark %>
+    <%= f.text_field :remark %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

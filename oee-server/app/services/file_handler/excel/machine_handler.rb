@@ -1,8 +1,8 @@
 module FileHandler
   module Excel
-    class HolidayHandler<Base
+    class MachineHandler<Base
       HEADERS=[
-          'holiday', 'type', 'remark', 'operation'
+          'nr', 'machine_type_id', 'oee_nr', 'department_id', 'status', 'remark', 'operation'
       ]
 
       def self.import(file)
@@ -19,25 +19,30 @@ module FileHandler
                 row = {}
                 HEADERS.each_with_index do |k, i|
                   row[k] = book.cell(line, i+1).to_s.strip
-                  # row[k] = row[k].sub(/\.0/, '') if k=='nr'
+                  row[k] = row[k].sub(/\.0/, '') if k=='oee_nr'
                 end
 
-                if ['update', 'UPDATE'].include?(row['operation']) && s=Holiday.find_by_holiday(row['holiday'])
-                  s.update(row['type'].blank? ? row.except('operation', 'type') : row.except('operation'))
-                elsif ['delete', 'DELETE'].include?(row['operation']) && s=Holiday.find_by_holiday(row['holiday'])
-                  s.destroy
+                mt = MachineType.find_by_nr(row['machine_type_id'])
+                dt = Department.find_by_nr(row['department_id'])
+                row['machine_type_id'] = mt.id
+                row['department_id'] = dt.id
+
+
+                if ['update', 'UPDATE'].include?(row['operation']) && m=Machine.find_by_nr(row['nr'])
+                  m.update(row['status'].blank? ? row.except('operation', 'status') : row.except('operation'))
+                elsif ['delete', 'DELETE'].include?(row['operation']) && m=Machine.find_by_nr(row['nr'])
+                  m.destroy
                 else
-                  s =Holiday.new(row['type'].blank? ? row.except('operation', 'type') : row.except('operation'))
+                  s =Machine.new(row['status'].blank? ? row.except('operation', 'status') : row.except('operation'))
                   unless s.save
                     puts s.errors.to_json
                     raise s.errors.to_json
                   end
                 end
-
               end
             end
             msg.result = true
-            msg.content = "导入节假日信息成功！"
+            msg.content = "导入机器信息成功！"
           rescue => e
             puts e.backtrace
             msg.result = false
@@ -86,18 +91,34 @@ module FileHandler
       def self.validate_row(row, line)
         msg = Message.new(contents: [])
 
-        if row['holiday'].blank?
-          msg.contents<<"节假日不可为空"
+        if row['nr'].blank?
+          msg.contents<<"机器号不可为空"
         else
-          h=Holiday.find_by_holiday(row['holiday'])
+          m=Machine.find_by_nr(row['nr'])
           if ['update', 'delete', 'UPDATE', 'DELETE'].include?(row['operation'])
-            if h.blank?
-              msg.contents<<"节假日:#{row['holiday']}未找到"
+            if m.blank?
+              msg.contents<<"机器号:#{row['nr']}未找到"
             end
           else
-            if h.present?
-              msg.contents<<"节假日:#{row['holiday']}已登记"
+            if m.present?
+              msg.contents<<"机器号:#{row['nr']}已存在"
             end
+          end
+        end
+
+        if row['machine_type_id'].blank?
+          msg.contents<<"机器类型不可为空"
+        else
+          unless MachineType.find_by_nr(row['machine_type_id'])
+            msg.contents<<"机器类型:#{row['machine_type_id']}不存在"
+          end
+        end
+
+        if row['department_id'].blank?
+          msg.contents<<"部门号不可为空"
+        else
+          unless Department.find_by_nr(row['department_id'])
+            msg.contents<<"部门号:#{row['department_id']}已存在"
           end
         end
 

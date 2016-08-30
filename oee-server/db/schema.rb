@@ -10,7 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160829022633) do
+ActiveRecord::Schema.define(version: 20160830090002) do
+
+  create_table "crafts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "nr"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "departments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "nr"
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "holidays", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.date     "holiday"
@@ -18,6 +33,26 @@ ActiveRecord::Schema.define(version: 20160829022633) do
     t.string   "remark"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "machine_types", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "nr"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "machines", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "nr"
+    t.integer  "machine_type_id"
+    t.string   "oee_nr"
+    t.integer  "department_id"
+    t.integer  "status",          default: 100
+    t.string   "remark"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.index ["department_id"], name: "index_machines_on_department_id", using: :btree
+    t.index ["machine_type_id"], name: "index_machines_on_machine_type_id", using: :btree
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -44,4 +79,19 @@ ActiveRecord::Schema.define(version: 20160829022633) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
   end
 
+  create_table "work_times", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "machine_type_id"
+    t.integer  "craft_id"
+    t.integer  "wire_length"
+    t.float    "std_time",        limit: 24
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.index ["craft_id"], name: "index_work_times_on_craft_id", using: :btree
+    t.index ["machine_type_id"], name: "index_work_times_on_machine_type_id", using: :btree
+  end
+
+  add_foreign_key "machines", "departments"
+  add_foreign_key "machines", "machine_types"
+  add_foreign_key "work_times", "crafts"
+  add_foreign_key "work_times", "machine_types"
 end

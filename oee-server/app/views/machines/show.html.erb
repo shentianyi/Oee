@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nr:</strong>
+  <%= @machine.nr %>
+</p>
+
+<p>
+  <strong>Machine type:</strong>
+  <%= @machine.machine_type %>
+</p>
+
+<p>
+  <strong>Oee nr:</strong>
+  <%= @machine.oee_nr %>
+</p>
+
+<p>
+  <strong>Department:</strong>
+  <%= @machine.department %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @machine.status %>
+</p>
+
+<p>
+  <strong>Remark:</strong>
+  <%= @machine.remark %>
+</p>
+
+<%= link_to 'Edit', edit_machine_path(@machine) %> |
+<%= link_to 'Back', machines_path %>

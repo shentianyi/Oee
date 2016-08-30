@@ -1,5 +1,28 @@
 Rails.application.routes.draw do
 
+  resources :work_times do
+    collection do
+      get :search
+      match :import, to: :import, via: [:get, :post]
+    end
+  end
+
+  resources :crafts do
+    collection do
+      get :search
+      match :import, to: :import, via: [:get, :post]
+    end
+  end
+
+  resources :machines do
+    collection do
+      get :search
+      match :import, to: :import, via: [:get, :post]
+    end
+  end
+
+  resources :departments
+  resources :machine_types
   resources :files
 
   delete 'holidays', to: 'holidays#destroy'

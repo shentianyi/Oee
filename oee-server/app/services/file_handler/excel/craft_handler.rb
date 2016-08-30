@@ -1,8 +1,8 @@
 module FileHandler
   module Excel
-    class HolidayHandler<Base
+    class CraftHandler<Base
       HEADERS=[
-          'holiday', 'type', 'remark', 'operation'
+          'nr', 'description', 'operation'
       ]
 
       def self.import(file)
@@ -19,25 +19,26 @@ module FileHandler
                 row = {}
                 HEADERS.each_with_index do |k, i|
                   row[k] = book.cell(line, i+1).to_s.strip
-                  # row[k] = row[k].sub(/\.0/, '') if k=='nr'
+                  # row[k] = row[k].sub(/\.0/, '') if k=='oee_nr'
                 end
 
-                if ['update', 'UPDATE'].include?(row['operation']) && s=Holiday.find_by_holiday(row['holiday'])
-                  s.update(row['type'].blank? ? row.except('operation', 'type') : row.except('operation'))
-                elsif ['delete', 'DELETE'].include?(row['operation']) && s=Holiday.find_by_holiday(row['holiday'])
-                  s.destroy
+                if ['update', 'UPDATE'].include?(row['operation']) && m=Craft.find_by_nr(row['nr'])
+                  m.update(row.except('operation'))
+                elsif ['delete', 'DELETE'].include?(row['operation']) && m=Craft.find_by_nr(row['nr'])
+                  m.destroy
                 else
-                  s =Holiday.new(row['type'].blank? ? row.except('operation', 'type') : row.except('operation'))
-                  unless s.save
-                    puts s.errors.to_json
-                    raise s.errors.to_json
+                  unless Craft.find_by_nr(row['nr'])
+                    s = Craft.new(row.except('operation'))
+                    unless s.save
+                      puts s.errors.to_json
+                      raise s.errors.to_json
+                    end
                   end
                 end
-
               end
             end
             msg.result = true
-            msg.content = "导入节假日信息成功！"
+            msg.content = "导入工艺信息成功！"
           rescue => e
             puts e.backtrace
             msg.result = false
@@ -86,17 +87,17 @@ module FileHandler
       def self.validate_row(row, line)
         msg = Message.new(contents: [])
 
-        if row['holiday'].blank?
-          msg.contents<<"节假日不可为空"
+        if row['nr'].blank?
+          msg.contents<<"工艺号不可为空"
         else
-          h=Holiday.find_by_holiday(row['holiday'])
+          m=Craft.find_by_nr(row['nr'])
           if ['update', 'delete', 'UPDATE', 'DELETE'].include?(row['operation'])
-            if h.blank?
-              msg.contents<<"节假日:#{row['holiday']}未找到"
+            if m.blank?
+              msg.contents<<"工艺号:#{row['nr']}未找到"
             end
           else
-            if h.present?
-              msg.contents<<"节假日:#{row['holiday']}已登记"
+            if m.present?
+              msg.contents<<"工艺号:#{row['nr']}已存在"
             end
           end
         end
