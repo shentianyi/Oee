@@ -3,6 +3,9 @@ class ImportTemplate
   MACHINE_EXCEL_TEMPLATE='machine_template.xlsx'
   CRAFT_EXCEL_TEMPLATE='craft_template.xlsx'
   WORK_TIME_EXCEL_TEMPLATE='work_time_template.xlsx'
+  DOWNTIME_TYPE_EXCEL_TEMPLATE='downtime_type_template.xlsx'
+  DOWNTIME_CODE_EXCEL_TEMPLATE='downtime_code_template.xlsx'
+  DOWNTIME_RECORD_EXCEL_TEMPLATE='downtime_record_template.xlsx'
 
   def self.method_missing(method_name, *args, &block)
     if method_name.to_s.include?('_template')

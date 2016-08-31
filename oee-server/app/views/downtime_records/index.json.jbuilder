@@ -1,0 +1,1 @@
+json.array! @downtime_records, partial: 'downtime_records/downtime_record', as: :downtime_record

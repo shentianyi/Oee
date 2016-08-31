@@ -1,0 +1,137 @@
+<%= form_for(downtime_record) do |f| %>
+  <% if downtime_record.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(downtime_record.errors.count, "error") %> prohibited this downtime_record from being saved:</h2>
+
+      <ul>
+      <% downtime_record.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :fors_werk %>
+    <%= f.text_field :fors_werk %>
+  </div>
+
+  <div class="field">
+    <%= f.label :fors_faufnr %>
+    <%= f.text_field :fors_faufnr %>
+  </div>
+
+  <div class="field">
+    <%= f.label :fors_faufpo %>
+    <%= f.text_field :fors_faufpo %>
+  </div>
+
+  <div class="field">
+    <%= f.label :fors_lnr %>
+    <%= f.text_field :fors_lnr %>
+  </div>
+
+  <div class="field">
+    <%= f.label :machine_id %>
+    <%= f.text_field :machine_id %>
+  </div>
+
+  <div class="field">
+    <%= f.label :pk_sch %>
+    <%= f.text_field :pk_sch %>
+  </div>
+
+  <div class="field">
+    <%= f.label :pk_datum %>
+    <%= f.text_field :pk_datum %>
+  </div>
+
+  <div class="field">
+    <%= f.label :pk_sch_std %>
+    <%= f.text_field :pk_sch_std %>
+  </div>
+
+  <div class="field">
+    <%= f.label :pk_sch_t %>
+    <%= f.text_field :pk_sch_t %>
+  </div>
+
+  <div class="field">
+    <%= f.label :craft_id %>
+    <%= f.text_field :craft_id %>
+  </div>
+
+  <div class="field">
+    <%= f.label :pd_teb %>
+    <%= f.text_field :pd_teb %>
+  </div>
+
+  <div class="field">
+    <%= f.label :pd_stueck %>
+    <%= f.text_field :pd_stueck %>
+  </div>
+
+  <div class="field">
+    <%= f.label :pd_auss_ruest %>
+    <%= f.text_field :pd_auss_ruest %>
+  </div>
+
+  <div class="field">
+    <%= f.label :pd_auss_prod %>
+    <%= f.text_field :pd_auss_prod %>
+  </div>
+
+  <div class="field">
+    <%= f.label :pd_bemerk %>
+    <%= f.text_field :pd_bemerk %>
+  </div>
+
+  <div class="field">
+    <%= f.label :pd_user %>
+    <%= f.text_field :pd_user %>
+  </div>
+
+  <div class="field">
+    <%= f.label :pd_erf_dat %>
+    <%= f.text_field :pd_erf_dat %>
+  </div>
+
+  <div class="field">
+    <%= f.label :pd_von %>
+    <%= f.text_field :pd_von %>
+  </div>
+
+  <div class="field">
+    <%= f.label :pd_bis %>
+    <%= f.text_field :pd_bis %>
+  </div>
+
+  <div class="field">
+    <%= f.label :downtime_code_id %>
+    <%= f.text_field :downtime_code_id %>
+  </div>
+
+  <div class="field">
+    <%= f.label :pd_std %>
+    <%= f.text_field :pd_std %>
+  </div>
+
+  <div class="field">
+    <%= f.label :pd_laenge %>
+    <%= f.text_field :pd_laenge %>
+  </div>
+
+  <div class="field">
+    <%= f.label :pd_rf %>
+    <%= f.text_field :pd_rf %>
+  </div>
+
+  <div class="field">
+    <%= f.label :is_naturl %>
+    <%= f.text_field :is_naturl %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

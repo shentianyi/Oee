@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160830090002) do
+ActiveRecord::Schema.define(version: 20160831073438) do
 
   create_table "crafts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "nr"
@@ -20,6 +20,84 @@ ActiveRecord::Schema.define(version: 20160830090002) do
   end
 
   create_table "departments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "nr"
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "downtime_codes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "nr"
+    t.integer  "downtime_type_id"
+    t.string   "description"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["downtime_type_id"], name: "index_downtime_codes_on_downtime_type_id", using: :btree
+  end
+
+  create_table "downtime_data", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "fors_werk"
+    t.string   "fors_faufnr"
+    t.string   "fors_faufpo"
+    t.string   "fors_lnr"
+    t.string   "fors_einres"
+    t.string   "pk_sch"
+    t.datetime "pk_datum"
+    t.string   "pk_sch_std"
+    t.string   "pk_sch_t"
+    t.string   "pd_prod_nr"
+    t.float    "pd_teb",        limit: 24
+    t.float    "pd_stueck",     limit: 24
+    t.float    "pd_auss_ruest", limit: 24
+    t.float    "pd_auss_prod",  limit: 24
+    t.string   "pd_bemerk"
+    t.string   "pd_user"
+    t.datetime "pd_erf_dat"
+    t.datetime "pd_von"
+    t.datetime "pd_bis"
+    t.string   "pd_stoer"
+    t.float    "pd_std",        limit: 24
+    t.integer  "pd_laenge"
+    t.string   "pd_rf"
+    t.boolean  "is_naturl"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  create_table "downtime_records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "fors_werk"
+    t.string   "fors_faufnr"
+    t.string   "fors_faufpo"
+    t.string   "fors_lnr"
+    t.integer  "machine_id"
+    t.string   "pk_sch"
+    t.datetime "pk_datum"
+    t.string   "pk_sch_std"
+    t.string   "pk_sch_t"
+    t.integer  "craft_id"
+    t.float    "pd_teb",           limit: 24
+    t.float    "pd_stueck",        limit: 24
+    t.float    "pd_auss_ruest",    limit: 24
+    t.float    "pd_auss_prod",     limit: 24
+    t.string   "pd_bemerk"
+    t.string   "pd_user"
+    t.datetime "pd_erf_dat"
+    t.datetime "pd_von"
+    t.datetime "pd_bis"
+    t.integer  "downtime_code_id"
+    t.float    "pd_std",           limit: 24
+    t.integer  "pd_laenge"
+    t.string   "pd_rf"
+    t.boolean  "is_naturl"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.index ["craft_id"], name: "index_downtime_records_on_craft_id", using: :btree
+    t.index ["downtime_code_id"], name: "index_downtime_records_on_downtime_code_id", using: :btree
+    t.index ["machine_id"], name: "index_downtime_records_on_machine_id", using: :btree
+  end
+
+  create_table "downtime_types", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "nr"
     t.string   "name"
     t.string   "description"
@@ -90,6 +168,10 @@ ActiveRecord::Schema.define(version: 20160830090002) do
     t.index ["machine_type_id"], name: "index_work_times_on_machine_type_id", using: :btree
   end
 
+  add_foreign_key "downtime_codes", "downtime_types"
+  add_foreign_key "downtime_records", "crafts"
+  add_foreign_key "downtime_records", "downtime_codes"
+  add_foreign_key "downtime_records", "machines"
   add_foreign_key "machines", "departments"
   add_foreign_key "machines", "machine_types"
   add_foreign_key "work_times", "crafts"

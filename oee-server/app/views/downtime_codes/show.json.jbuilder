@@ -1,0 +1,1 @@
+json.partial! "downtime_codes/downtime_code", downtime_code: @downtime_code

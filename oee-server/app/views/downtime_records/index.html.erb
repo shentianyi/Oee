@@ -1,0 +1,91 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Downtime Records</h1>
+<div>
+  <%= link_to '导入数据', import_downtime_records_path, :class => 'btn btn-primary'%>
+</div>
+
+
+<div class="col-sm-12">
+  <div class="digg_pagination">
+    <div class="page_info">
+      <%= page_entries_info @downtime_records %>
+    </div>
+    <%= will_paginate @downtime_records, :container => false %>
+  </div>
+</div>
+
+
+<table>
+  <thead>
+    <tr>
+      <th>NO.</th>
+      <th>Fors werk</th>
+      <th>Fors faufnr</th>
+      <th>Fors faufpo</th>
+      <th>Fors lnr</th>
+      <th>Machine</th>
+      <th>Pk sch</th>
+      <th>Pk datum</th>
+      <th>Pk sch std</th>
+      <th>Pk sch t</th>
+      <th>Craft</th>
+      <th>Pd teb</th>
+      <th>Pd stueck</th>
+      <th>Pd auss ruest</th>
+      <th>Pd auss prod</th>
+      <th>Pd bemerk</th>
+      <th>Pd user</th>
+      <th>Pd erf dat</th>
+      <th>Pd von</th>
+      <th>Pd bis</th>
+      <th>Downtime code</th>
+      <th>Pd std</th>
+      <th>Pd laenge</th>
+      <th>Pd rf</th>
+      <th>Is naturl</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% @downtime_records.each_with_index do |downtime_record, index| %>
+      <tr>
+        <td><%= index+@downtime_records.offset+1 %></td>
+        <td><%= downtime_record.fors_werk %></td>
+        <td><%= downtime_record.fors_faufnr %></td>
+        <td><%= downtime_record.fors_faufpo %></td>
+        <td><%= downtime_record.fors_lnr %></td>
+        <td><%= downtime_record.machine.nr %></td>
+        <td><%= downtime_record.pk_sch %></td>
+        <td><%= downtime_record.pk_datum %></td>
+        <td><%= downtime_record.pk_sch_std %></td>
+        <td><%= downtime_record.pk_sch_t %></td>
+        <td><%= downtime_record.craft.nr %></td>
+        <td><%= downtime_record.pd_teb %></td>
+        <td><%= downtime_record.pd_stueck %></td>
+        <td><%= downtime_record.pd_auss_ruest %></td>
+        <td><%= downtime_record.pd_auss_prod %></td>
+        <td><%= downtime_record.pd_bemerk %></td>
+        <td><%= downtime_record.pd_user %></td>
+        <td><%= downtime_record.pd_erf_dat %></td>
+        <td><%= downtime_record.pd_von %></td>
+        <td><%= downtime_record.pd_bis %></td>
+        <td><%= downtime_record.downtime_code.nr %></td>
+        <td><%= downtime_record.pd_std %></td>
+        <td><%= downtime_record.pd_laenge %></td>
+        <td><%= downtime_record.pd_rf %></td>
+        <td><%= downtime_record.is_naturl %></td>
+        <td><%= link_to 'Show', downtime_record %></td>
+        <td><%= link_to 'Edit', edit_downtime_record_path(downtime_record) %></td>
+        <td><%= link_to 'Destroy', downtime_record, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="digg_pagination">
+  <%= will_paginate @downtime_records, :container => false %>
+</div>
+
+<%= link_to 'New Downtime Record', new_downtime_record_path %>

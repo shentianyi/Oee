@@ -5,9 +5,20 @@
   <%= link_to '导入数据', import_machines_path, :class => 'btn btn-primary'%>
 </div>
 
+
+<div class="col-sm-12">
+  <div class="digg_pagination">
+    <div class="page_info">
+      <%= page_entries_info @machines %>
+    </div>
+    <%= will_paginate @machines, :container => false %>
+  </div>
+</div>
+
 <table>
   <thead>
     <tr>
+      <th>NO.</th>
       <th>Nr</th>
       <th>Machine type</th>
       <th>Oee nr</th>
@@ -19,8 +30,9 @@
   </thead>
 
   <tbody>
-    <% @machines.each do |machine| %>
+  <% @machines.each_with_index do |machine, index| %>
       <tr>
+        <td><%= index+@machines.offset+1 %></td>
         <td><%= machine.nr %></td>
         <td><%= machine.machine_type.nr %></td>
         <td><%= machine.oee_nr %></td>
@@ -35,6 +47,8 @@
   </tbody>
 </table>
 
-<br>
+<div class="digg_pagination">
+  <%= will_paginate @machines, :container => false %>
+</div>
 
 <%= link_to 'New Machine', new_machine_path %>

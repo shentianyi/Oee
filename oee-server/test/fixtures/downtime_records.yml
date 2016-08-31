@@ -1,0 +1,53 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fors_werk: MyString
+  fors_faufnr: MyString
+  fors_faufpo: MyString
+  fors_lnr: MyString
+  machine: one
+  pk_sch: MyString
+  pk_datum: MyString
+  pk_sch_std: MyString
+  pk_sch_t: MyString
+  craft: one
+  pd_teb: MyString
+  pd_stueck: MyString
+  pd_auss_ruest: MyString
+  pd_auss_prod: MyString
+  pd_bemerk: MyString
+  pd_user: MyString
+  pd_erf_dat: MyString
+  pd_von: MyString
+  pd_bis: MyString
+  downtime_code: one
+  pd_std: MyString
+  pd_laenge: MyString
+  pd_rf: MyString
+  is_naturl: MyString
+
+two:
+  fors_werk: MyString
+  fors_faufnr: MyString
+  fors_faufpo: MyString
+  fors_lnr: MyString
+  machine: two
+  pk_sch: MyString
+  pk_datum: MyString
+  pk_sch_std: MyString
+  pk_sch_t: MyString
+  craft: two
+  pd_teb: MyString
+  pd_stueck: MyString
+  pd_auss_ruest: MyString
+  pd_auss_prod: MyString
+  pd_bemerk: MyString
+  pd_user: MyString
+  pd_erf_dat: MyString
+  pd_von: MyString
+  pd_bis: MyString
+  downtime_code: two
+  pd_std: MyString
+  pd_laenge: MyString
+  pd_rf: MyString
+  is_naturl: MyString

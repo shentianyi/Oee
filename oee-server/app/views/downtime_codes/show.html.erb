@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nr:</strong>
+  <%= @downtime_code.nr %>
+</p>
+
+<p>
+  <strong>Downtime type:</strong>
+  <%= @downtime_code.downtime_type %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @downtime_code.description %>
+</p>
+
+<%= link_to 'Edit', edit_downtime_code_path(@downtime_code) %> |
+<%= link_to 'Back', downtime_codes_path %>

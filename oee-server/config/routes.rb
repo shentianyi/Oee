@@ -1,5 +1,26 @@
 Rails.application.routes.draw do
 
+  resources :downtime_records do
+    collection do
+      get :search
+      match :import, to: :import, via: [:get, :post]
+    end
+  end
+
+  resources :downtime_codes do
+    collection do
+      get :search
+      match :import, to: :import, via: [:get, :post]
+    end
+  end
+
+  resources :downtime_types do
+    collection do
+      get :search
+      match :import, to: :import, via: [:get, :post]
+    end
+  end
+
   resources :work_times do
     collection do
       get :search

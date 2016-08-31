@@ -1,0 +1,29 @@
+<script type="text/javascript">
+    $(document).ready(function () {
+        data_upload("#item-data-uploader");
+    });
+</script>
+<p id="notice">
+  <%= notice %>
+</p>
+
+<h1>上传<strong>停机类型信息</strong>文件</h1>
+<hr/>
+<form>
+  <fieldset>
+    <legend>停机类型信息表</legend>
+    <div>
+      <b>选择数据文件：</b>
+      <input id="item-data-uploader" type="file" name="files[]" data-url="/downtime_types/import"/>
+
+
+      <hr/>
+      <div id="item-data-uploader-preview"></div>
+      <div>
+        <b>下载模板：</b>
+        <a href="/files/<%= ImportTemplate.downtime_type_excel_template %>">
+          <%= ImportTemplate::DOWNTIME_TYPE_EXCEL_TEMPLATE %></a>
+      </div>
+    </div>
+  </fieldset>
+</form>

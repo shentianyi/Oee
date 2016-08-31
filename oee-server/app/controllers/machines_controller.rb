@@ -4,7 +4,7 @@ class MachinesController < ApplicationController
   # GET /machines
   # GET /machines.json
   def index
-    @machines = Machine.all
+    @machines = Machine.all.paginate(:page=> params[:page]).order(nr: :asc)
   end
 
   # GET /machines/1

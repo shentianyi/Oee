@@ -1,0 +1,1 @@
+json.partial! "downtime_types/downtime_type", downtime_type: @downtime_type

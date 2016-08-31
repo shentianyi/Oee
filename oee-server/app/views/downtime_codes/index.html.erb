@@ -1,0 +1,47 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Downtime Codes</h1>
+<div>
+  <%= link_to '导入数据', import_downtime_codes_path, :class => 'btn btn-primary'%>
+</div>
+
+<div class="col-sm-12">
+  <div class="digg_pagination">
+    <div class="page_info">
+      <%= page_entries_info @downtime_codes %>
+    </div>
+    <%= will_paginate @downtime_codes, :container => false %>
+  </div>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>NO.</th>
+      <th>Nr</th>
+      <th>Downtime type</th>
+      <th>Description</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% @downtime_codes.each_with_index do |downtime_code, index| %>
+      <tr>
+        <td><%= index+@downtime_codes.offset+1 %></td>
+        <td><%= downtime_code.nr %></td>
+        <td><%= downtime_code.downtime_type.name %></td>
+        <td><%= downtime_code.description %></td>
+        <!--<td><%= link_to 'Show', downtime_code %></td>-->
+        <td><%= link_to 'Edit', edit_downtime_code_path(downtime_code) %></td>
+        <td><%= link_to 'Destroy', downtime_code, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="digg_pagination">
+  <%= will_paginate @downtime_codes, :container => false %>
+</div>
+
+<%= link_to 'New Downtime Code', new_downtime_code_path %>

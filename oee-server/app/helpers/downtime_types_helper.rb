@@ -1,0 +1,2 @@
+module DowntimeTypesHelper
+end

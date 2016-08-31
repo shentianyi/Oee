@@ -5,9 +5,20 @@
   <%= link_to '导入数据', import_holidays_path, :class => 'btn btn-primary'%>
 </div>
 
+
+<div class="col-sm-12">
+  <div class="digg_pagination">
+    <div class="page_info">
+      <%= page_entries_info @holidays %>
+    </div>
+    <%= will_paginate @holidays, :container => false %>
+  </div>
+</div>
+
 <table>
   <thead>
     <tr>
+      <th>NO.</th>
       <th>Holiday</th>
       <th>Type</th>
       <th>Remark</th>
@@ -16,8 +27,9 @@
   </thead>
 
   <tbody>
-    <% @holidays.each do |holiday| %>
+  <% @holidays.each_with_index do |holiday, index| %>
       <tr>
+        <td><%= index+@holidays.offset+1 %></td>
         <td><%= holiday.holiday %></td>
         <td><%= HolidayType.display holiday.type %></td>
         <td><%= holiday.remark %></td>
@@ -29,6 +41,8 @@
   </tbody>
 </table>
 
-<br>
+<div class="digg_pagination">
+  <%= will_paginate @holidays, :container => false %>
+</div>
 
 <%= link_to 'New Holiday', new_holiday_path %>

@@ -4,7 +4,7 @@ class MachineTypesController < ApplicationController
   # GET /machine_types
   # GET /machine_types.json
   def index
-    @machine_types = MachineType.all
+    @machine_types = MachineType.all.paginate(:page=> params[:page]).order(nr: :asc)
   end
 
   # GET /machine_types/1

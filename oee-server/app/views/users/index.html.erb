@@ -2,9 +2,20 @@
 
 <h1>Users</h1>
 
+<div class="col-sm-12">
+  <div class="digg_pagination">
+    <div class="page_info">
+      <%= page_entries_info @users %>
+    </div>
+    <%= will_paginate @users, :container => false %>
+  </div>
+</div>
+
+
 <table>
   <thead>
     <tr>
+      <th>NO.</th>
       <th>Name</th>
       <th>Role</th>
       <th>Email</th>
@@ -13,8 +24,9 @@
   </thead>
 
   <tbody>
-    <% @users.each do |user| %>
+  <% @users.each_with_index do |user, index| %>
       <tr>
+        <td><%= index+@users.offset+1 %></td>
         <td><%= user.name %></td>
         <td><%= Role.display(user.role) %></td>
         <td><%= user.email %></td>
@@ -26,6 +38,8 @@
   </tbody>
 </table>
 
-<br>
+<div class="digg_pagination">
+  <%= will_paginate @users, :container => false %>
+</div>
 
 <%= link_to 'New User', new_user_path %>

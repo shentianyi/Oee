@@ -4,7 +4,7 @@ class CraftsController < ApplicationController
   # GET /crafts
   # GET /crafts.json
   def index
-    @crafts = Craft.all
+    @crafts = Craft.all.paginate(:page=> params[:page]).order(nr: :asc)
   end
 
   # GET /crafts/1

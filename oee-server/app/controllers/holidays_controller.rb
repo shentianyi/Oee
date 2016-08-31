@@ -4,7 +4,7 @@ class HolidaysController < ApplicationController
   # GET /holidays
   # GET /holidays.json
   def index
-    @holidays = Holiday.all
+    @holidays = Holiday.all.paginate(:page=> params[:page]).order(holiday: :asc)
   end
 
   # GET /holidays/1

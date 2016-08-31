@@ -1,0 +1,32 @@
+<%= form_for(downtime_code) do |f| %>
+  <% if downtime_code.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(downtime_code.errors.count, "error") %> prohibited this downtime_code from being saved:</h2>
+
+      <ul>
+      <% downtime_code.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :nr %>
+    <%= f.text_field :nr %>
+  </div>
+
+  <div class="field">
+    <%= f.label :downtime_type_id %>
+    <%= f.select(:downtime_type_id, DowntimeType.all.collect{|dtt| [dtt.name, dtt.id]}) %>
+  </div>
+
+  <div class="field">
+    <%= f.label :description %>
+    <%= f.text_field :description %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
