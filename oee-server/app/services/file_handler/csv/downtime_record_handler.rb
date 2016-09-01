@@ -7,39 +7,74 @@ module FileHandler
                       'PD_Rf']
       INVALID_CSV_HEADERS=IMPORT_HEADERS + ['Error MSG']
 
+      def self.recombine keys, values
+        values.each_with_index do |rv, index|
+          if rv.present? && rv.is_date?
+            return keys.zip(values[index, values.count]).to_h
+          end
+        end
+        keys.zip(values).to_h
+      end
+
       def self.import(file)
         msg = Message.new
         begin
           # validate_msg = validate_import(file)
           if true #validate_msg.result
             DowntimeRecord.transaction do
+
+              #machine hash container
+              machine_container = {}
+              #preview order params
+              pre_order={}
+
               CSV.foreach(file.file_path, headers: file.headers, col_sep: file.col_sep, encoding: file.encoding) do |row|
                 row.strip
-                # p row
-                # p row.headers
-                # p row.fields
+
+                #parse params
                 params = {}
-                IMPORT_HEADERS.each { |header|
+                IMPORT_HEADERS.each do |header|
                   if header=='PD_ErfDat'
-                    unless row[header].is_date?
-                      right_keys = IMPORT_HEADERS - params.keys
-                      right_values = row.fields[params.keys.count, row.fields.count]
-                      right_values.each_with_index do |rv, index|
-                        if rv.present? && rv.is_date?
-                          right_values = right_values[index, right_values.count]
-                          break
-                        end
-                      end
-                      params = params.merge(right_keys.zip(right_values).to_h)
+                    if row[header].blank? || !row[header].is_date?
+                      params = params.merge(recombine(IMPORT_HEADERS - params.keys, row.fields[params.keys.count, row.fields.count]))
                       break
                     end
                   end
                   params[header] = row[header]
-                }
+                end
+
+                #supplement params
+                if params['PD_Bemerk']==pre_order['PD_Bemerk']
+                  params['PD_ProdNr']=pre_order['PD_ProdNr']
+                  params['PD_Stueck']=pre_order['PD_Stueck']
+                  params['PD_Laenge']=pre_order['PD_Laenge']
+                else
+                  pre_order=params
+                end
+
+                #push data into container
+                p (params['PD_ErfDat'] + ' ' + params['PD_von']).to_time
+                if machine_container[row['FORS_einres']].blank?
+                  machine_container[row['FORS_einres']] = {}
+                end
+                machine_container[row['FORS_einres']][(params['PD_ErfDat'] + ' ' + params['PD_von']).to_time] = params
+
+
                 puts params
                 puts '--------------------------------------------------------------------------------------'
                 # MouldDetail.create(params)
               end
+
+              p machine_container
+              # p (machine_container['08708-15'].keys + ['2016-08-20 10:19:00'.to_time, '2016-08-20 10:29:00'.to_time, '2016-08-20 10:09:00'.to_time]).sort
+              # p machine_container['08708-15']['2016-08-20 10:19:00'.to_time]
+              # p machine_container['08708-15']['2016-08-20 11:19:00'.to_time]
+
+              #traversal container
+              machine_container.keys.each do |machine_nr|
+                p machine_container[machine_nr].keys
+              end
+
             end
             msg.result = true
             msg.content = '停机记录 上传成功'
