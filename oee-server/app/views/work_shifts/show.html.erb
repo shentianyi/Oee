@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nr:</strong>
+  <%= @work_shift.nr %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @work_shift.name %>
+</p>
+
+<p>
+  <strong>Start time:</strong>
+  <%= @work_shift.start_time.strftime('%H:%M:%S') %>
+</p>
+
+<p>
+  <strong>End time:</strong>
+  <%= @work_shift.end_time.strftime('%H:%M:%S') %>
+</p>
+
+<%= link_to 'Edit', edit_work_shift_path(@work_shift) %> |
+<%= link_to 'Back', work_shifts_path %>

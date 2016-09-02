@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :work_shifts
   resources :downtime_records do
     collection do
       get :search
