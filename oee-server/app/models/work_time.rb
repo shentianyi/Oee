@@ -8,6 +8,10 @@ class WorkTime < ApplicationRecord
   end
 
   def self.search_work_time machine_type, craft, length
+    if machine_type.blank? || craft.blank?
+      return 0
+    end
+
     if work_time=WorkTime.where(machine_type_id: machine_type.id, craft_id: craft.id, wire_length: wire_length_level(length)).first
       work_time.std_time
     else

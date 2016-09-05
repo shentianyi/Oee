@@ -20,6 +20,6 @@ module OeeServer
 
     config.i18n.default_locale = "zh"
 
-
+    config.active_record.time_zone_aware_types = [:datetime]
   end
 end

@@ -18,7 +18,9 @@ module FileHandler
 
       def self.import(file)
         msg = Message.new
-        begin
+        # begin
+          count = 0
+          count_natual = 0
           # validate_msg = validate_import(file)
           if true #validate_msg.result
             DowntimeRecord.transaction do
@@ -28,10 +30,11 @@ module FileHandler
               #preview order params
               pre_order={}
 
+
               #traversal file
               CSV.foreach(file.file_path, headers: file.headers, col_sep: file.col_sep, encoding: file.encoding) do |row|
                 row.strip
-
+# p row
                 #parse params
                 params = {}
                 IMPORT_HEADERS.each do |header|
@@ -44,82 +47,200 @@ module FileHandler
                   params[header] = row[header]
                 end
 
-                params['FORS_einres']=Machine.find_by_nr(params['FORS_einres']).id
-                params['PD_ProdNr']=Craft.find_by_nr(params['PD_ProdNr']).id
-                params['PD_Stoer']=DowntimeCode.find_by_nr(params['PD_Stoer']).id
-
                 #supplement params
                 if params['PD_Bemerk']==pre_order['PD_Bemerk']
-                  params['PD_ProdNr']=pre_order['PD_ProdNr']
-                  params['PD_Stueck']=pre_order['PD_Stueck']
-                  params['PD_Laenge']=pre_order['PD_Laenge']
+                  # puts pre_order['PD_ProdNr']
+                  # puts params['PD_ProdNr']
+                  # puts params['PD_ProdNr'].blank?
+                  params['PD_ProdNr']=pre_order['PD_ProdNr'] if (pre_order['PD_ProdNr'].present? && params['PD_ProdNr'].blank?)
+                  pre_order['PD_ProdNr']=params['PD_ProdNr'] if (pre_order['PD_ProdNr'].blank? && params['PD_ProdNr'].present?)
+
+                  params['PD_Stueck']=pre_order['PD_Stueck'] if (pre_order['PD_Stueck'].present? && params['PD_Stueck'].blank?)
+                  params['PD_Laenge']=pre_order['PD_Laenge'] if (pre_order['PD_Laenge'].present? && params['PD_Laenge'].blank?)
                 else
-                  pre_order=params
+                  pre_order=params.clone
                 end
+
+                if params['FORS_einres'].present? && machine=Machine.find_by_nr(params['FORS_einres'])
+                  params['FORS_einres']=machine.id
+                else
+                  raise "机器号：#{params['FORS_einres']}未找到或不存在" unless params['PD_Stoer']=='J1'
+                end
+                if params['PD_ProdNr'].present? && craft=Craft.find_by_nr(params['PD_ProdNr'])
+                  params['PD_ProdNr']=craft.id
+                else
+                  raise "工艺号：#{params['PD_ProdNr']}未找到或不存在" unless (params['PD_Stoer']=='J1' || params['PD_Stueck'].to_i==0)
+                end
+                if params['PD_Stoer'].present? && d_code=DowntimeCode.find_by_nr(params['PD_Stoer'])
+                  params['PD_Stoer']=d_code.id
+                else
+                  raise "停机代码：#{params['PD_Stoer']}未找到或不存在"
+                end
+                params['PD_von'] = params['PD_ErfDat'] + ' ' + params['PD_von']
+                params['PD_bis'] = params['PD_ErfDat'] + ' ' + params['PD_bis']
 
                 #push data into container
                 if machine_container[row['FORS_einres']].blank?
                   machine_container[row['FORS_einres']] = {}
                 end
-                machine_container[row['FORS_einres']][(params['PD_ErfDat'] + ' ' + params['PD_von']).to_time] = params
+                machine_container[row['FORS_einres']][params['PD_von'].to_time] = params
 
 
                 puts params
                 puts '--------------------------------------------------------------------------------------'
               end
 
-              p machine_container
+              # p machine_container
               # p (machine_container['08708-15'].keys + ['2016-08-20 10:19:00'.to_time, '2016-08-20 10:29:00'.to_time, '2016-08-20 10:09:00'.to_time]).sort
               # p machine_container['08708-15']['2016-08-20 10:19:00'.to_time]
               # p machine_container['08708-15']['2016-08-20 11:19:00'.to_time]
 
               #traversal container
-              pre_order={}
-              pre_record={}
-              pre_order_downtime=0
-              curr_shift_first_record = nil
+              puts '---------------------------------------分割线-----------------------------------------------'.red
+              # kc=0
+              # kp = 0
+              # machine_container.keys.each do |machine_nr|
+              #   puts machine_nr
+              #   kc += machine_container[machine_nr].keys.count
+              #   puts machine_container[machine_nr].keys.count
+              #   kp += machine_container[machine_nr].keys.uniq.count
+              #   puts machine_container[machine_nr].keys.uniq.count
+              # end
+              # puts kc
+              # puts kp
+              # raise 'gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg'
+
               machine_container.keys.each do |machine_nr|
+                pre_order={}
+                pre_record={}
+                pre_order_downtime=0
+                curr_shift_first_record = nil
+
                 machine_container[machine_nr].keys.sort.each do |time|
-                  p machine_container[machine_nr][time]
+                  # p machine_container[machine_nr][time]
+                  #create downtime record
+                  DowntimeRecord.create(parse_params machine_container[machine_nr][time])
+                  count_natual +=1
+
                   #set default current shift first record if curr_shift_first_record is nil
-                  curr_shift_first_record=machine_container[machine_nr][time] if curr_shift_first_record.blank?
+                  curr_shift_first_record=machine_container[machine_nr][time].clone if curr_shift_first_record.blank?
 
                   #换班了，为上个班次添加可能的 J1记录
                   if (machine_container[machine_nr][time]['PK_SchT'] != pre_record['PK_SchT']) && pre_record.present? && pre_record.present?
                     #set current shift first record
-                    curr_shift_first_record=machine_container[machine_nr][time]
+                    curr_shift_first_record=machine_container[machine_nr][time].clone
                     #用秒计量前一个订单的工时
                     machine_type = Machine.find_by_id(pre_record['FORS_einres']).machine_type
                     craft = Craft.find_by_id(pre_record['PD_ProdNr'])
-                    p order_work_time = WorkTime.search_work_time(machine_type, craft, pre_record['PD_Laenge'])*pre_record['PD_Stueck'].to_f*60
+                    order_work_time = WorkTime.search_work_time(machine_type, craft, pre_record['PD_Laenge'])*pre_record['PD_Stueck'].to_f*60
 
-                    p msg = self.check_shift((curr_shift_first_record['PD_ErfDat'] + ' ' + curr_shift_first_record['PD_von']).to_time,
-                                          (pre_record['PD_ErfDat'] + ' ' + pre_record['PD_von']).to_time)
+                    msg = self.check_shift(curr_shift_first_record['PD_von'].to_time, pre_record['PD_von'].to_time)
+
+                    if msg.result
+                      puts 'Insert Into Web System Calc Record .....'.red
+
+                      insert_params = pre_record.clone
+                      insert_params['PD_Stoer'] = DowntimeCode.find_by_nr('J1').id
+                      insert_params['is_naturl'] = true
+
+                      if order_work_time ==0
+                        insert_params['PD_von'] = pre_record['PD_bis']
+                        insert_params['PD_bis'] = msg.object[:shift_over_time]
+                        insert_params['PD_Std'] = insert_params['PD_bis'] - insert_params['PD_von'].to_time
+                        p insert_params
+                        puts "-------------------------------create  order_work_time=0--------------------------------".red
+                        DowntimeRecord.create(parse_params insert_params)
+                        count += 1
+                      else
+                        insert_params['PD_bis'] = msg.object[:shift_over_time]
+                        nomal_finished_time = (pre_order['PD_bis'].to_time + order_work_time + pre_order_downtime)
+                        if nomal_finished_time < msg.object[:shift_over_time]
+                          if nomal_finished_time < pre_record['PD_bis'].to_time
+                            insert_params['PD_von'] = pre_record['PD_bis']
+                          else
+                            insert_params['PD_von'] = nomal_finished_time
+                          end
+                          insert_params['PD_Std'] = (insert_params['PD_bis'] - insert_params['PD_von'].to_time)/3600
+                          p insert_params
+                          puts "--------------------------------create-------------------------------".red
+                          DowntimeRecord.create(parse_params insert_params)
+                          count += 1
+                        end
+                      end
+                    end
                   end
 
                   #换订单了
                   if machine_container[machine_nr][time]['PD_Bemerk'] != pre_order['PD_Bemerk']
-                    pre_order=machine_container[machine_nr][time]
+                    pre_order=machine_container[machine_nr][time].clone
                     pre_order_downtime = 0
                   end
 
                   pre_order_downtime += machine_container[machine_nr][time]['PD_Std'].to_f*3600
 
-                  pre_record=machine_container[machine_nr][time]
+                  pre_record=machine_container[machine_nr][time].clone
+                end
+
+                # puts 'pre_order-------pre_record------pre_order_downtime-------curr_shift_first_record---------'
+                # p pre_order
+                # p pre_record
+                # p pre_order_downtime
+                # p curr_shift_first_record
+
+                #insert record after last one per machine
+                msg = self.check_shift(curr_shift_first_record['PD_von'].to_time, pre_record['PD_von'].to_time)
+                insert_params = {}
+                if msg.result
+                  puts 'Insert Into Web System Calc Record .....'.yellow
+
+                  #用秒计量每个机器最后一个订单的工时
+                  machine_type = Machine.find_by_id(pre_record['FORS_einres']).machine_type
+                  craft = Craft.find_by_id(pre_record['PD_ProdNr'])
+                  order_work_time = WorkTime.search_work_time(machine_type, craft, pre_record['PD_Laenge'])*pre_record['PD_Stueck'].to_f*60
+
+                  insert_params = pre_record.clone
+                  insert_params['PD_Stoer'] = DowntimeCode.find_by_nr('J1').id
+                  insert_params['is_naturl'] = true
+
+                  if order_work_time ==0
+                    insert_params['PD_von'] = pre_record['PD_bis']
+                    insert_params['PD_bis'] = msg.object[:shift_over_time]
+                    insert_params['PD_Std'] = insert_params['PD_bis'] - insert_params['PD_von'].to_time
+                    p insert_params
+                    puts "-------------------------------create  1111--------------------------------".red
+                    DowntimeRecord.create(parse_params insert_params)
+                    count += 1
+                  else
+                    insert_params['PD_bis'] = msg.object[:shift_over_time]
+                    nomal_finished_time = (pre_order['PD_bis'].to_time + order_work_time + pre_order_downtime)
+                    if nomal_finished_time < msg.object[:shift_over_time]
+                      if nomal_finished_time < pre_record['PD_bis'].to_time
+                        insert_params['PD_von'] = pre_record['PD_bis']
+                      else
+                        insert_params['PD_von'] = nomal_finished_time
+                      end
+                      insert_params['PD_Std'] = (insert_params['PD_bis'] - insert_params['PD_von'].to_time)/3600
+                      p insert_params
+                      puts "--------------------------------create-------------------------------".red
+                      DowntimeRecord.create(parse_params insert_params)
+                      count += 1
+                    end
+                  end
                 end
               end
 
             end
             msg.result = true
-            msg.content = '停机记录 上传成功'
+            puts "------------------#{count_natual}---------------------------count #{count}-----------------------------------------".red
+            msg.content = '停机记录  上传成功'
           else
             msg.result = false
             msg.content = validate_msg.content
           end
-        rescue => e
-          puts e.backtrace
-          msg.content = e.message
-        end
+        # rescue => e
+        #   puts e.backtrace
+        #   msg.content = e.message
+        # end
         return msg
       end
 
@@ -183,6 +304,41 @@ module FileHandler
         end
 
         msg
+      end
+
+      def self.parse_params params
+        data={}
+
+        data[:fors_werk] = params['FORS_werk']
+        data[:fors_faufnr] = params['FORS_faufnr']
+        data[:fors_faufpo] = params['FORS_faufpo']
+        data[:fors_lnr] = params['FORS_lnr']
+        data[:machine_id] = params['FORS_einres']
+        data[:pk_sch] = params['PK_Sch']
+        data[:pk_datum] = params['PK_Datum']
+
+        data[:pk_sch_std] = params['PK_SchStd']
+        data[:pk_sch_t] = params['PK_SchT']
+        data[:craft_id] = params['PD_ProdNr']
+        data[:pd_teb] = params['PD_TEB']
+        data[:pd_stueck] = params['PD_Stueck']
+        data[:pd_auss_ruest] = params['PD_Auss_Ruest']
+        data[:pd_auss_prod] = params['PD_Auss_Prod']
+
+        data[:pd_bemerk] = params['PD_Bemerk']
+        data[:pd_user] = params['PD_User']
+        data[:pd_erf_dat] = params['PD_ErfDat']
+        data[:pd_von] = params['PD_von']
+
+        data[:pd_bis] = params['PD_bis']
+        data[:downtime_code_id] = params['PD_Stoer']
+        data[:pd_std] = params['PD_Std']
+        data[:pd_laenge] = params['PD_Laenge']
+
+        data[:pd_rf] = params['PD_Rf']
+        data[:is_naturl] = params['is_naturl'] if params['is_naturl'].present?
+
+        data
       end
 
     end

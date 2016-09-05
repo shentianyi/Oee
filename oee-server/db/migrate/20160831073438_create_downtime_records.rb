@@ -24,7 +24,7 @@ class CreateDowntimeRecords < ActiveRecord::Migration[5.0]
       t.float :pd_std
       t.integer :pd_laenge
       t.string :pd_rf
-      t.boolean :is_naturl
+      t.boolean :is_naturl, default: false
 
       t.timestamps
     end

@@ -3,3 +3,5 @@ class DowntimeRecord < ApplicationRecord
   belongs_to :craft
   belongs_to :downtime_code
 end
+
+

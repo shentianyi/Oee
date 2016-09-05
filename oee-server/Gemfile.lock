@@ -53,6 +53,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.10.0)
+    colorize (0.8.1)
     concurrent-ruby (1.0.2)
     debug_inspector (0.0.2)
     devise (4.2.0)
@@ -185,6 +186,7 @@ DEPENDENCIES
   axlsx
   byebug
   coffee-rails (~> 4.2)
+  colorize
   devise
   iconv (~> 1.0.3)
   jbuilder (~> 2.5)
