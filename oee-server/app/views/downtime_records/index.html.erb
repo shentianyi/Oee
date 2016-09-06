@@ -58,7 +58,7 @@
         <td><%= downtime_record.fors_lnr %></td>
         <td><%= downtime_record.machine.nr %></td>
         <td><%= downtime_record.pk_sch %></td>
-        <td><%= downtime_record.pk_datum %></td>
+        <td><%= downtime_record.pk_datum.localtime.strftime('%Y%m%d') %></td>
         <td><%= downtime_record.pk_sch_std %></td>
         <td><%= downtime_record.pk_sch_t %></td>
         <td><%= downtime_record.craft.nr %></td>
@@ -68,9 +68,9 @@
         <td><%= downtime_record.pd_auss_prod %></td>
         <td><%= downtime_record.pd_bemerk %></td>
         <td><%= downtime_record.pd_user %></td>
-        <td><%= downtime_record.pd_erf_dat %></td>
-        <td><%= downtime_record.pd_von %></td>
-        <td><%= downtime_record.pd_bis %></td>
+        <td><%= downtime_record.pd_erf_dat.localtime.strftime('%Y%m%d') %></td>
+        <td><%= downtime_record.pd_von.localtime.strftime('%Y%m%d  %H:%M:%S') %></td>
+        <td><%= downtime_record.pd_bis.localtime.strftime('%H:%M:%S') %></td>
         <td><%= downtime_record.downtime_code.nr %></td>
         <td><%= downtime_record.pd_std %></td>
         <td><%= downtime_record.pd_laenge %></td>
