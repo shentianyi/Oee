@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160902032550) do
+ActiveRecord::Schema.define(version: 20160907103949) do
 
   create_table "crafts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "nr"
@@ -36,6 +36,35 @@ ActiveRecord::Schema.define(version: 20160902032550) do
     t.index ["downtime_type_id"], name: "index_downtime_codes_on_downtime_type_id", using: :btree
   end
 
+  create_table "downtime_data", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "fors_werk"
+    t.string   "fors_faufnr"
+    t.string   "fors_faufpo"
+    t.string   "fors_lnr"
+    t.string   "fors_einres"
+    t.string   "pk_sch"
+    t.datetime "pk_datum"
+    t.string   "pk_sch_std"
+    t.string   "pk_sch_t"
+    t.string   "pd_prod_nr"
+    t.float    "pd_teb",        limit: 24
+    t.float    "pd_stueck",     limit: 24
+    t.float    "pd_auss_ruest", limit: 24
+    t.float    "pd_auss_prod",  limit: 24
+    t.string   "pd_bemerk"
+    t.string   "pd_user"
+    t.datetime "pd_erf_dat"
+    t.datetime "pd_von"
+    t.datetime "pd_bis"
+    t.string   "pd_stoer"
+    t.float    "pd_std",        limit: 24
+    t.integer  "pd_laenge"
+    t.string   "pd_rf"
+    t.boolean  "is_naturl"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
   create_table "downtime_records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "fors_werk"
     t.string   "fors_faufnr"
@@ -47,22 +76,23 @@ ActiveRecord::Schema.define(version: 20160902032550) do
     t.string   "pk_sch_std"
     t.string   "pk_sch_t"
     t.integer  "craft_id"
-    t.float    "pd_teb",           limit: 24
-    t.float    "pd_stueck",        limit: 24
-    t.float    "pd_auss_ruest",    limit: 24
-    t.float    "pd_auss_prod",     limit: 24
+    t.float    "pd_teb",             limit: 24
+    t.float    "pd_stueck",          limit: 24
+    t.float    "pd_auss_ruest",      limit: 24
+    t.float    "pd_auss_prod",       limit: 24
     t.string   "pd_bemerk"
     t.string   "pd_user"
     t.datetime "pd_erf_dat"
     t.datetime "pd_von"
     t.datetime "pd_bis"
     t.integer  "downtime_code_id"
-    t.float    "pd_std",           limit: 24
+    t.float    "pd_std",             limit: 24
     t.integer  "pd_laenge"
     t.string   "pd_rf"
-    t.boolean  "is_naturl",                   default: false
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
+    t.boolean  "is_naturl",                     default: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+    t.float    "standard_work_time", limit: 24, default: 0.0
     t.index ["craft_id"], name: "index_downtime_records_on_craft_id", using: :btree
     t.index ["downtime_code_id"], name: "index_downtime_records_on_downtime_code_id", using: :btree
     t.index ["machine_id"], name: "index_downtime_records_on_machine_id", using: :btree
@@ -78,10 +108,10 @@ ActiveRecord::Schema.define(version: 20160902032550) do
 
   create_table "holidays", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.date     "holiday"
-    t.integer  "type",       default: 100
+    t.integer  "type"
     t.string   "remark"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "machine_types", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

@@ -3,6 +3,12 @@ class DowntimeRecord < ApplicationRecord
   belongs_to :craft
   belongs_to :downtime_code
 
+  after_create :calc_standard_work_time
+
+  def calc_standard_work_time
+    self.update_attributes(standard_work_time: WorkTime.search_work_time(self.machine.machine_type, self.craft, self.pd_laenge)*self.pd_stueck.to_f/3600)
+  end
+
 
   def self.generate_condition time_start, time_end, machine, machine_type
     condition = {}
@@ -34,14 +40,16 @@ class DowntimeRecord < ApplicationRecord
 
     data=[]
     record_by_machine.each do |rm|
-      record_by_order=query.where(machine_id: rm.machine_id).group(:pd_bemerk)
-      naturl_work_time=0.0
+      record_by_order=query.where(machine_id: rm.machine_id)
+                          .select("SUM(downtime_records.standard_work_time) as total, downtime_records.*")
+                          .group(:pd_bemerk, :pd_stueck)
+      standard_work_time=0.0
       record_by_order.each do |ro|
-        naturl_work_time += (WorkTime.search_work_time(ro.machine.machine_type, ro.craft, ro.pd_laenge)*ro.pd_stueck.to_f/3600)
+        standard_work_time += ro.total
       end
 
       availability = (((time_end.to_time-time_start.to_time)/3600.0) - rm.total)/((time_end.to_time-time_start.to_time)/3600.0)
-      performance=naturl_work_time/(((time_end.to_time-time_start.to_time)/3600.0) - rm.total)
+      performance=standard_work_time/(((time_end.to_time-time_start.to_time)/3600.0) - rm.total)
 
       data<<{
           machine: rm.machine,
