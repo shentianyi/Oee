@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :downtime_records do
     collection do
       get :search
+      get :display
       match :import, to: :import, via: [:get, :post]
     end
   end

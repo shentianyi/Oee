@@ -162,11 +162,12 @@ module FileHandler
                   #用秒计量前一个订单的工时
                   machine_type = Machine.find_by_id(pre_record['FORS_einres']).machine_type
                   craft = Craft.find_by_id(pre_record['PD_ProdNr'])
-                  order_work_time = WorkTime.search_work_time(machine_type, craft, pre_record['PD_Laenge'])*pre_record['PD_Stueck'].to_f*60
+                  order_work_time = WorkTime.search_work_time(machine_type, craft, pre_record['PD_Laenge'])*pre_record['PD_Stueck'].to_f
 
                   p msg = self.check_shift(pre_record['PD_von'], curr_shift_first_record['PD_von'])
+                  p check_pre_record = self.check_shift(pre_record['PD_von'], pre_record['PD_bis'])
 
-                  if !msg.result
+                  if !msg.result && check_pre_record.result
                     puts 'Insert Into Web System Calc Record .....'.red
 
                     insert_params = pre_record.clone
@@ -176,7 +177,7 @@ module FileHandler
                     if order_work_time ==0
                       insert_params['PD_von'] = pre_record['PD_bis']
                       insert_params['PD_bis'] = msg.object[:shift_over_time]
-                      insert_params['PD_Std'] = insert_params['PD_bis'] - insert_params['PD_von']
+                      insert_params['PD_Std'] = (insert_params['PD_bis'] - insert_params['PD_von'])/3600.0
                       p insert_params
                       puts "-------------------------------create  order_work_time=0--------------------------------".red
                       DowntimeRecord.create(parse_params insert_params)
@@ -190,7 +191,7 @@ module FileHandler
                         else
                           insert_params['PD_von'] = nomal_finished_time
                         end
-                        insert_params['PD_Std'] = (insert_params['PD_bis'] - insert_params['PD_von'])/3600
+                        insert_params['PD_Std'] = (insert_params['PD_bis'] - insert_params['PD_von'])/3600.0
                         p insert_params
                         puts "--------------------------------create-------------------------------".red
                         DowntimeRecord.create(parse_params insert_params)
@@ -234,7 +235,7 @@ module FileHandler
                 #用秒计量每个机器最后一个订单的工时
                 machine_type = Machine.find_by_id(pre_record['FORS_einres']).machine_type
                 craft = Craft.find_by_id(pre_record['PD_ProdNr'])
-                order_work_time = WorkTime.search_work_time(machine_type, craft, pre_record['PD_Laenge'])*pre_record['PD_Stueck'].to_f*60
+                order_work_time = WorkTime.search_work_time(machine_type, craft, pre_record['PD_Laenge'])*pre_record['PD_Stueck'].to_f
 
                 insert_params = pre_record.clone
                 insert_params['PD_Stoer'] = DowntimeCode.find_by_nr('J1').id
@@ -243,7 +244,7 @@ module FileHandler
                 if order_work_time ==0
                   insert_params['PD_von'] = pre_record['PD_bis']
                   insert_params['PD_bis'] = msg.object[:shift_over_time]
-                  insert_params['PD_Std'] = insert_params['PD_bis'] - insert_params['PD_von']
+                  insert_params['PD_Std'] = (insert_params['PD_bis'] - insert_params['PD_von'])/3600.0
                   p insert_params
                   puts "-------------------------------create  1111--------------------------------".red
                   DowntimeRecord.create(parse_params insert_params)
@@ -257,7 +258,7 @@ module FileHandler
                     else
                       insert_params['PD_von'] = nomal_finished_time
                     end
-                    insert_params['PD_Std'] = (insert_params['PD_bis'] - insert_params['PD_von'])/3600
+                    insert_params['PD_Std'] = (insert_params['PD_bis'] - insert_params['PD_von'])/3600.0
                     p insert_params
                     puts "--------------------------------create-------------------------------".red
                     DowntimeRecord.create(parse_params insert_params)

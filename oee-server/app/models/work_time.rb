@@ -13,7 +13,7 @@ class WorkTime < ApplicationRecord
     end
 
     if work_time=WorkTime.where(machine_type_id: machine_type.id, craft_id: craft.id, wire_length: wire_length_level(length)).first
-      work_time.std_time
+      work_time.std_time * 60
     else
       0
     end
