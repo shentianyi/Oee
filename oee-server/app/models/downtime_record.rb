@@ -22,43 +22,109 @@ class DowntimeRecord < ApplicationRecord
     end
 
     #入账日期
-    condition["downtime_records.pk_datum"] = Time.parse(time_start).utc.to_s...Time.parse(time_end).utc.to_s
+    condition["downtime_records.pk_datum"] = Time.parse(time_start).utc.to_s..Time.parse(time_end).utc.to_s
     condition
   end
 
-  def self.generate_oee_data time_start, time_end, machine, machine_type
+  def self.generate_oee_data dimensionality, time_start, time_end, machine, machine_type
+    data=[]
+
     condition=generate_condition time_start, time_end, machine, machine_type
 
     query=DowntimeRecord.joins(:machine).where(condition)
 
-    puts query.count
-    record_by_machine=query.select("SUM(downtime_records.Pd_std) as total, downtime_records.*")
-                          .group(:machine_id)
 
-    puts query.count
+    if dimensionality=='machine'
+      #######################################################################################################################           by machine
+      puts query.count
+      record_by_machine=query.select("SUM(downtime_records.Pd_std) as total, downtime_records.*").group(:machine_id)
+      puts query.count
 
+      record_by_machine.each do |rm|
+        record_by_order=query.where(machine_id: rm.machine_id).group(:pd_bemerk, :pd_stueck)
+        standard_work_time=0.0
+        record_by_order.each do |ro|
+          standard_work_time += ro.standard_work_time
+        end
 
-    data=[]
-    record_by_machine.each do |rm|
-      record_by_order=query.where(machine_id: rm.machine_id)
-                          .select("SUM(downtime_records.standard_work_time) as total, downtime_records.*")
-                          .group(:pd_bemerk, :pd_stueck)
-      standard_work_time=0.0
-      record_by_order.each do |ro|
-        standard_work_time += ro.total
+        availability = (((time_end.to_time-time_start.to_time)/3600.0) - rm.total)/((time_end.to_time-time_start.to_time)/3600.0)
+        performance=standard_work_time/(((time_end.to_time-time_start.to_time)/3600.0) - rm.total)
+
+        data<<{
+            machine: rm.machine,
+            availability: availability,
+            performance: performance
+        }
       end
+      #############################################################################################################################################
+    else
+      ###########################################################################################################################        by time
+      record_by_time = query.select("SUM(downtime_records.Pd_std) as total, downtime_records.*").group(:pk_datum)
 
-      availability = (((time_end.to_time-time_start.to_time)/3600.0) - rm.total)/((time_end.to_time-time_start.to_time)/3600.0)
-      performance=standard_work_time/(((time_end.to_time-time_start.to_time)/3600.0) - rm.total)
+      record_by_time.each do |rt|
+        #时间维度--原则上的工作时间
+        worktime_bytime = 24
 
-      data<<{
-          machine: rm.machine,
-          availability: availability,
-          performance: performance
-      }
+        record_by_order=query.where(pk_datum: rt.pk_datum).group(:pd_bemerk, :pd_stueck)
+        standard_work_time=0.0
+        record_by_order.each do |ro|
+          standard_work_time += ro.standard_work_time
+        end
+
+        availability = (Machine.count*worktime_bytime - rt.total)/(Machine.count*worktime_bytime)
+        puts standard_work_time
+        puts (Machine.count)
+        puts (Machine.count*worktime_bytime)
+        puts rt.total
+        performance = standard_work_time/(Machine.count*worktime_bytime - rt.total)
+
+        data<<{
+            time: rt.pk_datum,
+            availability: availability,
+            performance: performance
+        }
+      end
+      #############################################################################################################################################
     end
 
     data
+  end
+
+  def self.generate_downtime_data dimensionality, time_start, time_end, machine, machine_type
+    data={}
+    condition=generate_condition time_start, time_end, machine, machine_type
+
+    if dimensionality=='machine'
+      #downtime code by machine
+      record_by_downtime = DowntimeRecord.joins(downtime_code: [:downtime_type])
+                               .where(condition)
+                               .select("SUM(downtime_records.Pd_std) as total, downtime_records.*, downtime_types.nr as nr")
+                               .group("downtime_types.nr, downtime_records.machine_id")
+                               .order(machine_id: :desc)
+
+      record_by_downtime.each do |rd|
+        if data[rd.machine.nr].blank?
+          data[rd.machine.nr] = {}
+        end
+        data[rd.machine.nr][rd.nr] = rd.total
+      end
+    else
+      #downtime code by time
+      record_by_downtime = DowntimeRecord.joins(downtime_code: [:downtime_type])
+                               .where(condition)
+                               .select("SUM(downtime_records.Pd_std) as total, downtime_records.*, downtime_types.nr as nr")
+                               .group("downtime_types.nr, downtime_records.pk_datum")
+                               .order(pk_datum: :asc)
+
+      record_by_downtime.each do |rd|
+        if data[rd.pk_datum].blank?
+          data[rd.pk_datum] = {}
+        end
+        data[rd.pk_datum][rd.nr] = rd.total
+      end
+    end
+
+    p data
   end
 end
 

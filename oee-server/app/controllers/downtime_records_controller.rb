@@ -1,3 +1,5 @@
+require 'will_paginate/array'
+
 class DowntimeRecordsController < ApplicationController
   before_action :set_downtime_record, only: [:show, :edit, :update, :destroy]
 
@@ -84,19 +86,22 @@ class DowntimeRecordsController < ApplicationController
     @time_start = params[:time_start].blank? ? 1.day.ago.strftime("%Y-%m-%d 7:00") : params[:time_start]
     @time_end = params[:time_end].blank? ? Time.now.strftime("%Y-%m-%d 7:00") : params[:time_end]
 
+    @dimensionality = 'tt'
+
     #check
     machine=Machine.find_by_id(params[:machine_id])
     machine_type=MachineType.find_by_id(params[:machine_type_id])
 
     #calc
-    @calc_result = DowntimeRecord.generate_oee_data @time_start, @time_end, machine, machine_type
+    @calc_result = DowntimeRecord.generate_oee_data(@dimensionality, @time_start, @time_end, machine, machine_type).paginate(:page => params[:page])
 
+    @downtime = DowntimeRecord.generate_downtime_data(@dimensionality, @time_start, @time_end, machine, machine_type)
 
     render :display
   end
 
   def display
-    @calc_result=[]
+    @calc_result=[].paginate(:page => params[:page])
   end
 
   private

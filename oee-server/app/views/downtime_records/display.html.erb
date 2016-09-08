@@ -1,6 +1,3 @@
-
-
-
 <h1>Display Data</h1>
 
 <div>
@@ -25,43 +22,152 @@
       </div>
 
       <div>
-        <input type="submit" value="查 找" class="btn btn-primary" />
+        <input type="submit" value="查 找" class="btn btn-primary"/>
       </div>
     </div>
   </form>
 </div>
 
 
-<table class="table table-striped table-bordered table-hover">
-  <thead>
-  <tr>
-    <th>NO.</th>
-    <th>机器号</th>
-    <th>机器类型</th>
-    <th>oee</th>
-    <th>availability</th>
-    <th>performance</th>
-    <th>停机代码</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @calc_result.each_with_index do |result, i| %>
-      <tr>
-        <td><%= i+1 %></td>
-        <td><%= result[:machine].nr %></td>
-        <td><%= result[:machine].machine_type.nr %></td>
-        <td><%= result[:availability] * result[:performance]%></td>
-        <td><%= result[:availability] %></td>
-        <td><%= result[:performance] %></td>
-      </tr>
-  <% end %>
-  </tbody>
-</table>
+
+
+<% if @dimensionality=='machine' %>
+    <% if false %>
+        <div class="col-sm-12">
+          <div class="digg_pagination">
+            <div class="page_info">
+              <%= page_entries_info @calc_result %>
+            </div>
+            <%= will_paginate @calc_result, :container => false %>
+          </div>
+        </div>
+        <table class="table table-striped table-bordered table-hover">
+          <thead>
+          <tr>
+            <th>NO.</th>
+            <th>机器号</th>
+            <th>机器类型</th>
+            <th>oee</th>
+            <th>availability</th>
+            <th>performance</th>
+            <th>停机代码</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @calc_result.each_with_index do |result, i| %>
+              <tr>
+                <td><%= i+1 %></td>
+                <td><%= result[:machine].nr %></td>
+                <td><%= result[:machine].machine_type.nr %></td>
+                <td><%= result[:availability] * result[:performance] %></td>
+                <td><%= result[:availability] %></td>
+                <td><%= result[:performance] %></td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+        <div class="digg_pagination">
+          <%= will_paginate @calc_result, :container => false %>
+        </div>
+
+    <% else %>
+
+        <table class="table table-striped table-bordered table-hover">
+          <thead>
+          <tr>
+            <th>NO.</th>
+            <th>机器号</th>
+            <% DowntimeType.pluck(:nr).each do |nr| %>
+                <th><%= nr %></th>
+            <% end %>
+          </tr>
+          </thead>
+          <tbody>
+          <% @downtime.keys.each_with_index do |key, i| %>
+              <tr>
+                <td><%= i+1 %></td>
+                <td><%= key %></td>
+                <% DowntimeType.pluck(:nr).each do |nr| %>
+                    <td><%= @downtime[key][nr] %></td>
+                <% end %>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+
+    <% end %>
+
+<% else %>
+    <% if false %>
+
+        <div class="col-sm-12">
+          <div class="digg_pagination">
+            <div class="page_info">
+              <%= page_entries_info @calc_result %>
+            </div>
+            <%= will_paginate @calc_result, :container => false %>
+          </div>
+        </div>
+        <table class="table table-striped table-bordered table-hover">
+          <thead>
+          <tr>
+            <th>NO.</th>
+            <th>时间</th>
+            <th>oee</th>
+            <th>availability</th>
+            <th>performance</th>
+            <th>停机代码</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @calc_result.each_with_index do |result, i| %>
+              <tr>
+                <td><%= i+1 %></td>
+                <td><%= result[:time].localtime.strftime('%Y/%m/%d') %></td>
+                <td><%= result[:availability] * result[:performance] %></td>
+                <td><%= result[:availability] %></td>
+                <td><%= result[:performance] %></td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+        <div class="digg_pagination">
+          <%= will_paginate @calc_result, :container => false %>
+        </div>
+
+    <% else %>
+
+        <table class="table table-striped table-bordered table-hover">
+          <thead>
+          <tr>
+            <th>NO.</th>
+            <th>时间</th>
+            <% DowntimeType.pluck(:nr).each do |nr| %>
+                <th><%= nr %></th>
+            <% end %>
+          </tr>
+          </thead>
+          <tbody>
+          <% @downtime.keys.each_with_index do |key, i| %>
+              <tr>
+                <td><%= i+1 %></td>
+                <td><%= key.localtime.strftime('%Y%m%d') %></td>
+                <% DowntimeType.pluck(:nr).each do |nr| %>
+                    <td><%= @downtime[key][nr] %></td>
+                <% end %>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+
+    <% end %>
+<% end %>
+
 
 
 <script>
     $(".datepicker").datetimepicker({
         lang: 'ch',
-        format: 'Y-m-d H:i'
+        format: 'Y-m-d'
     });
 </script>

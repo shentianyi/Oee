@@ -91,7 +91,7 @@ module FileHandler
                 raise "停机代码：#{params['PD_Stoer']}未找到或不存在"
               end
 
-              #jieshu ctrl z
+              #
               params['PD_von'] = (params['PD_ErfDat'] + ' ' + params['PD_von']).to_time
               params['PD_bis'] = (params['PD_ErfDat'] + ' ' + params['PD_bis']).to_time
 
@@ -366,7 +366,7 @@ module FileHandler
         data[:fors_lnr] = params['FORS_lnr']
         data[:machine_id] = params['FORS_einres']
         data[:pk_sch] = params['PK_Sch']
-        data[:pk_datum] = params['PK_Datum']
+        data[:pk_datum] = params['PK_Datum'].to_time
 
         data[:pk_sch_std] = params['PK_SchStd']
         data[:pk_sch_t] = params['PK_SchT']
@@ -378,7 +378,7 @@ module FileHandler
 
         data[:pd_bemerk] = params['PD_Bemerk']
         data[:pd_user] = params['PD_User']
-        data[:pd_erf_dat] = params['PD_ErfDat']
+        data[:pd_erf_dat] = params['PD_ErfDat'].to_time
         data[:pd_von] = params['PD_von']
 
         data[:pd_bis] = params['PD_bis']
