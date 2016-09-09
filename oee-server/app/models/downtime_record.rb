@@ -22,7 +22,7 @@ class DowntimeRecord < ApplicationRecord
     end
 
     #入账日期
-    condition["downtime_records.pk_datum"] = Time.parse(time_start).utc.to_s..Time.parse(time_end).utc.to_s
+    condition["downtime_records.pk_datum"] = Time.parse(time_start).utc.to_s...Time.parse(time_end).utc.to_s
     condition
   end
 
@@ -40,6 +40,9 @@ class DowntimeRecord < ApplicationRecord
       record_by_machine=query.select("SUM(downtime_records.Pd_std) as total, downtime_records.*").group(:machine_id)
       puts query.count
 
+      #calc
+      worktime_except_holiday = Holiday.calc_except_holiday(time_start.to_time.localtime.to_date, time_end.to_time.localtime.to_date)
+
       record_by_machine.each do |rm|
         record_by_order=query.where(machine_id: rm.machine_id).group(:pd_bemerk, :pd_stueck)
         standard_work_time=0.0
@@ -47,8 +50,8 @@ class DowntimeRecord < ApplicationRecord
           standard_work_time += ro.standard_work_time
         end
 
-        availability = (((time_end.to_time-time_start.to_time)/3600.0) - rm.total)/((time_end.to_time-time_start.to_time)/3600.0)
-        performance=standard_work_time/(((time_end.to_time-time_start.to_time)/3600.0) - rm.total)
+        availability = (worktime_except_holiday - rm.total)/worktime_except_holiday
+        performance=standard_work_time/(worktime_except_holiday - rm.total)
 
         data<<{
             machine: rm.machine,
@@ -63,7 +66,7 @@ class DowntimeRecord < ApplicationRecord
 
       record_by_time.each do |rt|
         #时间维度--原则上的工作时间
-        worktime_bytime = 24
+        worktime_except_holiday = 24.0# Holiday.calc_except_holiday(rt.pk_datum.localtime.to_date, rt.pk_datum.localtime.to_date)
 
         record_by_order=query.where(pk_datum: rt.pk_datum).group(:pd_bemerk, :pd_stueck)
         standard_work_time=0.0
@@ -71,12 +74,12 @@ class DowntimeRecord < ApplicationRecord
           standard_work_time += ro.standard_work_time
         end
 
-        availability = (Machine.count*worktime_bytime - rt.total)/(Machine.count*worktime_bytime)
+        availability = (Machine.count*worktime_except_holiday - rt.total)/(Machine.count*worktime_except_holiday)
         puts standard_work_time
         puts (Machine.count)
-        puts (Machine.count*worktime_bytime)
+        puts (Machine.count*worktime_except_holiday)
         puts rt.total
-        performance = standard_work_time/(Machine.count*worktime_bytime - rt.total)
+        performance = standard_work_time/(Machine.count*worktime_except_holiday - rt.total)
 
         data<<{
             time: rt.pk_datum,
@@ -96,7 +99,7 @@ class DowntimeRecord < ApplicationRecord
 
     if dimensionality=='machine'
       #downtime code by machine
-      record_by_downtime = DowntimeRecord.joins(downtime_code: [:downtime_type])
+      record_by_downtime = DowntimeRecord.joins(:machine).joins(downtime_code: [:downtime_type])
                                .where(condition)
                                .select("SUM(downtime_records.Pd_std) as total, downtime_records.*, downtime_types.nr as nr")
                                .group("downtime_types.nr, downtime_records.machine_id")
@@ -110,7 +113,7 @@ class DowntimeRecord < ApplicationRecord
       end
     else
       #downtime code by time
-      record_by_downtime = DowntimeRecord.joins(downtime_code: [:downtime_type])
+      record_by_downtime = DowntimeRecord.joins(:machine).joins(downtime_code: [:downtime_type])
                                .where(condition)
                                .select("SUM(downtime_records.Pd_std) as total, downtime_records.*, downtime_types.nr as nr")
                                .group("downtime_types.nr, downtime_records.pk_datum")

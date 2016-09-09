@@ -86,7 +86,7 @@ class DowntimeRecordsController < ApplicationController
     @time_start = params[:time_start].blank? ? 1.day.ago.strftime("%Y-%m-%d 7:00") : params[:time_start]
     @time_end = params[:time_end].blank? ? Time.now.strftime("%Y-%m-%d 7:00") : params[:time_end]
 
-    @dimensionality = 'tt'
+    @dimensionality = 'machine'
 
     #check
     machine=Machine.find_by_id(params[:machine_id])
