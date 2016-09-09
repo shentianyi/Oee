@@ -1,29 +1,55 @@
-<h2>Log in</h2>
-
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-    <div>
-      <p id="login-notice"><%= notice %></p>
+    <div class="container">
+      <div class="login">
+        <div class="login-heading">
+          <div class="login-font">
+            <b>OEE</b>
+            <p>LOGIN TO YOUR ACCOUNT</p>
+          </div>
+
+          <hr style="border-top: 2px dashed #ddd;"/>
+
+          <div class="login-icon">
+            <i class="fa fa-key fa-5x fa-spin"></i>
+          </div>
+        </div>
+
+        <div class="login-body row">
+          <div class="col-lg-offset-4 col-lg-4 col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6 col-xs-12">
+            <div class="marco-igroup-login">
+              <span><i class="fa fa-envelope"></i></span>
+              <input autofocus="autofocus" type="email" name="user[email]" id="user_email" placeholder="Email">
+            </div>
+          </div>
+          <div class="col-lg-offset-4 col-lg-4 col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6 col-xs-12">
+            <div class="marco-igroup-login">
+              <span title="我会旋转...">
+                <i class="fa fa-lock"></i>
+              </span>
+              <input autocomplete="off" type="password" name="user[password]" id="user_password" placeholder="Password">
+            </div>
+          </div>
+
+          <div class="col-lg-offset-4 col-lg-4 col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6 col-xs-12">
+            <% if devise_mapping.rememberable? -%>
+                <div class="marco-igroup-default">
+                  <input name="user[remember_me]" type="hidden" value="0">
+                  <label for="user_remember_me">记住我</label>
+                  <input type="checkbox" style="width: 20px; margin-top: 5px;" value="1" name="user[remember_me]" id="user_remember_me">
+                </div>
+            <% end -%>
+          </div>
+        </div>
+
+        <div class="login-footer">
+          <button class="marco-btn-login">登陆</button>
+        </div>
+
+        <div>
+          <p id="login-notice"><%= notice %></p>
+        </div>
+      </div>
     </div>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
-
-  <% if devise_mapping.rememberable? -%>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
-    </div>
-  <% end -%>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
 <% end %>
 
-<%= render "devise/shared/links" %>
+<%#= render "devise/shared/links" %>
