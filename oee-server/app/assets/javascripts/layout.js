@@ -1,9 +1,6 @@
 var layout = {};
 
 layout.init = function(){
-	$('.main').css({height: $(window).height()-20 +'px'});
-
-	// Nav click
 	var pathname = window.location.pathname.split("/")[1];
 	var all_nav = $('.main-nav').find('.nav-bar');
 

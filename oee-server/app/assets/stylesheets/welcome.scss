@@ -1,3 +1,59 @@
 // Place all the styles related to the welcome controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+body {
+  background: url('/assets/back.png') repeat;
+}
+
+.login {
+  min-width: 600px;
+  margin-top: 50px;
+  text-align: center;
+  border-radius: 35px;
+  border: 2px dashed #2c3e50;
+
+  .login-heading {
+    margin-top: 30px;
+    color: #31708f;
+    .login-font {
+      b {
+        font-size: 4em;
+      }
+      p {
+        font-size: 16px;
+        margin-top: 20px;
+        font-weight: bold;
+      }
+    }
+    .login-icon {
+      margin-top: 50px;
+      i {
+        background: #f2f2f2;
+        text-align: center;
+        color: #31708f;
+        padding: 15px;
+        vertical-align: middle;
+        border-radius: 50px;
+        border: 2px solid;
+        height: 100px;
+        width: 100px;
+        -webkit-border-radius: 50px;
+        -moz-border-radius: 50px;
+        &:hover {
+          color: lighten(#31708f, 10%);
+          background: #ddd;
+        }
+      }
+    }
+  }
+
+  .login-body {
+    margin-top: 50px;
+  }
+
+  .login-footer {
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+}

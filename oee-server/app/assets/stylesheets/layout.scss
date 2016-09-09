@@ -19,6 +19,7 @@ $midnight-blue: #2c3e50 !global; //午夜蓝  接近黑色
 $sun-flower: #f1c40f !global; // 浅黄色  向日葵
 $light-yellow: #fcf8e3 !global; //超级浅黄色
 $shallow-yellow: #faebcc !global;
+$flat-yellow: #E67E22 !global;
 $high-yellow: #8a6d3b !global;
 $orange: #f39c12 !global; //  橘黄色   橘子
 
@@ -30,7 +31,9 @@ $high-red: #a94442 !global;
 $pomegranate: #c0392b !global; // 红色   石榴
 
 $clouds: #ecf0f1 !global; // 白色    云彩
+$dark-white: #f2f2f2 !global;
 $silver: #bdc3c7 !global; //银色   银色
+$dark-gray: #999 !global;
 
 $light-grey: #ddd !global; // 浅灰色
 $concrete: #95a5a6 !global; //  浅灰色   混凝土
@@ -38,22 +41,21 @@ $asbestos: #7f8c8d !global; // 深灰色  石棉
 
 .main {
   width: 100%;
-  display: flex;
-  display: -ms-flex !important;
-  min-width: 900px;
+  min-width: 500px;
+  display: table;
   .main-nav {
-  	float: left;
+    display: table-cell;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
-    width: 80px;
+    width: 75px;
     text-align: center;
-    color: #ecf0f1;
+    color: $dark-white;
     background: $midnight-blue;
-    border-right: 1px solid #1a242f;
+    border-right: 1px solid $midnight-blue;
     margin: 0;
     padding: 0;
-    ul{
-    	margin: 0;
+    ul {
+      margin: 0;
     }
     .nav-bar {
       list-style: none;
@@ -61,21 +63,30 @@ $asbestos: #7f8c8d !global; // 深灰色  石棉
       margin-left: -35px;
       cursor: pointer;
       a {
-      	display: block;
+        display: block;
         font-size: 2.5em;
-        color: #ecf0f1 !important;
+        color: $dark-white;
         &:hover {
           background: transparent;
+          color: $green-sea;
         }
-        span{
-        	font-size: 1.2em;
+        span {
+          font-size: 1.2em;
+        }
+      }
+
+      //二级菜单
+      ul {
+        display: none;
+        &:hover {
+          display: block;
         }
       }
     }
 
     .nav-active,
     .nav-active > a {
-      color: #1abc9c !important;
+      color: $green-sea !important;
       i::after {
         -webkit-transform: rotate(45deg);
         -ms-transform: rotate(45deg);
@@ -85,7 +96,7 @@ $asbestos: #7f8c8d !global; // 深灰色  石棉
         display: inline-block;
         width: 10px;
         height: 10px;
-        background-color: #f2f2f2;
+        background-color: $dark-white;
         position: absolute;
         margin-top: 10px;
         margin-left: 17px;
@@ -93,11 +104,9 @@ $asbestos: #7f8c8d !global; // 深灰色  石棉
     }
   }
   .main-content {
-  	float: right;
-    padding:10px;
-    background: #f2f2f2;
-    width: 100%;
-    min-width: 800px;
+    display: table-cell;
+    padding: 10px;
+    background: url('/assets/back.png') repeat;
     border: 2px solid $midnight-blue;
     border-left: none;
     border-top-right-radius: 20px;
@@ -116,14 +125,15 @@ $asbestos: #7f8c8d !global; // 深灰色  石棉
   border: 1px solid $marco-bg;
   &:hover, &:link {
     outline: none;
+    background: lighten($marco-bg, 10%);
   }
   &:active {
     border: 1px solid $marco-bg;
     background: $marco-color;
     color: $marco-bg;
     outline: none;
-    a{
-    	color: $marco-bg;
+    a {
+      color: $marco-bg;
     }
   }
   &[disabled] {
@@ -132,11 +142,11 @@ $asbestos: #7f8c8d !global; // 深灰色  石棉
     border-color: #999;
     color: #fff;
   }
-  a{
-  	color: $marco-color;
-  	&:hover{
-  		text-decoration: none;
-  	}
+  a {
+    color: $marco-color;
+    &:hover {
+      text-decoration: none;
+    }
   }
 }
 
@@ -175,14 +185,52 @@ $asbestos: #7f8c8d !global; // 深灰色  石棉
   @include marco-btn($pomegranate);
 }
 
+.marco-btn-login {
+  height: 40px;
+  width: 200px;
+  @include marco-btn($high-blue);
+}
+
 //Input
+@mixin marco-input($marco-bg:$peter-river, $marco-color: $clouds) {
+  border: 1px solid $marco-bg;
+  color: $marco-color;
+  padding: 3px 10px 10px 10px;
+  &[disabled] {
+    border-color: $silver;
+  }
+}
+
+.marco-input-default {
+  @include marco-input($clouds, $midnight-blue);
+}
+
+.marco-input-primary {
+  @include marco-input;
+}
+
+.marco-input-success {
+  @include marco-input($green-sea, $midnight-blue);
+}
+
+.marco-input-warning {
+  @include marco-input($flat-yellow, $midnight-blue);
+}
+
+.marco-input-danger {
+  @include marco-input($pomegranate, $midnight-blue);
+}
+
+//Input Group
 @mixin marco-ninput($marco-bg: $concrete, $marco-color: #f2f2f2 ) {
   border: 1px solid $marco-bg;
   display: table;
   margin: 5px 0;
-  span {
+  height: 40px;
+  span, label {
     width: 1%;
     min-width: 60px;
+    padding: 4px 10px;
     display: table-cell;
     background: $marco-bg;
     color: $marco-color;
@@ -192,16 +240,26 @@ $asbestos: #7f8c8d !global; // 深灰色  石棉
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    i {
+      cursor: pointer;
+    }
+
+    &[disabled] {
+      background: $light-grey;
+    }
   }
 
   input, select {
     border: none;
     margin: 0;
-    padding: 6px;
+    padding: 7px;
+    height: 38px;
     width: 100%;
-    display: table-cell;
+    line-height: 10px;
     &[disabled] {
       cursor: not-allowed;
+      background: $clouds;
+      color: $peter-river;
     }
   }
 }
@@ -210,8 +268,12 @@ $asbestos: #7f8c8d !global; // 深灰色  石棉
   @include marco-ninput;
 }
 
+.marco-igroup-normal {
+  @include marco-ninput($silver, $midnight-blue);
+}
+
 .marco-igroup-default {
-  @include marco-ninput($wet-asphalt);
+  @include marco-ninput($clouds, $wet-asphalt);
 }
 
 .marco-igroup-primary {
@@ -230,14 +292,25 @@ $asbestos: #7f8c8d !global; // 深灰色  石棉
   @include marco-ninput($pomegranate);
 }
 
+.marco-igroup-login {
+  @include marco-ninput($clouds, $midnight-blue);
+}
+
 //Panel
 @mixin marco-panel-head($marco-bg: $concrete, $marco-color: #f2f2f2) {
-  height: 30px;
-  line-height: 20px;
+  height: 40px;
+  line-height: 30px;
   padding: 5px;
   font-size: 1.3em;
   background: $marco-bg;
   color: $marco-color;
+  i {
+    cursor: pointer;
+    color: $alizarin;
+    &:hover {
+      color: $marco-color;
+    }
+  }
 }
 
 @mixin marco-npanel($marco-border: $silver, $marco-bg: $concrete, $marco-color: #f2f2f2) {
@@ -255,6 +328,10 @@ $asbestos: #7f8c8d !global; // 深灰色  石棉
 
 .marco-npanel {
   @include marco-npanel;
+}
+
+.marco-npanel-normal {
+  @include marco-npanel($peter-river, $clouds, $wet-asphalt);
 }
 
 .marco-npanel-default {
@@ -277,22 +354,318 @@ $asbestos: #7f8c8d !global; // 深灰色  石棉
   @include marco-npanel($pomegranate, $alizarin);
 }
 
-.marco-breadcrumb{
-	li + li:before{
-		color: $high-blue;
-	}
+/*Table*/
+.table {
+  background: white;
+  text-align: center;
+  margin-bottom: 0;
+  margin-top: -2px;
+  th {
+    white-space: nowrap;
+    text-align: center;
+    border-bottom: 1px solid $light-grey !important;
+  }
+  td {
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+}
 
-	margin: 0;
-	border-radius: 0;
-	border-top-right-radius: 20px;
-	background: $light-grey;
-	color: $high-blue;
-	a{
-		color: $pumpkin;
-		text-decoration: none; 
-		&:hover{
-			background: transparent;
-			color: $pomegranate;
-		}
-	}
+@mixin table-heading {
+  background: $clouds;
+  padding: 10px;
+  border-bottom: 2px solid $dark-white;
+  font-size: 1.3em;
+  i {
+    margin-right: 10px;
+  }
+}
+
+.table-heading {
+  @include table-heading;
+}
+
+.usual-table {
+  background: white;
+  padding: 0;
+  margin-top: 10px;
+  border: 2px solid $peter-river;
+  .table-heading {
+    @include table-heading;
+    margin: 0;
+    color: $clouds;
+    /*background:-webkit-gradient(linear, 0 0, 0 100%, from(lighten($peter-river, 5%)), to(lighten($brlize-hole, 5%)));
+    background:-moz-linear-gradient(top, lighten($peter-river, 5%),lighten($brlize-hole, 5%));
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=lighten($peter-river, 5%),endColorstr=lighten($brlize-hole, 5%),grandientType=1);*/
+
+    background: $peter-river;
+  }
+  .table-body {
+    overflow: auto;
+  }
+}
+
+//label and textarea
+.marco-textarea {
+  margin-top: 10px;
+  label, span {
+    border: 1px solid $brlize-hole;
+    padding: 8px 10px;
+    border-bottom-color: $brlize-hole;
+    margin-bottom: -1px;
+    background: $peter-river;
+    color: $clouds;
+  }
+
+  textarea {
+    padding: 10px;
+    resize: none;
+    width: 100%;
+    border-color: $peter-river;
+    &[disabled] {
+      cursor: not-allowed;
+      background: $clouds;
+    }
+  }
+}
+
+.current-position {
+  margin-bottom: -10px;
+  color: $asbestos;
+  font-size: .9em;
+  background: transparent;
+}
+
+.hr-grey {
+  border-style: dashed;
+  border-color: #999;
+}
+
+@mixin optionIcon($marco-bg:$peter-river, $marco-color:$clouds) {
+  cursor: pointer;
+  &:hover {
+    text-decoration: none;
+  }
+  i {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    border: 2px solid $marco-bg;
+    line-height: 20px;
+    vertical-align: middle;
+    color: $marco-bg;
+    &:hover {
+      background: $marco-bg;
+      color: $marco-color;
+    }
+    &[disabled] {
+      border-color: $silver;
+      background: $silver;
+    }
+  }
+}
+
+.option-icon-primary {
+  @include optionIcon;
+}
+
+.option-icon-success {
+  @include optionIcon($marco-bg: $emerald);
+}
+
+.option-icon-warning {
+  @include optionIcon($marco-bg: $flat-yellow);
+}
+
+.option-icon-danger {
+  @include optionIcon($marco-bg: $pomegranate);
+}
+
+@mixin blockquote($marco-bg:$clouds, $marco-color: $peter-river) {
+  border-color: $marco-color;
+  color: $marco-color;
+  background: $marco-bg;
+  font-weight: bold;
+}
+
+.marco-blockquote-default {
+  @include blockquote($clouds, $midnight-blue);
+}
+
+.marco-blockquote-primary {
+  @include blockquote($clouds, $peter-river);
+}
+
+.marco-blockquote-info {
+  @include blockquote($clouds, $light-blue);
+}
+
+.marco-blockquote-success {
+  @include blockquote($clouds, $green-sea);
+}
+
+.marco-blockquote-warning {
+  @include blockquote($clouds, $carrot);
+}
+
+.marco-blockquote-danger {
+  @include blockquote($clouds, $pomegranate);
+}
+
+@mixin label($marco-bg: $peter-river, $marco-color: $clouds) {
+  background: $marco-bg !important;
+  color: $marco-color !important;
+  padding: 3px 5px;
+  font-size: .9em;
+  vertical-align: middle;
+}
+
+.marco-label-default {
+  @include label($clouds, $midnight-blue);
+}
+
+.marco-label-primary {
+  @include label($brlize-hole, $clouds);
+}
+
+.marco-label-success {
+  @include label($green-sea, $clouds);
+}
+
+.marco-label-warning {
+  @include label($orange, $clouds);
+}
+
+.marco-label-danger {
+  @include label($alizarin, $clouds);
+}
+
+@mixin card-box($marco-bg: $peter-river, $marco-color:$clouds) {
+  .card-box {
+    border: 2px solid $marco-bg;
+    padding: 3px 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background: $marco-bg;
+    color: $marco-color;
+    .card-heading {
+      height: 36px;
+      line-height: 36px;
+      span {
+        font-size: .9em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        position: absolute;
+        max-width: 220px;
+      }
+      i {
+        cursor: pointer;
+        margin-top: 10px;
+      }
+    }
+
+    .card-body {
+      font-size: 1.5em;
+      text-align: center;
+      height: 60px;
+      line-height: 60px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .card-body-multiple {
+      p {
+        height: 30px;
+        &:first-child {
+          margin-top: 30px;
+        }
+      }
+    }
+
+    .card-footer {
+      height: 36px;
+      line-height: 36px;
+      span {
+        font-size: .9em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        position: absolute;
+        max-width: 220px;
+      }
+      i {
+        cursor: help;
+        margin-top: 10px;
+      }
+    }
+  }
+}
+
+.card-box-default {
+  @include card-box($clouds, $midnight-blue);
+}
+
+.card-box-primary {
+  @include card-box;
+}
+
+.card-box-success {
+  @include card-box($green-sea, $clouds);
+}
+
+.card-box-warning {
+  @include card-box($flat-yellow, $clouds);
+}
+
+.card-box-danger {
+  @include card-box($alizarin, $clouds);
+}
+
+@mixin popMsg($marco-bg: $peter-river, $marco-color: white) {
+  position: fixed;
+  top: 52px;
+  right: 10px;
+  width: 200px;
+  padding: 4px;
+  text-align: center;
+  background: $marco-bg;
+  color: $marco-color;
+  z-index: 20000;
+  .popMsg-body {
+    height: 40px;
+    padding: 5px;
+    line-height: 30px;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: clip;
+    white-space: normal;
+  }
+}
+
+.popMsg-default {
+  @include popMsg($silver, $midnight-blue);
+}
+
+.popMsg-primary {
+  @include popMsg;
+}
+
+.popMsg-success {
+  @include popMsg($turquoise);
+}
+
+.popMsg-warning {
+  @include popMsg($orange);
+}
+
+.popMsg-danger {
+  @include popMsg($alizarin);
+}
+
+@-moz-document url-prefix() {
+  fieldset {
+    display: table-cell;
+  }
 }
