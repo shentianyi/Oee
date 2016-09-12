@@ -1,7 +1,7 @@
 <h1>Display Data</h1>
 
 <div>
-  <form method="get" action="<%= send("search_downtime_records_path") %>">
+  <form method="get" action="<%= send("display_downtime_records_path") %>">
     <div>
       <div>
         机器号：
@@ -10,6 +10,11 @@
       <div>
         机器类型：
         <%= select_tag('machine_type_id', options_from_collection_for_select(MachineType.all, :id, :nr, @machine_type_id), include_blank: true) %>
+      </div>
+
+      <div>
+        展示角度：
+        <%= select_tag(:dimensionality, options_for_select(DimensionalityEnum.menu, @dimensionality), include_blank: true ) %>
       </div>
     </div>
 
@@ -31,7 +36,7 @@
 
 
 
-<% if @dimensionality=='machine' %>
+<% if @dimensionality==DimensionalityEnum::MACHINE %>
     <% if true %>
         <div class="col-sm-12">
           <div class="digg_pagination">

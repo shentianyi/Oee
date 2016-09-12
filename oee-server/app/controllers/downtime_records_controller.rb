@@ -81,12 +81,30 @@ class DowntimeRecordsController < ApplicationController
   end
 
   def search
+    # @machine_id = params[:machine_id]
+    # @machine_type_id = params[:machine_type_id]
+    # @time_start = params[:time_start].blank? ? 1.day.ago.strftime("%Y-%m-%d 7:00") : params[:time_start]
+    # @time_end = params[:time_end].blank? ? Time.now.strftime("%Y-%m-%d 7:00") : params[:time_end]
+    # @dimensionality = params[:dimensionality].blank? ? DimensionalityEnum::MACHINE : params[:dimensionality]
+    #
+    # #check
+    # machine=Machine.find_by_id(params[:machine_id])
+    # machine_type=MachineType.find_by_id(params[:machine_type_id])
+    #
+    # #calc
+    # @calc_result = DowntimeRecord.generate_oee_data(@dimensionality, @time_start, @time_end, machine, machine_type).paginate(:page => params[:page])
+    #
+    # @downtime = DowntimeRecord.generate_downtime_data(@dimensionality, @time_start, @time_end, machine, machine_type)
+    #
+    # render :display
+  end
+
+  def display
     @machine_id = params[:machine_id]
     @machine_type_id = params[:machine_type_id]
     @time_start = params[:time_start].blank? ? 1.day.ago.strftime("%Y-%m-%d 7:00") : params[:time_start]
     @time_end = params[:time_end].blank? ? Time.now.strftime("%Y-%m-%d 7:00") : params[:time_end]
-
-    @dimensionality = 'machine'
+    @dimensionality = params[:dimensionality].blank? ? DimensionalityEnum::MACHINE : params[:dimensionality]
 
     #check
     machine=Machine.find_by_id(params[:machine_id])
@@ -96,12 +114,6 @@ class DowntimeRecordsController < ApplicationController
     @calc_result = DowntimeRecord.generate_oee_data(@dimensionality, @time_start, @time_end, machine, machine_type).paginate(:page => params[:page])
 
     @downtime = DowntimeRecord.generate_downtime_data(@dimensionality, @time_start, @time_end, machine, machine_type)
-
-    render :display
-  end
-
-  def display
-    @calc_result=[].paginate(:page => params[:page])
   end
 
   private

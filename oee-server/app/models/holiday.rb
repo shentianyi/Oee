@@ -17,7 +17,7 @@ class Holiday < ApplicationRecord
     end
 
     total_hours = 0
-    start_date...end_date.each do |d|
+    (start_date...end_date).each do |d|
       unless holidays.include?(d.strftime('%Y-%m-%d'))
         total_hours += 24.0
       end

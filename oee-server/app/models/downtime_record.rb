@@ -34,7 +34,7 @@ class DowntimeRecord < ApplicationRecord
     query=DowntimeRecord.joins(:machine).where(condition)
 
 
-    if dimensionality=='machine'
+    if dimensionality==DimensionalityEnum::MACHINE
       #######################################################################################################################           by machine
       puts query.count
       record_by_machine=query.select("SUM(downtime_records.Pd_std) as total, downtime_records.*").group(:machine_id)
@@ -60,7 +60,7 @@ class DowntimeRecord < ApplicationRecord
         }
       end
       #############################################################################################################################################
-    else
+    elsif dimensionality==DimensionalityEnum::TIME
       ###########################################################################################################################        by time
       record_by_time = query.select("SUM(downtime_records.Pd_std) as total, downtime_records.*").group(:pk_datum)
 
@@ -97,7 +97,7 @@ class DowntimeRecord < ApplicationRecord
     data={}
     condition=generate_condition time_start, time_end, machine, machine_type
 
-    if dimensionality=='machine'
+    if dimensionality==DimensionalityEnum::MACHINE
       #downtime code by machine
       record_by_downtime = DowntimeRecord.joins(:machine).joins(downtime_code: [:downtime_type])
                                .where(condition)
@@ -111,7 +111,7 @@ class DowntimeRecord < ApplicationRecord
         end
         data[rd.machine.nr][rd.nr] = rd.total
       end
-    else
+    elsif dimensionality==DimensionalityEnum::TIME
       #downtime code by time
       record_by_downtime = DowntimeRecord.joins(:machine).joins(downtime_code: [:downtime_type])
                                .where(condition)
