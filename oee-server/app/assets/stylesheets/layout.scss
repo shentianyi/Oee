@@ -39,10 +39,15 @@ $light-grey: #ddd !global; // 浅灰色
 $concrete: #95a5a6 !global; //  浅灰色   混凝土
 $asbestos: #7f8c8d !global; // 深灰色  石棉
 
+body{
+  font-family: arialregular;
+}
+
 .main {
   width: 100%;
   min-width: 500px;
   display: table;
+  overflow: hidden;
   .main-nav {
     display: table-cell;
     border-top-left-radius: 20px;
@@ -64,7 +69,7 @@ $asbestos: #7f8c8d !global; // 深灰色  石棉
       cursor: pointer;
       a {
         display: block;
-        font-size: 2.5em;
+        font-size: 2.4em;
         color: $dark-white;
         &:hover {
           background: transparent;
@@ -75,32 +80,104 @@ $asbestos: #7f8c8d !global; // 深灰色  石棉
         }
       }
 
-      //二级菜单
-      ul {
-        display: none;
-        &:hover {
-          display: block;
+      &:hover{
+        &::after{
+          -webkit-transform: rotate(45deg);
+          -ms-transform: rotate(45deg);
+          -o-transform: rotate(45deg);
+          transform: rotate(45deg);
+          content: "";
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+          background-color: $dark-white;
+          position: absolute;
+          margin-top: -20px;
+          margin-left: 17px;
         }
+        ul{ 
+          display:block;
+        }
+      }
+
+      ul{
+        display: none;
+        position:absolute;
+        list-style: none;
+        padding: 20px 10px;
+        min-width: 180px;
+        margin-top: -60px;
+        margin-left: 75px;
+        text-align: left;
+        background:$midnight-blue;
+        border-radius: 5px;
+        z-index: 3;
+
+        &::before{
+          margin-left: -15px;
+          margin-top: 2px;
+          -webkit-transform: rotate(45deg);
+          -ms-transform: rotate(45deg);
+          -o-transform: rotate(45deg);
+          transform: rotate(45deg);
+          content: "";
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+          background-color: $midnight-blue;
+          position: absolute;
+          color: $green-sea;
+        }
+
+        li{
+          width: 160px;
+          display: table;
+          height: 25px;
+          margin: 5px 0;
+          border-bottom: 1px dashed #999;
+          i{
+            display: table-cell;
+            padding-left: 10px;
+          }
+          a{
+            text-decoration: none;
+            span{
+              display: table-cell;
+              font-size: .5em;
+            }
+            &:hover{
+              color: $green-sea;
+            }
+          }
+          &:last-child{
+            border:none;
+          }
+        }
+      }
+
+      &:last-child{
+        margin-bottom: 20px;
       }
     }
 
-    .nav-active,
-    .nav-active > a {
-      color: $green-sea !important;
-      i::after {
-        -webkit-transform: rotate(45deg);
-        -ms-transform: rotate(45deg);
-        -o-transform: rotate(45deg);
-        transform: rotate(45deg);
-        content: "";
-        display: inline-block;
-        width: 10px;
-        height: 10px;
-        background-color: $dark-white;
-        position: absolute;
-        margin-top: 10px;
-        margin-left: 17px;
-      }
+    .nav-active{
+       a, span{
+          color: $green-sea !important;
+       } 
+      // i::after {
+      //   -webkit-transform: rotate(45deg);
+      //   -ms-transform: rotate(45deg);
+      //   -o-transform: rotate(45deg);
+      //   transform: rotate(45deg);
+      //   content: "";
+      //   display: inline-block;
+      //   width: 10px;
+      //   height: 10px;
+      //   background-color: $dark-white;
+      //   position: absolute;
+      //   margin-top: 10px;
+      //   margin-left: 16px;
+      // }
     }
   }
   .main-content {
@@ -111,7 +188,7 @@ $asbestos: #7f8c8d !global; // 深灰色  石棉
     border-left: none;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
-    z-index: 1;
+    z-index: 2;
   }
 }
 
