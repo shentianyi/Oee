@@ -74,12 +74,13 @@ class DowntimeRecord < ApplicationRecord
           standard_work_time += ro.standard_work_time
         end
 
-        availability = (Machine.count*worktime_except_holiday - rt.total)/(Machine.count*worktime_except_holiday)
-        puts standard_work_time
-        puts (Machine.count)
-        puts (Machine.count*worktime_except_holiday)
-        puts rt.total
-        performance = standard_work_time/(Machine.count*worktime_except_holiday - rt.total)
+        machine_count = query.pluck(:machine_id).uniq.count
+        availability = (machine_count*worktime_except_holiday - rt.total)/(machine_count*worktime_except_holiday)
+        # puts standard_work_time
+        # puts machine_count
+        # puts (machine_count*worktime_except_holiday)
+        # puts rt.total
+        performance = standard_work_time/(machine_count*worktime_except_holiday - rt.total)
 
         data<<{
             time: rt.pk_datum,

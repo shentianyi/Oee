@@ -2,6 +2,8 @@ require 'will_paginate/array'
 
 class DowntimeRecordsController < ApplicationController
   before_action :set_downtime_record, only: [:show, :edit, :update, :destroy]
+  before_action :downtime_record_params, only: [:search]
+  # skip_before_action :downtime_record_params
 
   # GET /downtime_records
   # GET /downtime_records.json
@@ -81,30 +83,77 @@ class DowntimeRecordsController < ApplicationController
   end
 
   def search
-    # @machine_id = params[:machine_id]
-    # @machine_type_id = params[:machine_type_id]
-    # @time_start = params[:time_start].blank? ? 1.day.ago.strftime("%Y-%m-%d 7:00") : params[:time_start]
-    # @time_end = params[:time_end].blank? ? Time.now.strftime("%Y-%m-%d 7:00") : params[:time_end]
-    # @dimensionality = params[:dimensionality].blank? ? DimensionalityEnum::MACHINE : params[:dimensionality]
-    #
-    # #check
-    # machine=Machine.find_by_id(params[:machine_id])
-    # machine_type=MachineType.find_by_id(params[:machine_type_id])
-    #
-    # #calc
-    # @calc_result = DowntimeRecord.generate_oee_data(@dimensionality, @time_start, @time_end, machine, machine_type).paginate(:page => params[:page])
-    #
-    # @downtime = DowntimeRecord.generate_downtime_data(@dimensionality, @time_start, @time_end, machine, machine_type)
-    #
-    # render :display
+    params.permit
+    @condition=params[@model].to_unsafe_h
+
+    query=model.all #.unscoped
+    @condition.each do |k, v|
+      if (v.is_a?(Fixnum) || v.is_a?(String)) && !v.blank?
+        puts @condition.has_key?(k+'_fuzzy')
+        if @condition.has_key?(k+'_fuzzy')
+          query=query.where("#{k} like ?", "%#{v}%")
+        else
+          query=query.where(Hash[k, v])
+        end
+        instance_variable_set("@#{k}", v)
+      end
+      #if v.is_a?(Array) && !v.empty?
+      #  query= v.size==1 ? query.where(Hash[k, v[0]]) : query.in(Hash[k, v]
+      #end
+      #query=query.where(Hash[k, v]) if v.is_a?(Range)
+
+      if (v.is_a?(Hash) || v.is_a?(ActionController::Parameters)) && v.values.count==2 && v.values.uniq!=['']
+        values=v.values.sort
+        values[0]=Time.parse(values[0]).utc.to_s if values[0].is_date? & values[0].include?('-')
+        values[1]=Time.parse(values[1]).utc.to_s if values[1].is_date? & values[1].include?('-')
+
+        query=query.where(Hash[k, (values[0]..values[1])])
+        v.each do |kk, vv|
+          instance_variable_set("@#{k}_#{kk}", vv)
+        end
+      end
+    end
+
+    if block_given?
+      query=(yield query)
+    end
+
+    if params.has_key? "download"
+      send_data(query.to_xlsx(query),
+                :type => "application/vnd.openxmlformates-officedocument.spreadsheetml.sheet",
+                :filename => @model.pluralize+".xlsx")
+      #render :json => query.to_xlsx(query)
+    else
+      instance_variable_set("@#{@model.pluralize}", query.paginate(:page => params[:page]))
+      render :index
+    end
   end
+
+  # def search
+  #   # @machine_id = params[:machine_id]
+  #   # @machine_type_id = params[:machine_type_id]
+  #   # @time_start = params[:time_start].blank? ? 1.day.ago.strftime("%Y-%m-%d 7:00") : params[:time_start]
+  #   # @time_end = params[:time_end].blank? ? Time.now.strftime("%Y-%m-%d 7:00") : params[:time_end]
+  #   # @dimensionality = params[:dimensionality].blank? ? DimensionalityEnum::MACHINE : params[:dimensionality]
+  #   #
+  #   # #check
+  #   # machine=Machine.find_by_id(params[:machine_id])
+  #   # machine_type=MachineType.find_by_id(params[:machine_type_id])
+  #   #
+  #   # #calc
+  #   # @calc_result = DowntimeRecord.generate_oee_data(@dimensionality, @time_start, @time_end, machine, machine_type).paginate(:page => params[:page])
+  #   #
+  #   # @downtime = DowntimeRecord.generate_downtime_data(@dimensionality, @time_start, @time_end, machine, machine_type)
+  #   #
+  #   # render :display
+  # end
 
   def display
     @machine_id = params[:machine_id]
     @machine_type_id = params[:machine_type_id]
     @time_start = params[:time_start].blank? ? 1.day.ago.strftime("%Y-%m-%d 7:00") : params[:time_start]
     @time_end = params[:time_end].blank? ? Time.now.strftime("%Y-%m-%d 7:00") : params[:time_end]
-    @dimensionality = params[:dimensionality].blank? ? DimensionalityEnum::MACHINE : params[:dimensionality]
+    @dimensionality = params[:dimensionality].blank? ? DimensionalityEnum::MACHINE : params[:dimensionality].to_i
 
     #check
     machine=Machine.find_by_id(params[:machine_id])
@@ -124,6 +173,8 @@ class DowntimeRecordsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def downtime_record_params
-    params.require(:downtime_record).permit(:fors_werk, :fors_faufnr, :fors_faufpo, :fors_lnr, :machine_id, :pk_sch, :pk_datum, :pk_sch_std, :pk_sch_t, :craft_id, :pd_teb, :pd_stueck, :pd_auss_ruest, :pd_auss_prod, :pd_bemerk, :pd_user, :pd_erf_dat, :pd_von, :pd_bis, :downtime_code_id, :pd_std, :pd_laenge, :pd_rf, :is_naturl)
+    params.require(:downtime_record).permit(:fors_werk, :fors_faufnr, :fors_faufpo, :fors_lnr, :machine_id, :pk_sch, :pk_datum, :pk_sch_std,
+                                            :pk_sch_t, :craft_id, :pd_teb, :pd_stueck, :pd_auss_ruest, :pd_auss_prod, :pd_bemerk, :pd_user,
+                                            :pd_erf_dat, :pd_von, :pd_bis, :downtime_code_id, :pd_std, :pd_laenge, :pd_rf, :is_naturl, :pd_bemerk_fuzzy, :start, :end)
   end
 end

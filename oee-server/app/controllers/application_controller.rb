@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
+  include ApplicationHelper
 
+  before_action :set_model
   before_action :require_user
 
   before_action :set_current_controller_and_action
@@ -25,5 +27,9 @@ class ApplicationController < ActionController::Base
   private
   def set_model
     @model=self.class.name.gsub(/Controller/, '').tableize.singularize
+  end
+
+  def model
+    self.class.name.gsub(/Controller/, '').classify.constantize
   end
 end
