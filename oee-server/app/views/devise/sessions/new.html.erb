@@ -44,12 +44,12 @@
         <div class="login-footer">
           <button class="marco-btn-login">登陆</button>
         </div>
-
-        <div>
-          <p id="login-notice"><%= notice %></p>
-        </div>
       </div>
     </div>
 <% end %>
 
 <%#= render "devise/shared/links" %>
+
+<script type="text/javascript" charset="utf-8">
+  layout.notice('popMsg-danger', $('#notice').html());
+</script>

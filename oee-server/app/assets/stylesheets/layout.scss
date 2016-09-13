@@ -45,7 +45,11 @@ body {
   //路径导航设置背景为透明
   .breadcrumb {
     background-color: transparent;
-    margin: -15px 0 -20px 0;
+    margin: -5px 0 -20px 0;
+  }
+
+  #notice, #login-notice {
+    display: none;
   }
 }
 
@@ -753,7 +757,7 @@ body {
 
 @mixin popMsg($marco-bg: $peter-river, $marco-color: white) {
   position: fixed;
-  top: 52px;
+  top: 12px;
   right: 10px;
   width: 200px;
   padding: 4px;

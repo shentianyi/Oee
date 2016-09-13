@@ -58,3 +58,19 @@ layout.init = function () {
             break;
     }
 };
+
+layout.notice = function (cls, Notice) {
+    if (Notice) {
+        layout.popMsg(cls, Notice);
+    }
+};
+
+layout.popMsg = function (cls, content) {
+    var Html = "<div class='" + cls + "'><div class='popMsg-body'> " + content + "</div></div>";
+
+    $(Html).appendTo($('body'));
+
+    window.setTimeout(function () {
+        $("." + cls).slideUp();
+    }, 3000);
+};
