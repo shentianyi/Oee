@@ -39,7 +39,7 @@ $light-grey: #ddd !global; // 浅灰色
 $concrete: #95a5a6 !global; //  浅灰色   混凝土
 $asbestos: #7f8c8d !global; // 深灰色  石棉
 
-body{
+body {
   font-family: arialregular;
 }
 
@@ -49,6 +49,9 @@ body{
   display: table;
   overflow: hidden;
   .main-nav {
+    position: absolute;
+    top: 20px;
+    bottom: 20px;
     display: table-cell;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
@@ -57,12 +60,10 @@ body{
     color: $dark-white;
     background: $midnight-blue;
     border-right: 1px solid $midnight-blue;
-    margin: 0;
-    padding: 0;
     ul {
       margin: 0;
     }
-    .nav-bar {
+    .first-nav > li {
       list-style: none;
       margin-top: 20px;
       margin-left: -35px;
@@ -80,8 +81,8 @@ body{
         }
       }
 
-      &:hover{
-        &::after{
+      &:hover {
+        &::after {
           -webkit-transform: rotate(45deg);
           -ms-transform: rotate(45deg);
           -o-transform: rotate(45deg);
@@ -93,27 +94,30 @@ body{
           background-color: $dark-white;
           position: absolute;
           margin-top: -20px;
-          margin-left: 17px;
+          margin-left: 19px;
         }
-        ul{ 
-          display:block;
+        ul {
+          display: block;
         }
       }
 
-      ul{
+      ul {
         display: none;
-        position:absolute;
+        position: absolute;
         list-style: none;
         padding: 20px 10px;
         min-width: 180px;
         margin-top: -60px;
-        margin-left: 75px;
+        margin-left: 70px;
         text-align: left;
-        background:$midnight-blue;
-        border-radius: 5px;
+        background: $midnight-blue;
+        border-radius: 8px;
+        //border-top-right-radius: 10px;
+        //border-bottom-right-radius: 10px;
+        border-left: 4px solid $clouds;
         z-index: 3;
 
-        &::before{
+        &::before {
           margin-left: -15px;
           margin-top: 2px;
           -webkit-transform: rotate(45deg);
@@ -129,41 +133,41 @@ body{
           color: $green-sea;
         }
 
-        li{
+        li {
           width: 160px;
           display: table;
           height: 25px;
-          margin: 5px 0;
+          //margin: 5px 0;
           border-bottom: 1px dashed #999;
-          i{
+          i {
             display: table-cell;
             padding-left: 10px;
           }
-          a{
+          a {
             text-decoration: none;
-            span{
+            span {
               display: table-cell;
               font-size: .5em;
             }
-            &:hover{
+            &:hover {
               color: $green-sea;
             }
           }
-          &:last-child{
-            border:none;
+          &:last-child {
+            border: none;
           }
         }
       }
 
-      &:last-child{
+      &:last-child {
         margin-bottom: 20px;
       }
     }
 
-    .nav-active{
-       a, span{
-          color: $green-sea !important;
-       } 
+    .nav-active {
+      & > a, & > span {
+        color: $green-sea !important;
+      }
       // i::after {
       //   -webkit-transform: rotate(45deg);
       //   -ms-transform: rotate(45deg);
@@ -181,6 +185,11 @@ body{
     }
   }
   .main-content {
+    position: absolute;
+    top: 20px;
+    bottom: 20px;
+    left: 85px;
+    right: 10px;
     display: table-cell;
     padding: 10px;
     background: url('/assets/back.png') repeat;

@@ -9,120 +9,120 @@
 </head>
 
 <body>
-  <div class="main">
-    <div class="main-nav">
-      <ul>
-        <li class="nav-active nav-bar">
-          <%= link_to content_tag(:i, '', :class => 'fa fa-home'), root_path, :title => '主页' %>
-          <span>主页</span>
-        </li>
+<div class="main">
+  <div class="main-nav">
+    <ul class="first-nav">
+      <li class="nav-active nav-home">
+        <%= link_to content_tag(:i, '', :class => 'fa fa-home'), root_path, :title => '主页' %>
+        <span>主页</span>
+      </li>
 
-        <li class="nav-bar">
-          <%= link_to content_tag(:i, '', :class => 'fa fa-users'), users_path, :title => '用户管理' %>
-          <span>用户</span>
-        </li>
+      <li class="nav-users">
+        <%= link_to content_tag(:i, '', :class => 'fa fa-users'), users_path, :title => '用户管理' %>
+        <span>用户</span>
+      </li>
 
-        <li class="nav-bar">
-          <%= link_to content_tag(:i, '', :class => 'fa fa-gavel'), crafts_path, :title => '工艺' %>
-          <span>工艺</span>
-        </li>
+      <li class="nav-crafts">
+        <%= link_to content_tag(:i, '', :class => 'fa fa-gavel'), crafts_path, :title => '工艺' %>
+        <span>工艺</span>
+      </li>
 
-        <li class="nav-bar">
-          <%= link_to content_tag(:i, '', :class => 'fa fa-tasks'), departments_path, :title => '部门'%>
-          <span>部门</span>
-        </li>
+      <li class="nav-departments">
+        <%= link_to content_tag(:i, '', :class => 'fa fa-tasks'), departments_path, :title => '部门' %>
+        <span>部门</span>
+      </li>
 
-        <li class="nav-bar">
-          <a href="#">
-            <i class="fa fa-flash" style="font-size:1.2em;"></i>
-          </a>
-          <span>停机</span>
-          <ul>
-            <li>
-              <i class="fa fa-list-ol"></i>
-              <%= link_to content_tag(:span, '停机代码'), downtime_codes_path, :title => '停机代码'%>
-            </li>
+      <li class="nav-downtime">
+        <a href="#">
+          <i class="fa fa-flash" style="font-size:1.2em;"></i>
+        </a>
+        <span>停机</span>
+        <ul>
+          <li class="nav-downtime_codes">
+            <i class="fa fa-list-ol"></i>
+            <%= link_to content_tag(:span, '停机代码'), downtime_codes_path, :title => '停机代码' %>
+          </li>
 
-            <li>
-              <i class="fa fa-th-list"></i>
-              <%= link_to content_tag(:span, '停机类型'), downtime_types_path, :title => '停机类型'%>
-            </li>
+          <li class="nav-downtime_types">
+            <i class="fa fa-th-list"></i>
+            <%= link_to content_tag(:span, '停机类型'), downtime_types_path, :title => '停机类型' %>
+          </li>
 
-            <li>
-              <i class="fa fa-file-text"></i>
-              <%= link_to content_tag(:span, '停机记录'), downtime_records_path, :title => '停机记录'%>
-            </li>
-          </ul>
-        </li>
+          <li class="nav-downtime_records">
+            <i class="fa fa-file-text" style="font-size: 1.2em;"></i>
+            <%= link_to content_tag(:span, '停机记录'), downtime_records_path, :title => '停机记录' %>
+          </li>
 
-        <li class="nav-bar">
-          <%= link_to content_tag(:i, '', :class => 'fa fa-tasks'), display_downtime_records_path, :title => '报告', :style => 'font-size: 2.4em;' %>
-          <span>报告</span>
-        </li>
-       
-        <li class="nav-bar">
-          <a href="#">
-            <i class="fa fa-wrench"></i>
-          </a>
-          <span>机器</span>
-          <ul>
-            <li>
-              <i class="fa fa-list-ol"></i>
-              <%= link_to content_tag(:span, '标准工时'), work_times_path, :title => '标准工时'%>
-            </li>
+          <li class="nav-display_downtime_records">
+            <i class="fa fa-bar-chart"></i>
+            <%= link_to content_tag(:span, '停机报告'), display_downtime_records_path, :title => '停机报告' %>
+          </li>
+        </ul>
+      </li>
 
-            <li>
-              <i class="fa fa-th-list"></i>
-              <%= link_to content_tag(:span, '机器类型'), machine_types_path, :title => '停机类型'%>
-            </li>
+      <li class="nav-machine">
+        <a href="#">
+          <i class="fa fa-wrench"></i>
+        </a>
+        <span>机器</span>
+        <ul>
+          <li class="nav-work_times">
+            <i class="fa fa-list-ol"></i>
+            <%= link_to content_tag(:span, '标准工时'), work_times_path, :title => '标准工时' %>
+          </li>
 
-            <li>
-              <i class="fa fa-file-text"></i>
-              <%= link_to content_tag(:span, '机器'), machines_path, :title => '机器'%>
-            </li>
-          </ul>
-        </li>
+          <li class="nav-machine_types">
+            <i class="fa fa-th-list"></i>
+            <%= link_to content_tag(:span, '机器类型'), machine_types_path, :title => '机器类型' %>
+          </li>
 
-        <li class="nav-bar">
-          <a href="#">
-            <i class="fa fa-cog"></i>
-          </a>
-          <span>设置</span>
-          <ul>
-            <li>
-              <i class="fa fa-sort-numeric-asc"></i>
-              <%= link_to content_tag(:span, '班次设置'), work_shifts_path, :title => '班次设置'%>
-            </li>
+          <li class="nav-machines">
+            <i class="fa fa-file-text"></i>
+            <%= link_to content_tag(:span, '机器配置'), machines_path, :title => '机器配置' %>
+          </li>
+        </ul>
+      </li>
 
-            <li>
-              <i class="fa fa-calendar"></i>
-              <%= link_to content_tag(:span, '节假日'), holidays_path, :title => '节假日'%>
-            </li>
+      <li class="nav-settings">
+        <a href="#">
+          <i class="fa fa-cog"></i>
+        </a>
+        <span>设置</span>
+        <ul>
+          <li class="nav-work_shifts">
+            <i class="fa fa-sort-numeric-asc"></i>
+            <%= link_to content_tag(:span, '班次设置'), work_shifts_path, :title => '班次设置' %>
+          </li>
 
-          </ul>
-        </li>
+          <li class="nav-holidays">
+            <i class="fa fa-calendar"></i>
+            <%= link_to content_tag(:span, '节假日'), holidays_path, :title => '节假日' %>
+          </li>
 
-        <!--<li class="nav-bar">-->
-        <!--<%#= link_to content_tag(:i, '', :class => 'fa fa-recycle'), users_path, :title=>'报废' %>-->
-        <!--<span>报废</span>-->
-        <!--</li>-->
+        </ul>
+      </li>
 
-        <li class="nav-bar">
-          <%= link_to content_tag(:i, '', :class => 'fa fa-power-off'), destroy_user_session_path, method: :delete %>
-          <span title="<%= current_user.email %>"><%= current_user.name %></span>
-        </li>
-      </ul>
-    </div>
+      <!--<li class="nav-bar">-->
+      <!--<%#= link_to content_tag(:i, '', :class => 'fa fa-recycle'), users_path, :title=>'报废' %>-->
+      <!--<span>报废</span>-->
+      <!--</li>-->
 
-    <div class="main-content">
-      <%= yield %>
-    </div>
-
+      <li style="position: absolute;bottom: 0;width:100%; text-align:center;">
+        <%= link_to content_tag(:i, '', :class => 'fa fa-power-off'), destroy_user_session_path, method: :delete %>
+        <span title="<%= current_user.email %>"><%= current_user.name %></span>
+      </li>
+    </ul>
   </div>
 
-  <script type="text/javascript">
-    layout.init();
-  </script>
+  <div class="main-content">
+    <%= yield %>
+  </div>
+
+</div>
+
+<script type="text/javascript">
+  layout.init();
+</script>
 </body>
 
 <%= yield :javascript_includes %>
