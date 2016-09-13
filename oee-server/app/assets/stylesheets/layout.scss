@@ -41,6 +41,12 @@ $asbestos: #7f8c8d !global; // 深灰色  石棉
 
 body {
   font-family: arialregular;
+
+  //路径导航设置背景为透明
+  .breadcrumb {
+    background-color: transparent;
+    margin: -15px 0 -20px 0;
+  }
 }
 
 .main {
@@ -191,7 +197,7 @@ body {
     left: 85px;
     right: 10px;
     display: table-cell;
-    padding: 10px;
+    padding: 5px;
     background: url('/assets/back.png') repeat;
     border: 2px solid $midnight-blue;
     border-left: none;
@@ -204,11 +210,12 @@ body {
 //Button
 @mixin marco-btn($marco-bg: $concrete, $marco-color:#f5f5f5) {
   min-width: 60px;
-  padding: 4px 9px;
+  padding: 2px 5px;
   margin: 5px 0;
   background: $marco-bg;
   color: $marco-color;
   border: 1px solid $marco-bg;
+  border-radius: 3px;
   &:hover, &:link {
     outline: none;
     background: lighten($marco-bg, 10%);
@@ -256,7 +263,7 @@ body {
 }
 
 .marco-btn-primary {
-  @include marco-btn($brlize-hole);
+  @include marco-btn($peter-river, $clouds);
 }
 
 .marco-btn-success {
@@ -390,9 +397,18 @@ body {
   font-size: 1.3em;
   background: $marco-bg;
   color: $marco-color;
+  a {
+    color: $marco-color;
+    &:hover {
+      text-decoration: none;
+      background: transparent;
+      i, span {
+        color: $green-sea;
+      }
+    }
+  }
   i {
     cursor: pointer;
-    color: $alizarin;
     &:hover {
       color: $marco-color;
     }
@@ -461,7 +477,6 @@ body {
   background: $clouds;
   padding: 10px;
   border-bottom: 2px solid $dark-white;
-  font-size: 1.3em;
   i {
     margin-right: 10px;
   }
@@ -476,6 +491,9 @@ body {
   padding: 0;
   margin-top: 10px;
   border: 2px solid $peter-river;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+
   .table-heading {
     @include table-heading;
     margin: 0;
@@ -522,9 +540,33 @@ body {
   background: transparent;
 }
 
-.hr-grey {
+@mixin hr($marco-border-color: $peter-river) {
   border-style: dashed;
-  border-color: #999;
+  border-color: $marco-border-color;
+}
+
+.hr-grey {
+  @include hr(#999);
+}
+
+.hr-default {
+  @include hr($clouds);
+}
+
+.hr-primary {
+  @include hr($brlize-hole);
+}
+
+.hr-success {
+  @include hr($green-sea);
+}
+
+.hr-warning {
+  @include hr($orange);
+}
+
+.hr-danger {
+  @include hr($alizarin);
 }
 
 @mixin optionIcon($marco-bg:$peter-river, $marco-color:$clouds) {
