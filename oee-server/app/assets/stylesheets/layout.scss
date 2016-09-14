@@ -41,7 +41,6 @@ $asbestos: #7f8c8d !global; // 深灰色  石棉
 
 body {
   font-family: arialregular;
-
   //路径导航设置背景为透明
   .breadcrumb {
     background-color: transparent;
@@ -74,17 +73,23 @@ body {
       margin: 0;
     }
     .first-nav > li {
+      display: table;
       list-style: none;
       margin-top: 20px;
-      margin-left: -35px;
+      margin-left: -40px;
       cursor: pointer;
       a {
-        display: block;
         font-size: 2.4em;
         color: $dark-white;
         &:hover {
           background: transparent;
           color: $green-sea;
+          text-decoration: none;
+        }
+        i {
+          display: table-cell;
+          margin-left: 20px;
+          width: 75px;
         }
         span {
           font-size: 1.2em;
@@ -93,18 +98,18 @@ body {
 
       &:hover {
         &::after {
+          display: table-cell;
           -webkit-transform: rotate(45deg);
           -ms-transform: rotate(45deg);
           -o-transform: rotate(45deg);
           transform: rotate(45deg);
           content: "";
-          display: inline-block;
           width: 10px;
           height: 10px;
           background-color: $dark-white;
           position: absolute;
-          margin-top: -20px;
-          margin-left: 19px;
+          margin-top: -35px;
+          margin-left: 70px;
         }
         ul {
           display: block;
@@ -117,13 +122,11 @@ body {
         list-style: none;
         padding: 20px 10px;
         min-width: 180px;
-        margin-top: -60px;
-        margin-left: 70px;
+        margin-top: -57px;
+        margin-left: 75px;
         text-align: left;
         background: $midnight-blue;
         border-radius: 8px;
-        //border-top-right-radius: 10px;
-        //border-bottom-right-radius: 10px;
         border-left: 4px solid $clouds;
         z-index: 3;
 
@@ -147,11 +150,11 @@ body {
           width: 160px;
           display: table;
           height: 25px;
-          //margin: 5px 0;
           border-bottom: 1px dashed #999;
           i {
             display: table-cell;
             padding-left: 10px;
+            width: 40px;
           }
           a {
             text-decoration: none;
@@ -260,6 +263,14 @@ body {
 
 .marco-btn {
   @include marco-btn;
+}
+
+.marco-btn-normal {
+  @include marco-btn($clouds, $wet-asphalt);
+  margin-top: -5px;
+  height: 30px;
+  line-height: 20px;
+  border-radius: 0;
 }
 
 .marco-btn-default {
@@ -387,6 +398,10 @@ body {
 
 .marco-igroup-danger {
   @include marco-ninput($pomegranate);
+}
+
+.marco-igroup-oee {
+  @include marco-ninput($wet-asphalt);
 }
 
 .marco-igroup-login {

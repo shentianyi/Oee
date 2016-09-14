@@ -1,38 +1,78 @@
-<%= form_for(user) do |f| %>
-  <% if user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+<div id="users">
+  <ol class="breadcrumb">
+    <li>用户</li>
+    <li><%= link_to '用户列表', users_path %></li>
+    <li>{{action}}</li>
+  </ol>
 
-      <ul>
-      <% user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+  <hr class="hr-grey"/>
+
+  <%= form_for(user) do |f| %>
+      <% if user.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+            <ul>
+              <% user.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
       <% end %>
-      </ul>
-    </div>
+
+      <div class="marco-npanel-default">
+        <div class="marco-nheading">
+          {{action}}
+          <div class="pull-right">
+            <button type="submit" class="marco-btn-normal">{{actionBtn}}</button>
+          </div>
+        </div>
+
+        <div class="marco-nbody row">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>姓名</span>
+              <%= f.text_field :name %>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>邮箱</span>
+              <%= f.text_field :email %>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>角色</span>
+              <%= f.select(:role, Role.menu, {include_blank: false}) %>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>密码</span>
+              <%= f.password_field :password %>
+              <span>
+              <i class="fa fa-eye-slash change-password"></i>
+            </span>
+            </div>
+          </div>
+        </div>
+      </div>
   <% end %>
+</div>
 
-  <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
-  </div>
+<script type="text/javascript" charset="utf-8">
+  $('.change-password').click(function () {
+    var Input = $('#user_password');
 
-    <div class="field">
-      <%= f.label :role %>
-      <%= f.select(:role, Role.menu, {include_blank: false}, :class => 'col-md-6', :style => 'margin:0 0 0 30px;') %>
-    </div>
-
-  <div class="field">
-    <%= f.label :email %>
-    <%= f.text_field :email %>
-  </div>
-
-
-    <div class="field">
-      <%= f.label :password %>
-      <%= f.text_field :password %>
-    </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+    if (Input.attr('type') == "password") {
+      Input.attr('type', 'text');
+      $(this).removeClass('fa-eye-slash');
+      $(this).addClass('fa-eye');
+    } else {
+      Input.attr('type', 'password');
+      $(this).removeClass('fa-eye');
+      $(this).addClass('fa-eye-slash');
+    }
+  });
+</script>
