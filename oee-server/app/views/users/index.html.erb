@@ -1,4 +1,4 @@
-<p id="notice" style="visibility: hidden;"><%= notice %></p>
+<p id="notice"><%= notice %></p>
 
 <ol class="breadcrumb">
   <li>用户</li>
@@ -47,8 +47,11 @@
   </table>
 </div>
 
-
 <div class="digg_pagination">
   <%= will_paginate @users, :container => false %>
 </div>
+
+<script type="text/javascript" charset="utf-8">
+  layout.notice('popMsg-danger', $('#notice').html());
+</script>
 
