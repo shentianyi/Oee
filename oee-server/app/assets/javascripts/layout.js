@@ -10,6 +10,7 @@ layout.init = function () {
             break;
         case "users":
             $('.nav-users').addClass('nav-active');
+            PageAction('#users', '新增用户', '编辑用户', '创建', '更新');
             break;
         case "crafts":
             $('.nav-crafts').addClass('nav-active');
@@ -56,6 +57,26 @@ layout.init = function () {
         default:
             $('.nav-home').addClass('nav-active');
             break;
+    }
+
+    function PageAction(id, newAction, editAction, newBtn, editBtn) {
+        var vueName = new Vue({
+            el: id,
+            data: {
+                action: newAction,
+                actionBtn: newBtn
+            }
+        });
+
+        if (pathname[pathname.length - 1] == "edit") {
+            vueName.action = editAction;
+            vueName.actionBtn = editBtn;
+        }
+
+        // else if (pathname[pathname.length - 1] == "delete") {
+        //     vueName.action = deleteAction;
+        //     vueName.actionBtn = deleteBtn;
+        // }
     }
 };
 
