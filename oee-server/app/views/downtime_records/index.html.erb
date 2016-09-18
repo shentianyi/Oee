@@ -118,17 +118,6 @@
   </div>
 </div>
 
-
-
-<div class="col-sm-12">
-  <div class="digg_pagination">
-    <div class="page_info">
-      <%= page_entries_info @downtime_records %>
-    </div>
-    <%= will_paginate @downtime_records, :container => false, params: params.to_unsafe_h %>
-  </div>
-</div>
-
 <div class="digg_pagination">
   <%= will_paginate @downtime_records, :container => false, params: params.to_unsafe_h %>
 </div>

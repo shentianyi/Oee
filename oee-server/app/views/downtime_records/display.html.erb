@@ -48,14 +48,6 @@
 <!-- 不需要表格， 不需要分页-->
 <% if @dimensionality==DimensionalityEnum::MACHINE %>
     <% if true %>
-        <div class="col-sm-12">
-          <div class="digg_pagination">
-            <div class="page_info">
-              <%= page_entries_info @calc_result %>
-            </div>
-            <%= will_paginate @calc_result, :container => false %>
-          </div>
-        </div>
         <table class="table table-striped table-bordered table-hover">
           <thead>
           <tr>
@@ -112,15 +104,6 @@
 
 <% else %>
     <% if true %>
-
-        <div class="col-sm-12">
-          <div class="digg_pagination">
-            <div class="page_info">
-              <%= page_entries_info @calc_result %>
-            </div>
-            <%= will_paginate @calc_result, :container => false %>
-          </div>
-        </div>
         <table class="table table-striped table-bordered table-hover">
           <thead>
           <tr>
