@@ -55,6 +55,7 @@ class DowntimeRecord < ApplicationRecord
 
         data<<{
             machine: rm.machine,
+            oee: availability*performance,
             availability: availability,
             performance: performance
         }
@@ -83,7 +84,8 @@ class DowntimeRecord < ApplicationRecord
         performance = standard_work_time/(machine_count*worktime_except_holiday - rt.total)
 
         data<<{
-            time: rt.pk_datum,
+            time: rt.pk_datum.localtime.strftime('%Y/%m/%d').to_s,
+            oee: availability*performance,
             availability: availability,
             performance: performance
         }
@@ -121,10 +123,10 @@ class DowntimeRecord < ApplicationRecord
                                .order(pk_datum: :asc)
 
       record_by_downtime.each do |rd|
-        if data[rd.pk_datum].blank?
-          data[rd.pk_datum] = {}
+        if data[rd.pk_datum.localtime.strftime('%Y/%m/%d').to_s].blank?
+          data[rd.pk_datum.localtime.strftime('%Y/%m/%d').to_s] = {}
         end
-        data[rd.pk_datum][rd.nr] = rd.total
+        data[rd.pk_datum.localtime.strftime('%Y/%m/%d').to_s][rd.nr] = rd.total
       end
     end
 
