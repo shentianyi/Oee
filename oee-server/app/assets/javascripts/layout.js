@@ -76,6 +76,7 @@ layout.init = function () {
                 $('.nav-display_downtime_records').addClass('nav-active');
             } else {
                 $('.nav-downtime_records').addClass('nav-active');
+                PageAction('#downtime_records', '新增停机记录', '编辑停机记录', '上传停机记录信息', '创建', '更新', '上传');
             }
             break;
 
@@ -127,7 +128,7 @@ layout.popMsg = function (cls, content) {
     }, 3000);
 };
 
-layout.time_picker = function (cls) {
+layout.date_picker = function (cls) {
     $(cls).datetimepicker({
         lang: 'ch',
         format: 'Y-m-d',

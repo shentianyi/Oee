@@ -1,25 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<div id="downtime_records">
+  <ol class="breadcrumb">
+    <li>基础数据</li>
+    <li><%= link_to '停机记录', downtime_records_path %></li>
+    <li>{{action}}</li>
+  </ol>
+
+  <hr class="hr-grey"/>
+
+  <form>
+    <fieldset>
+      <legend style="width: 170px;">{{action}}</legend>
+      <div>
+        <b>选择数据文件：</b>
+        <input id="item-data-uploader" type="file" name="files[]" data-url="/downtime_records/import"/>
+
+        <hr class="hr-grey"/>
+
+        <div id="item-data-uploader-preview">
+          处理信息
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</div>
+
 <script type="text/javascript">
-    $(document).ready(function () {
-        data_upload("#item-data-uploader");
-    });
+  $(document).ready(function () {
+    data_upload("#item-data-uploader");
+  });
 </script>
-<p id="notice">
-  <%= notice %>
-</p>
-
-<h1>上传<strong>停机记录信息</strong>文件</h1>
-<hr/>
-<form>
-  <fieldset>
-    <legend>停机记录信息表</legend>
-    <div>
-      <b>选择数据文件：</b>
-      <input id="item-data-uploader" type="file" name="files[]" data-url="/downtime_records/import"/>
-
-
-      <hr/>
-      <div id="item-data-uploader-preview"></div>
-
-    </div>
-  </fieldset>
-</form>

@@ -1,41 +1,48 @@
-<h1>Display Data</h1>
+<ol class="breadcrumb">
+  <li>基础数据</li>
+  <li>停机报告</li>
+</ol>
 
-<div>
-  <form method="get" action="<%= send("display_downtime_records_path") %>">
-    <div>
-      <div>
-        机器号：
-        <%= select_tag('machine_id', options_from_collection_for_select(Machine.all, :id, :nr, @machine_id), include_blank: true) %>
-      </div>
-      <div>
-        机器类型：
-        <%= select_tag('machine_type_id', options_from_collection_for_select(MachineType.all, :id, :nr, @machine_type_id), include_blank: true) %>
-      </div>
+<hr class="hr-grey"/>
 
-      <div>
-        展示角度：
-        <%= select_tag('dimensionality', options_for_select(DimensionalityEnum.menu, @dimensionality), include_blank: true ) %>
-      </div>
+<!--搜索-->
+<form method="get" action="<%= send("display_downtime_records_path") %>">
+  <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="marco-igroup-oee">
+      <span>机器号</span>
+      <%= select_tag('machine_id', options_from_collection_for_select(Machine.all, :id, :nr, @machine_id), include_blank: true) %>
     </div>
-
-    <div>
-      <div>
-        查询日期：
-        <input type="text" name="time_start" class="datepicker" value="<%= @time_start %>"/>
-        ~
-        <input type="text" name="time_end" class="datepicker" value="<%= @time_end %>"/>
-      </div>
-
-      <div>
-        <input type="submit" value="查 找" class="btn btn-primary"/>
-      </div>
+  </div>
+  <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="marco-igroup-oee">
+      <span>机器类型</span>
+      <%= select_tag('machine_type_id', options_from_collection_for_select(MachineType.all, :id, :nr, @machine_type_id), include_blank: true) %>
     </div>
-  </form>
-</div>
+  </div>
+  <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="marco-igroup-oee">
+      <span>展示角度</span>
+      <%= select_tag('dimensionality', options_for_select(DimensionalityEnum.menu, @dimensionality), include_blank: true) %>
+    </div>
+  </div>
 
+  <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
+    <div class="marco-igroup-oee">
+      <span>查询日期</span>
+      <input type="text" name="time_start" class="datepicker" value="<%= @time_start %>"/>
+      <span>~</span>
+      <input type="text" name="time_end" class="datepicker" value="<%= @time_end %>"/>
+    </div>
+  </div>
 
+  <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" style="margin-top:5px;">
+    <input type="submit" value="查 找" class="marco-btn-oee" style="height: 30px;"/>
+  </div>
+</form>
 
+<!--TODO:显示 OEE停机报告 图表-->
 
+<!-- 不需要 图表， 不需要分页-->
 <% if @dimensionality==DimensionalityEnum::MACHINE %>
     <% if true %>
         <div class="col-sm-12">
@@ -166,11 +173,6 @@
     <% end %>
 <% end %>
 
-
-
-<script>
-    $(".datepicker").datetimepicker({
-        lang: 'ch',
-        format: 'Y-m-d'
-    });
+<script type="text/javascript">
+  layout.date_picker('.datepicker');
 </script>
