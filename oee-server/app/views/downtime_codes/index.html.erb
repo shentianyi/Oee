@@ -48,15 +48,6 @@
   </table>
 </div>
 
-<div class="col-sm-12">
-  <div class="digg_pagination">
-    <div class="page_info">
-      <%= page_entries_info @downtime_codes %>
-    </div>
-    <%= will_paginate @downtime_codes, :container => false %>
-  </div>
-</div>
-
 <div class="digg_pagination">
   <%= will_paginate @downtime_codes, :container => false %>
 </div>
