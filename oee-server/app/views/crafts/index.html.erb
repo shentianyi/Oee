@@ -47,14 +47,6 @@
   </table>
 </div>
 
-<!--TODO:分页可以考虑放在表格后面-->
-<div class="digg_pagination">
-  <div class="page_info">
-    <%= page_entries_info @crafts %>
-  </div>
-  <%= will_paginate @crafts, :container => false %>
-</div>
-
 <div class="digg_pagination">
   <%= will_paginate @crafts, :container => false %>
 </div>

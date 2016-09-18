@@ -28,7 +28,7 @@ class MachinesController < ApplicationController
 
     respond_to do |format|
       if @machine.save
-        format.html { redirect_to @machine, notice: 'Machine was successfully created.' }
+        format.html { redirect_to machines_url, notice: '成功添加.' }
         format.json { render :show, status: :created, location: @machine }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class MachinesController < ApplicationController
   def update
     respond_to do |format|
       if @machine.update(machine_params)
-        format.html { redirect_to @machine, notice: 'Machine was successfully updated.' }
+        format.html { redirect_to machines_url, notice: '成功更新.' }
         format.json { render :show, status: :ok, location: @machine }
       else
         format.html { render :edit }
@@ -56,7 +56,7 @@ class MachinesController < ApplicationController
   def destroy
     @machine.destroy
     respond_to do |format|
-      format.html { redirect_to machines_url, notice: 'Machine was successfully destroyed.' }
+      format.html { redirect_to machines_url, notice: '成功删除.' }
       format.json { head :no_content }
     end
   end

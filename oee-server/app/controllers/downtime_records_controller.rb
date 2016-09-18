@@ -32,7 +32,7 @@ class DowntimeRecordsController < ApplicationController
 
     respond_to do |format|
       if @downtime_record.save
-        format.html { redirect_to @downtime_record, notice: 'Downtime record was successfully created.' }
+        format.html { redirect_to downtime_records_url, notice: '成功添加.' }
         format.json { render :show, status: :created, location: @downtime_record }
       else
         format.html { render :new }
@@ -46,7 +46,7 @@ class DowntimeRecordsController < ApplicationController
   def update
     respond_to do |format|
       if @downtime_record.update(downtime_record_params)
-        format.html { redirect_to @downtime_record, notice: 'Downtime record was successfully updated.' }
+        format.html { redirect_to downtime_records_url, notice: '成功更新.' }
         format.json { render :show, status: :ok, location: @downtime_record }
       else
         format.html { render :edit }
@@ -60,7 +60,7 @@ class DowntimeRecordsController < ApplicationController
   def destroy
     @downtime_record.destroy
     respond_to do |format|
-      format.html { redirect_to downtime_records_url, notice: 'Downtime record was successfully destroyed.' }
+      format.html { redirect_to downtime_records_url, notice: '成功删除.' }
       format.json { head :no_content }
     end
   end
@@ -79,48 +79,6 @@ class DowntimeRecordsController < ApplicationController
         msg.content = e.message
       end
       render json: msg
-    end
-  end
-
-  def search
-    @condition=params[@model].to_unsafe_h
-
-    query=model.all #.unscoped
-    @condition.each do |k, v|
-      if (v.is_a?(Fixnum) || v.is_a?(String)) && !v.blank?
-        puts @condition.has_key?(k+'_fuzzy')
-        if @condition.has_key?(k+'_fuzzy')
-          query=query.where("#{k} like ?", "%#{v}%")
-        else
-          query=query.where(Hash[k, v])
-        end
-        instance_variable_set("@#{k}", v)
-      end
-
-      if (v.is_a?(Hash) || v.is_a?(ActionController::Parameters)) && v.values.count==2 && v.values.uniq!=['']
-        values=v.values.sort
-        values[0]=Time.parse(values[0]).utc.to_s if values[0].is_date? & values[0].include?('-')
-        values[1]=Time.parse(values[1]).utc.to_s if values[1].is_date? & values[1].include?('-')
-
-        query=query.where(Hash[k, (values[0]..values[1])])
-        v.each do |kk, vv|
-          instance_variable_set("@#{k}_#{kk}", vv)
-        end
-      end
-    end
-
-    if block_given?
-      query=(yield query)
-    end
-
-    if params.has_key? "download"
-      send_data(query.to_xlsx(query),
-                :type => "application/vnd.openxmlformates-officedocument.spreadsheetml.sheet",
-                :filename => @model.pluralize+".xlsx")
-      #render :json => query.to_xlsx(query)
-    else
-      instance_variable_set("@#{@model.pluralize}", query.paginate(:page => params[:page]))
-      render :index
     end
   end
 

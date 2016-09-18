@@ -28,7 +28,7 @@ class WorkShiftsController < ApplicationController
 
     respond_to do |format|
       if @work_shift.save
-        format.html { redirect_to @work_shift, notice: 'Work shift was successfully created.' }
+        format.html { redirect_to work_shifts_url, notice: '成功添加.' }
         format.json { render :show, status: :created, location: @work_shift }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class WorkShiftsController < ApplicationController
   def update
     respond_to do |format|
       if @work_shift.update(work_shift_params)
-        format.html { redirect_to @work_shift, notice: 'Work shift was successfully updated.' }
+        format.html { redirect_to work_shifts_url, notice: '成功更新.' }
         format.json { render :show, status: :ok, location: @work_shift }
       else
         format.html { render :edit }
@@ -56,7 +56,7 @@ class WorkShiftsController < ApplicationController
   def destroy
     @work_shift.destroy
     respond_to do |format|
-      format.html { redirect_to work_shifts_url, notice: 'Work shift was successfully destroyed.' }
+      format.html { redirect_to work_shifts_url, notice: '成功删除.' }
       format.json { head :no_content }
     end
   end

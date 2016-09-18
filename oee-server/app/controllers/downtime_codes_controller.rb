@@ -28,7 +28,7 @@ class DowntimeCodesController < ApplicationController
 
     respond_to do |format|
       if @downtime_code.save
-        format.html { redirect_to @downtime_code, notice: 'Downtime code was successfully created.' }
+        format.html { redirect_to downtime_codes_url, notice: '成功添加.' }
         format.json { render :show, status: :created, location: @downtime_code }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class DowntimeCodesController < ApplicationController
   def update
     respond_to do |format|
       if @downtime_code.update(downtime_code_params)
-        format.html { redirect_to @downtime_code, notice: 'Downtime code was successfully updated.' }
+        format.html { redirect_to downtime_codes_url, notice: '成功更新.' }
         format.json { render :show, status: :ok, location: @downtime_code }
       else
         format.html { render :edit }
@@ -56,7 +56,7 @@ class DowntimeCodesController < ApplicationController
   def destroy
     @downtime_code.destroy
     respond_to do |format|
-      format.html { redirect_to downtime_codes_url, notice: 'Downtime code was successfully destroyed.' }
+      format.html { redirect_to downtime_codes_url, notice: '成功删除.' }
       format.json { head :no_content }
     end
   end

@@ -30,20 +30,20 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-    if @user.save
-      render json: {user: @user, content: '成功创建新用户', result: true}
-    else
-      render json: {content: @user.errors.messages.values.uniq.join('/'), result: false}
-    end
-    # respond_to do |format|
-    #   if @user.save
-    #     format.html { redirect_to @user, notice: 'User was successfully created.' }
-    #     format.json { render :show, status: :created, user: @user }
-    #   else
-    #     # format.html { render :new }
-    #     format.json { render json: @user.errors, status: :unprocessable_entity }
-    #   end
+    # if @user.save
+    #   render json: {user: @user, content: '成功创建新用户', result: true}
+    # else
+    #   render json: {content: @user.errors.messages.values.uniq.join('/'), result: false}
     # end
+    respond_to do |format|
+      if @user.save
+        format.html { redirect_to users_url, notice: '成功创建新用户.' }
+        format.json { render :show, status: :created, user: @user }
+      else
+        format.html { render :new }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # PATCH/PUT /users/1
@@ -51,7 +51,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.html { redirect_to users_url, notice: '更新成功.' }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
@@ -65,7 +65,7 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+      format.html { redirect_to users_url, notice: '删除成功.' }
       format.json { head :no_content }
     end
   end

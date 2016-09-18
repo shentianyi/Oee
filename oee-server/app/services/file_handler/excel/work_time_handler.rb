@@ -14,6 +14,7 @@ module FileHandler
         if validate_msg.result
           #validate file
           begin
+            count = 0
             User.transaction do
               2.upto(book.last_row) do |line|
                 row = {}
@@ -27,7 +28,7 @@ module FileHandler
                 row['machine_type_id'] = mt.id
                 row['craft_id'] = craft.id
 
-
+                count += 1
                 if ['update', 'UPDATE'].include?(row['operation']) && wt = WorkTime.where(machine_type_id: mt.id, craft_id: craft.id, wire_length: row['wire_length'].to_f).first
                   wt.update(row.except('operation'))
                 elsif ['delete', 'DELETE'].include?(row['operation']) && wt = WorkTime.where(machine_type_id: mt.id, craft_id: craft.id, wire_length: row['wire_length'].to_f).first
@@ -42,7 +43,7 @@ module FileHandler
               end
             end
             msg.result = true
-            msg.content = "导入标准工时信息成功！"
+            msg.content = "导入标准工时信息成功, #{count}条记录成功改变！"
           rescue => e
             puts e.backtrace
             msg.result = false

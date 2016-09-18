@@ -15,6 +15,7 @@ module FileHandler
           #validate file
           begin
             User.transaction do
+              count = 0
               2.upto(book.last_row) do |line|
                 row = {}
                 HEADERS.each_with_index do |k, i|
@@ -22,6 +23,7 @@ module FileHandler
                   row[k] = row[k].sub(/\.0/, '') if k=='nr'
                 end
 
+                count += 1
                 if ['update', 'UPDATE'].include?(row['operation']) && DowntimeType.find_by_nr(row['nr'])
                   m.update(row.except('operation'))
                 elsif ['delete', 'DELETE'].include?(row['operation']) && DowntimeType.find_by_nr(row['nr'])
@@ -38,7 +40,7 @@ module FileHandler
               end
             end
             msg.result = true
-            msg.content = "导入停机类型信息成功！"
+            msg.content = "导入停机类型信息成功, #{count}条记录成功改变！"
           rescue => e
             puts e.backtrace
             msg.result = false

@@ -14,6 +14,7 @@ module FileHandler
         if validate_msg.result
           #validate file
           begin
+            count = 0
             User.transaction do
               2.upto(book.last_row) do |line|
                 row = {}
@@ -22,6 +23,7 @@ module FileHandler
                   # row[k] = row[k].sub(/\.0/, '') if k=='nr'
                 end
 
+                count += 1
                 if ['update', 'UPDATE'].include?(row['operation']) && s=Holiday.find_by_holiday(row['holiday'])
                   s.update(row['type'].blank? ? row.except('operation', 'type') : row.except('operation'))
                 elsif ['delete', 'DELETE'].include?(row['operation']) && s=Holiday.find_by_holiday(row['holiday'])
@@ -37,7 +39,7 @@ module FileHandler
               end
             end
             msg.result = true
-            msg.content = "导入节假日信息成功！"
+            msg.content = "导入节假日信息成功, #{count}条记录成功改变！"
           rescue => e
             puts e.backtrace
             msg.result = false
