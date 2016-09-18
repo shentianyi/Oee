@@ -98,7 +98,11 @@ class DowntimeRecordsController < ApplicationController
 
     @downtime = DowntimeRecord.generate_downtime_data(@dimensionality, @time_start, @time_end, machine, machine_type)
 
-    render :json => {result: true, oee: @calc_result, downtime_code: @downtime}
+    if @calc_result.blank? && @downtime.blank?
+
+    else
+      render :json => {result: true, oee: @calc_result, downtime_code: @downtime}, content_type: "test/html"
+    end
   end
 
   private
