@@ -1,8 +1,57 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Machines</h1>
-<div>
-  <%= link_to '导入数据', import_machines_path, :class => 'btn btn-primary'%>
+<ol class="breadcrumb">
+  <li>基础数据</li>
+  <li>机器配置</li>
+</ol>
+
+<hr class="hr-grey"/>
+
+<div class="marco-npanel-default">
+  <div class="marco-nheading">
+    机器配置
+    <div class="pull-right">
+      <%= link_to content_tag(:i, content_tag(:span, "导入数据 "), :class => "fa fa-cloud-upload"), import_machines_path %>
+
+      <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_machine_path %>
+    </div>
+  </div>
+
+  <table class="marco-nbody table table-bordered">
+    <thead>
+    <tr>
+      <th>NO</th>
+      <th>机器号</th>
+      <th>机器类型</th>
+      <th>OEE号</th>
+      <th>部门</th>
+      <th>状态</th>
+      <th>备注</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @machines.each_with_index do |machine, index| %>
+        <tr>
+          <td><%= index+@machines.offset+1 %></td>
+          <td><%= machine.nr %></td>
+          <td><%= machine.machine_type.nr %></td>
+          <td><%= machine.oee_nr %></td>
+          <td><%= machine.department.nr %></td>
+          <td><%= MachineStatus.display machine.status %></td>
+          <td><%= machine.remark %></td>
+          <td>
+            <%#= link_to 'Show', machine %>
+
+            <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_machine_path(machine), :class => "marco-btn-primary", :title => "编辑" %>
+
+            <%= link_to content_tag(:i, '', :class => 'fa fa-close'), machine, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+          </td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
 </div>
 
 
@@ -15,40 +64,6 @@
   </div>
 </div>
 
-<table>
-  <thead>
-    <tr>
-      <th>NO.</th>
-      <th>Nr</th>
-      <th>Machine type</th>
-      <th>Oee nr</th>
-      <th>Department</th>
-      <th>Status</th>
-      <th>Remark</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-  <% @machines.each_with_index do |machine, index| %>
-      <tr>
-        <td><%= index+@machines.offset+1 %></td>
-        <td><%= machine.nr %></td>
-        <td><%= machine.machine_type.nr %></td>
-        <td><%= machine.oee_nr %></td>
-        <td><%= machine.department.nr %></td>
-        <td><%= MachineStatus.display machine.status %></td>
-        <td><%= machine.remark %></td>
-        <td><%= link_to 'Show', machine %></td>
-        <td><%= link_to 'Edit', edit_machine_path(machine) %></td>
-        <td><%= link_to 'Destroy', machine, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
 <div class="digg_pagination">
   <%= will_paginate @machines, :container => false %>
 </div>
-
-<%= link_to 'New Machine', new_machine_path %>

@@ -1,8 +1,51 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Holidays</h1>
-<div>
-  <%= link_to '导入数据', import_holidays_path, :class => 'btn btn-primary'%>
+<ol class="breadcrumb">
+  <li>基础数据</li>
+  <li>节假日列表</li>
+</ol>
+
+<hr class="hr-grey"/>
+
+<div class="marco-npanel-default">
+  <div class="marco-nheading">
+    节假日列表
+    <div class="pull-right">
+      <%= link_to content_tag(:i, content_tag(:span, "导入数据 "), :class => "fa fa-cloud-upload"), import_holidays_path %>
+
+      <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_holiday_path %>
+    </div>
+  </div>
+
+  <table class="marco-nbody table table-bordered">
+    <thead>
+    <tr>
+      <th>NO</th>
+      <th>节假日</th>
+      <th>类型</th>
+      <th>备注</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @holidays.each_with_index do |holiday, index| %>
+        <tr>
+          <td><%= index+@holidays.offset+1 %></td>
+          <td><%= holiday.holiday %></td>
+          <td><%= HolidayType.display holiday.type %></td>
+          <td><%= holiday.remark %></td>
+          <td>
+            <%#= link_to 'Show', holiday %>
+            <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_holiday_path(holiday), :class => "marco-btn-primary", :title => "编辑" %>
+
+            <%= link_to content_tag(:i, '', :class => 'fa fa-close'), holiday, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+
+          </td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
 </div>
 
 
@@ -15,34 +58,6 @@
   </div>
 </div>
 
-<table>
-  <thead>
-    <tr>
-      <th>NO.</th>
-      <th>Holiday</th>
-      <th>Type</th>
-      <th>Remark</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-  <% @holidays.each_with_index do |holiday, index| %>
-      <tr>
-        <td><%= index+@holidays.offset+1 %></td>
-        <td><%= holiday.holiday %></td>
-        <td><%= HolidayType.display holiday.type %></td>
-        <td><%= holiday.remark %></td>
-        <td><%= link_to 'Show', holiday %></td>
-        <td><%= link_to 'Edit', edit_holiday_path(holiday) %></td>
-        <td><%= link_to 'Destroy', holiday, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
 <div class="digg_pagination">
   <%= will_paginate @holidays, :container => false %>
 </div>
-
-<%= link_to 'New Holiday', new_holiday_path %>

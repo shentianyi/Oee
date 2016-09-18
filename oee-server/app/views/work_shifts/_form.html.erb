@@ -1,37 +1,64 @@
-<%= form_for(work_shift) do |f| %>
-  <% if work_shift.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(work_shift.errors.count, "error") %> prohibited this work_shift from being saved:</h2>
+<div id="work_shifts">
+  <ol class="breadcrumb">
+    <li>基础数据</li>
+    <li><%= link_to '班次设置', work_shifts_path %></li>
+    <li>{{action}}</li>
+  </ol>
 
-      <ul>
-      <% work_shift.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+  <hr class="hr-grey"/>
+
+  <%= form_for(work_shift) do |f| %>
+      <% if work_shift.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(work_shift.errors.count, "error") %> prohibited this work_shift from being saved:</h2>
+
+            <ul>
+              <% work_shift.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
       <% end %>
-      </ul>
-    </div>
+
+      <div class="marco-npanel-default">
+        <div class="marco-nheading">
+          {{action}}
+          <div class="pull-right">
+            <button type="submit" class="marco-btn-normal">{{actionBtn}}</button>
+          </div>
+        </div>
+
+        <div class="marco-nbody row">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>编号</span>
+              <%= f.text_field :nr %>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>名称</span>
+              <%= f.text_field :name %>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee-time">
+              <span>开始时间</span>
+              <div>
+                <%= f.time_select :start_time %>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee-time">
+              <span>结束时间</span>
+              <%= f.time_select :end_time %>
+            </div>
+          </div>
+        </div>
+      </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :nr %>
-    <%= f.text_field :nr %>
-  </div>
-
-  <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
-  </div>
-
-  <div class="field">
-    <%= f.label :start_time %>
-    <%= f.time_select :start_time %>
-  </div>
-
-  <div class="field">
-    <%= f.label :end_time %>
-    <%= f.time_select :end_time %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+</div>

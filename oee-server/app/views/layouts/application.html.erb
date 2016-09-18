@@ -40,14 +40,14 @@
             <%= link_to content_tag(:span, '部门'), departments_path, :title => '部门' %>
           </li>
 
-          <li class="nav-downtime_codes">
-            <i class="fa fa-list-ol"></i>
-            <%= link_to content_tag(:span, '停机代码'), downtime_codes_path, :title => '停机代码' %>
-          </li>
-
           <li class="nav-downtime_types">
             <i class="fa fa-th-list"></i>
             <%= link_to content_tag(:span, '停机类型'), downtime_types_path, :title => '停机类型' %>
+          </li>
+
+          <li class="nav-downtime_codes">
+            <i class="fa fa-list-ol"></i>
+            <%= link_to content_tag(:span, '停机代码'), downtime_codes_path, :title => '停机代码' %>
           </li>
 
           <li class="nav-work_times">
@@ -106,6 +106,9 @@
 
   <div class="main-content">
     <%= yield %>
+
+    <%= render 'layouts/HandlingMsgDialog' %>
+
   </div>
 
 </div>

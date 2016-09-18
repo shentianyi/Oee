@@ -1,32 +1,55 @@
-<%= form_for(department) do |f| %>
-  <% if department.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(department.errors.count, "error") %> prohibited this department from being saved:</h2>
+<div id="departemnts">
+  <ol class="breadcrumb">
+    <li>基础数据</li>
+    <li><%= link_to '部门列表', departments_path %></li>
+    <li>{{action}}</li>
+  </ol>
 
-      <ul>
-      <% department.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+  <hr class="hr-grey"/>
+
+  <%= form_for(department) do |f| %>
+      <% if department.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(department.errors.count, "error") %> prohibited this department from being saved:</h2>
+
+            <ul>
+              <% department.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
       <% end %>
-      </ul>
-    </div>
+
+      <div class="marco-npanel-default">
+        <div class="marco-nheading">
+          {{action}}
+          <div class="pull-right">
+            <button type="submit" class="marco-btn-normal">{{actionBtn}}</button>
+          </div>
+        </div>
+
+        <div class="marco-nbody row">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>部门</span>
+              <%= f.text_field :nr %>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>部门名称</span>
+              <%= f.text_field :name %>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>部门描述</span>
+              <%= f.text_field :description %>
+            </div>
+          </div>
+        </div>
+      </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :nr %>
-    <%= f.text_field :nr %>
-  </div>
-
-  <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
-  </div>
-
-  <div class="field">
-    <%= f.label :description %>
-    <%= f.text_field :description %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+</div>

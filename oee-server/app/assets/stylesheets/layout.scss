@@ -203,6 +203,8 @@ body {
     bottom: 20px;
     left: 85px;
     right: 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
     display: table-cell;
     padding: 5px;
     background: url('/assets/back.png') repeat;
@@ -404,6 +406,13 @@ body {
   @include marco-ninput($wet-asphalt);
 }
 
+.marco-igroup-oee-time {
+  @include marco-ninput($wet-asphalt);
+  select {
+    width: 48%;
+  }
+}
+
 .marco-igroup-login {
   @include marco-ninput($clouds, $midnight-blue);
 }
@@ -418,6 +427,12 @@ body {
   color: $marco-color;
   a {
     color: $marco-color;
+    i > span {
+      font-size: .9em;
+      margin-left: 5px;
+      margin-right: 10px;
+    }
+
     &:hover {
       text-decoration: none;
       background: transparent;

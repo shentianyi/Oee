@@ -1,29 +1,36 @@
-<script type="text/javascript">
-    $(document).ready(function () {
-        data_upload("#item-data-uploader");
-    });
-</script>
-<p id="notice">
-  <%= notice %>
-</p>
+<p id="notice"><%= notice %></p>
 
-<h1>上传<strong>工艺信息</strong>文件</h1>
-<hr/>
-<form>
-  <fieldset>
-    <legend>工艺信息表</legend>
-    <div>
-      <b>选择数据文件：</b>
-      <input id="item-data-uploader" type="file" name="files[]" data-url="/crafts/import"/>
+<div id="crafts">
+  <ol class="breadcrumb">
+    <li>基础数据</li>
+    <li><%= link_to '工艺', crafts_path %></li>
+    <li>{{action}}</li>
+  </ol>
 
+  <hr class="hr-grey"/>
 
-      <hr/>
-      <div id="item-data-uploader-preview"></div>
+  <form>
+    <fieldset>
+      <legend style="width: 140px;">{{action}}</legend>
       <div>
+        <b>请选择数据文件：</b>
+
+        <input id="item-data-uploader" type="file" name="files[]" data-url="/crafts/import"/>
+
+        <hr class="hr-grey"/>
+
+        <div id="item-data-uploader-preview"></div>
+
         <b>下载模板：</b>
         <a href="/files/<%= ImportTemplate.craft_excel_template %>">
           <%= ImportTemplate::CRAFT_EXCEL_TEMPLATE %></a>
       </div>
-    </div>
-  </fieldset>
-</form>
+    </fieldset>
+  </form>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    data_upload("#item-data-uploader");
+  });
+</script>

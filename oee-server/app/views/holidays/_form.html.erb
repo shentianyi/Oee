@@ -1,42 +1,59 @@
-<%= form_for(holiday) do |f| %>
-  <% if holiday.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(holiday.errors.count, "error") %> prohibited this holiday from being saved:</h2>
+<div id="holidays">
+  <ol class="breadcrumb">
+    <li>基础数据</li>
+    <li><%= link_to '节假日列表', holidays_path %></li>
+    <li>{{action}}</li>
+  </ol>
 
-      <ul>
-      <% holiday.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+  <hr class="hr-grey"/>
+
+  <%= form_for(holiday) do |f| %>
+      <% if holiday.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(holiday.errors.count, "error") %> prohibited this holiday from being saved:</h2>
+
+            <ul>
+              <% holiday.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
       <% end %>
-      </ul>
-    </div>
+
+      <div class="marco-npanel-default">
+        <div class="marco-nheading">
+          {{action}}
+          <div class="pull-right">
+            <button type="submit" class="marco-btn-normal">{{actionBtn}}</button>
+          </div>
+        </div>
+
+        <div class="marco-nbody row">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>节假日</span>
+              <%= f.text_field :holiday %>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>类型</span>
+              <%= f.select(:type, HolidayType.menu, {include_blank: true}) %>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>备注</span>
+              <%= f.text_field :remark %>
+            </div>
+          </div>
+        </div>
+      </div>
   <% end %>
+</div>
 
-  <div class="field">
-    <%= f.label :holiday %>
-    <%= f.text_field :holiday %>
-  </div>
-
-  <div class="field">
-    <%= f.label :type %>
-    <%= f.select(:type, HolidayType.menu, {include_blank: true}) %>
-  </div>
-
-  <div class="field">
-    <%= f.label :remark %>
-    <%= f.text_field :remark %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
-
-
-<script>
-    $(function () {
-        $(".datepicker").datetimepicker({
-            lang: 'ch',
-            format: 'Y-m-d'
-        });
-    });
+<script type="application/javascript">
+  layout.time_picker('#holiday_holiday');
 </script>
