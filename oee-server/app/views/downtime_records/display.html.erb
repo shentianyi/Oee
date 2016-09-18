@@ -6,39 +6,39 @@
 <hr class="hr-grey"/>
 
 <!--搜索-->
-<form method="get" action="<%= send("display_downtime_records_path") %>">
-  <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-    <div class="marco-igroup-oee">
-      <span>机器号</span>
-      <%= select_tag('machine_id', options_from_collection_for_select(Machine.all, :id, :nr, @machine_id), include_blank: true) %>
-    </div>
+<!--<form method="get" action="<%= send("display_downtime_records_path") %>">-->
+<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+  <div class="marco-igroup-oee">
+    <span>机器号</span>
+    <%= select_tag('machine_id', options_from_collection_for_select(Machine.all, :id, :nr, @machine_id), include_blank: true) %>
   </div>
-  <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-    <div class="marco-igroup-oee">
-      <span>机器类型</span>
-      <%= select_tag('machine_type_id', options_from_collection_for_select(MachineType.all, :id, :nr, @machine_type_id), include_blank: true) %>
-    </div>
+</div>
+<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+  <div class="marco-igroup-oee">
+    <span>机器类型</span>
+    <%= select_tag('machine_type_id', options_from_collection_for_select(MachineType.all, :id, :nr, @machine_type_id), include_blank: true) %>
   </div>
-  <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-    <div class="marco-igroup-oee">
-      <span>展示角度</span>
-      <%= select_tag('dimensionality', options_for_select(DimensionalityEnum.menu, @dimensionality), include_blank: true) %>
-    </div>
+</div>
+<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+  <div class="marco-igroup-oee">
+    <span>展示角度</span>
+    <%= select_tag('dimensionality', options_for_select(DimensionalityEnum.menu, @dimensionality), include_blank: true) %>
   </div>
+</div>
 
-  <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
-    <div class="marco-igroup-oee">
-      <span>查询日期</span>
-      <input type="text" name="time_start" class="datepicker" value="<%= @time_start %>"/>
-      <span>~</span>
-      <input type="text" name="time_end" class="datepicker" value="<%= @time_end %>"/>
-    </div>
+<div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
+  <div class="marco-igroup-oee">
+    <span>查询日期</span>
+    <input type="text" name="time_start" class="datepicker" value="<%= @time_start %>"/>
+    <span>~</span>
+    <input type="text" name="time_end" class="datepicker" value="<%= @time_end %>"/>
   </div>
+</div>
 
-  <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" style="margin-top:5px;">
-    <input type="submit" value="查 找" class="marco-btn-oee" style="height: 30px;"/>
-  </div>
-</form>
+<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" style="margin-top:5px;">
+  <input type="button" value="查 找" class="marco-btn-oee submit" style="height: 30px;"/>
+</div>
+<!--</form>-->
 
 <!--TODO:显示 OEE停机报告 图表  使用ajax 请求， 进行返回判断-->
 
@@ -157,4 +157,28 @@
 
 <script type="text/javascript">
   layout.date_picker('.datepicker');
+
+  $('.submit').click(function () {
+    var DownTimeRecords = {
+      machine_id: '67',
+      machine_type_id: '3',
+      dimensionality: '200',
+      time_start: '2016-07-01',
+      time_end: '2016-07-03'
+    };
+    $.ajax({
+      url: '/downtime_records/display',
+      type: 'get',
+      data: {
+        downtime_records: DownTimeRecords
+      },
+      success: function (data) {
+        console.log(data);
+      },
+      error: function () {
+        console.log("Error");
+      }
+    });
+  });
+
 </script>

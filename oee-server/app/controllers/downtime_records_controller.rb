@@ -83,15 +83,17 @@ class DowntimeRecordsController < ApplicationController
   end
 
   def display
-    @machine_id = params[:machine_id]
-    @machine_type_id = params[:machine_type_id]
-    @time_start = params[:time_start].blank? ? 1.day.ago.strftime("%Y-%m-%d 7:00") : params[:time_start]
-    @time_end = params[:time_end].blank? ? Time.now.strftime("%Y-%m-%d 7:00") : params[:time_end]
-    @dimensionality = params[:dimensionality].blank? ? DimensionalityEnum::MACHINE : params[:dimensionality].to_i
+    params[:downtime_records]= {} if params[:downtime_records].blank?
+
+    @machine_id = params[:downtime_records][:machine_id]
+    @machine_type_id = params[:downtime_records][:machine_type_id]
+    @time_start = params[:downtime_records][:time_start].blank? ? 1.day.ago.strftime("%Y-%m-%d 7:00") : params[:downtime_records][:time_start]
+    @time_end = params[:downtime_records][:time_end].blank? ? Time.now.strftime("%Y-%m-%d 7:00") : params[:downtime_records][:time_end]
+    @dimensionality = params[:downtime_records][:dimensionality].blank? ? DimensionalityEnum::MACHINE : params[:downtime_records][:dimensionality].to_i
 
     #check
-    machine=Machine.find_by_id(params[:machine_id])
-    machine_type=MachineType.find_by_id(params[:machine_type_id])
+    machine=Machine.find_by_id(params[:downtime_records][:machine_id])
+    machine_type=MachineType.find_by_id(params[:downtime_records][:machine_type_id])
 
     #calc
     @calc_result = DowntimeRecord.generate_oee_data(@dimensionality, @time_start, @time_end, machine, machine_type).paginate(:page => params[:page])
@@ -101,7 +103,7 @@ class DowntimeRecordsController < ApplicationController
     if @calc_result.blank? && @downtime.blank?
 
     else
-      render :json => {result: true, oee: @calc_result, downtime_code: @downtime}, content_type: "test/html"
+      render :json => {result: true, oee: @calc_result, downtime_code: @downtime}, content_type: 'text/html'
     end
   end
 
@@ -116,6 +118,6 @@ class DowntimeRecordsController < ApplicationController
     params.require(:downtime_record).permit(:fors_werk, :fors_faufnr, :fors_faufpo, :fors_lnr, :machine_id, :pk_sch, :pk_datum, :pk_sch_std,
                                             :pk_sch_t, :craft_id, :pd_teb, :pd_stueck, :pd_auss_ruest, :pd_auss_prod, :pd_bemerk, :pd_user,
                                             :pd_erf_dat, :pd_von, :pd_bis, :downtime_code_id, :pd_std, :pd_laenge, :pd_rf, :is_naturl,
-                                            :pd_bemerk_fuzzy, :pk_datum_start, :pk_datum_end,:page)
+                                            :pd_bemerk_fuzzy, :pk_datum_start, :pk_datum_end, :page)
   end
 end
