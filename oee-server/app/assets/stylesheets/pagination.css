@@ -1,0 +1,27 @@
+﻿.digg_pagination {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    min-width: 70px;
+    height: 40px;
+    line-height: 38px;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.digg_pagination > span, .digg_pagination > a {
+    padding: 9px 15px;
+    width: 20px;
+    margin-left: 3px;
+}
+
+.digg_pagination > span:last-child, a:last-child {
+    border: none;
+}
+
+.digg_pagination > a:hover, .digg_pagination > a:active {
+    outline: none;
+}
+
+.current {
+    color: #ff6700;
+}

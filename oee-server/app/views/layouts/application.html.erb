@@ -96,7 +96,6 @@
         </ul>
       </li>
 
-
       <li style="position: absolute;bottom: 0;width:100%; text-align:center;">
         <%= link_to content_tag(:i, '', :class => 'fa fa-power-off'), destroy_user_session_path, method: :delete %>
         <span title="<%= current_user.email %>"><%= current_user.name %></span>

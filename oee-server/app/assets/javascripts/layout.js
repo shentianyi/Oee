@@ -101,11 +101,6 @@ layout.init = function () {
             vueName.action = importAction;
             vueName.actionBtn = importBtn;
         }
-
-        // else if (pathname[pathname.length - 1] == "delete") {
-        //     vueName.action = deleteAction;
-        //     vueName.actionBtn = deleteBtn;
-        // }
     }
 
     //所有的界面都需要

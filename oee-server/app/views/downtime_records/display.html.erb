@@ -40,9 +40,12 @@
   </div>
 </form>
 
-<!--TODO:显示 OEE停机报告 图表-->
+<!--TODO:显示 OEE停机报告 图表  使用ajax 请求， 进行返回判断-->
 
-<!-- 不需要 图表， 不需要分页-->
+
+
+
+<!-- 不需要表格， 不需要分页-->
 <% if @dimensionality==DimensionalityEnum::MACHINE %>
     <% if true %>
         <div class="col-sm-12">
@@ -105,7 +108,6 @@
           <% end %>
           </tbody>
         </table>
-
     <% end %>
 
 <% else %>

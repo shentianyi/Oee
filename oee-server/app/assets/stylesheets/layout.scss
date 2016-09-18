@@ -372,6 +372,7 @@ body {
     height: 38px;
     width: 100%;
     line-height: 10px;
+    background: white;
     &[disabled] {
       cursor: not-allowed;
       background: $clouds;

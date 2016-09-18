@@ -26,8 +26,8 @@ zh:
               name:
                 blank: 不可为空
   will_paginate:
-    previous_label: '<<上一页'
-    next_label: '下一页>>'
+    previous_label: '上一页'
+    next_label: '下一页'
     page_gap: '....'
     page_entries_info:
       single_page_html: ''
