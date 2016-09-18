@@ -220,6 +220,7 @@ body {
 @mixin marco-btn($marco-bg: $concrete, $marco-color:#f5f5f5) {
   min-width: 60px;
   padding: 2px 5px;
+  //padding: 4px 9px;
   margin: 5px 0;
   background: $marco-bg;
   color: $marco-color;
@@ -293,6 +294,11 @@ body {
 
 .marco-btn-danger {
   @include marco-btn($pomegranate);
+}
+
+.marco-btn-oee {
+  @include marco-btn($wet-asphalt);
+  padding: 4px 9px;
 }
 
 .marco-btn-login {
@@ -700,6 +706,10 @@ body {
 
 .marco-label-danger {
   @include label($alizarin, $clouds);
+}
+
+.marco-label-oee {
+  @include label($wet-asphalt, $clouds);
 }
 
 @mixin card-box($marco-bg: $peter-river, $marco-color:$clouds) {
