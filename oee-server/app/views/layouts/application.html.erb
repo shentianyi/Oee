@@ -24,22 +24,22 @@
         <span>用户</span>
       </li>
 
-      <li class="nav-crafts">
-        <%= link_to content_tag(:i, '', :class => 'fa fa-gavel'), crafts_path, :title => '工艺' %>
-        <span>工艺</span>
-      </li>
-
-      <li class="nav-departments">
-        <%= link_to content_tag(:i, '', :class => 'fa fa-tasks'), departments_path, :title => '部门' %>
-        <span>部门</span>
-      </li>
-
-      <li class="nav-downtime">
+      <li class="nav-basic">
         <a href="#">
-          <i class="fa fa-flash"></i>
+          <i class="fa fa-hdd-o"></i>
         </a>
-        <span>停机</span>
+        <span>基础</span>
         <ul>
+          <li class="nav-crafts">
+            <i class="fa fa-gavel"></i>
+            <%= link_to content_tag(:span, '工艺'), crafts_path, :title => '工艺' %>
+          </li>
+
+          <li class="nav-departments">
+            <i class="fa fa-tasks"></i>
+            <%= link_to content_tag(:span, '部门'), departments_path, :title => '部门' %>
+          </li>
+
           <li class="nav-downtime_codes">
             <i class="fa fa-list-ol"></i>
             <%= link_to content_tag(:span, '停机代码'), downtime_codes_path, :title => '停机代码' %>
@@ -50,24 +50,6 @@
             <%= link_to content_tag(:span, '停机类型'), downtime_types_path, :title => '停机类型' %>
           </li>
 
-          <li class="nav-downtime_records">
-            <i class="fa fa-file-text"></i>
-            <%= link_to content_tag(:span, '停机记录'), downtime_records_path, :title => '停机记录' %>
-          </li>
-
-          <li class="nav-display_downtime_records">
-            <i class="fa fa-bar-chart"></i>
-            <%= link_to content_tag(:span, '停机报告'), display_downtime_records_path, :title => '停机报告' %>
-          </li>
-        </ul>
-      </li>
-
-      <li class="nav-machine">
-        <a href="#">
-          <i class="fa fa-wrench"></i>
-        </a>
-        <span>机器</span>
-        <ul>
           <li class="nav-work_times">
             <i class="fa fa-list-ol"></i>
             <%= link_to content_tag(:span, '标准工时'), work_times_path, :title => '标准工时' %>
@@ -82,15 +64,7 @@
             <i class="fa fa-file-text"></i>
             <%= link_to content_tag(:span, '机器配置'), machines_path, :title => '机器配置' %>
           </li>
-        </ul>
-      </li>
 
-      <li class="nav-settings">
-        <a href="#">
-          <i class="fa fa-cog"></i>
-        </a>
-        <span>设置</span>
-        <ul>
           <li class="nav-work_shifts">
             <i class="fa fa-sort-numeric-asc"></i>
             <%= link_to content_tag(:span, '班次设置'), work_shifts_path, :title => '班次设置' %>
@@ -100,14 +74,28 @@
             <i class="fa fa-calendar"></i>
             <%= link_to content_tag(:span, '节假日'), holidays_path, :title => '节假日' %>
           </li>
-
         </ul>
       </li>
 
-      <!--<li class="nav-bar">-->
-      <!--<%#= link_to content_tag(:i, '', :class => 'fa fa-recycle'), users_path, :title=>'报废' %>-->
-      <!--<span>报废</span>-->
-      <!--</li>-->
+      <li class="nav-oee">
+        <a href="#">
+          <i class="fa fa-gears"></i>
+        </a>
+        <span>OEE</span>
+
+        <ul>
+          <li class="nav-downtime_records">
+            <i class="fa fa-file-text"></i>
+            <%= link_to content_tag(:span, '停机记录'), downtime_records_path, :title => '停机记录' %>
+          </li>
+
+          <li class="nav-display_downtime_records">
+            <i class="fa fa-bar-chart"></i>
+            <%= link_to content_tag(:span, '停机报告'), display_downtime_records_path, :title => '停机报告' %>
+          </li>
+        </ul>
+      </li>
+
 
       <li style="position: absolute;bottom: 0;width:100%; text-align:center;">
         <%= link_to content_tag(:i, '', :class => 'fa fa-power-off'), destroy_user_session_path, method: :delete %>
