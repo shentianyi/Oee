@@ -8,26 +8,67 @@ layout.init = function () {
         case "":
             $('.nav-home').addClass('nav-active');
             break;
+
         case "users":
             $('.nav-users').addClass('nav-active');
-            PageAction('#users', '新增用户', '编辑用户', '创建', '更新');
+            PageAction('#users', '新增用户', '编辑用户', '上传用户', '创建', '更新', '上传');
             break;
+
         case "crafts":
             $('.nav-basic').addClass('nav-active');
             $('.nav-crafts').addClass('nav-active');
+            PageAction('#crafts', '新增工艺', '编辑工艺', '上传工艺信息', '创建', '更新', '上传');
             break;
+
         case "departments":
             $('.nav-basic').addClass('nav-active');
             $('.nav-departments').addClass('nav-active');
+            PageAction('#departemnts', '新增部门', '编辑部门', '上传部门信息', '创建', '更新', '上传');
             break;
-        case "downtime_codes":
-            $('.nav-basic').addClass('nav-active');
-            $('.nav-downtime_codes').addClass('nav-active');
-            break;
+
         case "downtime_types":
             $('.nav-basic').addClass('nav-active');
             $('.nav-downtime_types').addClass('nav-active');
+            PageAction('#downtime_types', '新增停机类型', '编辑停机类型', '上传停机类型信息', '创建', '更新', '上传');
             break;
+
+        case "downtime_codes":
+            $('.nav-basic').addClass('nav-active');
+            $('.nav-downtime_codes').addClass('nav-active');
+            PageAction('#downtime_codes', '新增停机代码', '编辑停机代码', '上传停机代码信息', '创建', '更新', '上传');
+            break;
+
+        case "work_times":
+            $('.nav-basic').addClass('nav-active');
+            $('.nav-work_times').addClass('nav-active');
+            PageAction('#work_times', '新增标准工时', '编辑标准工时', '上传标准工时信息', '创建', '更新', '上传');
+            break;
+
+        case "machine_types":
+            $('.nav-basic').addClass('nav-active');
+            $('.nav-machine_types').addClass('nav-active');
+            PageAction('#machine_types', '新增机器类型', '编辑机器类型', '上传机器类型信息', '创建', '更新', '上传');
+            break;
+
+        case "machines":
+            $('.nav-basic').addClass('nav-active');
+            $('.nav-machines').addClass('nav-active');
+            PageAction('#machines', '新增机器', '编辑机器', '上传机器信息', '创建', '更新', '上传');
+            break;
+
+        case "work_shifts":
+            $('.nav-basic').addClass('nav-active');
+            $('.nav-work_shifts').addClass('nav-active');
+            PageAction('#work_shifts', '新增班次设置', '编辑班次设置', '上传班次设置信息', '创建', '更新', '上传');
+            break;
+
+        case "holidays":
+            $('.nav-basic').addClass('nav-active');
+            $('.nav-holidays').addClass('nav-active');
+            PageAction('#holidays', '新增节假日', '编辑节假日', '上传节假日信息', '创建', '更新', '上传');
+            break;
+
+        //OEE 管理
         case "downtime_records":
             $('.nav-oee').addClass('nav-active');
             $('.nav-downtime').addClass('nav-active');
@@ -37,32 +78,13 @@ layout.init = function () {
                 $('.nav-downtime_records').addClass('nav-active');
             }
             break;
-        case "work_times":
-            $('.nav-basic').addClass('nav-active');
-            $('.nav-work_times').addClass('nav-active');
-            break;
-        case "machine_types":
-            $('.nav-basic').addClass('nav-active');
-            $('.nav-machine_types').addClass('nav-active');
-            break;
-        case "machines":
-            $('.nav-basic').addClass('nav-active');
-            $('.nav-machines').addClass('nav-active');
-            break;
-        case "work_shifts":
-            $('.nav-basic').addClass('nav-active');
-            $('.nav-work_shifts').addClass('nav-active');
-            break;
-        case "holidays":
-            $('.nav-basic').addClass('nav-active');
-            $('.nav-holidays').addClass('nav-active');
-            break;
+
         default:
             $('.nav-home').addClass('nav-active');
             break;
     }
 
-    function PageAction(id, newAction, editAction, newBtn, editBtn) {
+    function PageAction(id, newAction, editAction, importAction, newBtn, editBtn, importBtn) {
         var vueName = new Vue({
             el: id,
             data: {
@@ -74,6 +96,9 @@ layout.init = function () {
         if (pathname[pathname.length - 1] == "edit") {
             vueName.action = editAction;
             vueName.actionBtn = editBtn;
+        } else if (pathname[pathname.length - 1] == "import") {
+            vueName.action = importAction;
+            vueName.actionBtn = importBtn;
         }
 
         // else if (pathname[pathname.length - 1] == "delete") {
@@ -81,6 +106,10 @@ layout.init = function () {
         //     vueName.actionBtn = deleteBtn;
         // }
     }
+
+    //所有的界面都需要
+    //TODO: 如何判断是 警告， 提示， 正常返回 ?
+    layout.notice('popMsg-success', $('#notice').html());
 };
 
 layout.notice = function (cls, Notice) {
@@ -91,10 +120,17 @@ layout.notice = function (cls, Notice) {
 
 layout.popMsg = function (cls, content) {
     var Html = "<div class='" + cls + "'><div class='popMsg-body'> " + content + "</div></div>";
-
     $(Html).appendTo($('body'));
 
     window.setTimeout(function () {
         $("." + cls).slideUp();
     }, 3000);
+};
+
+layout.time_picker = function (cls) {
+    $(cls).datetimepicker({
+        lang: 'ch',
+        format: 'Y-m-d',
+        timepicker: false
+    });
 };

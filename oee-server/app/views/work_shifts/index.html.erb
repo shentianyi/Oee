@@ -1,33 +1,46 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Work Shifts</h1>
+<ol class="breadcrumb">
+  <li>基础数据</li>
+  <li>班次设置</li>
+</ol>
 
-<table>
-  <thead>
+<hr class="hr-grey"/>
+
+<div class="marco-npanel-default">
+  <div class="marco-nheading">
+    班次设置
+    <div class="pull-right">
+      <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_work_shift_path %>
+    </div>
+  </div>
+
+  <table class="marco-nbody table table-bordered">
+    <thead>
     <tr>
-      <th>Nr</th>
-      <th>Name</th>
-      <th>Start time</th>
-      <th>End time</th>
-      <th colspan="3"></th>
+      <th>编号</th>
+      <th>名称</th>
+      <th>开始时间</th>
+      <th>结束时间</th>
+      <th>操作</th>
     </tr>
-  </thead>
+    </thead>
 
-  <tbody>
+    <tbody>
     <% @work_shifts.each do |work_shift| %>
-      <tr>
-        <td><%= work_shift.nr %></td>
-        <td><%= work_shift.name %></td>
-        <td><%= work_shift.start_time.strftime('%H:%M:%S') %></td>
-        <td><%= work_shift.end_time.strftime('%H:%M:%S') %></td>
-        <td><%= link_to 'Show', work_shift %></td>
-        <td><%= link_to 'Edit', edit_work_shift_path(work_shift) %></td>
-        <td><%= link_to 'Destroy', work_shift, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+        <tr>
+          <td><%= work_shift.nr %></td>
+          <td><%= work_shift.name %></td>
+          <td><%= work_shift.start_time.strftime('%H:%M:%S') %></td>
+          <td><%= work_shift.end_time.strftime('%H:%M:%S') %></td>
+          <td>
+            <%#= link_to 'Show', work_shift %>
+            <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_work_shift_path(work_shift), :class => "marco-btn-primary", :title => "编辑" %>
+
+            <%= link_to content_tag(:i, '', :class => 'fa fa-close'), work_shift, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+          </td>
+        </tr>
     <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Work Shift', new_work_shift_path %>
+    </tbody>
+  </table>
+</div>

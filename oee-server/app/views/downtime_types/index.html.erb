@@ -1,8 +1,52 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Downtime Types</h1>
-<div>
-  <%= link_to '导入数据', import_downtime_types_path, :class => 'btn btn-primary'%>
+<ol class="breadcrumb">
+  <li>基础数据</li>
+  <li>停机类型</li>
+</ol>
+
+<hr class="hr-grey"/>
+
+<div class="marco-npanel-default">
+  <div class="marco-nheading">
+    工艺列表
+    <div class="pull-right">
+      <%= link_to content_tag(:i, content_tag(:span, "导入数据 "), :class => "fa fa-cloud-upload"), import_downtime_types_path %>
+
+      <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_downtime_type_path %>
+    </div>
+  </div>
+
+  <table class="marco-nbody table table-bordered">
+    <thead>
+    <tr>
+      <th>NO</th>
+      <th>编号</th>
+      <th>名称</th>
+      <th>描述</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @downtime_types.each_with_index do |downtime_type, index| %>
+        <tr>
+          <td><%= index+@downtime_types.offset+1 %></td>
+          <td><%= downtime_type.nr %></td>
+          <td><%= downtime_type.name %></td>
+          <td><%= downtime_type.description %></td>
+          <td>
+            <%#= link_to 'Show', downtime_type %>
+
+            <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_downtime_type_path(downtime_type), :class => "marco-btn-primary", :title => "编辑" %>
+
+            <%= link_to content_tag(:i, '', :class => 'fa fa-close'), downtime_type, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+
+          </td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
 </div>
 
 
@@ -15,34 +59,6 @@
   </div>
 </div>
 
-<table>
-  <thead>
-    <tr>
-      <th>NO.</th>
-      <th>Nr</th>
-      <th>Name</th>
-      <th>Description</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-  <% @downtime_types.each_with_index do |downtime_type, index| %>
-      <tr>
-        <td><%= index+@downtime_types.offset+1 %></td>
-        <td><%= downtime_type.nr %></td>
-        <td><%= downtime_type.name %></td>
-        <td><%= downtime_type.description %></td>
-        <td><%= link_to 'Show', downtime_type %></td>
-        <td><%= link_to 'Edit', edit_downtime_type_path(downtime_type) %></td>
-        <td><%= link_to 'Destroy', downtime_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
 <div class="digg_pagination">
   <%= will_paginate @downtime_types, :container => false %>
 </div>
-
-<%= link_to 'New Downtime Type', new_downtime_type_path %>

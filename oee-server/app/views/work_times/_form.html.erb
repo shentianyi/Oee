@@ -1,37 +1,62 @@
-<%= form_for(work_time) do |f| %>
-  <% if work_time.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(work_time.errors.count, "error") %> prohibited this work_time from being saved:</h2>
+<div id="work_times">
+  <ol class="breadcrumb">
+    <li>基础数据</li>
+    <li><%= link_to '标准工时列表', work_times_path %></li>
+    <li>{{action}}</li>
+  </ol>
 
-      <ul>
-      <% work_time.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+  <hr class="hr-grey"/>
+
+  <%= form_for(work_time) do |f| %>
+      <% if work_time.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(work_time.errors.count, "error") %> prohibited this work_time from being saved:</h2>
+
+            <ul>
+              <% work_time.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
       <% end %>
-      </ul>
-    </div>
+
+      <div class="marco-npanel-default">
+        <div class="marco-nheading">
+          {{action}}
+          <div class="pull-right">
+            <button type="submit" class="marco-btn-normal">{{actionBtn}}</button>
+          </div>
+        </div>
+
+        <div class="marco-nbody row">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>机器类型</span>
+              <%= f.select(:machine_type_id, MachineType.all.collect { |mt| [mt.nr, mt.id] }, {include_blank: true}) %>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>工艺号</span>
+              <%= f.select(:craft_id, Craft.all.collect { |c| [c.nr, c.id] }, {include_blank: true}) %>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>线长</span>
+              <%= f.number_field :wire_length %>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>工时</span>
+              <%= f.text_field :std_time %>
+            </div>
+          </div>
+        </div>
+      </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :machine_type_id %>
-    <%= f.select(:machine_type_id, MachineType.all.collect{|mt| [mt.nr, mt.id]}, {include_blank: true}) %>
-  </div>
-
-  <div class="field">
-    <%= f.label :craft_id %>
-    <%= f.select(:craft_id, Craft.all.collect{|c| [c.nr, c.id]}, {include_blank: true}) %>
-  </div>
-
-  <div class="field">
-    <%= f.label :wire_length %>
-    <%= f.number_field :wire_length %>
-  </div>
-
-  <div class="field">
-    <%= f.label :std_time %>
-    <%= f.text_field :std_time %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+</div>

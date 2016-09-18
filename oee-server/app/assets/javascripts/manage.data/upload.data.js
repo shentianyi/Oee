@@ -1,11 +1,11 @@
 function show_handle_dialog() {
-    //document.getElementById('handle-dialog-modal').style.display = 'block';
-    //document.getElementById('dialog-overlay').style.display = 'block';
+    document.getElementById('handle-dialog-modal').style.display = 'block';
+    document.getElementById('dialog-overlay').style.display = 'block';
 }
 
 function hide_handle_dialog() {
-    //document.getElementById('handle-dialog-modal').style.display = 'none';
-    //document.getElementById('dialog-overlay').style.display = 'none';
+    document.getElementById('handle-dialog-modal').style.display = 'none';
+    document.getElementById('dialog-overlay').style.display = 'none';
 }
 
 function data_upload(idStr, format, callback) {
