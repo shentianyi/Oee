@@ -36,7 +36,7 @@
     <div class="page_info">
       <%= page_entries_info @downtime_records %>
     </div>
-    <%= will_paginate @downtime_records, :container => true %>
+    <%= will_paginate @downtime_records, :container => false, params: params.to_unsafe_h %>
   </div>
 </div>
 
@@ -109,7 +109,7 @@
 </table>
 
 <div class="digg_pagination">
-  <%= will_paginate @downtime_records, :container => false %>
+  <%= will_paginate @downtime_records, :container => false, params: params.to_unsafe_h %>
 </div>
 
 <%= link_to 'New Downtime Record', new_downtime_record_path %>
