@@ -83,7 +83,6 @@ class DowntimeRecordsController < ApplicationController
   end
 
   def search
-    params.permit
     @condition=params[@model].to_unsafe_h
 
     query=model.all #.unscoped
@@ -97,10 +96,6 @@ class DowntimeRecordsController < ApplicationController
         end
         instance_variable_set("@#{k}", v)
       end
-      #if v.is_a?(Array) && !v.empty?
-      #  query= v.size==1 ? query.where(Hash[k, v[0]]) : query.in(Hash[k, v]
-      #end
-      #query=query.where(Hash[k, v]) if v.is_a?(Range)
 
       if (v.is_a?(Hash) || v.is_a?(ActionController::Parameters)) && v.values.count==2 && v.values.uniq!=['']
         values=v.values.sort
@@ -175,6 +170,7 @@ class DowntimeRecordsController < ApplicationController
   def downtime_record_params
     params.require(:downtime_record).permit(:fors_werk, :fors_faufnr, :fors_faufpo, :fors_lnr, :machine_id, :pk_sch, :pk_datum, :pk_sch_std,
                                             :pk_sch_t, :craft_id, :pd_teb, :pd_stueck, :pd_auss_ruest, :pd_auss_prod, :pd_bemerk, :pd_user,
-                                            :pd_erf_dat, :pd_von, :pd_bis, :downtime_code_id, :pd_std, :pd_laenge, :pd_rf, :is_naturl, :pd_bemerk_fuzzy, :start, :end)
+                                            :pd_erf_dat, :pd_von, :pd_bis, :downtime_code_id, :pd_std, :pd_laenge, :pd_rf, :is_naturl,
+                                            :pd_bemerk_fuzzy, :pk_datum_start, :pk_datum_end,:page)
   end
 end

@@ -15,7 +15,6 @@
       <div class="col-sm-3">
         订单号：
         <input type="text" name="downtime_record[pd_bemerk]" value="<%= @pd_bemerk %>"/>
-        <input type="hidden" name="downtime_record[pd_bemerk_fuzzy]"/>
       </div>
       <div class="col-sm-4">
         停机代码：
@@ -25,21 +24,12 @@
 
 
     <div class="col-sm-12">
-      <div class="col-sm-8">
-        入账日期：
-        <input type="text" name="downtime_record[pk_datum][start]" class="datepicker" value="<%= @pk_datum_start %>"/>
-        ~
-        <input type="text" name="downtime_record[pk_datum][end]" class="datepicker" value="<%= @pk_datum_end %>"/>
-      </div>
-
       <div class="col-sm-4">
         <input type="submit" value="查 找" class="btn btn-primary" style="width: 150px;"/>
       </div>
     </div>
   </form>
 </div>
-
-
 
 <div class="col-sm-12">
   <div class="digg_pagination">
@@ -49,7 +39,6 @@
     <%= will_paginate @downtime_records, :container => true %>
   </div>
 </div>
-
 
 <table>
   <thead>
