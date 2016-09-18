@@ -2,14 +2,14 @@
 
 <ol class="breadcrumb">
   <li>基础数据</li>
-  <li>机器配置</li>
+  <li>机台信息</li>
 </ol>
 
 <hr class="hr-grey"/>
 
 <div class="marco-npanel-default">
   <div class="marco-nheading">
-    机器配置
+    机台信息
     <div class="pull-right">
       <%= link_to content_tag(:i, content_tag(:span, "导入数据 "), :class => "fa fa-cloud-upload"), import_machines_path %>
 
@@ -52,16 +52,6 @@
     <% end %>
     </tbody>
   </table>
-</div>
-
-
-<div class="col-sm-12">
-  <div class="digg_pagination">
-    <div class="page_info">
-      <%= page_entries_info @machines %>
-    </div>
-    <%= will_paginate @machines, :container => false %>
-  </div>
 </div>
 
 <div class="digg_pagination">

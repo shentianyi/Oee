@@ -28,7 +28,7 @@ class WorkTimesController < ApplicationController
 
     respond_to do |format|
       if @work_time.save
-        format.html { redirect_to @work_time, notice: 'Work time was successfully created.' }
+        format.html { redirect_to work_times_url, notice: '成功添加.' }
         format.json { render :show, status: :created, location: @work_time }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class WorkTimesController < ApplicationController
   def update
     respond_to do |format|
       if @work_time.update(work_time_params)
-        format.html { redirect_to @work_time, notice: 'Work time was successfully updated.' }
+        format.html { redirect_to work_times_url, notice: '成功更新.' }
         format.json { render :show, status: :ok, location: @work_time }
       else
         format.html { render :edit }
@@ -56,7 +56,7 @@ class WorkTimesController < ApplicationController
   def destroy
     @work_time.destroy
     respond_to do |format|
-      format.html { redirect_to work_times_url, notice: 'Work time was successfully destroyed.' }
+      format.html { redirect_to work_times_url, notice: '成功删除.' }
       format.json { head :no_content }
     end
   end

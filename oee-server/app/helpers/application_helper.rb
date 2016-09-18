@@ -5,9 +5,6 @@ module ApplicationHelper
 
     query=model.all #.unscoped
     @condition.each do |k, v|
-      puts v.is_a?(Hash)
-      puts v.is_a?(ActionController::Parameters)
-
       if (v.is_a?(Fixnum) || v.is_a?(String)) && !v.blank?
         puts @condition.has_key?(k+'_fuzzy')
         if @condition.has_key?(k+'_fuzzy')
@@ -17,10 +14,6 @@ module ApplicationHelper
         end
         instance_variable_set("@#{k}", v)
       end
-      #if v.is_a?(Array) && !v.empty?
-      #  query= v.size==1 ? query.where(Hash[k, v[0]]) : query.in(Hash[k, v]
-      #end
-      #query=query.where(Hash[k, v]) if v.is_a?(Range)
 
       if (v.is_a?(Hash) || v.is_a?(ActionController::Parameters)) && v.values.count==2 && v.values.uniq!=['']
         values=v.values.sort
@@ -44,7 +37,7 @@ module ApplicationHelper
                 :filename => @model.pluralize+".xlsx")
       #render :json => query.to_xlsx(query)
     else
-      instance_variable_set("@#{@model.pluralize}", query.paginate(:page => params[:page]).all)
+      instance_variable_set("@#{@model.pluralize}", query.paginate(:page => params[:page]))
       render :index
     end
   end
