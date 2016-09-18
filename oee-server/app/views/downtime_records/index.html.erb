@@ -11,7 +11,7 @@
   <form method="get" action="<%= send("search_#{@model.pluralize}_path") %>">
     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
       <div class="marco-igroup-oee">
-        <span>机器号</span>
+        <span>机台号</span>
         <%= select_tag('downtime_record[machine_id]', options_from_collection_for_select(Machine.all, :id, :nr, @machine_id), include_blank: true) %>
       </div>
     </div>
@@ -107,9 +107,12 @@
             <td><%= downtime_record.pd_rf %></td>
             <td><%= downtime_record.is_naturl %></td>
             <td>
-              <%= link_to 'Show', downtime_record %>
-              <%= link_to 'Edit', edit_downtime_record_path(downtime_record) %>
-              <%= link_to 'Destroy', downtime_record, method: :delete, data: {confirm: 'Are you sure?'} %>
+              <%= link_to content_tag(:i, '', :class => 'fa fa-eye'), downtime_record, :class => "marco-btn-success", :title => "详情" %>
+
+              <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_downtime_record_path(downtime_record), :class => "marco-btn-primary", :title => "编辑" %>
+
+              <%= link_to content_tag(:i, '', :class => 'fa fa-close'), downtime_record, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+
             </td>
           </tr>
       <% end %>
