@@ -55,9 +55,9 @@ class DowntimeRecord < ApplicationRecord
 
         data<<{
             machine: rm.machine,
-            oee: availability*performance,
-            availability: availability,
-            performance: performance
+            oee: (availability*performance).roundf(2),
+            availability: availability.roundf(2),
+            performance: performance.roundf(2)
         }
       end
       #############################################################################################################################################
@@ -85,9 +85,9 @@ class DowntimeRecord < ApplicationRecord
 
         data<<{
             time: rt.pk_datum.localtime.strftime('%Y/%m/%d').to_s,
-            oee: availability*performance,
-            availability: availability,
-            performance: performance
+            oee: (availability*performance).roundf(2),
+            availability: availability.roundf(2),
+            performance: performance.roundf(2)
         }
       end
       #############################################################################################################################################
@@ -98,6 +98,8 @@ class DowntimeRecord < ApplicationRecord
 
   def self.generate_downtime_data dimensionality, time_start, time_end, machine, machine_type
     data={}
+    downtime_types = DowntimeType.all.pluck(:nr)
+
     condition=generate_condition time_start, time_end, machine, machine_type
 
     if dimensionality==DimensionalityEnum::MACHINE
@@ -111,8 +113,9 @@ class DowntimeRecord < ApplicationRecord
       record_by_downtime.each do |rd|
         if data[rd.machine.nr].blank?
           data[rd.machine.nr] = {}
+          downtime_types.map(){|nr| data[rd.machine.nr][nr]=0.0}
         end
-        data[rd.machine.nr][rd.nr] = rd.total
+        data[rd.machine.nr][rd.nr] = rd.total.roundf(2)
       end
     elsif dimensionality==DimensionalityEnum::TIME
       #downtime code by time
@@ -125,8 +128,9 @@ class DowntimeRecord < ApplicationRecord
       record_by_downtime.each do |rd|
         if data[rd.pk_datum.localtime.strftime('%Y/%m/%d').to_s].blank?
           data[rd.pk_datum.localtime.strftime('%Y/%m/%d').to_s] = {}
+          downtime_types.map(){|nr| data[rd.pk_datum.localtime.strftime('%Y/%m/%d').to_s][nr]=0.0}
         end
-        data[rd.pk_datum.localtime.strftime('%Y/%m/%d').to_s][rd.nr] = rd.total
+        data[rd.pk_datum.localtime.strftime('%Y/%m/%d').to_s][rd.nr] = rd.total.roundf(2)
       end
     end
 

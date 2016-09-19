@@ -6,165 +6,65 @@
 <hr class="hr-grey"/>
 
 <!--搜索-->
-<!--<form method="get" action="<%= send("display_downtime_records_path") %>">-->
-<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-  <div class="marco-igroup-oee">
-    <span>机器号</span>
-    <%= select_tag('machine_id', options_from_collection_for_select(Machine.all, :id, :nr, @machine_id), include_blank: true) %>
+<div class="row">
+  <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="marco-igroup-oee">
+      <span>机器号</span>
+      <%= select_tag('machine_id', options_from_collection_for_select(Machine.all, :id, :nr, @machine_id), include_blank: true) %>
+    </div>
+  </div>
+  <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="marco-igroup-oee">
+      <span>机器类型</span>
+      <%= select_tag('machine_type_id', options_from_collection_for_select(MachineType.all, :id, :nr, @machine_type_id), include_blank: true) %>
+    </div>
+  </div>
+  <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="marco-igroup-oee">
+      <span>展示角度</span>
+      <%= select_tag('dimensionality', options_for_select(DimensionalityEnum.menu, @dimensionality), include_blank: true) %>
+    </div>
+  </div>
+
+  <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
+    <div class="marco-igroup-oee">
+      <span>查询日期</span>
+      <input type="text" name="time_start" class="datepicker" value="<%= @time_start %>"/>
+      <span>~</span>
+      <input type="text" name="time_end" class="datepicker" value="<%= @time_end %>"/>
+    </div>
+  </div>
+
+  <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" style="margin-top:5px;">
+    <input type="button" value="查 找" class="marco-btn-oee submit" style="height: 30px;"/>
   </div>
 </div>
-<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-  <div class="marco-igroup-oee">
-    <span>机器类型</span>
-    <%= select_tag('machine_type_id', options_from_collection_for_select(MachineType.all, :id, :nr, @machine_type_id), include_blank: true) %>
-  </div>
-</div>
-<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-  <div class="marco-igroup-oee">
-    <span>展示角度</span>
-    <%= select_tag('dimensionality', options_for_select(DimensionalityEnum.menu, @dimensionality), include_blank: true) %>
-  </div>
-</div>
 
-<div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
-  <div class="marco-igroup-oee">
-    <span>查询日期</span>
-    <input type="text" name="time_start" class="datepicker" value="<%= @time_start %>"/>
-    <span>~</span>
-    <input type="text" name="time_end" class="datepicker" value="<%= @time_end %>"/>
-  </div>
-</div>
+<hr class="hr-grey">
 
-<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" style="margin-top:5px;">
-  <input type="button" value="查 找" class="marco-btn-oee submit" style="height: 30px;"/>
-</div>
-<!--</form>-->
-
-<!--TODO:显示 OEE停机报告 图表  使用ajax 请求， 进行返回判断-->
-
-<!-- 不需要表格， 不需要分页-->
-<% if @dimensionality==DimensionalityEnum::MACHINE %>
-    <% if true %>
-        <table class="table table-striped table-bordered table-hover">
-          <thead>
-          <tr>
-            <th>NO.</th>
-            <th>机器号</th>
-            <th>机器类型</th>
-            <th>oee</th>
-            <th>availability</th>
-            <th>performance</th>
-          </tr>
-          </thead>
-          <tbody>
-          <% @calc_result.each_with_index do |result, i| %>
-              <tr>
-                <td><%= i+1 %></td>
-                <td><%= result[:machine].nr %></td>
-                <td><%= result[:machine].machine_type.nr %></td>
-                <td><%= result[:availability] * result[:performance] %></td>
-                <td><%= result[:availability] %></td>
-                <td><%= result[:performance] %></td>
-              </tr>
-          <% end %>
-          </tbody>
-        </table>
-        <div class="digg_pagination">
-          <%= will_paginate @calc_result, :container => false %>
-        </div>
-
-    <% else %>
-
-        <table class="table table-striped table-bordered table-hover">
-          <thead>
-          <tr>
-            <th>NO.</th>
-            <th>机器号</th>
-            <% DowntimeType.pluck(:nr).each do |nr| %>
-                <th><%= nr %></th>
-            <% end %>
-          </tr>
-          </thead>
-          <tbody>
-          <% @downtime.keys.each_with_index do |key, i| %>
-              <tr>
-                <td><%= i+1 %></td>
-                <td><%= key %></td>
-                <% DowntimeType.pluck(:nr).each do |nr| %>
-                    <td><%= @downtime[key][nr] %></td>
-                <% end %>
-              </tr>
-          <% end %>
-          </tbody>
-        </table>
-    <% end %>
-
-<% else %>
-    <% if true %>
-        <table class="table table-striped table-bordered table-hover">
-          <thead>
-          <tr>
-            <th>NO.</th>
-            <th>时间</th>
-            <th>oee</th>
-            <th>availability</th>
-            <th>performance</th>
-          </tr>
-          </thead>
-          <tbody>
-          <% @calc_result.each_with_index do |result, i| %>
-              <tr>
-                <td><%= i+1 %></td>
-                <td><%= result[:time].localtime.strftime('%Y/%m/%d') %></td>
-                <td><%= result[:availability] * result[:performance] %></td>
-                <td><%= result[:availability] %></td>
-                <td><%= result[:performance] %></td>
-              </tr>
-          <% end %>
-          </tbody>
-        </table>
-        <div class="digg_pagination">
-          <%= will_paginate @calc_result, :container => false %>
-        </div>
-
-    <% else %>
-
-        <table class="table table-striped table-bordered table-hover">
-          <thead>
-          <tr>
-            <th>NO.</th>
-            <th>时间</th>
-            <% DowntimeType.pluck(:nr).each do |nr| %>
-                <th><%= nr %></th>
-            <% end %>
-          </tr>
-          </thead>
-          <tbody>
-          <% @downtime.keys.each_with_index do |key, i| %>
-              <tr>
-                <td><%= i+1 %></td>
-                <td><%= key.localtime.strftime('%Y%m%d') %></td>
-                <% DowntimeType.pluck(:nr).each do |nr| %>
-                    <td><%= @downtime[key][nr] %></td>
-                <% end %>
-              </tr>
-          <% end %>
-          </tbody>
-        </table>
-
-    <% end %>
-<% end %>
+<div id="oee"></div>
+<div id="availability"></div>
+<div id="performance"></div>
+<div id="downtime_code"></div>
 
 <script type="text/javascript">
   layout.date_picker('.datepicker');
 
+  //TODO:显示 OEE停机报告 图表  使用ajax 请求， 进行返回判断
+
   $('.submit').click(function () {
+    var MachineID = $('#machine_id').val();
+    var MachineTypeID = $('#machine_type_id').val();
+    var Dimensionality = $('#dimensionality').val();
+    var TimeStart = $('[name=time_start]').val();
+    var TimeEnd = $('[name=time_end]').val();
+
     var DownTimeRecords = {
-      machine_id: '',
-      machine_type_id: '',
-      dimensionality: '200',
-      time_start: '2016-07-01',
-      time_end: '2016-07-03'
+      machine_id: MachineID,
+      machine_type_id: MachineTypeID,
+      dimensionality: Dimensionality,
+      time_start: TimeStart,
+      time_end: TimeEnd
     };
     $.ajax({
       url: '/downtime_records/display',
@@ -173,10 +73,29 @@
         downtime_records: DownTimeRecords
       },
       success: function (data) {
-        console.log(data);
+//        {"result":true,"oee":[{"time":"2016/07/01","oee":0.43593408333333317,"availability":0.8562453798173616,"performance":0.5091228444658219},{"time":"2016/07/02","oee":0.4813213333333334,"availability":0.8590555836757024,"performance":0.5602912576085816}],"downtime_code":{"2016/07/01":{"16":2.283444881439209,"4":0.0,"1":0.18333300203084946,"9":0.15000000223517418,"3":0.06666599959135056,"2":0.08333300054073334,"15":0.5833339989185333,"14":0.016666999086737633,"5":0.08333300054073334},"2016/07/02":{"16":1.9160000085830688,"4":0.0,"1":0.3166669923812151,"15":0.7833329923450947,"9":0.05000000074505806,"3":0.1333319991827011,"2":0.11666700057685375,"12":0.06666699796915054}}}
+        var data = $.parseJSON(data);
+
+        if (data.result) {
+            console.log(data)
+          var Oee = data.oee;
+
+          var DownTimeRecord = data.downtime_code;
+
+          var DTRXAxis = new Array();
+          for (var dtr in DownTimeRecord) {
+            DTRXAxis.push(dtr);
+          }
+
+          console.log(DTRXAxis);
+
+        } else {
+          layout.popMsg('popMsg-danger', '请求数据出现错误!');
+        }
       },
       error: function () {
         console.log("Error");
+        layout.popMsg('popMsg-danger', '请求不到服务器!');
       }
     });
   });
