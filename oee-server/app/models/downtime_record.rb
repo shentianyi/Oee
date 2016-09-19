@@ -28,6 +28,7 @@ class DowntimeRecord < ApplicationRecord
 
   def self.generate_oee_data dimensionality, time_start, time_end, machine, machine_type
     data=[]
+    j1=DowntimeCode.find_by_nr('J1')
 
     condition=generate_condition time_start, time_end, machine, machine_type
 
@@ -50,14 +51,22 @@ class DowntimeRecord < ApplicationRecord
           standard_work_time += ro.standard_work_time
         end
 
+        #calc j1
+        # puts '1111111111111111111111111111111111111111111111111111111111111111111111'.red
+        j1_time = DowntimeRecord.joins(:machine).where(condition).where(machine_id: rm.machine_id, downtime_code_id: j1.id).select("SUM(downtime_records.Pd_std) as total, downtime_records.*").first.total
+        downtime_total_j1 = j1_time.blank? ? rm.total : (rm.total - j1_time)
+
         availability = (worktime_except_holiday - rm.total)/worktime_except_holiday
+        availability_j1 = (worktime_except_holiday - downtime_total_j1)/worktime_except_holiday
         performance=standard_work_time/(worktime_except_holiday - rm.total)
 
         data<<{
             machine: rm.machine,
-            oee: (availability*performance).roundf(2),
-            availability: availability.roundf(2),
-            performance: performance.roundf(2)
+            oee: (availability*performance).roundf(2)*100,
+            oee_j1: (availability_j1*performance).roundf(2)*100,
+            availability: availability.roundf(2)*100,
+            availability_j1: availability_j1.roundf(2)*100,
+            performance: performance.roundf(2)*100
         }
       end
       #############################################################################################################################################
@@ -75,8 +84,14 @@ class DowntimeRecord < ApplicationRecord
           standard_work_time += ro.standard_work_time
         end
 
+        #calc j1
+        # puts '1111111111111111111111111111111111111111111111111111111111111111111111'.red
+        j1_time = DowntimeRecord.joins(:machine).where(condition).where(pk_datum: rt.pk_datum, downtime_code_id: j1.id).select("SUM(downtime_records.Pd_std) as total, downtime_records.*").first.total
+        downtime_total_j1 = j1_time.blank? ? rt.total : (rt.total - j1_time)
+
         machine_count = query.pluck(:machine_id).uniq.count
         availability = (machine_count*worktime_except_holiday - rt.total)/(machine_count*worktime_except_holiday)
+        availability_j1 = (machine_count*worktime_except_holiday - downtime_total_j1)/(machine_count*worktime_except_holiday)
         # puts standard_work_time
         # puts machine_count
         # puts (machine_count*worktime_except_holiday)
@@ -85,9 +100,11 @@ class DowntimeRecord < ApplicationRecord
 
         data<<{
             time: rt.pk_datum.localtime.strftime('%Y/%m/%d').to_s,
-            oee: (availability*performance).roundf(2),
-            availability: availability.roundf(2),
-            performance: performance.roundf(2)
+            oee: (availability*performance).roundf(2)*100,
+            oee_j1: (availability_j1*performance).roundf(2)*100,
+            availability: availability.roundf(2)*100,
+            availability_j1: availability_j1.roundf(2)*100,
+            performance: performance.roundf(2)*100
         }
       end
       #############################################################################################################################################
@@ -134,8 +151,15 @@ class DowntimeRecord < ApplicationRecord
       end
     end
 
-    data
+    p data
+p '------------------------------------------------------------------------------------------------------------------------------------------------'
+    data_convert={}
+    data_convert[:machines] = data.keys
+    p data.values
+
+    p data_convert
   end
+
 end
 
 class Float
