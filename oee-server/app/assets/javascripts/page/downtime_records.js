@@ -15,6 +15,9 @@ DTR.downtime_record = function (cls, title, xAxis, series) {
         chart: {
             type: 'column'
         },
+        credits: {
+            enabled: false
+        },
         title: {
             text: title,
             x: -20
@@ -24,9 +27,9 @@ DTR.downtime_record = function (cls, title, xAxis, series) {
         },
         yAxis: {
             min: 0,
-            // stackLabels: {
-            //     enabled: true
-            // }
+            stackLabels: {
+                enabled: true
+            }
         },
         legend: {
             align: 'right',

@@ -88,7 +88,7 @@
           for (var oee in Oee) {
             OeeXId.push(Oee[oee].machine.id);
             OeeXAxis.push(Oee[oee].machine.nr);
-            OeeAvailablity.push({name: Oee[oee].machine.nr, data: Oee[oee].availability});
+            OeeAvailablity.push(Oee[oee].availability);
             OeeOee.push({name: Oee[oee].machine.nr, data: Oee[oee].oee});
             OeePerformance.push({name: Oee[oee].machine.nr, data: Oee[oee].performance});
           }
@@ -98,7 +98,10 @@
           console.log(OeeOee);
           console.log(OeePerformance);
 
-          DTR.downtime_record('#availability', "Availability", OeeXAxis, OeeAvailablity);
+          var AvailSeries = new Array();
+          AvailSeries.push({name: 'Availablity', data: OeeAvailablity});
+
+          DTR.downtime_record('#availability', "Availability", OeeXAxis, AvailSeries);
 
 
           var DownTimeRecord = downtime_records.downtime_code;
