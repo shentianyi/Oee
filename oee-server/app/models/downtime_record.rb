@@ -130,7 +130,14 @@ class DowntimeRecord < ApplicationRecord
       end
     end
 
-    p data
+    data
+  end
+end
+
+class Float
+  def roundf(places)
+    temp = self.to_s.length
+    sprintf("%#{temp}.#{places}f",self).to_f
   end
 end
 
