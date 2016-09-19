@@ -4,13 +4,7 @@
 
 var DTR = {};
 
-DTR.downtime_record = function (cls, title, xAxis, series) {
-    console.log('Start....')
-
-    console.log(series);
-
-    console.log('End....')
-
+DTR.oee = function (cls, title, xAxis, plotColor, series) {
     $(cls).highcharts({
         chart: {
             type: 'column'
@@ -27,33 +21,31 @@ DTR.downtime_record = function (cls, title, xAxis, series) {
         },
         yAxis: {
             min: 0,
-            stackLabels: {
-                enabled: true
+            labels: {
+                format: '{value}%'
             }
         },
         legend: {
-            align: 'right',
-            x: -30,
-            verticalAlign: 'top',
-            y: 25,
-            floating: true,
-            borderColor: '#CCC',
+            align: 'center',
+            verticalAlign: 'bottom',
             shadow: false
         },
         tooltip: {
             formatter: function () {
                 return '<b>' + this.x + '</b><br/>' +
-                    this.series.name + ': ' + this.y + '<br/>' +
-                    'Total: ' + this.point.stackTotal;
+                    this.series.name + ': ' + this.y + '%<br/>';
             }
         },
         plotOptions: {
             column: {
+                color: plotColor,
                 stacking: 'normal',
                 dataLabels: {
                     enabled: true,
+                    format: '{y}%',
+                    rotation: -90,
                     style: {
-                        textShadow: '0 0 3px black'
+                        textShadow: 'none'
                     }
                 }
             }
