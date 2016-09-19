@@ -73,21 +73,41 @@
         downtime_records: DownTimeRecords
       },
       success: function (data) {
-//        {"result":true,"oee":[{"time":"2016/07/01","oee":0.43593408333333317,"availability":0.8562453798173616,"performance":0.5091228444658219},{"time":"2016/07/02","oee":0.4813213333333334,"availability":0.8590555836757024,"performance":0.5602912576085816}],"downtime_code":{"2016/07/01":{"16":2.283444881439209,"4":0.0,"1":0.18333300203084946,"9":0.15000000223517418,"3":0.06666599959135056,"2":0.08333300054073334,"15":0.5833339989185333,"14":0.016666999086737633,"5":0.08333300054073334},"2016/07/02":{"16":1.9160000085830688,"4":0.0,"1":0.3166669923812151,"15":0.7833329923450947,"9":0.05000000074505806,"3":0.1333319991827011,"2":0.11666700057685375,"12":0.06666699796915054}}}
-        var data = $.parseJSON(data);
+        var downtime_records = $.parseJSON(data);
+        if (downtime_records.result) {
+          var Oee = downtime_records.oee;
 
-        if (data.result) {
-          var Oee = data.oee;
+          console.log(Oee);
 
-          var DownTimeRecord = data.downtime_code;
+          var OeeXAxis = new Array();
+          var OeeXId = new Array();
+          var OeeAvailablity = new Array();
+          var OeeOee = new Array();
+          var OeePerformance = new Array();
 
+          for (var oee in Oee) {
+            OeeXId.push(Oee[oee].machine.id);
+            OeeXAxis.push(Oee[oee].machine.nr);
+            OeeAvailablity.push({name: Oee[oee].machine.nr, data: Oee[oee].availability});
+            OeeOee.push({name: Oee[oee].machine.nr, data: Oee[oee].oee});
+            OeePerformance.push({name: Oee[oee].machine.nr, data: Oee[oee].performance});
+          }
+
+          console.log(OeeXAxis);
+          console.log(OeeAvailablity);
+          console.log(OeeOee);
+          console.log(OeePerformance);
+
+          DTR.downtime_record('#availability', "Availability", OeeXAxis, OeeAvailablity);
+
+
+          var DownTimeRecord = downtime_records.downtime_code;
           var DTRXAxis = new Array();
           for (var dtr in DownTimeRecord) {
             DTRXAxis.push(dtr);
           }
 
           console.log(DTRXAxis);
-
         } else {
           layout.popMsg('popMsg-danger', '请求数据出现错误!');
         }
@@ -98,5 +118,6 @@
       }
     });
   });
+
 
 </script>
