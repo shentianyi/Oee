@@ -62,11 +62,11 @@ class DowntimeRecord < ApplicationRecord
 
         data<<{
             machine: rm.machine,
-            oee: (availability*performance).roundf(2)*100,
-            oee_j1: (availability_j1*performance).roundf(2)*100,
-            availability: availability.roundf(2)*100,
-            availability_j1: availability_j1.roundf(2)*100,
-            performance: performance.roundf(2)*100
+            oee: (availability*performance*100).roundf(2),
+            oee_j1: (availability_j1*performance*100).roundf(2),
+            availability: (availability*100).roundf(2),
+            availability_j1: (availability_j1*100).roundf(2),
+            performance: (performance*100).roundf(2)
         }
       end
       #############################################################################################################################################
@@ -100,17 +100,17 @@ class DowntimeRecord < ApplicationRecord
 
         data<<{
             time: rt.pk_datum.localtime.strftime('%Y/%m/%d').to_s,
-            oee: (availability*performance).roundf(2)*100,
-            oee_j1: (availability_j1*performance).roundf(2)*100,
-            availability: availability.roundf(2)*100,
-            availability_j1: availability_j1.roundf(2)*100,
-            performance: performance.roundf(2)*100
+            oee: (availability*performance*100).roundf(2),
+            oee_j1: (availability_j1*performance*100).roundf(2),
+            availability: (availability*100).roundf(2),
+            availability_j1: (availability_j1*100).roundf(2),
+            performance: (performance*100).roundf(2)
         }
       end
       #############################################################################################################################################
     end
 
-    data
+    p data
   end
 
   def self.generate_downtime_data dimensionality, time_start, time_end, machine, machine_type
@@ -152,12 +152,6 @@ class DowntimeRecord < ApplicationRecord
     end
 
     p data
-# p '------------------------------------------------------------------------------------------------------------------------------------------------'
-#     data_convert={}
-#     data_convert[:machines] = data.keys
-#     p data.values
-#
-#     p data_convert
   end
 
 end
