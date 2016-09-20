@@ -152,12 +152,12 @@ class DowntimeRecord < ApplicationRecord
     end
 
     p data
-p '------------------------------------------------------------------------------------------------------------------------------------------------'
-    data_convert={}
-    data_convert[:machines] = data.keys
-    p data.values
-
-    p data_convert
+# p '------------------------------------------------------------------------------------------------------------------------------------------------'
+#     data_convert={}
+#     data_convert[:machines] = data.keys
+#     p data.values
+#
+#     p data_convert
   end
 
 end
