@@ -96,14 +96,18 @@ class DowntimeRecordsController < ApplicationController
     machine_type=MachineType.find_by_id(params[:downtime_records][:machine_type_id])
 
     #calc
-    @calc_result = DowntimeRecord.generate_oee_data(@dimensionality, @time_start, @time_end, machine, machine_type).paginate(:page => params[:page])
+    @calc_result = DowntimeRecord.generate_oee_data(@dimensionality, @time_start, @time_end, machine, machine_type)
+
+    @bu_calc_result = DowntimeRecord.generate_bu_oee_data(@dimensionality, @time_start, @time_end, machine, machine_type)
 
     @downtime = DowntimeRecord.generate_downtime_data(@dimensionality, @time_start, @time_end, machine, machine_type)
+
+    @bu_downtime = DowntimeRecord.generate_bu_downtime_data(@dimensionality, @time_start, @time_end, machine, machine_type)
 
     if @calc_result.blank? && @downtime.blank?
 
     else
-      render :json => {result: true, oee: @calc_result, downtime_code: @downtime}, content_type: 'text/html'
+      render :json => {result: true, oee: @calc_result, downtime_code: @downtime, bu_oee: @bu_calc_result, bu_downtime: @bu_downtime}, content_type: 'text/html'
     end
   end
 
