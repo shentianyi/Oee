@@ -43,14 +43,59 @@
 <hr class="hr-grey">
 
 <div id="oee"></div>
+
 <div id="availability"></div>
+
 <div id="performance"></div>
+
 <div id="downtime_code"></div>
 
 <script type="text/javascript">
-  layout.date_picker('.datepicker');
+  var Source = {
+    A: {Code1: 0.2, Code2: 0.3},
+    B: {Code1: 0.3, Code2: 0.4},
+    C: {Code1: 0.4, Code2: 0.5}
+  };
 
-  //TODO:显示 OEE停机报告 图表  使用ajax 请求， 进行返回判断
+  var XAxis = new Array();
+  var Data = new Array();
+  var OK = new Array();
+
+  for (var i in Source) {
+    XAxis.push(i);
+
+    var count = 0;
+    for (var key in Source[i]) {
+      count++;
+      Data.push({key: key, value: Source[i][key]});
+    }
+  }
+
+  for (var m = 0; m < Data.length; m += count) {
+    console.log(Data[m]);
+    OK.push(Data[m].value);
+  }
+
+  console.log('...');
+  console.log(OK);
+
+  console.log(count);
+  console.log(Data);
+  console.log(Data.length);
+
+  console.log(XAxis);
+
+
+  //  var downtime_code = {
+  //    machine: ["08705-01", "08703-31"],
+  //    downtime_codes: [
+  //      {name: "1", data: [0.2, 0.3, 0.4]},
+  //      {name: "2", data: [0.3, 0.4, 0.5]},
+  //      {name: "3", data: [0.7, 0.8, 0.9]}
+  //    ]
+  //  };
+
+  layout.date_picker('.datepicker');
 
   $('.submit').click(function () {
     var MachineID = $('#machine_id').val();
@@ -66,6 +111,7 @@
       time_start: TimeStart,
       time_end: TimeEnd
     };
+
     $.ajax({
       url: '/downtime_records/display',
       type: 'get',
@@ -73,31 +119,72 @@
         downtime_records: DownTimeRecords
       },
       success: function (data) {
-//        {"result":true,"oee":[{"time":"2016/07/01","oee":0.43593408333333317,"availability":0.8562453798173616,"performance":0.5091228444658219},{"time":"2016/07/02","oee":0.4813213333333334,"availability":0.8590555836757024,"performance":0.5602912576085816}],"downtime_code":{"2016/07/01":{"16":2.283444881439209,"4":0.0,"1":0.18333300203084946,"9":0.15000000223517418,"3":0.06666599959135056,"2":0.08333300054073334,"15":0.5833339989185333,"14":0.016666999086737633,"5":0.08333300054073334},"2016/07/02":{"16":1.9160000085830688,"4":0.0,"1":0.3166669923812151,"15":0.7833329923450947,"9":0.05000000074505806,"3":0.1333319991827011,"2":0.11666700057685375,"12":0.06666699796915054}}}
-        var data = $.parseJSON(data);
+        var downtime_records = $.parseJSON(data);
+        if (downtime_records.result) {
+          var Oee = downtime_records.oee,
+              OeeXAxis = new Array(),
+              OeeXId = new Array(),
+              OeeAvailability = new Array(),
+              OeeOee = new Array(),
+              OeePerformance = new Array();
 
-        if (data.result) {
-            console.log(data)
-          var Oee = data.oee;
-
-          var DownTimeRecord = data.downtime_code;
-
-          var DTRXAxis = new Array();
-          for (var dtr in DownTimeRecord) {
-            DTRXAxis.push(dtr);
+          for (var oee in Oee) {
+            //维度不同， 横坐标不一样
+            if (DownTimeRecords.dimensionality == 200) {
+              OeeXAxis.push(Oee[oee].time);
+            }
+            else {
+              OeeXId.push(Oee[oee].machine.id);
+              OeeXAxis.push(Oee[oee].machine.nr);
+            }
+            OeeAvailability.push(Oee[oee].availability);
+            OeeOee.push(Oee[oee].oee);
+            OeePerformance.push(Oee[oee].performance);
           }
 
-          console.log(DTRXAxis);
+          var OeeSeries = new Array(),
+              AvailSeries = new Array(),
+              PerSeries = new Array();
 
+          OeeSeries.push({name: 'Oee', data: OeeOee});
+          AvailSeries.push({name: 'Availablity', data: OeeAvailability});
+          PerSeries.push({name: 'Performance', data: OeePerformance});
+
+          DTR.oee('#oee', "OEE", OeeXAxis, '#2980b9', OeeSeries);
+          DTR.oee('#availability', "Availability", OeeXAxis, '#a94442', AvailSeries);
+          DTR.oee('#performance', "Performance", OeeXAxis, '#E67E22', PerSeries);
+
+
+          var DownTimeCode = downtime_records.downtime_code;
+
+          console.log(DownTimeCode);
+
+
+          var DTCXAxis = new Array();
+          var DTCSeries = new Array();
+
+          for (var dtc in DownTimeCode) {
+            DTCXAxis.push(dtc);
+            var Data = new Array();
+            for (var c in DownTimeCode[dtc]) {
+              Data.push(DownTimeCode[dtc][c]);
+            }
+
+            DTCSeries.push({name: DownTimeCode[dtc], data: Data});
+          }
+
+          console.log(DTCSeries);
         } else {
           layout.popMsg('popMsg-danger', '请求数据出现错误!');
         }
-      },
+      }
+      ,
       error: function () {
         console.log("Error");
         layout.popMsg('popMsg-danger', '请求不到服务器!');
       }
     });
   });
+
 
 </script>

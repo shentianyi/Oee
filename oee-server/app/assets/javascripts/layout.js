@@ -86,6 +86,12 @@ layout.init = function () {
     }
 
     function PageAction(id, newAction, editAction, importAction, newBtn, editBtn, importBtn) {
+        console.log(">L>>");
+
+        console.log($(id).length);
+
+        if ($(id).length == 0) return;
+
         var vueName = new Vue({
             el: id,
             data: {
