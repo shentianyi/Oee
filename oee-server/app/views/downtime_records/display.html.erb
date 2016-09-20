@@ -51,50 +51,6 @@
 <div id="downtime_code"></div>
 
 <script type="text/javascript">
-  var Source = {
-    A: {Code1: 0.2, Code2: 0.3},
-    B: {Code1: 0.3, Code2: 0.4},
-    C: {Code1: 0.4, Code2: 0.5}
-  };
-
-  var XAxis = new Array();
-  var Data = new Array();
-  var OK = new Array();
-
-  for (var i in Source) {
-    XAxis.push(i);
-
-    var count = 0;
-    for (var key in Source[i]) {
-      count++;
-      Data.push({key: key, value: Source[i][key]});
-    }
-  }
-
-  for (var m = 0; m < Data.length; m += count) {
-    console.log(Data[m]);
-    OK.push(Data[m].value);
-  }
-
-  console.log('...');
-  console.log(OK);
-
-  console.log(count);
-  console.log(Data);
-  console.log(Data.length);
-
-  console.log(XAxis);
-
-
-  //  var downtime_code = {
-  //    machine: ["08705-01", "08703-31"],
-  //    downtime_codes: [
-  //      {name: "1", data: [0.2, 0.3, 0.4]},
-  //      {name: "2", data: [0.3, 0.4, 0.5]},
-  //      {name: "3", data: [0.7, 0.8, 0.9]}
-  //    ]
-  //  };
-
   layout.date_picker('.datepicker');
 
   $('.submit').click(function () {
@@ -125,7 +81,9 @@
               OeeXAxis = new Array(),
               OeeXId = new Array(),
               OeeAvailability = new Array(),
+              OeeAvailabilityJ1 = new Array(),
               OeeOee = new Array(),
+              OeeOeeJ1 = new Array(),
               OeePerformance = new Array();
 
           for (var oee in Oee) {
@@ -138,7 +96,9 @@
               OeeXAxis.push(Oee[oee].machine.nr);
             }
             OeeAvailability.push(Oee[oee].availability);
+            OeeAvailabilityJ1.push(Oee[oee].availability_j1);
             OeeOee.push(Oee[oee].oee);
+            OeeOeeJ1.push(Oee[oee].oee_j1);
             OeePerformance.push(Oee[oee].performance);
           }
 
@@ -146,34 +106,55 @@
               AvailSeries = new Array(),
               PerSeries = new Array();
 
-          OeeSeries.push({name: 'Oee', data: OeeOee});
-          AvailSeries.push({name: 'Availablity', data: OeeAvailability});
+          OeeSeries.push({name: 'OEE', data: OeeOee}, {name: 'OEE_J1', data: OeeOeeJ1});
+          AvailSeries.push({name: 'Availablity', data: OeeAvailability}, {
+            name: 'Availablity_J1',
+            data: OeeAvailabilityJ1
+          });
           PerSeries.push({name: 'Performance', data: OeePerformance});
 
-          DTR.oee('#oee', "OEE", OeeXAxis, '#2980b9', OeeSeries);
-          DTR.oee('#availability', "Availability", OeeXAxis, '#a94442', AvailSeries);
-          DTR.oee('#performance', "Performance", OeeXAxis, '#E67E22', PerSeries);
-
+          DTR.oee('#oee', "OEE", OeeXAxis, OeeSeries);
+          DTR.oee('#availability', "Availability", OeeXAxis, AvailSeries);
+          DTR.oee('#performance', "Performance", OeeXAxis, PerSeries);
 
           var DownTimeCode = downtime_records.downtime_code;
 
           console.log(DownTimeCode);
 
+          //计算停机代码
+          var DTCXAxis = new Array(),
+              DTCData = new Array(),
+              DTCSeries = new Array();
 
-          var DTCXAxis = new Array();
-          var DTCSeries = new Array();
+          for (var i in DownTimeCode) {
+            DTCXAxis.push(i);
 
-          for (var dtc in DownTimeCode) {
-            DTCXAxis.push(dtc);
-            var Data = new Array();
-            for (var c in DownTimeCode[dtc]) {
-              Data.push(DownTimeCode[dtc][c]);
+            //计算步长
+            var count = 0;
+            for (var key in DownTimeCode[i]) {
+              count++;
+              DTCData.push({key: key, value: DownTimeCode[i][key]});
             }
-
-            DTCSeries.push({name: DownTimeCode[dtc], data: Data});
           }
 
-          console.log(DTCSeries);
+          for (var j = 0; j < count; j++) {
+            var SeriesData = new Array();
+
+            for (var m = j; m < DTCData.length; m += count) {
+              SeriesData.push(DTCData[m].value);
+            }
+            DTCSeries.push({name: DTCData[j].key, data: SeriesData});
+          }
+
+          var downtime_code = {
+            XAxis: DTCXAxis,
+            downtime_codes: DTCSeries
+          };
+
+          console.log(downtime_code);
+
+          DTR.downtime_code('#downtime_code', 'DownTime Code', DTCXAxis, DTCSeries);
+
         } else {
           layout.popMsg('popMsg-danger', '请求数据出现错误!');
         }
