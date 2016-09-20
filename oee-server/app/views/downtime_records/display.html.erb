@@ -70,12 +70,19 @@
 
     $.ajax({
       url: '/downtime_records/display',
-      type: 'get',
+      type: 'post',
       data: {
         downtime_records: DownTimeRecords
       },
       success: function (data) {
-        var downtime_records = $.parseJSON(data);
+        console.log(data);
+
+        var downtime_records = data;
+
+//        var downtime_records = $.parseJSON(data);
+
+        console.log(downtime_records);
+
         if (downtime_records.result) {
           var Oee = downtime_records.oee,
               OeeXAxis = new Array(),

@@ -83,37 +83,40 @@ class DowntimeRecordsController < ApplicationController
   end
 
   def display
-    params[:downtime_records]= {} if params[:downtime_records].blank?
 
-    @machine_id = params[:downtime_records][:machine_id]
-    @machine_type_id = params[:downtime_records][:machine_type_id]
-    @time_start = params[:downtime_records][:time_start].blank? ? 1.day.ago.strftime("%Y-%m-%d 7:00") : params[:downtime_records][:time_start]
-    @time_end = params[:downtime_records][:time_end].blank? ? Time.now.strftime("%Y-%m-%d 7:00") : params[:downtime_records][:time_end]
-    @dimensionality = params[:downtime_records][:dimensionality].blank? ? DimensionalityEnum::MACHINE : params[:downtime_records][:dimensionality].to_i
+    if request.post?
+      params[:downtime_records]= {} if params[:downtime_records].blank?
 
-    #check
-    machine=Machine.find_by_id(params[:downtime_records][:machine_id])
-    machine_type=MachineType.find_by_id(params[:downtime_records][:machine_type_id])
+      @machine_id = params[:downtime_records][:machine_id]
+      @machine_type_id = params[:downtime_records][:machine_type_id]
+      @time_start = params[:downtime_records][:time_start].blank? ? 1.day.ago.strftime("%Y-%m-%d 7:00") : params[:downtime_records][:time_start]
+      @time_end = params[:downtime_records][:time_end].blank? ? Time.now.strftime("%Y-%m-%d 7:00") : params[:downtime_records][:time_end]
+      @dimensionality = params[:downtime_records][:dimensionality].blank? ? DimensionalityEnum::MACHINE : params[:downtime_records][:dimensionality].to_i
 
-    #calc
-    @calc_result = DowntimeRecord.generate_oee_data(@dimensionality, @time_start, @time_end, machine, machine_type)
+      #check
+      machine=Machine.find_by_id(params[:downtime_records][:machine_id])
+      machine_type=MachineType.find_by_id(params[:downtime_records][:machine_type_id])
 
-    @bu_calc_result = DowntimeRecord.generate_bu_oee_data(@dimensionality, @time_start, @time_end, machine, machine_type)
+      #calc
+      @calc_result = DowntimeRecord.generate_oee_data(@dimensionality, @time_start, @time_end, machine, machine_type)
 
-    @downtime = DowntimeRecord.generate_downtime_data(@dimensionality, @time_start, @time_end, machine, machine_type)
+      @bu_calc_result = DowntimeRecord.generate_bu_oee_data(@dimensionality, @time_start, @time_end, machine, machine_type)
 
-    @bu_downtime = DowntimeRecord.generate_bu_downtime_data(@dimensionality, @time_start, @time_end, machine, machine_type)
+      @downtime = DowntimeRecord.generate_downtime_data(@dimensionality, @time_start, @time_end, machine, machine_type)
 
-    #停机前 5大
-    if @dimensionality==DimensionalityEnum::MACHINE
-      downtime_limit5
-    end
+      @bu_downtime = DowntimeRecord.generate_bu_downtime_data(@dimensionality, @time_start, @time_end, machine, machine_type)
+
+      #停机前 5大
+      if @dimensionality==DimensionalityEnum::MACHINE
+        # downtime_limit5
+      end
 
 
-    if @calc_result.blank? && @downtime.blank?
-
-    else
-      render :json => {result: true, oee: @calc_result, downtime_code: @downtime, bu_oee: @bu_calc_result, bu_downtime: @bu_downtime}, content_type: 'text/html'
+      # if @calc_result.blank? && @downtime.blank?
+      #
+      # else
+      render :json => {result: true, oee: @calc_result, downtime_code: @downtime, bu_oee: @bu_calc_result, bu_downtime: @bu_downtime}
+      # end
     end
   end
 
