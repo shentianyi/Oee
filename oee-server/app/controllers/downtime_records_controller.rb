@@ -106,7 +106,7 @@ class DowntimeRecordsController < ApplicationController
 
     #停机前 5大
     if @dimensionality==DimensionalityEnum::MACHINE
-      downtime_limit5
+      # downtime_limit
     end
 
 
