@@ -231,7 +231,7 @@ class DowntimeRecord < ApplicationRecord
       data[:bus] = downtime_bus
       data[:downtime_code] = []
       test.keys.each do |key|
-        data[:downtime_code]<<{key => test[key].values}
+        data[:downtime_code]<<{name: key, data: test[key].values}
       end
 
     elsif dimensionality==DimensionalityEnum::TIME
