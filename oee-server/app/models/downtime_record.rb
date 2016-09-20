@@ -110,14 +110,14 @@ class DowntimeRecord < ApplicationRecord
         availability_j1 = (worktime_except_holiday - downtime_total_j1)/worktime_except_holiday
         performance=standard_work_time/(worktime_except_holiday - rm.total)
 
-        data<<{
-            machine: rm.machine,
-            oee: (availability*performance*100).roundf(2),
-            oee_j1: (availability_j1*performance*100).roundf(2),
-            availability: (availability*100).roundf(2),
-            availability_j1: (availability_j1*100).roundf(2),
-            performance: (performance*100).roundf(2)
-        }
+        data.insert(sort_by_performance(data, (performance*100).roundf(2)), {
+                                                                              machine: rm.machine,
+                                                                              oee: (availability*performance*100).roundf(2),
+                                                                              oee_j1: (availability_j1*performance*100).roundf(2),
+                                                                              availability: (availability*100).roundf(2),
+                                                                              availability_j1: (availability_j1*100).roundf(2),
+                                                                              performance: (performance*100).roundf(2)
+                                                                          })
       end
       #############################################################################################################################################
     elsif dimensionality==DimensionalityEnum::TIME
@@ -212,7 +212,7 @@ class DowntimeRecord < ApplicationRecord
     test = {}
     downtime_types.each do |t|
       test[t]={}
-      downtime_bus.map(){|bu| test[t][bu]=0.0}
+      downtime_bus.map() { |bu| test[t][bu]=0.0 }
     end
 
     condition=generate_condition time_start, time_end, machine, machine_type
@@ -231,13 +231,32 @@ class DowntimeRecord < ApplicationRecord
       data[:bus] = downtime_bus
       data[:downtime_code] = []
       test.keys.each do |key|
-        data[:downtime_code]<<{key=> test[key].values}
+        data[:downtime_code]<<{key => test[key].values}
       end
 
     elsif dimensionality==DimensionalityEnum::TIME
     end
 
     p data
+  end
+
+  def self.generate_downtime_limit dimensionality, time_start, time_end, machine, machine_type
+
+  end
+
+  def self.sort_by_performance array, performance
+    if array.blank?
+      return 0
+    else
+      array.each_with_index do |a, index|
+        if performance > a[:performance]
+          next
+        else
+          return index
+        end
+      end
+      return -1
+    end
   end
 
 end

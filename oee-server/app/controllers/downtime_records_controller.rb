@@ -104,6 +104,12 @@ class DowntimeRecordsController < ApplicationController
 
     @bu_downtime = DowntimeRecord.generate_bu_downtime_data(@dimensionality, @time_start, @time_end, machine, machine_type)
 
+    #停机前 5大
+    if @dimensionality==DimensionalityEnum::MACHINE
+      downtime_limit5
+    end
+
+
     if @calc_result.blank? && @downtime.blank?
 
     else
