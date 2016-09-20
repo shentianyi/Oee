@@ -103,7 +103,9 @@ class DowntimeRecord < ApplicationRecord
 
         #calc j1
         # puts '1111111111111111111111111111111111111111111111111111111111111111111111'.red
-        j1_time = DowntimeRecord.joins(:machine).where(condition).where(machine_id: rm.machine_id, downtime_code_id: j1.id).select("SUM(downtime_records.Pd_std) as total, downtime_records.*").first.total
+        j1_time = DowntimeRecord.joins(:machine).where(condition)
+                      .where(machine_id: rm.machine_id, downtime_code_id: j1.id)
+                      .select("SUM(downtime_records.Pd_std) as total, downtime_records.*").first.total
         downtime_total_j1 = j1_time.blank? ? rm.total : (rm.total - j1_time)
 
         availability = (worktime_except_holiday - rm.total)/worktime_except_holiday
@@ -112,6 +114,7 @@ class DowntimeRecord < ApplicationRecord
 
         data.insert(sort_by_performance(data, (performance*100).roundf(2)), {
                                                                               machine: rm.machine,
+                                                                              bu: rm.machine.department,
                                                                               oee: (availability*performance*100).roundf(2),
                                                                               oee_j1: (availability_j1*performance*100).roundf(2),
                                                                               availability: (availability*100).roundf(2),
@@ -136,7 +139,9 @@ class DowntimeRecord < ApplicationRecord
 
         #calc j1
         # puts '1111111111111111111111111111111111111111111111111111111111111111111111'.red
-        j1_time = DowntimeRecord.joins(:machine).where(condition).where(pk_datum: rt.pk_datum, downtime_code_id: j1.id).select("SUM(downtime_records.Pd_std) as total, downtime_records.*").first.total
+        j1_time = DowntimeRecord.joins(:machine)
+                      .where(condition).where(pk_datum: rt.pk_datum, downtime_code_id: j1.id)
+                      .select("SUM(downtime_records.Pd_std) as total, downtime_records.*").first.total
         downtime_total_j1 = j1_time.blank? ? rt.total : (rt.total - j1_time)
 
         machine_count = query.pluck(:machine_id).uniq.count
@@ -240,8 +245,26 @@ class DowntimeRecord < ApplicationRecord
     p data
   end
 
-  def self.generate_downtime_limit dimensionality, time_start, time_end, machine, machine_type
+  def self.generate_downtime_record_limit dimensionality, time_start, time_end, machine, machine_type
+    data=[]
+    j1=DowntimeCode.find_by_nr('J1')
+    condition=generate_condition time_start, time_end, machine, machine_type
+    query=DowntimeRecord.joins(:machine).where(condition).where("downtime_code_id != ?", j1.id)
+              .order(pd_std: :desc).limit(5)
 
+    if dimensionality==DimensionalityEnum::MACHINE
+      query.each do |q|
+        data<<{
+            machine: q.machine.nr,
+            bu: q.machine.department.nr,
+            downtime_code: q.downtime_code.nr,
+            downtime_start: q.pd_von,
+            time: q.pd_std
+        }
+      end
+    end
+
+    p data
   end
 
   def self.sort_by_performance array, performance
