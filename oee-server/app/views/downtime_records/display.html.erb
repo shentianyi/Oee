@@ -75,7 +75,6 @@
         downtime_records: DownTimeRecords
       },
       success: function (data) {
-        console.log(data);
 
         var downtime_records = data;
 
@@ -126,7 +125,6 @@
 
           var DownTimeCode = downtime_records.downtime_code;
 
-          console.log(DownTimeCode);
 
           //计算停机代码
           var DTCXAxis = new Array(),
@@ -158,7 +156,6 @@
             downtime_codes: DTCSeries
           };
 
-          console.log(downtime_code);
 
           DTR.downtime_code('#downtime_code', 'DownTime Code', DTCXAxis, DTCSeries);
 

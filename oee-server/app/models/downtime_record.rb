@@ -26,7 +26,7 @@ class DowntimeRecord < ApplicationRecord
     condition
   end
 
-  def self.generate_bu_oee_data dimensionality, time_start, time_end, machine, machine_type
+  def self.generate_bu_oee_data time_start, time_end, machine, machine_type, dimensionality
     data=[]
     j1=DowntimeCode.find_by_nr('J1')
 
@@ -76,7 +76,7 @@ class DowntimeRecord < ApplicationRecord
     data
   end
 
-  def self.generate_oee_data dimensionality, time_start, time_end, machine, machine_type
+  def self.generate_oee_data time_start, time_end, machine, machine_type, dimensionality, is_daily
     data=[]
     j1=DowntimeCode.find_by_nr('J1')
 
@@ -125,42 +125,88 @@ class DowntimeRecord < ApplicationRecord
       #############################################################################################################################################
     elsif dimensionality==DimensionalityEnum::TIME
       ###########################################################################################################################        by time
-      record_by_time = query.select("SUM(downtime_records.Pd_std) as total, downtime_records.*").group(:pk_datum)
+      if is_daily
+        record_by_time = query.select("SUM(downtime_records.Pd_std) as total, downtime_records.*").group(:pk_datum)
+        record_by_time.each do |rt|
+          #时间维度--原则上的工作时间
+          worktime_except_holiday = 24.0 # Holiday.calc_except_holiday(rt.pk_datum.localtime.to_date, rt.pk_datum.localtime.to_date)
 
-      record_by_time.each do |rt|
-        #时间维度--原则上的工作时间
-        worktime_except_holiday = 24.0 # Holiday.calc_except_holiday(rt.pk_datum.localtime.to_date, rt.pk_datum.localtime.to_date)
+          record_by_order=query.where(pk_datum: rt.pk_datum).group(:pd_bemerk, :pd_stueck)
+          standard_work_time=0.0
+          record_by_order.each do |ro|
+            standard_work_time += ro.standard_work_time
+          end
 
-        record_by_order=query.where(pk_datum: rt.pk_datum).group(:pd_bemerk, :pd_stueck)
-        standard_work_time=0.0
-        record_by_order.each do |ro|
-          standard_work_time += ro.standard_work_time
+          #calc j1
+          # puts '1111111111111111111111111111111111111111111111111111111111111111111111'.red
+          j1_time = DowntimeRecord.joins(:machine)
+                        .where(condition).where(pk_datum: rt.pk_datum, downtime_code_id: j1.id)
+                        .select("SUM(downtime_records.Pd_std) as total, downtime_records.*").first.total
+          downtime_total_j1 = j1_time.blank? ? rt.total : (rt.total - j1_time)
+
+          machine_count = query.where(pk_datum: rt.pk_datum).pluck(:machine_id).uniq.count
+
+
+          availability = (machine_count*worktime_except_holiday - rt.total)/(machine_count*worktime_except_holiday)
+          availability_j1 = (machine_count*worktime_except_holiday - downtime_total_j1)/(machine_count*worktime_except_holiday)
+          performance = standard_work_time/(machine_count*worktime_except_holiday - rt.total)
+
+          data<<{
+              time: rt.pk_datum.localtime.strftime('%Y/%m/%d').to_s,
+              oee: (availability*performance*100).roundf(2),
+              oee_j1: (availability_j1*performance*100).roundf(2),
+              availability: (availability*100).roundf(2),
+              availability_j1: (availability_j1*100).roundf(2),
+              performance: (performance*100).roundf(2)
+          }
+        end
+      else
+        record_by_time = query.select("SUM(downtime_records.Pd_std) as total, downtime_records.*").group(:monthly)
+
+        record_by_time.each do |rt|
+          #时间维度--原则上的工作时间
+          record_by_days = query.where(monthly: rt.monthly).pluck(:pk_datum).uniq
+          total_work_time = 0
+          record_by_days.each do |day|
+            # puts '---------------------------------------------------------------'
+            # puts (query.where(pk_datum: day).pluck(:machine_id).uniq.count)
+            # puts (Holiday.calc_except_holiday(day.localtime.to_date, day.localtime.to_date))
+            total_work_time += (query.where(pk_datum: day).pluck(:machine_id).uniq.count * Holiday.calc_except_holiday(day.localtime.to_date, day.localtime.to_date))
+          end
+          # raise 'ffffffffffffffffffffffffffffffffffffffffffffffffffff'
+
+          record_by_order=query.where(monthly: rt.monthly).group(:pd_bemerk, :pd_stueck)
+          standard_work_time=0.0
+          record_by_order.each do |ro|
+            standard_work_time += ro.standard_work_time
+          end
+
+          #calc j1
+          j1_time = DowntimeRecord.joins(:machine)
+                        .where(condition).where(monthly: rt.monthly, downtime_code_id: j1.id)
+                        .select("SUM(downtime_records.Pd_std) as total, downtime_records.*").first.total
+          downtime_total_j1 = j1_time.blank? ? rt.total : (rt.total - j1_time)
+
+          puts '999999999999999999999999999999999999999999999999999999999999999999999999999999'
+          puts "#{total_work_time}---------------total work time"
+          puts "#{rt.total}-----------------monthil total downtime"
+          puts "#{standard_work_time}--------------monthly total work time"
+          puts "#{downtime_total_j1}-------------------monthly total j1"
+
+          availability = (total_work_time - rt.total)/total_work_time
+          availability_j1 = (total_work_time - downtime_total_j1)/total_work_time
+          performance = standard_work_time/(total_work_time - rt.total)
+
+          data<<{
+              time: rt.pk_datum.localtime.strftime('%Y/%m').to_s,
+              oee: (availability*performance*100).roundf(2),
+              oee_j1: (availability_j1*performance*100).roundf(2),
+              availability: (availability*100).roundf(2),
+              availability_j1: (availability_j1*100).roundf(2),
+              performance: (performance*100).roundf(2)
+          }
         end
 
-        #calc j1
-        # puts '1111111111111111111111111111111111111111111111111111111111111111111111'.red
-        j1_time = DowntimeRecord.joins(:machine)
-                      .where(condition).where(pk_datum: rt.pk_datum, downtime_code_id: j1.id)
-                      .select("SUM(downtime_records.Pd_std) as total, downtime_records.*").first.total
-        downtime_total_j1 = j1_time.blank? ? rt.total : (rt.total - j1_time)
-
-        machine_count = query.pluck(:machine_id).uniq.count
-        availability = (machine_count*worktime_except_holiday - rt.total)/(machine_count*worktime_except_holiday)
-        availability_j1 = (machine_count*worktime_except_holiday - downtime_total_j1)/(machine_count*worktime_except_holiday)
-        # puts standard_work_time
-        # puts machine_count
-        # puts (machine_count*worktime_except_holiday)
-        # puts rt.total
-        performance = standard_work_time/(machine_count*worktime_except_holiday - rt.total)
-
-        data<<{
-            time: rt.pk_datum.localtime.strftime('%Y/%m/%d').to_s,
-            oee: (availability*performance*100).roundf(2),
-            oee_j1: (availability_j1*performance*100).roundf(2),
-            availability: (availability*100).roundf(2),
-            availability_j1: (availability_j1*100).roundf(2),
-            performance: (performance*100).roundf(2)
-        }
       end
       #############################################################################################################################################
     end
@@ -168,7 +214,7 @@ class DowntimeRecord < ApplicationRecord
     p data
   end
 
-  def self.generate_downtime_data dimensionality, time_start, time_end, machine, machine_type
+  def self.generate_downtime_data time_start, time_end, machine, machine_type, dimensionality, is_daily
     data={}
     downtime_types = DowntimeType.all.pluck(:nr)
 
@@ -191,25 +237,53 @@ class DowntimeRecord < ApplicationRecord
       end
     elsif dimensionality==DimensionalityEnum::TIME
       #downtime code by time
-      record_by_downtime = DowntimeRecord.joins(:machine).joins(downtime_code: [:downtime_type])
-                               .where(condition)
-                               .select("SUM(downtime_records.Pd_std) as total, downtime_records.*, downtime_types.nr as nr")
-                               .group("downtime_types.nr, downtime_records.pk_datum")
-                               .order(pk_datum: :asc)
+      if is_daily
+        record_by_downtime = DowntimeRecord.joins(:machine).joins(downtime_code: [:downtime_type])
+                                 .where(condition)
+                                 .select("SUM(downtime_records.Pd_std) as total, downtime_records.*, downtime_types.nr as nr")
+                                 .group("downtime_types.nr, downtime_records.pk_datum")
+                                 .order(pk_datum: :asc)
 
-      record_by_downtime.each do |rd|
-        if data[rd.pk_datum.localtime.strftime('%Y/%m/%d').to_s].blank?
-          data[rd.pk_datum.localtime.strftime('%Y/%m/%d').to_s] = {}
-          downtime_types.map() { |nr| data[rd.pk_datum.localtime.strftime('%Y/%m/%d').to_s][nr]=0.0 }
+        record_by_downtime.each do |rd|
+          if data[rd.pk_datum.localtime.strftime('%Y/%m/%d').to_s].blank?
+            data[rd.pk_datum.localtime.strftime('%Y/%m/%d').to_s] = {}
+            downtime_types.map() { |nr| data[rd.pk_datum.localtime.strftime('%Y/%m/%d').to_s][nr]=0.0 }
+          end
+          data[rd.pk_datum.localtime.strftime('%Y/%m/%d').to_s][rd.nr] = rd.total.roundf(2)
         end
-        data[rd.pk_datum.localtime.strftime('%Y/%m/%d').to_s][rd.nr] = rd.total.roundf(2)
+      else
+        record_by_downtime = DowntimeRecord.joins(:machine).joins(downtime_code: [:downtime_type])
+                                 .where(condition)
+                                 .select("SUM(downtime_records.Pd_std) as total, downtime_records.*, downtime_types.nr as nr")
+                                 .group("downtime_types.nr, downtime_records.monthly")
+                                 .order(monthly: :asc)
+
+        months = DowntimeRecord.pluck(:monthly).uniq
+        downtime_types = DowntimeType.all.pluck(:nr)
+
+        test = {}
+        downtime_types.each do |t|
+          test[t]={}
+          months.map() { |m| test[t][m]=0.0 }
+        end
+
+        record_by_downtime.each do |rd|
+          test[rd.downtime_code.downtime_type.nr][rd.monthly] = rd.total.roundf(2)
+        end
+
+        data[:months] = months
+        data[:downtime_code] = []
+        test.keys.each do |key|
+          data[:downtime_code]<<{name: key, data: test[key].values}
+        end
+
       end
     end
 
     p data
   end
 
-  def self.generate_bu_downtime_data dimensionality, time_start, time_end, machine, machine_type
+  def self.generate_bu_downtime_data time_start, time_end, machine, machine_type, dimensionality
     data={}
     downtime_bus = Department.pluck(:nr)
     downtime_types = DowntimeType.all.pluck(:nr)
@@ -245,7 +319,7 @@ class DowntimeRecord < ApplicationRecord
     p data
   end
 
-  def self.generate_downtime_record_limit dimensionality, time_start, time_end, machine, machine_type
+  def self.generate_downtime_record_limit time_start, time_end, machine, machine_type, dimensionality
     data=[]
     j1=DowntimeCode.find_by_nr('J1')
     condition=generate_condition time_start, time_end, machine, machine_type
