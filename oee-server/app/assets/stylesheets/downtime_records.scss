@@ -1,3 +1,34 @@
 // Place all the styles related to the downtime_records controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+//display 界面图表展示
+
+.marco-nbody {
+  display: table;
+  height: 400px;
+  text-align: center;
+  .bu-charts {
+    display: table-cell;
+    min-width: 350px;
+    max-width: 350px;
+    width: 1%;
+    h3 {
+      line-height: 400px;
+      vertical-align: middle;
+    }
+  }
+
+  .right-detail {
+    display: table-cell;
+    width: 100%;
+    & > div {
+      margin-left: 10px;
+      margin-right: 5px;
+    }
+    h3 {
+      line-height: 400px;
+    }
+  }
+}
+

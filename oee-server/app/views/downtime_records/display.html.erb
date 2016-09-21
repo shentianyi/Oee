@@ -42,18 +42,112 @@
 
 <hr class="hr-grey">
 
-<div id="oee"></div>
+<div class="marco-npanel-primary">
+  <div class="marco-nheading">
+    OEE
+    <div class="pull-right">
+    </div>
+  </div>
 
-<div id="availability"></div>
+  <div class="marco-nbody">
+    <div class="bu-charts">
+      <div id="bu_oee">
+        <h3>OEE BU 图表</h3>
+      </div>
+    </div>
 
-<div id="performance"></div>
+    <div class="right-detail">
+      <div id="oee">
+        <h3>OEE 图表</h3>
+      </div>
+    </div>
+  </div>
+</div>
 
-<div id="downtime_code"></div>
+<hr class="hr-grey"/>
+
+<div class="marco-npanel-danger">
+  <div class="marco-nheading">
+    Availabliltiy
+    <div class="pull-right">
+    </div>
+  </div>
+
+  <div class="marco-nbody">
+    <div class="bu-charts">
+      <div id="bu_availability">
+        <h3>Availabliltiy BU 图表</h3>
+      </div>
+    </div>
+
+    <div class="right-detail">
+      <div id="availability">
+        <h3>Availabliltiy 图表</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="hr-grey"/>
+
+<div class="marco-npanel-warning">
+  <div class="marco-nheading">
+    Performance
+    <div class="pull-right">
+    </div>
+  </div>
+
+  <div class="marco-nbody">
+    <div class="bu-charts">
+      <div id="bu_performance">
+        <h3>Performance BU 图表</h3>
+      </div>
+    </div>
+
+    <div class="right-detail">
+      <div id="performance">
+        <h3>Performance 图表</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="hr-grey"/>
+
+<div class="marco-npanel-default">
+  <div class="marco-nheading">
+    DownTime Code
+    <div class="pull-right">
+    </div>
+  </div>
+
+  <div class="marco-nbody">
+    <div class="bu-charts">
+      <div id="bu_downtime_code">
+        <h3>DownTime Code BU 图表</h3>
+      </div>
+    </div>
+
+    <div class="right-detail">
+      <div id="downtime_code">
+        <h3>DownTime Code 图表</h3>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script type="text/javascript">
   layout.date_picker('.datepicker');
 
   $('.submit').click(function () {
+
+    var LoadingHtml = '<div class="show_spinner" style="position: absolute; margin-top: 150px;left: 45%;">' +
+        '<span class = "fa fa-spinner fa-spin fa-4x" style="color: #27ae60;"></span>' +
+        '<span style="color: #27ae60; font-size: 1.3em;"> 数据正在加载，请稍后... </span></div>';
+
+    $('.marco-nbody').append(LoadingHtml);
+
+
     var MachineID = $('#machine_id').val();
     var MachineTypeID = $('#machine_type_id').val();
     var Dimensionality = $('#dimensionality').val();
@@ -75,15 +169,45 @@
         downtime_records: DownTimeRecords
       },
       success: function (data) {
-        console.log(data);
-
         var downtime_records = data;
-
-//        var downtime_records = $.parseJSON(data);
 
         console.log(downtime_records);
 
         if (downtime_records.result) {
+          //BU OEE
+          var Bu_Oee = downtime_records.bu_oee,
+              Bu_OeeXAxis = new Array(),
+              BuOeeAvailability = new Array(),
+              BuOeeAvailabilityJ1 = new Array(),
+              BuOeeOee = new Array(),
+              BuOeeOeeJ1 = new Array(),
+              BuOeePerformance = new Array();
+
+          for (var buOee in Bu_Oee) {
+            Bu_OeeXAxis.push(Bu_Oee[buOee].machine.nr);
+            BuOeeOee.push({color: '#2980b9', y: Bu_Oee[buOee].oee});
+            BuOeeOeeJ1.push({color: '#3498db', y: Bu_Oee[buOee].oee_j1});
+            BuOeeAvailability.push({color: '#a94442', y: Bu_Oee[buOee].availability});
+            BuOeeAvailabilityJ1.push({color: '#e74c3c', y: Bu_Oee[buOee].availability_j1});
+            BuOeePerformance.push({color: '#e67e22', y: Bu_Oee[buOee].performance});
+          }
+
+          var BuOeeSeries = new Array(),
+              BuAvailSeries = new Array(),
+              BuPerSeries = new Array();
+
+          BuOeeSeries.push({name: 'OEE', data: BuOeeOee}, {name: 'OEE_J1', data: BuOeeOeeJ1});
+          BuAvailSeries.push({name: 'Availablity', data: BuOeeAvailability}, {
+            name: 'Availablity_J1',
+            data: BuOeeAvailabilityJ1
+          });
+          BuPerSeries.push({name: 'Performance', data: BuOeePerformance});
+
+          DTR.oee('#bu_oee', "Bu OEE", Bu_OeeXAxis, BuOeeSeries);
+          DTR.oee('#bu_availability', "Bu Availability", Bu_OeeXAxis, BuAvailSeries);
+          DTR.oee('#bu_performance', "Bu Performance", Bu_OeeXAxis, BuPerSeries);
+
+          // OEE Show
           var Oee = downtime_records.oee,
               OeeXAxis = new Array(),
               OeeXId = new Array(),
@@ -97,16 +221,20 @@
             //维度不同， 横坐标不一样
             if (DownTimeRecords.dimensionality == 200) {
               OeeXAxis.push(Oee[oee].time);
+              //隐藏 bu显示
+              $('.bu-charts').css({display: 'none'});
             }
             else {
               OeeXId.push(Oee[oee].machine.id);
               OeeXAxis.push(Oee[oee].machine.nr);
             }
-            OeeAvailability.push(Oee[oee].availability);
-            OeeAvailabilityJ1.push(Oee[oee].availability_j1);
-            OeeOee.push(Oee[oee].oee);
-            OeeOeeJ1.push(Oee[oee].oee_j1);
-            OeePerformance.push(Oee[oee].performance);
+            OeeOee.push({color: '#2980b9', y: Oee[oee].oee});
+            OeeOeeJ1.push({color: '#3498db', y: Oee[oee].oee_j1});
+
+            OeeAvailability.push({color: '#a94442', y: Oee[oee].availability});
+            OeeAvailabilityJ1.push({color: '#e74c3c', y: Oee[oee].availability_j1});
+
+            OeePerformance.push({color: '#e67e22', y: Oee[oee].performance});
           }
 
           var OeeSeries = new Array(),
@@ -124,9 +252,17 @@
           DTR.oee('#availability', "Availability", OeeXAxis, AvailSeries);
           DTR.oee('#performance', "Performance", OeeXAxis, PerSeries);
 
-          var DownTimeCode = downtime_records.downtime_code;
 
-          console.log(DownTimeCode);
+          //Bu DownTime Code Show
+          var BuDownTimeCode = downtime_records.bu_downtime;
+
+          var BuDTCXAxis = BuDownTimeCode.bus;
+          var BuDTCSeries = BuDownTimeCode.downtime_code;
+
+          DTR.downtime_code('#bu_downtime_code', 'Bu DownTime Code', BuDTCXAxis, BuDTCSeries);
+
+          // DownTime Code Show
+          var DownTimeCode = downtime_records.downtime_code;
 
           //计算停机代码
           var DTCXAxis = new Array(),
@@ -135,7 +271,6 @@
 
           for (var i in DownTimeCode) {
             DTCXAxis.push(i);
-
             //计算步长
             var count = 0;
             for (var key in DownTimeCode[i]) {
@@ -146,7 +281,6 @@
 
           for (var j = 0; j < count; j++) {
             var SeriesData = new Array();
-
             for (var m = j; m < DTCData.length; m += count) {
               SeriesData.push(DTCData[m].value);
             }
@@ -157,8 +291,6 @@
             XAxis: DTCXAxis,
             downtime_codes: DTCSeries
           };
-
-          console.log(downtime_code);
 
           DTR.downtime_code('#downtime_code', 'DownTime Code', DTCXAxis, DTCSeries);
 
