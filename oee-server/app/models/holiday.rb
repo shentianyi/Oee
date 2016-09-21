@@ -10,9 +10,9 @@ class Holiday < ApplicationRecord
 
     if start_date==end_date
       if holidays.include?(start_date.strftime('%Y-%m-%d'))
-        return 24.0
-      else
         return 0.0
+      else
+        return 24.0
       end
     end
 

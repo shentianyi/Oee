@@ -141,12 +141,14 @@
 
   $('.submit').click(function () {
 
+    $('.bu-charts > div').empty();
+    $('.right-detail > div').empty();
+
     var LoadingHtml = '<div class="show_spinner" style="position: absolute; margin-top: 150px;left: 45%;">' +
         '<span class = "fa fa-spinner fa-spin fa-4x" style="color: #27ae60;"></span>' +
         '<span style="color: #27ae60; font-size: 1.3em;"> 数据正在加载，请稍后... </span></div>';
 
     $('.marco-nbody').append(LoadingHtml);
-
 
     var MachineID = $('#machine_id').val();
     var MachineTypeID = $('#machine_type_id').val();
@@ -159,7 +161,8 @@
       machine_type_id: MachineTypeID,
       dimensionality: Dimensionality,
       time_start: TimeStart,
-      time_end: TimeEnd
+      time_end: TimeEnd,
+      is_daily: true
     };
 
     $.ajax({
@@ -171,9 +174,8 @@
       success: function (data) {
         var downtime_records = data;
 
-        console.log(downtime_records);
-
         if (downtime_records.result) {
+
           //BU OEE
           var Bu_Oee = downtime_records.bu_oee,
               Bu_OeeXAxis = new Array(),
@@ -201,6 +203,7 @@
             name: 'Availablity_J1',
             data: BuOeeAvailabilityJ1
           });
+
           BuPerSeries.push({name: 'Performance', data: BuOeePerformance});
 
           DTR.oee('#bu_oee', "Bu OEE", Bu_OeeXAxis, BuOeeSeries);
@@ -221,13 +224,20 @@
             //维度不同， 横坐标不一样
             if (DownTimeRecords.dimensionality == 200) {
               OeeXAxis.push(Oee[oee].time);
-              //隐藏 bu显示
-              $('.bu-charts').css({display: 'none'});
+//              //隐藏 bu显示
+//              $('.marco-nbody').css({display: 'block'});
+//              $('.bu-charts').css({display: 'none'});
+//              $('.right-detail').css({display: 'block'});
             }
             else {
               OeeXId.push(Oee[oee].machine.id);
               OeeXAxis.push(Oee[oee].machine.nr);
+//
+//              $('.marco-nbody').css({display: 'table'});
+//              $('.bu-charts').css({display: 'table-cell', minWidth: '350px', maxWidth: '350px', width: '1%'});
+//              $('.right-detail').css({display: 'table-cell'});
             }
+
             OeeOee.push({color: '#2980b9', y: Oee[oee].oee});
             OeeOeeJ1.push({color: '#3498db', y: Oee[oee].oee_j1});
 
@@ -251,7 +261,6 @@
           DTR.oee('#oee', "OEE", OeeXAxis, OeeSeries);
           DTR.oee('#availability', "Availability", OeeXAxis, AvailSeries);
           DTR.oee('#performance', "Performance", OeeXAxis, PerSeries);
-
 
           //Bu DownTime Code Show
           var BuDownTimeCode = downtime_records.bu_downtime;

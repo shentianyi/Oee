@@ -91,30 +91,26 @@ class DowntimeRecordsController < ApplicationController
       @time_start = params[:downtime_records][:time_start].blank? ? 1.day.ago.strftime("%Y-%m-%d 7:00") : params[:downtime_records][:time_start]
       @time_end = params[:downtime_records][:time_end].blank? ? Time.now.strftime("%Y-%m-%d 7:00") : params[:downtime_records][:time_end]
       @dimensionality = params[:downtime_records][:dimensionality].blank? ? DimensionalityEnum::MACHINE : params[:downtime_records][:dimensionality].to_i
+      @is_daily = params[:downtime_records][:is_daily].blank? ? false : params[:downtime_records][:is_daily]
 
       #check
       machine=Machine.find_by_id(params[:downtime_records][:machine_id])
       machine_type=MachineType.find_by_id(params[:downtime_records][:machine_type_id])
 
       #calc
-      @calc_result = DowntimeRecord.generate_oee_data(@dimensionality, @time_start, @time_end, machine, machine_type)
+      @calc_result = DowntimeRecord.generate_oee_data(@time_start, @time_end, machine, machine_type, @dimensionality, @is_daily)
 
-      @bu_calc_result = DowntimeRecord.generate_bu_oee_data(@dimensionality, @time_start, @time_end, machine, machine_type)
+      @bu_calc_result = DowntimeRecord.generate_bu_oee_data(@time_start, @time_end, machine, machine_type, @dimensionality)
 
-      @downtime = DowntimeRecord.generate_downtime_data(@dimensionality, @time_start, @time_end, machine, machine_type)
+      @downtime = DowntimeRecord.generate_downtime_data(@time_start, @time_end, machine, machine_type, @dimensionality, @is_daily)
 
-      @bu_downtime = DowntimeRecord.generate_bu_downtime_data(@dimensionality, @time_start, @time_end, machine, machine_type)
-
+      @bu_downtime = DowntimeRecord.generate_bu_downtime_data(@time_start, @time_end, machine, machine_type, @dimensionality)
 
       #停机前 5大
-      @downtime_record_limit = DowntimeRecord.generate_downtime_record_limit(@dimensionality, @time_start, @time_end, machine, machine_type)
+      @downtime_record_limit = DowntimeRecord.generate_downtime_record_limit(@time_start, @time_end, machine, machine_type, @dimensionality)
 
 
-      # if @calc_result.blank? && @downtime.blank?
-      #
-      # else
       render :json => {result: true, oee: @calc_result, downtime_code: @downtime, bu_oee: @bu_calc_result, bu_downtime: @bu_downtime}
-      # end
     end
   end
 
