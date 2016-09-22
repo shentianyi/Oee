@@ -4,11 +4,11 @@
 
 //display 界面图表展示
 
-.marco-nbody {
+.display-body {
   display: table;
   height: 400px;
   text-align: center;
-  .bu-charts {
+  .bu-charts, .performance-table {
     display: table-cell;
     min-width: 350px;
     max-width: 350px;
@@ -19,7 +19,7 @@
     }
   }
 
-  .right-detail {
+  .right-detail, .limit-table {
     display: table-cell;
     width: 100%;
     & > div {
@@ -32,3 +32,18 @@
   }
 }
 
+.show_spinner, .show_bullhorn {
+  position: absolute;
+  margin-top: 150px;
+  left: 45%;
+  span {
+    color: #27ae60;
+    &:last-child {
+      font-size: 1.3em;
+    }
+  }
+}
+
+.show_bullhorn {
+  left: 40%;
+}

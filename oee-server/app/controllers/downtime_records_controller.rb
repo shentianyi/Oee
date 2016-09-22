@@ -91,7 +91,7 @@ class DowntimeRecordsController < ApplicationController
       @time_start = params[:downtime_records][:time_start].blank? ? 1.day.ago.strftime("%Y-%m-%d 7:00") : params[:downtime_records][:time_start]
       @time_end = params[:downtime_records][:time_end].blank? ? Time.now.strftime("%Y-%m-%d 7:00") : params[:downtime_records][:time_end]
       @dimensionality = params[:downtime_records][:dimensionality].blank? ? DimensionalityEnum::MACHINE : params[:downtime_records][:dimensionality].to_i
-      @is_daily = params[:downtime_records][:is_daily].blank? ? false : params[:downtime_records][:is_daily]
+      @is_daily = params[:downtime_records][:is_daily].blank? ? 'true' : params[:downtime_records][:is_daily]
 
       #check
       machine=Machine.find_by_id(params[:downtime_records][:machine_id])
@@ -110,7 +110,7 @@ class DowntimeRecordsController < ApplicationController
       @downtime_record_limit = DowntimeRecord.generate_downtime_record_limit(@time_start, @time_end, machine, machine_type, @dimensionality)
 
 
-      render :json => {result: true, oee: @calc_result, downtime_code: @downtime, bu_oee: @bu_calc_result, bu_downtime: @bu_downtime}
+      render :json => {result: true, oee: @calc_result, downtime_code: @downtime, bu_oee: @bu_calc_result, bu_downtime: @bu_downtime, limit: @downtime_record_limit}
     end
   end
 

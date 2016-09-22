@@ -35,8 +35,18 @@
     </div>
   </div>
 
-  <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" style="margin-top:5px;">
-    <input type="button" value="查 找" class="marco-btn-oee submit" style="height: 30px;"/>
+  <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="marco-igroup-oee">
+      <span>按</span>
+      <select name="is_daily" id="is_daily">
+        <option value=""></option>
+        <option value="true" selected>天</option>
+        <option value="false">月</option>
+      </select>
+      <span>
+        <input type="button" value="查 找" style="background:#34495e; height: 30px; " class="submit"/>
+      </span>
+    </div>
   </div>
 </div>
 
@@ -49,7 +59,7 @@
     </div>
   </div>
 
-  <div class="marco-nbody">
+  <div class="marco-nbody display-body">
     <div class="bu-charts">
       <div id="bu_oee">
         <h3>OEE BU 图表</h3>
@@ -68,21 +78,21 @@
 
 <div class="marco-npanel-danger">
   <div class="marco-nheading">
-    Availabliltiy
+    Availability
     <div class="pull-right">
     </div>
   </div>
 
-  <div class="marco-nbody">
+  <div class="marco-nbody display-body">
     <div class="bu-charts">
       <div id="bu_availability">
-        <h3>Availabliltiy BU 图表</h3>
+        <h3>Availability BU 图表</h3>
       </div>
     </div>
 
     <div class="right-detail">
       <div id="availability">
-        <h3>Availabliltiy 图表</h3>
+        <h3>Availability 图表</h3>
       </div>
     </div>
   </div>
@@ -97,7 +107,7 @@
     </div>
   </div>
 
-  <div class="marco-nbody">
+  <div class="marco-nbody display-body">
     <div class="bu-charts">
       <div id="bu_performance">
         <h3>Performance BU 图表</h3>
@@ -121,7 +131,7 @@
     </div>
   </div>
 
-  <div class="marco-nbody">
+  <div class="marco-nbody display-body">
     <div class="bu-charts">
       <div id="bu_downtime_code">
         <h3>DownTime Code BU 图表</h3>
@@ -136,25 +146,79 @@
   </div>
 </div>
 
+<hr class="hr-grey"/>
+
+<div class="marco-npanel-default">
+  <div class="marco-nheading">
+    统计表格
+    <div class="pull-right">
+    </div>
+  </div>
+
+  <div class="marco-nbody display-body">
+    <div class="performance-table">
+      <div class="marco-npanel-default">
+        <div class="marco-nheading">
+          表现率
+        </div>
+        <div class="marco-nbody" style="display: block; padding:0;">
+          <table class="table table-bordered">
+            <thead>
+            <tr>
+              <th>机台</th>
+              <th>BU</th>
+              <th>Performance</th>
+            </tr>
+            </thead>
+            <tbody class="performance_tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="limit-table">
+      <div class="marco-npanel-default">
+        <div class="marco-nheading">
+          停机前5大
+        </div>
+        <div class="marco-nbody" style="display: block; padding:0;">
+          <table class="table table-bordered">
+            <thead>
+            <tr>
+              <th>机台</th>
+              <th>BU</th>
+              <th>停机原因</th>
+              <th>开始</th>
+              <th>时间(h)</th>
+            </tr>
+            </thead>
+            <tbody class="limit_tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script type="text/javascript">
   layout.date_picker('.datepicker');
 
+  $("#dimensionality").find("option[value='100']").attr("selected", true);
+  $('[name=time_start]').val(layout.futureDate(7));
+  $('[name=time_end]').val(new Date().marcoFormat("yyyy-MM-dd"));
+  DTR.show_charts(queryData());
+
   $('.submit').click(function () {
+    DTR.show_charts(queryData());
+  });
 
-    $('.bu-charts > div').empty();
-    $('.right-detail > div').empty();
-
-    var LoadingHtml = '<div class="show_spinner" style="position: absolute; margin-top: 150px;left: 45%;">' +
-        '<span class = "fa fa-spinner fa-spin fa-4x" style="color: #27ae60;"></span>' +
-        '<span style="color: #27ae60; font-size: 1.3em;"> 数据正在加载，请稍后... </span></div>';
-
-    $('.marco-nbody').append(LoadingHtml);
-
+  function queryData() {
     var MachineID = $('#machine_id').val();
     var MachineTypeID = $('#machine_type_id').val();
     var Dimensionality = $('#dimensionality').val();
     var TimeStart = $('[name=time_start]').val();
     var TimeEnd = $('[name=time_end]').val();
+    var IsDaily = $('#is_daily').val();
 
     var DownTimeRecords = {
       machine_id: MachineID,
@@ -162,158 +226,10 @@
       dimensionality: Dimensionality,
       time_start: TimeStart,
       time_end: TimeEnd,
-      is_daily: true
+      is_daily: IsDaily
     };
 
-    $.ajax({
-      url: '/downtime_records/display',
-      type: 'post',
-      data: {
-        downtime_records: DownTimeRecords
-      },
-      success: function (data) {
-        var downtime_records = data;
-
-        if (downtime_records.result) {
-
-          //BU OEE
-          var Bu_Oee = downtime_records.bu_oee,
-              Bu_OeeXAxis = new Array(),
-              BuOeeAvailability = new Array(),
-              BuOeeAvailabilityJ1 = new Array(),
-              BuOeeOee = new Array(),
-              BuOeeOeeJ1 = new Array(),
-              BuOeePerformance = new Array();
-
-          for (var buOee in Bu_Oee) {
-            Bu_OeeXAxis.push(Bu_Oee[buOee].machine.nr);
-            BuOeeOee.push({color: '#2980b9', y: Bu_Oee[buOee].oee});
-            BuOeeOeeJ1.push({color: '#3498db', y: Bu_Oee[buOee].oee_j1});
-            BuOeeAvailability.push({color: '#a94442', y: Bu_Oee[buOee].availability});
-            BuOeeAvailabilityJ1.push({color: '#e74c3c', y: Bu_Oee[buOee].availability_j1});
-            BuOeePerformance.push({color: '#e67e22', y: Bu_Oee[buOee].performance});
-          }
-
-          var BuOeeSeries = new Array(),
-              BuAvailSeries = new Array(),
-              BuPerSeries = new Array();
-
-          BuOeeSeries.push({name: 'OEE', data: BuOeeOee}, {name: 'OEE_J1', data: BuOeeOeeJ1});
-          BuAvailSeries.push({name: 'Availablity', data: BuOeeAvailability}, {
-            name: 'Availablity_J1',
-            data: BuOeeAvailabilityJ1
-          });
-
-          BuPerSeries.push({name: 'Performance', data: BuOeePerformance});
-
-          DTR.oee('#bu_oee', "Bu OEE", Bu_OeeXAxis, BuOeeSeries);
-          DTR.oee('#bu_availability', "Bu Availability", Bu_OeeXAxis, BuAvailSeries);
-          DTR.oee('#bu_performance', "Bu Performance", Bu_OeeXAxis, BuPerSeries);
-
-          // OEE Show
-          var Oee = downtime_records.oee,
-              OeeXAxis = new Array(),
-              OeeXId = new Array(),
-              OeeAvailability = new Array(),
-              OeeAvailabilityJ1 = new Array(),
-              OeeOee = new Array(),
-              OeeOeeJ1 = new Array(),
-              OeePerformance = new Array();
-
-          for (var oee in Oee) {
-            //维度不同， 横坐标不一样
-            if (DownTimeRecords.dimensionality == 200) {
-              OeeXAxis.push(Oee[oee].time);
-//              //隐藏 bu显示
-//              $('.marco-nbody').css({display: 'block'});
-//              $('.bu-charts').css({display: 'none'});
-//              $('.right-detail').css({display: 'block'});
-            }
-            else {
-              OeeXId.push(Oee[oee].machine.id);
-              OeeXAxis.push(Oee[oee].machine.nr);
-//
-//              $('.marco-nbody').css({display: 'table'});
-//              $('.bu-charts').css({display: 'table-cell', minWidth: '350px', maxWidth: '350px', width: '1%'});
-//              $('.right-detail').css({display: 'table-cell'});
-            }
-
-            OeeOee.push({color: '#2980b9', y: Oee[oee].oee});
-            OeeOeeJ1.push({color: '#3498db', y: Oee[oee].oee_j1});
-
-            OeeAvailability.push({color: '#a94442', y: Oee[oee].availability});
-            OeeAvailabilityJ1.push({color: '#e74c3c', y: Oee[oee].availability_j1});
-
-            OeePerformance.push({color: '#e67e22', y: Oee[oee].performance});
-          }
-
-          var OeeSeries = new Array(),
-              AvailSeries = new Array(),
-              PerSeries = new Array();
-
-          OeeSeries.push({name: 'OEE', data: OeeOee}, {name: 'OEE_J1', data: OeeOeeJ1});
-          AvailSeries.push({name: 'Availablity', data: OeeAvailability}, {
-            name: 'Availablity_J1',
-            data: OeeAvailabilityJ1
-          });
-          PerSeries.push({name: 'Performance', data: OeePerformance});
-
-          DTR.oee('#oee', "OEE", OeeXAxis, OeeSeries);
-          DTR.oee('#availability', "Availability", OeeXAxis, AvailSeries);
-          DTR.oee('#performance', "Performance", OeeXAxis, PerSeries);
-
-          //Bu DownTime Code Show
-          var BuDownTimeCode = downtime_records.bu_downtime;
-
-          var BuDTCXAxis = BuDownTimeCode.bus;
-          var BuDTCSeries = BuDownTimeCode.downtime_code;
-
-          DTR.downtime_code('#bu_downtime_code', 'Bu DownTime Code', BuDTCXAxis, BuDTCSeries);
-
-          // DownTime Code Show
-          var DownTimeCode = downtime_records.downtime_code;
-
-          //计算停机代码
-          var DTCXAxis = new Array(),
-              DTCData = new Array(),
-              DTCSeries = new Array();
-
-          for (var i in DownTimeCode) {
-            DTCXAxis.push(i);
-            //计算步长
-            var count = 0;
-            for (var key in DownTimeCode[i]) {
-              count++;
-              DTCData.push({key: key, value: DownTimeCode[i][key]});
-            }
-          }
-
-          for (var j = 0; j < count; j++) {
-            var SeriesData = new Array();
-            for (var m = j; m < DTCData.length; m += count) {
-              SeriesData.push(DTCData[m].value);
-            }
-            DTCSeries.push({name: DTCData[j].key, data: SeriesData});
-          }
-
-          var downtime_code = {
-            XAxis: DTCXAxis,
-            downtime_codes: DTCSeries
-          };
-
-          DTR.downtime_code('#downtime_code', 'DownTime Code', DTCXAxis, DTCSeries);
-
-        } else {
-          layout.popMsg('popMsg-danger', '请求数据出现错误!');
-        }
-      }
-      ,
-      error: function () {
-        console.log("Error");
-        layout.popMsg('popMsg-danger', '请求不到服务器!');
-      }
-    });
-  });
-
+    return DownTimeRecords;
+  }
 
 </script>
