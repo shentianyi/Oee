@@ -96,6 +96,27 @@
         </ul>
       </li>
 
+      <li class="nav-users">
+        <%= link_to content_tag(:i, '', :class => 'fa fa-truck'), users_path, :title => '资产跟踪' %>
+        <span>资产跟踪</span>
+      </li>
+
+
+      <li class="nav-users">
+        <%= link_to content_tag(:i, '', :class => 'fa fa-line-chart'), users_path, :title => '月资产平衡' %>
+        <span>月资产</span>
+      </li>
+
+      <li class="nav-users">
+        <%= link_to content_tag(:i, '', :class => 'fa fa-inbox'), users_path, :title => '资产盘点' %>
+        <span>盘点</span>
+      </li>
+
+      <li class="nav-users">
+        <%= link_to content_tag(:i, '', :class => 'fa fa-list-alt'), users_path, :title => 'CAPEX' %>
+        <span>CAPEX</span>
+      </li>
+
       <li style="position: absolute;bottom: 0;width:100%; text-align:center;">
         <%= link_to content_tag(:i, '', :class => 'fa fa-power-off'), destroy_user_session_path, method: :delete %>
         <span title="<%= current_user.email %>"><%= current_user.name %></span>
