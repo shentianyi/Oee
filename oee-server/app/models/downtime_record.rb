@@ -125,7 +125,7 @@ class DowntimeRecord < ApplicationRecord
       #############################################################################################################################################
     elsif dimensionality==DimensionalityEnum::TIME
       ###########################################################################################################################        by time
-      if is_daily=='true'
+      if is_daily
         record_by_time = query.select("SUM(downtime_records.Pd_std) as total, downtime_records.*").group(:pk_datum)
         record_by_time.each do |rt|
           #时间维度--原则上的工作时间
@@ -237,7 +237,7 @@ class DowntimeRecord < ApplicationRecord
       end
     elsif dimensionality==DimensionalityEnum::TIME
       #downtime code by time
-      if is_daily=='true'
+      if is_daily
         record_by_downtime = DowntimeRecord.joins(:machine).joins(downtime_code: [:downtime_type])
                                  .where(condition)
                                  .select("SUM(downtime_records.Pd_std) as total, downtime_records.*, downtime_types.nr as nr")

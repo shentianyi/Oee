@@ -47,6 +47,13 @@ gem "iconv", "~> 1.0.3"
 # For log
 gem 'colorize'
 
+# store file
+gem 'mini_magick'
+gem 'carrierwave','~>0.10.0'
+gem 'aliyun-oss'
+gem 'carrierwave-aliyun'
+gem 'rack-cors', :require => 'rack/cors'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri

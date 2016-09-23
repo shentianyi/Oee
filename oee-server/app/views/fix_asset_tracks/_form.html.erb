@@ -1,0 +1,107 @@
+<%= form_for(fix_asset_track) do |f| %>
+  <% if fix_asset_track.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(fix_asset_track.errors.count, "error") %> prohibited this fix_asset_track from being saved:</h2>
+
+      <ul>
+      <% fix_asset_track.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :info_receive_date %>
+    <%= f.text_field :info_receive_date %>
+  </div>
+
+  <div class="field">
+    <%= f.label :apply_id %>
+    <%= f.text_field :apply_id %>
+  </div>
+
+  <div class="field">
+    <%= f.label :description %>
+    <%= f.text_field :description %>
+  </div>
+
+  <div class="field">
+    <%= f.label :qty %>
+    <%= f.text_field :qty %>
+  </div>
+
+  <div class="field">
+    <%= f.label :price %>
+    <%= f.text_field :price %>
+  </div>
+
+  <div class="field">
+    <%= f.label :proposer %>
+    <%= f.text_field :proposer %>
+  </div>
+
+  <div class="field">
+    <%= f.label :procurment_id %>
+    <%= f.text_field :procurment_id %>
+  </div>
+
+  <div class="field">
+    <%= f.label :procurment_date %>
+    <%= f.text_field :procurment_date %>
+  </div>
+
+  <div class="field">
+    <%= f.label :supplier %>
+    <%= f.text_field :supplier %>
+  </div>
+
+  <div class="field">
+    <%= f.label :project %>
+    <%= f.text_field :project %>
+  </div>
+
+  <div class="field">
+    <%= f.label :completed_id %>
+    <%= f.text_field :completed_id %>
+  </div>
+
+  <div class="field">
+    <%= f.label :is_add_equipment %>
+    <%= f.check_box :is_add_equipment %>
+  </div>
+
+  <div class="field">
+    <%= f.label :equipment_nr %>
+    <%= f.text_field :equipment_nr %>
+  </div>
+
+  <div class="field">
+    <%= f.label :is_add_fix_asset %>
+    <%= f.check_box :is_add_fix_asset %>
+  </div>
+
+  <div class="field">
+    <%= f.label :nr %>
+    <%= f.text_field :nr %>
+  </div>
+
+  <div class="field">
+    <%= f.label :status %>
+    <%= f.number_field :status %>
+  </div>
+
+  <div class="field">
+    <%= f.label :remark %>
+    <%= f.text_field :remark %>
+  </div>
+
+  <div class="field">
+    <%= f.label :equipment_track_id %>
+    <%= f.number_field :equipment_track_id %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

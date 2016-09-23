@@ -1,0 +1,1 @@
+json.array! @equipment_releases, partial: 'equipment_releases/equipment_release', as: :equipment_release

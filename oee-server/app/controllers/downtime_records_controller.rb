@@ -91,7 +91,7 @@ class DowntimeRecordsController < ApplicationController
       @time_start = params[:downtime_records][:time_start].blank? ? 1.day.ago.strftime("%Y-%m-%d 7:00") : params[:downtime_records][:time_start]
       @time_end = params[:downtime_records][:time_end].blank? ? Time.now.strftime("%Y-%m-%d 7:00") : params[:downtime_records][:time_end]
       @dimensionality = params[:downtime_records][:dimensionality].blank? ? DimensionalityEnum::MACHINE : params[:downtime_records][:dimensionality].to_i
-      @is_daily = params[:downtime_records][:is_daily].blank? ? 'true' : params[:downtime_records][:is_daily]
+      @is_daily = params[:downtime_records][:is_daily]=='true' ? true : false
 
       #check
       machine=Machine.find_by_id(params[:downtime_records][:machine_id])

@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160921014110) do
+ActiveRecord::Schema.define(version: 20160923085317) do
+
+  create_table "attachments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "name"
+    t.string   "path"
+    t.string   "size"
+    t.string   "type"
+    t.integer  "attachable_id"
+    t.string   "attachable_type"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
 
   create_table "crafts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "nr"
@@ -107,6 +118,80 @@ ActiveRecord::Schema.define(version: 20160921014110) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "equipment_depreciations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.datetime "depreciation_time"
+    t.float    "original_val",       limit: 24
+    t.float    "depreciation_val",   limit: 24
+    t.float    "net_val",            limit: 24
+    t.integer  "equipment_track_id"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.index ["equipment_track_id"], name: "index_equipment_depreciations_on_equipment_track_id", using: :btree
+  end
+
+  create_table "equipment_releases", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "equipment_track_id"
+    t.integer  "release_index"
+    t.datetime "release_time"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "remark"
+    t.index ["equipment_track_id"], name: "index_equipment_releases_on_equipment_track_id", using: :btree
+  end
+
+  create_table "equipment_tracks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "level"
+    t.string   "name"
+    t.string   "nr"
+    t.integer  "type"
+    t.string   "asset_nr"
+    t.string   "description"
+    t.string   "product_id"
+    t.string   "equipment_serial_id"
+    t.string   "supplier"
+    t.string   "status"
+    t.string   "profit_center"
+    t.string   "department"
+    t.string   "project"
+    t.string   "location"
+    t.string   "area"
+    t.string   "position"
+    t.datetime "procurment_date"
+    t.float    "release_cycle",       limit: 24, default: 0.0
+    t.datetime "next_release"
+    t.string   "release_notice"
+    t.string   "responsibilityer"
+    t.string   "remark"
+    t.boolean  "is_top",                         default: true
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+    t.string   "operate_instructor"
+    t.string   "maintain_instructor"
+  end
+
+  create_table "fix_asset_tracks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.datetime "info_receive_date"
+    t.string   "apply_id"
+    t.string   "description"
+    t.float    "qty",                limit: 24
+    t.float    "price",              limit: 24
+    t.string   "proposer"
+    t.string   "procurment_id"
+    t.datetime "procurment_date"
+    t.string   "supplier"
+    t.string   "project"
+    t.string   "completed_id"
+    t.boolean  "is_add_equipment",              default: false
+    t.string   "equipment_nr"
+    t.boolean  "is_add_fix_asset",              default: false
+    t.string   "nr"
+    t.integer  "status",                        default: 100
+    t.string   "remark"
+    t.integer  "equipment_track_id"
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+  end
+
   create_table "holidays", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.date     "holiday"
     t.integer  "type"
@@ -183,6 +268,8 @@ ActiveRecord::Schema.define(version: 20160921014110) do
   add_foreign_key "downtime_records", "crafts"
   add_foreign_key "downtime_records", "downtime_codes"
   add_foreign_key "downtime_records", "machines"
+  add_foreign_key "equipment_depreciations", "equipment_tracks"
+  add_foreign_key "equipment_releases", "equipment_tracks"
   add_foreign_key "machines", "departments"
   add_foreign_key "machines", "machine_types"
   add_foreign_key "work_times", "crafts"

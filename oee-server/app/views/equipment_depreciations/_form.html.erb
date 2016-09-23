@@ -1,0 +1,42 @@
+<%= form_for(equipment_depreciation) do |f| %>
+  <% if equipment_depreciation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(equipment_depreciation.errors.count, "error") %> prohibited this equipment_depreciation from being saved:</h2>
+
+      <ul>
+      <% equipment_depreciation.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :depreciation_time %>
+    <%= f.datetime_select :depreciation_time %>
+  </div>
+
+  <div class="field">
+    <%= f.label :original_val %>
+    <%= f.text_field :original_val %>
+  </div>
+
+  <div class="field">
+    <%= f.label :depreciation_val %>
+    <%= f.text_field :depreciation_val %>
+  </div>
+
+  <div class="field">
+    <%= f.label :net_val %>
+    <%= f.text_field :net_val %>
+  </div>
+
+  <div class="field">
+    <%= f.label :equipment_track_id %>
+    <%= f.text_field :equipment_track_id %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,2 @@
+json.extract! fix_asset_track, :id, :info_receive_date, :apply_id, :description, :qty, :price, :proposer, :procurment_id, :procurment_date, :supplier, :project, :completed_id, :is_add_equipment, :equipment_nr, :is_add_fix_asset, :nr, :status, :remark, :equipment_track_id, :created_at, :updated_at
+json.url fix_asset_track_url(fix_asset_track, format: :json)

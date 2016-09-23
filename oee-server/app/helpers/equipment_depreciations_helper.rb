@@ -1,0 +1,2 @@
+module EquipmentDepreciationsHelper
+end

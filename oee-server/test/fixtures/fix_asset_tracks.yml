@@ -1,0 +1,41 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  info_receive_date: 2016-09-23 14:34:04
+  apply_id: MyString
+  description: MyString
+  qty: 1.5
+  price: 1.5
+  proposer: MyString
+  procurment_id: MyString
+  procurment_date: 2016-09-23 14:34:04
+  supplier: MyString
+  project: MyString
+  completed_id: MyString
+  is_add_equipment: false
+  equipment_nr: MyString
+  is_add_fix_asset: false
+  nr: MyString
+  status: 1
+  remark: MyString
+  equipment_track_id: 1
+
+two:
+  info_receive_date: 2016-09-23 14:34:04
+  apply_id: MyString
+  description: MyString
+  qty: 1.5
+  price: 1.5
+  proposer: MyString
+  procurment_id: MyString
+  procurment_date: 2016-09-23 14:34:04
+  supplier: MyString
+  project: MyString
+  completed_id: MyString
+  is_add_equipment: false
+  equipment_nr: MyString
+  is_add_fix_asset: false
+  nr: MyString
+  status: 1
+  remark: MyString
+  equipment_track_id: 1

@@ -80,6 +80,12 @@ layout.init = function () {
             }
             break;
 
+        case "equipment_tracks":
+            $('.nav-basic').addClass('nav-active');
+            $('.nav-equipment_tracks').addClass('nav-active');
+            PageAction('#equipment_tracks', '新增设备', '上传设备追踪表');
+            break;
+
         default:
             $('.nav-home').addClass('nav-active');
             break;

@@ -1,0 +1,1 @@
+json.partial! "equipment_tracks/equipment_track", equipment_track: @equipment_track

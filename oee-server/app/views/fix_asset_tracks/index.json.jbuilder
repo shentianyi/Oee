@@ -1,0 +1,1 @@
+json.array! @fix_asset_tracks, partial: 'fix_asset_tracks/fix_asset_track', as: :fix_asset_track

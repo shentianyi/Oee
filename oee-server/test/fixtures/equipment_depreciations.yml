@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  depreciation_time: 2016-09-23 12:17:42
+  original_val: 1.5
+  depreciation_val: 1.5
+  net_val: 1.5
+  equipment_track: one
+
+two:
+  depreciation_time: 2016-09-23 12:17:42
+  original_val: 1.5
+  depreciation_val: 1.5
+  net_val: 1.5
+  equipment_track: two

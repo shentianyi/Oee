@@ -1,0 +1,1 @@
+json.array! @equipment_tracks, partial: 'equipment_tracks/equipment_track', as: :equipment_track

@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+
+<div id="equipment_tracks">
+  <ol class="breadcrumb">
+    <li>基础数据</li>
+    <li><%= link_to '设备追踪表', equipment_tracks_path %></li>
+    <li>{{action}}</li>
+  </ol>
+
+  <hr class="hr-grey"/>
+
+  <form>
+    <fieldset>
+      <legend style="width: 150px;">{{action}}</legend>
+      <div>
+        <b>选择数据文件：</b>
+        <input id="item-data-uploader" type="file" name="files[]" data-url="/equipment_tracks/import"/>
+
+        <hr class="hr-grey"/>
+
+        <div id="item-data-uploader-preview"></div>
+
+        <div>
+          <b>下载模板：</b>
+          <a href="/files/<%= ImportTemplate.equipment_track_excel_template %>">
+            <%= ImportTemplate::EQUIPMENT_TRACK_EXCEL_TEMPLATE %></a>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    data_upload("#item-data-uploader");
+  });
+</script>

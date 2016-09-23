@@ -1,0 +1,2 @@
+json.extract! equipment_track, :id, :level, :name, :nr, :type, :asset_nr, :description, :product_id, :equipment_serial_id, :supplier, :status, :profit_center, :department, :project, :location, :area, :position, :procurment_date, :release_cycle, :next_release, :release_notice, :responsibilityer, :remark, :is_top, :created_at, :updated_at
+json.url equipment_track_url(equipment_track, format: :json)

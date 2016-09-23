@@ -1,6 +1,38 @@
 Rails.application.routes.draw do
 
+
+  resources :fix_asset_tracks do
+    collection do
+      get :search
+      match :import, to: :import, via: [:get, :post]
+    end
+  end
+
+  resources :equipment_releases do
+    collection do
+      get :search
+      match :import, to: :import, via: [:get, :post]
+    end
+  end
+
+  resources :equipment_depreciations do
+    collection do
+      get :search
+      match :import, to: :import, via: [:get, :post]
+    end
+  end
+
+  resources :attachments
+
+  resources :equipment_tracks do
+    collection do
+      get :search
+      match :import, to: :import, via: [:get, :post]
+    end
+  end
+
   resources :work_shifts
+
   resources :downtime_records do
     collection do
       get :search

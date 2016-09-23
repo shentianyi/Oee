@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Equipment Depreciations</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Depreciation time</th>
+      <th>Original val</th>
+      <th>Depreciation val</th>
+      <th>Net val</th>
+      <th>Equipment track</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @equipment_depreciations.each do |equipment_depreciation| %>
+      <tr>
+        <td><%= equipment_depreciation.depreciation_time %></td>
+        <td><%= equipment_depreciation.original_val %></td>
+        <td><%= equipment_depreciation.depreciation_val %></td>
+        <td><%= equipment_depreciation.net_val %></td>
+        <td><%= equipment_depreciation.equipment_track %></td>
+        <td><%= link_to 'Show', equipment_depreciation %></td>
+        <td><%= link_to 'Edit', edit_equipment_depreciation_path(equipment_depreciation) %></td>
+        <td><%= link_to 'Destroy', equipment_depreciation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Equipment Depreciation', new_equipment_depreciation_path %>

@@ -1,0 +1,1 @@
+json.array! @equipment_depreciations, partial: 'equipment_depreciations/equipment_depreciation', as: :equipment_depreciation

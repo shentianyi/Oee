@@ -1,0 +1,51 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  level: MyString
+  name: MyString
+  nr: MyString
+  type: 1
+  asset_nr: MyString
+  description: MyString
+  product_id: MyString
+  equipment_serial_id: MyString
+  supplier: MyString
+  status: MyString
+  profit_center: MyString
+  department: MyString
+  project: MyString
+  location: MyString
+  area: MyString
+  position: MyString
+  procurment_date: 2016-09-23 11:31:38
+  release_cycle: 1.5
+  next_release: 2016-09-23 11:31:38
+  release_notice: MyString
+  responsibilityer: MyString
+  remark: MyString
+  is_top: false
+
+two:
+  level: MyString
+  name: MyString
+  nr: MyString
+  type: 1
+  asset_nr: MyString
+  description: MyString
+  product_id: MyString
+  equipment_serial_id: MyString
+  supplier: MyString
+  status: MyString
+  profit_center: MyString
+  department: MyString
+  project: MyString
+  location: MyString
+  area: MyString
+  position: MyString
+  procurment_date: 2016-09-23 11:31:38
+  release_cycle: 1.5
+  next_release: 2016-09-23 11:31:38
+  release_notice: MyString
+  responsibilityer: MyString
+  remark: MyString
+  is_top: false

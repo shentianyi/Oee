@@ -1,0 +1,2 @@
+module EquipmentTracksHelper
+end

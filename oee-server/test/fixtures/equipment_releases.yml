@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  equipment_track: one
+  release_index: 1
+  release_time: 2016-09-23 12:27:32
+
+two:
+  equipment_track: two
+  release_index: 1
+  release_time: 2016-09-23 12:27:32

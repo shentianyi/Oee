@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Equipment track:</strong>
+  <%= @equipment_release.equipment_track %>
+</p>
+
+<p>
+  <strong>Release index:</strong>
+  <%= @equipment_release.release_index %>
+</p>
+
+<p>
+  <strong>Release time:</strong>
+  <%= @equipment_release.release_time %>
+</p>
+
+<%= link_to 'Edit', edit_equipment_release_path(@equipment_release) %> |
+<%= link_to 'Back', equipment_releases_path %>

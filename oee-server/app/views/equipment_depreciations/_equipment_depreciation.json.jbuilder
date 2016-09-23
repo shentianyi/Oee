@@ -1,0 +1,2 @@
+json.extract! equipment_depreciation, :id, :depreciation_time, :original_val, :depreciation_val, :net_val, :equipment_track_id, :created_at, :updated_at
+json.url equipment_depreciation_url(equipment_depreciation, format: :json)
