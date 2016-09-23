@@ -310,17 +310,24 @@ function oee_parsed_data(dimensionality, Oee) {
     for (var oee in Oee) {
         //维度不同， 横坐标不一样
         if (dimensionality == 200) {
-            OeeXAxis.push(Oee[oee].time);
             $('.display-body').css({display: 'block'});
             $('.bu-charts').css({display: 'none'});
             $('.right-detail').css({display: 'block'});
+            $('.sum-table').css({display: 'none'});
+            OeeXAxis.push(Oee[oee].time);
         }
         else {
-            OeeXId.push(Oee[oee].machine.id);
-            OeeXAxis.push(Oee[oee].machine.nr);
+            $('.sum-table').css({display: 'block'});
             $('.display-body').css({display: 'table'});
             $('.bu-charts').css({display: 'table-cell'});
             $('.right-detail').css({display: 'table-cell'});
+            OeeXId.push(Oee[oee].machine.id);
+            OeeXAxis.push(Oee[oee].machine.nr);
+            Performance_table.push({
+                machine: Oee[oee].machine.nr,
+                bu: Oee[oee].bu.name,
+                performance: Oee[oee].performance
+            });
         }
 
         OeeOee.push({color: '#2980b9', y: Oee[oee].oee});
@@ -328,7 +335,6 @@ function oee_parsed_data(dimensionality, Oee) {
         OeeAvailability.push({color: '#a94442', y: Oee[oee].availability});
         OeeAvailabilityJ1.push({color: '#e74c3c', y: Oee[oee].availability_j1});
         OeePerformance.push({color: '#e67e22', y: Oee[oee].performance});
-        Performance_table.push({machine: Oee[oee].machine.nr, bu: Oee[oee].bu.name, performance: Oee[oee].performance});
     }
 
     var OeeSeries = new Array(), AvailSeries = new Array(), PerSeries = new Array();
