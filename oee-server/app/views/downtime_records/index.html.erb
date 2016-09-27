@@ -22,14 +22,25 @@
         <input type="hidden" name="downtime_record[pd_bemerk_fuzzy]"/>
       </div>
     </div>
+
     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
       <div class="marco-igroup-oee">
         <span>停机代码</span>
         <%= select_tag('downtime_record[downtime_code_id]', options_from_collection_for_select(DowntimeCode.all, :id, :nr, @downtime_code_id), include_blank: true) %>
-        <span class="marco-label-oee" style="padding:0;">
-          <button type="submit" style="border: none; background: #34495e;">查找</button>
-        </span>
+
       </div>
+    </div>
+
+    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>入账日期</span>
+        <input type="text" name="downtime_record[pk_datum][start]" class="datepicker" value="<%= @pk_datum_start %>"/>
+        <span>~</span>
+        <input type="text" name="downtime_record[pk_datum][end]" class="datepicker" value="<%= @pk_datum_end %>"/>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
+          <button type="submit" class="marco-btn-default"  style="width: 180px; height: 40px; line-height: 40px;">查找</button>
     </div>
   </form>
 </div>
@@ -124,3 +135,8 @@
 <div class="digg_pagination">
   <%= will_paginate @downtime_records, :container => false, params: params.to_unsafe_h %>
 </div>
+
+
+<script type="text/javascript">
+    layout.date_picker('.datepicker');
+</script>

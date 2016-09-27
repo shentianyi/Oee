@@ -7,6 +7,9 @@ class ImportTemplate
   DOWNTIME_CODE_EXCEL_TEMPLATE='downtime_code_template.xlsx'
   DOWNTIME_RECORD_EXCEL_TEMPLATE='downtime_record_template.xlsx'
   EQUIPMENT_TRACK_EXCEL_TEMPLATE='equipment_track_template.xlsx'
+  EQUIPMENT_DEPRECIATION_EXCEL_TEMPLATE='equipment_depreciation_template.xlsx'
+  EQUIPMENT_RELEASE_EXCEL_TEMPLATE='equipment_release_template.xlsx'
+  FIX_ASSET_TRACK_EXCEL_TEMPLATE='fix_asset_track_template.xlsx'
 
   def self.method_missing(method_name, *args, &block)
     if method_name.to_s.include?('_template')

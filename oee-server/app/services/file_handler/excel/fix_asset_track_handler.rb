@@ -1,13 +1,10 @@
 module FileHandler
   module Excel
-    class EquipmentTrackHandler<Base
-
-      #设备分级	 设备类型	 资产编号 	设备名称	设备编号	型号规格配置	Cutting生产编号	 设备序列号	 供应商	使用状态	成本中心	使用部门	使用项目
-      # 使用位置	区域 	操作指导书	维护指导书	说明书柜位	购置日期	放行周期(年)	预计再次放行时间	 放行提醒	 负责的工程师	 备注	操作
+    class FixAssetTrackHandler<Base
 
       HEADERS=[
-          :level, :type, :asset_nr, :name, :nr, :description, :product_id, :equipment_serial_id, :supplier, :status, :profit_center, :department, :project,
-          :location, :area, :operate_instructor, :maintain_instructor, :position, :procurment_date, :release_cycle, :next_release, :release_notice, :responsibilityer, :remark,  :operation
+          :info_receive_date, :apply_id, :description, :qty, :price, :proposer, :procurment_date, :supplier,
+          :project, :procurment_id, :completed_id, :is_add_equipment, :equipment_nr, :is_add_fix_asset, :nr, :status, :remark
       ]
 
       def self.import(file)
@@ -21,36 +18,30 @@ module FileHandler
           begin
             count = 0
             EquipmentTrack.transaction do
-              if validate_msg.object[:has_create]
-                EquipmentTrack.where(is_top: true).update_all({is_top: false})
-              end
-
               2.upto(book.last_row) do |line|
                 row = {}
                 HEADERS.each_with_index do |k, i|
                   row[k] = book.cell(line, i+1).to_s.strip
-                  row[k] = row[k].sub(/\.0/, '') if k== :asset_nr
+                  row[k] = row[k].sub(/\.0/, '') if [:nr, :equipment_nr, :apply_id, :procurment_id].include?(k)
                 end
+
+                row[:is_add_fix_asset] = row[:is_add_fix_asset]=='Y' ? true : false
+                row[:is_add_equipment] = row[:is_add_equipment]=='Y' ? true : false
+                row[:status] = FixAssetStatus.decode(row[:status])
 
                 p row
 
                 count += 1
-                if ['update', 'UPDATE'].include?(row[:operation]) && e=EquipmentTrack.find_by_nr(row[:nr])
-                  e.update(row.except(:operation))
-                elsif ['delete', 'DELETE'].include?(row[:operation]) && e=EquipmentTrack.find_by_nr(row[:nr])
-                  e.destroy
-                else
-                  e =EquipmentTrack.new(row.except(:operation))
-                  unless e.save
-                    puts e.errors.to_json
-                    raise e.errors.to_json
-                  end
-                end
 
+                f =FixAssetTrack.new(row.except(:operation))
+                unless f.save
+                  puts f.errors.to_json
+                  raise f.errors.to_json
+                end
               end
             end
             msg.result = true
-            msg.content = "导入设备信息成功, #{count}条记录成功改变！"
+            msg.content = "导入固定资产信息成功, #{count}条记录成功改变！"
           rescue => e
             puts e.backtrace
             msg.result = false
@@ -77,7 +68,11 @@ module FileHandler
             row = {}
             HEADERS.each_with_index do |k, i|
               row[k] = book.cell(line, i+1).to_s.strip
+              row[k] = row[k].sub(/\.0/, '') if [:nr, :equipment_nr, :apply_id, :procurment_id].include?(k)
             end
+
+            row[:is_add_fix_asset] = row[:is_add_fix_asset]=='Y' ? true : false
+            row[:is_add_equipment] = row[:is_add_equipment]=='Y' ? true : false
 
             mssg = validate_row(row, line)
             if mssg.result
@@ -99,23 +94,12 @@ module FileHandler
 
       def self.validate_row(row, line)
         msg = Message.new(contents: [])
-
-        if ['new', 'NEW'].include?(row[:operation]) || row[:operation].blank?
-          msg.object = {has_create: true}
-        end
-
         if row[:nr].blank?
-          msg.contents<<"设备编号不可为空"
+          msg.contents<<"固定资产编号不可为空"
         else
-          e=EquipmentTrack.find_by_nr(row[:nr])
-          if ['update', 'delete', 'UPDATE', 'DELETE'].include?(row[:operation])
-            if e.blank?
-              msg.contents<<"设备编号:#{row[:nr]}未找到"
-            end
-          else
-            if e.present?
-              msg.contents<<"设备编号:#{row[:nr]}已存在，不可重复新建"
-            end
+          f = FixAssetTrack.find_by_nr(row[:nr])
+          if !row[:is_add_fix_asset] && !f.blank?
+            msg.contents<<"固定资产编号:#{row[:nr]}已存在"
           end
         end
 

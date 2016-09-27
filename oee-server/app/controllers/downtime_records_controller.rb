@@ -8,7 +8,7 @@ class DowntimeRecordsController < ApplicationController
   # GET /downtime_records
   # GET /downtime_records.json
   def index
-    @downtime_records = DowntimeRecord.all.paginate(:page => params[:page]).order(machine_id: :asc, pd_von: :asc)
+    @downtime_records = DowntimeRecord.all.paginate(:page => params[:page]).order(pd_von: :asc, machine_id: :asc)
   end
 
   # GET /downtime_records/1

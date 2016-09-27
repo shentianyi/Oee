@@ -7,10 +7,10 @@ class EquipmentTrack < ApplicationRecord
   has_many :equipment_releases, :dependent => :destroy
   has_one :fix_asset_track, :dependent => :destroy
 
-  after_create :set_new_mark
-
-
-  def set_new_mark
-    self.update()
-  end
+  # after_create :set_new_mark
+  #
+  #
+  # def set_new_mark
+  #   self.update()
+  # end
 end
