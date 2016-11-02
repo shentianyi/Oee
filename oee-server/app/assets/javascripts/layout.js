@@ -80,14 +80,19 @@ layout.init = function () {
             }
             break;
 
+        case "fix_asset_tracks":
+            $('.nav-fix-asset-tracks').addClass('nav-active');
+            PageAction('#fix_asset_tracks', '新增固定资产追踪', '编辑固定资产追踪', '上传固定资产追踪信息', '创建', '更新', '上传');
+            break;
+
         case "equipment_tracks":
-            $('.nav-basic').addClass('nav-active');
-            $('.nav-equipment_tracks').addClass('nav-active');
-            PageAction('#equipment_tracks', '新增设备', '上传设备追踪表');
+            $('.nav-equipment-tracks').addClass('nav-active');
+            PageAction('#equipment_tracks', '新增设备追踪', '编辑设备追踪', '上传设备追踪信息', '创建', '更新', '上传');
             break;
 
         default:
-            $('.nav-home').addClass('nav-active');
+            // $('.nav-home').addClass('nav-active');
+            //可以跳转 404
             break;
     }
 

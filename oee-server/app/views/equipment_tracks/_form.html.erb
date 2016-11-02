@@ -1,132 +1,343 @@
-<%= form_for(equipment_track) do |f| %>
-  <% if equipment_track.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(equipment_track.errors.count, "error") %> prohibited this equipment_track from being saved:</h2>
+<style type="text/css">
+  .marco-igroup-oee > span {
+    min-width: 130px;
+  }
+</style>
 
-      <ul>
-      <% equipment_track.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+<div id="equipment_tracks">
+  <ol class="breadcrumb">
+    <li><%= link_to '设备跟踪列表', equipment_tracks_path %></li>
+    <li>{{action}}</li>
+  </ol>
+
+  <hr class="hr-grey"/>
+
+  <%= form_for(equipment_track) do |f| %>
+      <% if equipment_track.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(equipment_track.errors.count, "error") %> prohibited this equipment_track from being saved:</h2>
+
+            <ul>
+              <% equipment_track.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
       <% end %>
-      </ul>
-    </div>
+
+      <div class="marco-npanel-default">
+        <div class="marco-nheading">
+          {{action}}
+          <div class="pull-right">
+            <button type="submit" class="marco-btn-normal">{{actionBtn}}</button>
+          </div>
+        </div>
+
+        <div class="marco-nbody">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>设备分级</span>
+                <%= f.text_field :level%>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>设备名称</span>
+                <%= f.text_field :name %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>设备编号</span>
+                <%= f.text_field :nr %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>T型号/规格/配置</span>
+                <%= f.select(:type, EquipmentType.menu, {include_blank: true}) %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>固定资产编号</span>
+                <%= f.text_field :asset_nr %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>描述</span>
+                <%= f.text_field :description %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>Cutting生产编号</span>
+                <%= f.text_field :product_id %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>设备序列号</span>
+                <%= f.text_field :equipment_serial_id %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>供应商</span>
+                <%= f.text_field :supplier %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>使用状态</span>
+                <%= f.text_field :status %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>成本中心</span>
+                <%= f.text_field :profit_center %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>使用部门</span>
+                <%= f.text_field :department %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>使用项目</span>
+                <%= f.text_field :project %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>使用位置</span>
+                <%= f.text_field :location %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>区域</span>
+                <%= f.text_field :area %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>说明书柜位</span>
+                <%= f.text_field :position %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>购置日期</span>
+                <%= f.text_field :procurment_date, :class=>'datepicker' %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>放行周期</span>
+                <%= f.text_field :release_cycle %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>预计再次放行时间</span>
+                <%= f.text_field :next_release, :class=>'datepicker' %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>放行提醒</span>
+                <%= f.text_field :release_notice %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>负责的工程师</span>
+                <%= f.text_field :responsibilityer %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>备注</span>
+                <%= f.text_field :remark %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>Is top</span>
+                <%= f.text_field :is_top %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
   <% end %>
+</div>
 
-  <div class="field">
-    <%= f.label :level %>
-    <%= f.text_field :level %>
-  </div>
+<script type="text/javascript">
+  layout.date_picker('.datepicker');
+</script>
 
-  <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
-  </div>
 
-  <div class="field">
-    <%= f.label :nr %>
-    <%= f.text_field :nr %>
-  </div>
 
-  <div class="field">
-    <%= f.label :type %>
-    <%= f.select(:type, EquipmentType.menu, {include_blank: true}) %>
-  </div>
+<!--之前的数据-->
 
-  <div class="field">
-    <%= f.label :asset_nr %>
-    <%= f.text_field :asset_nr %>
-  </div>
+<!--<%#= form_for(equipment_track) do |f| %>-->
+  <!--<%# if equipment_track.errors.any? %>-->
+    <!--<div id="error_explanation">-->
+      <!--<h2><%#= pluralize(equipment_track.errors.count, "error") %> prohibited this equipment_track from being saved:</h2>-->
 
-  <div class="field">
-    <%= f.label :description %>
-    <%= f.text_field :description %>
-  </div>
+      <!--<ul>-->
+      <!--<%# equipment_track.errors.full_messages.each do |message| %>-->
+        <!--<li><%#= message %></li>-->
+      <!--<%# end %>-->
+      <!--</ul>-->
+    <!--</div>-->
+  <!--<%# end %>-->
 
-  <div class="field">
-    <%= f.label :product_id %>
-    <%= f.text_field :product_id %>
-  </div>
+  <!--<div class="field">-->
+    <!--<%#= f.label :level %>-->
+    <!--<%#= f.text_field :level %>-->
+  <!--</div>-->
 
-  <div class="field">
-    <%= f.label :equipment_serial_id %>
-    <%= f.text_field :equipment_serial_id %>
-  </div>
+  <!--<div class="field">-->
+    <!--<%#= f.label :name %>-->
+    <!--<%#= f.text_field :name %>-->
+  <!--</div>-->
 
-  <div class="field">
-    <%= f.label :supplier %>
-    <%= f.text_field :supplier %>
-  </div>
+  <!--<div class="field">-->
+    <!--<%#= f.label :nr %>-->
+    <!--<%#= f.text_field :nr %>-->
+  <!--</div>-->
 
-  <div class="field">
-    <%= f.label :status %>
-    <%= f.text_field :status %>
-  </div>
+  <!--<div class="field">-->
+    <!--<%#= f.label :type %>-->
+    <!--<%#= f.select(:type, EquipmentType.menu, {include_blank: true}) %>-->
+  <!--</div>-->
 
-  <div class="field">
-    <%= f.label :profit_center %>
-    <%= f.text_field :profit_center %>
-  </div>
+  <!--<div class="field">-->
+    <!--<%#= f.label :asset_nr %>-->
+    <!--<%#= f.text_field :asset_nr %>-->
+  <!--</div>-->
 
-  <div class="field">
-    <%= f.label :department %>
-    <%= f.text_field :department %>
-  </div>
+  <!--<div class="field">-->
+    <!--<%#= f.label :description %>-->
+    <!--<%#= f.text_field :description %>-->
+  <!--</div>-->
 
-  <div class="field">
-    <%= f.label :project %>
-    <%= f.text_field :project %>
-  </div>
+  <!--<div class="field">-->
+    <!--<%#= f.label :product_id %>-->
+    <!--<%#= f.text_field :product_id %>-->
+  <!--</div>-->
 
-  <div class="field">
-    <%= f.label :location %>
-    <%= f.text_field :location %>
-  </div>
+  <!--<div class="field">-->
+    <!--<%#= f.label :equipment_serial_id %>-->
+    <!--<%#= f.text_field :equipment_serial_id %>-->
+  <!--</div>-->
 
-  <div class="field">
-    <%= f.label :area %>
-    <%= f.text_field :area %>
-  </div>
+  <!--<div class="field">-->
+    <!--<%#= f.label :supplier %>-->
+    <!--<%#= f.text_field :supplier %>-->
+  <!--</div>-->
 
-  <div class="field">
-    <%= f.label :position %>
-    <%= f.text_field :position %>
-  </div>
+  <!--<div class="field">-->
+    <!--<%#= f.label :status %>-->
+    <!--<%#= f.text_field :status %>-->
+  <!--</div>-->
 
-  <div class="field">
-    <%= f.label :procurment_date %>
-    <%= f.text_field :procurment_date %>
-  </div>
+  <!--<div class="field">-->
+    <!--<%#= f.label :profit_center %>-->
+    <!--<%#= f.text_field :profit_center %>-->
+  <!--</div>-->
 
-  <div class="field">
-    <%= f.label :release_cycle %>
-    <%= f.text_field :release_cycle %>
-  </div>
+  <!--<div class="field">-->
+    <!--<%#= f.label :department %>-->
+    <!--<%#= f.text_field :department %>-->
+  <!--</div>-->
 
-  <div class="field">
-    <%= f.label :next_release %>
-    <%= f.text_field :next_release %>
-  </div>
+  <!--<div class="field">-->
+    <!--<%#= f.label :project %>-->
+    <!--<%#= f.text_field :project %>-->
+  <!--</div>-->
 
-  <div class="field">
-    <%= f.label :release_notice %>
-    <%= f.text_field :release_notice %>
-  </div>
+  <!--<div class="field">-->
+    <!--<%#= f.label :location %>-->
+    <!--<%#= f.text_field :location %>-->
+  <!--</div>-->
 
-  <div class="field">
-    <%= f.label :responsibilityer %>
-    <%= f.text_field :responsibilityer %>
-  </div>
+  <!--<div class="field">-->
+    <!--<%#= f.label :area %>-->
+    <!--<%#= f.text_field :area %>-->
+  <!--</div>-->
 
-  <div class="field">
-    <%= f.label :remark %>
-    <%= f.text_field :remark %>
-  </div>
+  <!--<div class="field">-->
+    <!--<%#= f.label :position %>-->
+    <!--<%#= f.text_field :position %>-->
+  <!--</div>-->
 
-  <div class="field">
-    <%= f.label :is_top %>
-    <%= f.check_box :is_top %>
-  </div>
+  <!--<div class="field">-->
+    <!--<%#= f.label :procurment_date %>-->
+    <!--<%#= f.text_field :procurment_date %>-->
+  <!--</div>-->
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+  <!--<div class="field">-->
+    <!--<%#= f.label :release_cycle %>-->
+    <!--<%#= f.text_field :release_cycle %>-->
+  <!--</div>-->
+
+  <!--<div class="field">-->
+    <!--<%#= f.label :next_release %>-->
+    <!--<%#= f.text_field :next_release %>-->
+  <!--</div>-->
+
+  <!--<div class="field">-->
+    <!--<%#= f.label :release_notice %>-->
+    <!--<%#= f.text_field :release_notice %>-->
+  <!--</div>-->
+
+  <!--<div class="field">-->
+    <!--<%#= f.label :responsibilityer %>-->
+    <!--<%#= f.text_field :responsibilityer %>-->
+  <!--</div>-->
+
+  <!--<div class="field">-->
+    <!--<%#= f.label :remark %>-->
+    <!--<%#= f.text_field :remark %>-->
+  <!--</div>-->
+
+  <!--<div class="field">-->
+    <!--<%#= f.label :is_top %>-->
+    <!--<%#= f.check_box :is_top %>-->
+  <!--</div>-->
+
+  <!--<div class="actions">-->
+    <!--<%#= f.submit %>-->
+  <!--</div>-->
+<!--<%# end %>-->

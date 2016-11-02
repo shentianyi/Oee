@@ -379,6 +379,11 @@ body {
       color: $peter-river;
     }
   }
+
+  input[type="checkbox"] {
+    height: 20px;
+    margin-top: 8px;
+  }
 }
 
 .marco-igroup {

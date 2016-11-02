@@ -1,119 +1,129 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Level:</strong>
-  <%= @equipment_track.level %>
-</p>
+<%= render 'form', equipment_track: @equipment_track %>
 
-<p>
-  <strong>Name:</strong>
-  <%= @equipment_track.name %>
-</p>
+<script type="text/javascript" charset="utf-8">
+  $('.breadcrumb li').last().html('固定资产追踪详情');
 
-<p>
-  <strong>Nr:</strong>
-  <%= @equipment_track.nr %>
-</p>
+  $('input').attr('disabled', 'disabled');
 
-<p>
-  <strong>Type:</strong>
-  <%= @equipment_track.type %>
-</p>
+  $('.marco-btn-normal').css({display: 'none'});
+</script>
 
-<p>
-  <strong>Asset nr:</strong>
-  <%= @equipment_track.asset_nr %>
-</p>
+<!--<p>-->
+  <!--<strong>Level:</strong>-->
+  <!--<%#= @equipment_track.level %>-->
+<!--</p>-->
 
-<p>
-  <strong>Description:</strong>
-  <%= @equipment_track.description %>
-</p>
+<!--<p>-->
+  <!--<strong>Name:</strong>-->
+  <!--<%#= @equipment_track.name %>-->
+<!--</p>-->
 
-<p>
-  <strong>Product:</strong>
-  <%= @equipment_track.product_id %>
-</p>
+<!--<p>-->
+  <!--<strong>Nr:</strong>-->
+  <!--<%#= @equipment_track.nr %>-->
+<!--</p>-->
 
-<p>
-  <strong>Equipment serial:</strong>
-  <%= @equipment_track.equipment_serial_id %>
-</p>
+<!--<p>-->
+  <!--<strong>Type:</strong>-->
+  <!--<%#= @equipment_track.type %>-->
+<!--</p>-->
 
-<p>
-  <strong>Supplier:</strong>
-  <%= @equipment_track.supplier %>
-</p>
+<!--<p>-->
+  <!--<strong>Asset nr:</strong>-->
+  <!--<%#= @equipment_track.asset_nr %>-->
+<!--</p>-->
 
-<p>
-  <strong>Status:</strong>
-  <%= @equipment_track.status %>
-</p>
+<!--<p>-->
+  <!--<strong>Description:</strong>-->
+  <!--<%#= @equipment_track.description %>-->
+<!--</p>-->
 
-<p>
-  <strong>Profit center:</strong>
-  <%= @equipment_track.profit_center %>
-</p>
+<!--<p>-->
+  <!--<strong>Product:</strong>-->
+  <!--<%#= @equipment_track.product_id %>-->
+<!--</p>-->
 
-<p>
-  <strong>Department:</strong>
-  <%= @equipment_track.department %>
-</p>
+<!--<p>-->
+  <!--<strong>Equipment serial:</strong>-->
+  <!--<%#= @equipment_track.equipment_serial_id %>-->
+<!--</p>-->
 
-<p>
-  <strong>Project:</strong>
-  <%= @equipment_track.project %>
-</p>
+<!--<p>-->
+  <!--<strong>Supplier:</strong>-->
+  <!--<%#= @equipment_track.supplier %>-->
+<!--</p>-->
 
-<p>
-  <strong>Location:</strong>
-  <%= @equipment_track.location %>
-</p>
+<!--<p>-->
+  <!--<strong>Status:</strong>-->
+  <!--<%#= @equipment_track.status %>-->
+<!--</p>-->
 
-<p>
-  <strong>Area:</strong>
-  <%= @equipment_track.area %>
-</p>
+<!--<p>-->
+  <!--<strong>Profit center:</strong>-->
+  <!--<%#= @equipment_track.profit_center %>-->
+<!--</p>-->
 
-<p>
-  <strong>Position:</strong>
-  <%= @equipment_track.position %>
-</p>
+<!--<p>-->
+  <!--<strong>Department:</strong>-->
+  <!--<%#= @equipment_track.department %>-->
+<!--</p>-->
 
-<p>
-  <strong>Procurment date:</strong>
-  <%= @equipment_track.procurment_date %>
-</p>
+<!--<p>-->
+  <!--<strong>Project:</strong>-->
+  <!--<%#= @equipment_track.project %>-->
+<!--</p>-->
 
-<p>
-  <strong>Release cycle:</strong>
-  <%= @equipment_track.release_cycle %>
-</p>
+<!--<p>-->
+  <!--<strong>Location:</strong>-->
+  <!--<%#= @equipment_track.location %>-->
+<!--</p>-->
 
-<p>
-  <strong>Next release:</strong>
-  <%= @equipment_track.next_release %>
-</p>
+<!--<p>-->
+  <!--<strong>Area:</strong>-->
+  <!--<%#= @equipment_track.area %>-->
+<!--</p>-->
 
-<p>
-  <strong>Release notice:</strong>
-  <%= @equipment_track.release_notice %>
-</p>
+<!--<p>-->
+  <!--<strong>Position:</strong>-->
+  <!--<%#= @equipment_track.position %>-->
+<!--</p>-->
 
-<p>
-  <strong>Responsibilityer:</strong>
-  <%= @equipment_track.responsibilityer %>
-</p>
+<!--<p>-->
+  <!--<strong>Procurment date:</strong>-->
+  <!--<%#= @equipment_track.procurment_date %>-->
+<!--</p>-->
 
-<p>
-  <strong>Remark:</strong>
-  <%= @equipment_track.remark %>
-</p>
+<!--<p>-->
+  <!--<strong>Release cycle:</strong>-->
+  <!--<%#= @equipment_track.release_cycle %>-->
+<!--</p>-->
 
-<p>
-  <strong>Is top:</strong>
-  <%= @equipment_track.is_top %>
-</p>
+<!--<p>-->
+  <!--<strong>Next release:</strong>-->
+  <!--<%#= @equipment_track.next_release %>-->
+<!--</p>-->
 
-<%= link_to 'Edit', edit_equipment_track_path(@equipment_track) %> |
-<%= link_to 'Back', equipment_tracks_path %>
+<!--<p>-->
+  <!--<strong>Release notice:</strong>-->
+  <!--<%#= @equipment_track.release_notice %>-->
+<!--</p>-->
+
+<!--<p>-->
+  <!--<strong>Responsibilityer:</strong>-->
+  <!--<%#= @equipment_track.responsibilityer %>-->
+<!--</p>-->
+
+<!--<p>-->
+  <!--<strong>Remark:</strong>-->
+  <!--<%#= @equipment_track.remark %>-->
+<!--</p>-->
+
+<!--<p>-->
+  <!--<strong>Is top:</strong>-->
+  <!--<%#= @equipment_track.is_top %>-->
+<!--</p>-->
+
+<%#= link_to 'Edit', edit_equipment_track_path(@equipment_track) %> |
+<!--<%#= link_to 'Back', equipment_tracks_path %>-->

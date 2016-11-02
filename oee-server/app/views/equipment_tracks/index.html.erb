@@ -1,18 +1,24 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Equipment Tracks</h1>
+<ol class="breadcrumb">
+  <li>设备跟踪列表</li>
+</ol>
 
-<div class="marco-nheading">
-  设备追踪表
-  <div class="pull-right">
-    <%= link_to content_tag(:i, content_tag(:span, "导入数据 "), :class => "fa fa-cloud-upload"), import_equipment_tracks_path %>
+<hr class="hr-grey"/>
 
-    <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_equipment_track_path %>
+<div class="marco-npanel-default">
+  <div class="marco-nheading">
+    设备跟踪列表
+    <div class="pull-right">
+      <%= link_to content_tag(:i, content_tag(:span, "导入数据 "), :class => "fa fa-cloud-upload"), import_equipment_tracks_path %>
+
+      <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_equipment_track_path %>
+    </div>
   </div>
-</div>
 
-<div style="overflow: auto">
-<table class="table">
+
+  <div class="marco-nbody" style="overflow: auto; padding: 0;">
+    <table class="table table-bordered">
   <thead>
     <tr>
       <th>设备分级</th>
@@ -83,5 +89,7 @@
 </table>
 </div>
 <br>
+</div>
+
 
 

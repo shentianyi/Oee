@@ -1,71 +1,76 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Fix Asset Tracks</h1>
+<ol class="breadcrumb">
+  <li>固定资产跟踪列表</li>
+</ol>
 
-<div class="marco-nheading">
-  固定资产追踪表
-  <div class="pull-right">
-    <%= link_to content_tag(:i, content_tag(:span, "导入数据 "), :class => "fa fa-cloud-upload"), import_fix_asset_tracks_path %>
+<hr class="hr-grey"/>
 
-    <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_fix_asset_track_path %>
+
+<div class="marco-npanel-default">
+  <div class="marco-nheading">
+    固定资产跟踪列表
+    <div class="pull-right">
+      <%= link_to content_tag(:i, content_tag(:span, "导入数据 "), :class => "fa fa-cloud-upload"), import_fix_asset_tracks_path %>
+
+      <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_fix_asset_track_path %>
+    </div>
   </div>
-</div>
-
-<div style="overflow: auto">
-<table class="table">
-  <thead>
-    <tr>
-      <th>资料接收日期</th>
-      <th>物资采购申请单号</th>
-      <th>名称及规格</th>
-      <th>数量</th>
-      <th>总价</th>
-      <th>申请人</th>
-      <th>采购订单号</th>
-      <th>采购日期</th>
-      <th>供应商</th>
-      <th>使用费用（项目）</th>
-      <th>竣工单号</th>
-      <th>是否追加</th>
-      <th>设备编号</th>
-      <th>是否追加</th>
-      <th>固定资产号</th>
-      <th>竣工单状态</th>
-      <th>备注</th>
-      <!--<th>Equipment track</th>-->
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @fix_asset_tracks.each do |fix_asset_track| %>
+  <div class="marco-nbody" style="overflow: auto; padding: 0;">
+    <table class="table table-bordered">
+      <thead>
       <tr>
-        <td><%= fix_asset_track.info_receive_date.localtime.strftime('%Y%m%d') %></td>
-        <td><%= fix_asset_track.apply_id %></td>
-        <td><%= fix_asset_track.description %></td>
-        <td><%= fix_asset_track.qty %></td>
-        <td><%= fix_asset_track.price %></td>
-        <td><%= fix_asset_track.proposer %></td>
-        <td><%= fix_asset_track.procurment_id %></td>
-        <td><%= fix_asset_track.procurment_date.localtime.strftime('%Y%m%d') %></td>
-        <td><%= fix_asset_track.supplier %></td>
-        <td><%= fix_asset_track.project %></td>
-        <td><%= fix_asset_track.completed_id %></td>
-        <td><%= fix_asset_track.is_add_equipment %></td>
-        <td><%= fix_asset_track.equipment_nr %></td>
-        <td><%= fix_asset_track.is_add_fix_asset %></td>
-        <td><%= fix_asset_track.nr %></td>
-        <td><%= FixAssetStatus.display fix_asset_track.status %></td>
-        <td><%= fix_asset_track.remark %></td>
-        <!--<td><%= fix_asset_track.equipment_track_id %></td>-->
-        <td><%= link_to 'Show', fix_asset_track %></td>
-        <td><%= link_to 'Edit', edit_fix_asset_track_path(fix_asset_track) %></td>
-        <td><%= link_to 'Destroy', fix_asset_track, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>资料接收日期</th>
+        <th>物资采购申请单号</th>
+        <th>名称及规格</th>
+        <th>数量</th>
+        <th>总价</th>
+        <th>申请人</th>
+        <th>采购订单号</th>
+        <th>采购日期</th>
+        <th>供应商</th>
+        <th>使用费用（项目）</th>
+        <th>竣工单号</th>
+        <th>是否追加</th>
+        <th>设备编号</th>
+        <th>是否追加</th>
+        <th>固定资产号</th>
+        <th>竣工单状态</th>
+        <th>备注</th>
+        <!--<th>Equipment track</th>-->
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+      </thead>
+
+      <tbody>
+      <% @fix_asset_tracks.each do |fix_asset_track| %>
+          <tr>
+            <td><%= fix_asset_track.info_receive_date.localtime.strftime('%Y%m%d') %></td>
+            <td><%= fix_asset_track.apply_id %></td>
+            <td><%= fix_asset_track.description %></td>
+            <td><%= fix_asset_track.qty %></td>
+            <td><%= fix_asset_track.price %></td>
+            <td><%= fix_asset_track.proposer %></td>
+            <td><%= fix_asset_track.procurment_id %></td>
+            <td><%= fix_asset_track.procurment_date.localtime.strftime('%Y%m%d') %></td>
+            <td><%= fix_asset_track.supplier %></td>
+            <td><%= fix_asset_track.project %></td>
+            <td><%= fix_asset_track.completed_id %></td>
+            <td><%= fix_asset_track.is_add_equipment %></td>
+            <td><%= fix_asset_track.equipment_nr %></td>
+            <td><%= fix_asset_track.is_add_fix_asset %></td>
+            <td><%= fix_asset_track.nr %></td>
+            <td><%= FixAssetStatus.display fix_asset_track.status %></td>
+            <td><%= fix_asset_track.remark %></td>
+            <!--<td><%= fix_asset_track.equipment_track_id %></td>-->
+            <td><%= link_to 'Show', fix_asset_track %></td>
+            <td><%= link_to 'Edit', edit_fix_asset_track_path(fix_asset_track) %></td>
+            <td><%= link_to 'Destroy', fix_asset_track, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
 <br>
 
-<%= link_to 'New Fix Asset Track', new_fix_asset_track_path %>
