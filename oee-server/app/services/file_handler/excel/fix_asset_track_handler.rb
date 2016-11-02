@@ -4,7 +4,8 @@ module FileHandler
 
       HEADERS=[
           :info_receive_date, :apply_id, :description, :qty, :price, :proposer, :procurment_date, :supplier,
-          :project, :procurment_id, :completed_id, :is_add_equipment, :equipment_nr, :is_add_fix_asset, :nr, :status, :remark
+          :project, :procurment_id, :completed_id, :is_add_equipment, :equipment_nr, :is_add_fix_asset, :nr,
+          :status, :remark
       ]
 
       def self.import(file)
@@ -98,6 +99,10 @@ module FileHandler
           msg.contents<<"固定资产编号不可为空"
         else
           f = FixAssetTrack.find_by_nr(row[:nr])
+          if row[:is_add_fix_asset] && f.blank?
+            msg.contents<<"固定资产编号:#{row[:nr]}不存在, 不可追加"
+          end
+
           if !row[:is_add_fix_asset] && !f.blank?
             msg.contents<<"固定资产编号:#{row[:nr]}已存在"
           end
