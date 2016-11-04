@@ -1,6 +1,18 @@
 Rails.application.routes.draw do
 
 
+  resources :asset_balance_items do
+
+  end
+
+  resources :asset_balance_lists do
+    member do
+      get 'asset_balance_items'
+    end
+    collection do
+      match :import, to: :import, via: [:get, :post]
+    end
+  end
   resources :fix_asset_tracks do
     collection do
       get :search

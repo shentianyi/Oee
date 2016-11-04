@@ -1,0 +1,49 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fix_asset_track: one
+  cap_date: 2016-11-03 16:18:37
+  profit_center: MyString
+  asset_description: MyString
+  acquis_val: 1.5
+  accum_dep: 1.5
+  book_val: 1.5
+  asset_class: MyString
+  inventory_nr: MyString
+  ts_equipment_nr: MyString
+  ts_project: MyString
+  ts_inventory_user: MyString
+  ts_keeper: MyString
+  ts_position: MyString
+  ts_nameplate_track: MyString
+  ts_type: MyString
+  ts_equipment_type: MyString
+  ts_area: MyString
+  ts_supplier: MyString
+  status: MyString
+  remark: MyString
+  ts_inventory_result: MyString
+
+two:
+  fix_asset_track: two
+  cap_date: 2016-11-03 16:18:37
+  profit_center: MyString
+  asset_description: MyString
+  acquis_val: 1.5
+  accum_dep: 1.5
+  book_val: 1.5
+  asset_class: MyString
+  inventory_nr: MyString
+  ts_equipment_nr: MyString
+  ts_project: MyString
+  ts_inventory_user: MyString
+  ts_keeper: MyString
+  ts_position: MyString
+  ts_nameplate_track: MyString
+  ts_type: MyString
+  ts_equipment_type: MyString
+  ts_area: MyString
+  ts_supplier: MyString
+  status: MyString
+  remark: MyString
+  ts_inventory_result: MyString

@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Asset Balance Lists</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>资产平衡单号</th>
+      <th>月份</th>
+      <th>清单</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @asset_balance_lists.each do |asset_balance_list| %>
+      <tr>
+        <td><%= asset_balance_list.id %></td>
+        <td><%= asset_balance_list.balance_date.localtime.strftime('%Y/%m/%d') %></td>
+        <td><%= link_to '清单列表', asset_balance_items_asset_balance_list_path(asset_balance_list) %>
+          <span class="badge pull-right"><%= asset_balance_list.asset_balance_items.count %></td>
+        <td><%= link_to '导入数据', import_asset_balance_lists_path(id: asset_balance_list.id) %></td>
+        <td><%= link_to 'Edit', edit_asset_balance_list_path(asset_balance_list) %></td>
+        <td><%= link_to 'Destroy', asset_balance_list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Asset Balance List', new_asset_balance_list_path %>

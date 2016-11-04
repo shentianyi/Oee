@@ -1,0 +1,9 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Balance date:</strong>
+  <%= @asset_balance_list.balance_date %>
+</p>
+
+<%= link_to 'Edit', edit_asset_balance_list_path(@asset_balance_list) %> |
+<%= link_to 'Back', asset_balance_lists_path %>

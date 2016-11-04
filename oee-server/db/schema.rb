@@ -10,7 +10,44 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160923085317) do
+ActiveRecord::Schema.define(version: 20161104034901) do
+
+  create_table "asset_balance_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "fix_asset_track_id"
+    t.datetime "cap_date"
+    t.string   "profit_center"
+    t.string   "asset_description"
+    t.float    "acquis_val",            limit: 24
+    t.float    "accum_dep",             limit: 24
+    t.float    "book_val",              limit: 24
+    t.string   "asset_class"
+    t.string   "inventory_nr"
+    t.string   "ts_equipment_nr"
+    t.string   "ts_project"
+    t.string   "ts_inventory_user"
+    t.string   "ts_keeper"
+    t.string   "ts_position"
+    t.string   "ts_nameplate_track"
+    t.string   "ts_type"
+    t.string   "ts_equipment_type"
+    t.string   "ts_area"
+    t.string   "ts_supplier"
+    t.string   "status"
+    t.string   "remark"
+    t.string   "ts_inventory_result"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.string   "asset_balance_list_id"
+    t.index ["asset_balance_list_id"], name: "index_asset_balance_items_on_asset_balance_list_id", using: :btree
+    t.index ["fix_asset_track_id"], name: "index_asset_balance_items_on_fix_asset_track_id", using: :btree
+  end
+
+  create_table "asset_balance_lists", id: :string, limit: 36, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.datetime "balance_date"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["id"], name: "index_asset_balance_lists_on_id", using: :btree
+  end
 
   create_table "attachments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
@@ -264,6 +301,7 @@ ActiveRecord::Schema.define(version: 20160923085317) do
     t.index ["machine_type_id"], name: "index_work_times_on_machine_type_id", using: :btree
   end
 
+  add_foreign_key "asset_balance_items", "fix_asset_tracks"
   add_foreign_key "downtime_codes", "downtime_types"
   add_foreign_key "downtime_records", "crafts"
   add_foreign_key "downtime_records", "downtime_codes"
