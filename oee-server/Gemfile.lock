@@ -47,6 +47,8 @@ GEM
       addressable
       gyoku
       httparty
+    ancestry (2.1.0)
+      activerecord (>= 3.0.0)
     arel (7.1.1)
     axlsx (2.0.1)
       htmlentities (~> 4.3.1)
@@ -210,6 +212,7 @@ PLATFORMS
 
 DEPENDENCIES
   aliyun-oss
+  ancestry
   axlsx
   byebug
   carrierwave (~> 0.10.0)
