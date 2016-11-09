@@ -1,0 +1,79 @@
+<p id="notice"><%= notice %></p>
+<li><%= link_to '返回', inventory_lists_path %></li>
+
+
+<h1>盘点单名称：<%= @inventory_list.name %></h1>
+<h1>Inventory Items</h1>
+
+<div>
+  <div>
+    <% if @inventory_list.status==InventoryListStatus::PROCESSING && @inventory_list.has_un_covered_item %>
+        <%= link_to "开始覆盖", cover_list_inventory_item_path(@inventory_list.id), class: "btn btn-warning", data: {confirm: "覆盖后将清空原有的固定资产记录以新的盘点结果作为固定资产记录"} %>
+    <% end %>
+  </div>
+</div>
+
+
+<div style="overflow: auto">
+<table class="table">
+  <thead>
+  <tr>
+    <th>是否已覆盖</th>
+    <th>Fix asset track</th>
+    <th>Cap date</th>
+    <th>Profit center</th>
+    <th>Asset description</th>
+    <th>Acquis val</th>
+    <th>Accum dep</th>
+    <th>Book val</th>
+    <th>Ts equipment nr</th>
+    <th>Ts project</th>
+    <th>Ts inventory user</th>
+    <th>Ts keeper</th>
+    <th>Ts position</th>
+    <th>Ts nameplate track</th>
+    <th>Ts type</th>
+    <th>Ts equipment type</th>
+    <th>Ts area</th>
+    <th>Ts supplier</th>
+    <th>Status</th>
+    <th>Remark</th>
+    <th>Ts inventory result</th>
+    <th colspan="2"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @inventory_items.each do |inventory_item| %>
+      <tr>
+        <td><%= inventory_item.is_cover==true ? '是' : '否' %></td>
+        <td><%= inventory_item.fix_asset_track.nr %></td>
+        <td><%= inventory_item.cap_date %></td>
+        <td><%= inventory_item.profit_center %></td>
+        <td><%= inventory_item.asset_description %></td>
+        <td><%= inventory_item.acquis_val %></td>
+        <td><%= inventory_item.accum_dep %></td>
+        <td><%= inventory_item.book_val %></td>
+        <td><%= inventory_item.ts_equipment_nr %></td>
+        <td><%= inventory_item.ts_project %></td>
+        <td><%= inventory_item.ts_inventory_user %></td>
+        <td><%= inventory_item.ts_keeper %></td>
+        <td><%= inventory_item.ts_position %></td>
+        <td><%= inventory_item.ts_nameplate_track %></td>
+        <td><%= inventory_item.ts_type %></td>
+        <td><%= inventory_item.ts_equipment_type %></td>
+        <td><%= inventory_item.ts_area %></td>
+        <td><%= inventory_item.ts_supplier %></td>
+        <td><%= inventory_item.status %></td>
+        <td><%= inventory_item.remark %></td>
+        <td><%= inventory_item.ts_inventory_result %></td>
+
+        <td><%= link_to 'Edit', edit_inventory_item_path(inventory_item) %></td>
+        <td><%= link_to 'Destroy', inventory_item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+</div>
+

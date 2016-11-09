@@ -1,16 +1,16 @@
 <p id="notice"><%= notice %></p>
 
-<div id="equipment_tracks">
+<div id="fix_asset_tracks">
   <ol class="breadcrumb">
-    <li>基础数据</li>
-    <li><%= link_to '固定资产追踪表', fix_asset_tracks_path %></li>
+    <li><%= link_to '固定资产追踪列表', fix_asset_tracks_path %></li>
+    <li>{{action}}</li>
   </ol>
 
   <hr class="hr-grey"/>
 
   <form>
     <fieldset>
-      <legend style="width: 150px;"></legend>
+      <legend style="width: 220px;">{{action}}</legend>
       <div>
         <b>选择数据文件：</b>
         <input id="item-data-uploader" type="file" name="files[]" data-url="/fix_asset_tracks/import"/>

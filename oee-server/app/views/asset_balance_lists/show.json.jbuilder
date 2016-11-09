@@ -1,0 +1,1 @@
+json.partial! "asset_balance_lists/asset_balance_list", asset_balance_list: @asset_balance_list

@@ -1,6 +1,36 @@
 Rails.application.routes.draw do
 
 
+  resources :inventory_items do
+    member do
+      get :cover_list
+    end
+  end
+  resources :inventory_lists do
+    member do
+      get 'inventory_items'
+
+    end
+
+    collection do
+      get 'reset_inventory'
+      match :import, to: :import, via: [:get, :post]
+    end
+  end
+
+
+  resources :asset_balance_items do
+
+  end
+
+  resources :asset_balance_lists do
+    member do
+      get 'asset_balance_items'
+    end
+    collection do
+      match :import, to: :import, via: [:get, :post]
+    end
+  end
   resources :fix_asset_tracks do
     collection do
       get :search

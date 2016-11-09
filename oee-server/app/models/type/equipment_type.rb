@@ -27,4 +27,17 @@ class EquipmentType < BaseType
         '客户资产'
     end
   end
+
+  def self.decode type
+    case type
+      when '设备'
+        EQUIPMENT
+      when '固定资产'
+        FIX_ASSET
+      when '客户资产'
+        CLIENT_ASSET
+      else
+        EQUIPMENT
+    end
+  end
 end

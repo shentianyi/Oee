@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @inventory_list.name %>
+</p>
+
+<p>
+  <strong>Inventory date:</strong>
+  <%= @inventory_list.inventory_date %>
+</p>
+
+<p>
+  <strong>Asset balance list:</strong>
+  <%= @inventory_list.asset_balance_list %>
+</p>
+
+<%= link_to 'Edit', edit_inventory_list_path(@inventory_list) %> |
+<%= link_to 'Back', inventory_lists_path %>

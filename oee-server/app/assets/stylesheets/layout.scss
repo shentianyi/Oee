@@ -201,7 +201,7 @@ body {
     position: absolute;
     top: 20px;
     bottom: 20px;
-    left: 85px;
+    left: 105px;
     right: 10px;
     overflow-y: auto;
     overflow-x: hidden;
@@ -378,6 +378,11 @@ body {
       background: $clouds;
       color: $peter-river;
     }
+  }
+
+  input[type="checkbox"] {
+    height: 20px;
+    margin-top: 8px;
   }
 }
 

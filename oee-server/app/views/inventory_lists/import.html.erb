@@ -1,0 +1,36 @@
+<p id="notice"><%= notice %></p>
+
+<div>
+  <ol class="breadcrumb">
+    <li><%= link_to '盘点列表', inventory_lists_path %></li>
+  </ol>
+
+  <hr class="hr-grey"/>
+
+  <form>
+    <fieldset>
+      <div>
+        <b>选择数据文件：</b>
+        <input id="item-data-uploader" type="file" name="files[]" data-url="/inventory_lists/import"/>
+
+        <hr class="hr-grey"/>
+
+        <div id="item-data-uploader-preview">
+          处理信息
+        </div>
+      </div>
+
+      <div>
+        <b>下载模板：</b>
+        <a href="/files/<%= ImportTemplate.inventory_item_excel_template %>">
+          <%= ImportTemplate::INVENTORY_ITEM_EXCEL_TEMPLATE %></a>
+      </div>
+    </fieldset>
+  </form>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    data_upload("#item-data-uploader");
+  });
+</script>

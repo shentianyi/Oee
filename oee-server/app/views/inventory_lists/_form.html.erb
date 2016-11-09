@@ -1,0 +1,38 @@
+<%= form_for(inventory_list) do |f| %>
+    <% if inventory_list.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(inventory_list.errors.count, "error") %> prohibited this inventory_list from being
+            saved:</h2>
+
+          <ul>
+            <% inventory_list.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    </div>
+
+    <div class="field">
+      <%= f.label :inventory_date %>
+      <%= f.date_field :inventory_date %>
+    </div>
+
+    <div class="field">
+      <%= f.label :asset_balance_list_id %>
+      <%= f.select(:asset_balance_list_id, AssetBalanceList.all.collect { |a| [a.id, a.id] }, {include_blank: false}) %>
+    </div>
+
+    <div class="field">
+      <%= f.label :status, '状态' %>
+      <%= f.select(:status, InventoryListStatus.menu, {include_blank: false}) %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+<% end %>

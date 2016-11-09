@@ -1,0 +1,1 @@
+json.array! @inventory_lists, partial: 'inventory_lists/inventory_list', as: :inventory_list

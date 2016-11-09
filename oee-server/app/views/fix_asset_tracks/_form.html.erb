@@ -1,107 +1,312 @@
-<%= form_for(fix_asset_track) do |f| %>
-  <% if fix_asset_track.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(fix_asset_track.errors.count, "error") %> prohibited this fix_asset_track from being saved:</h2>
+<style type="text/css">
+  .marco-igroup-oee > span {
+    min-width: 130px;
+  }
+</style>
 
-      <ul>
-      <% fix_asset_track.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+<div id="fix_asset_tracks">
+  <ol class="breadcrumb">
+    <li><%= link_to '固定资产跟踪列表', fix_asset_tracks_path %></li>
+    <li>{{action}}</li>
+  </ol>
+
+  <hr class="hr-grey"/>
+
+  <%= form_for(fix_asset_track) do |f| %>
+      <% if fix_asset_track.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(fix_asset_track.errors.count, "error") %> prohibited this fix_asset_track from being
+              saved:</h2>
+
+            <ul>
+              <% fix_asset_track.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
       <% end %>
-      </ul>
-    </div>
+
+      <div class="marco-npanel-default">
+        <div class="marco-nheading">
+          {{action}}
+          <div class="pull-right">
+            <button type="submit" class="marco-btn-normal">{{actionBtn}}</button>
+          </div>
+        </div>
+
+        <div class="marco-nbody">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>资产接收日期</span>
+                <%= f.text_field :info_receive_date, :class => 'datepicker' %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>物资采购申请单号</span>
+                <%= f.text_field :apply_id %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>名称及规格</span>
+                <%= f.text_field :description %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>数量</span>
+                <%= f.text_field :qty %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>总价</span>
+                <%= f.text_field :price %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>申请人</span>
+                <%= f.text_field :proposer %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <%#= f.label :procurment_id %>
+                <span>Pepcurment</span>
+                <%= f.text_field :procurment_id %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>采购日期</span>
+                <%= f.text_field :procurment_date %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>供应商</span>
+                <%= f.text_field :supplier %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>使用费用(项目)</span>
+                <%= f.text_field :project %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>采购订单号</span>
+                <%= f.text_field :completed_id %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>发票情况</span>
+                <%#= f.text_field :completed_id %>
+                <input type="text" value="发票情况">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <hr class="hr-grey" style="margin-bottom:3px;"/>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <span style="color:lightseagreen;">追加到其他设备号时打钩并填写</span>
+
+              <div class="marco-igroup-oee">
+                <%#= f.label :is_add_equipment %>
+                <span>是否追加</span>
+                <%= f.check_box :is_add_equipment %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <span style="color:lightseagreen;">其他设备号</span>
+
+              <div class="marco-igroup-oee">
+                <span>设备号</span>
+                <%= f.text_field :equipment_nr %>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <hr class="hr-grey" style="margin-bottom:3px;"/>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <span style="color:lightseagreen;">追加到其他固定资产号时打钩并填写</span>
+
+              <div class="marco-igroup-oee">
+                <%#= f.label :is_add_fix_asset %>
+                <span>是否追加</span>
+                <%= f.check_box :is_add_fix_asset %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <span style="color:lightseagreen;">其他固定资产号</span>
+
+              <div class="marco-igroup-oee">
+                <span>固定资产号</span>
+                <%= f.text_field :nr %>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <hr class="hr-grey" style="margin-bottom:3px;"/>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>竣工单状态</span>
+                <%= f.text_field :status %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>备注</span>
+                <%= f.text_field :remark %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>Equipment track</span>
+                <%= f.text_field :equipment_track_id %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
   <% end %>
+</div>
 
-  <div class="field">
-    <%= f.label :info_receive_date %>
-    <%= f.text_field :info_receive_date %>
-  </div>
+<script type="text/javascript">
+  layout.date_picker('.datepicker');
+</script>
 
-  <div class="field">
-    <%= f.label :apply_id %>
-    <%= f.text_field :apply_id %>
-  </div>
+<!--之前的数据-->
 
-  <div class="field">
-    <%= f.label :description %>
-    <%= f.text_field :description %>
-  </div>
+<%#= form_for(fix_asset_track) do |f| %>
+<%# if fix_asset_track.errors.any? %>
+<!--<div id="error_explanation">-->
+<!--<h2><%#= pluralize(fix_asset_track.errors.count, "error") %> prohibited this fix_asset_track from being saved:</h2>-->
 
-  <div class="field">
-    <%= f.label :qty %>
-    <%= f.text_field :qty %>
-  </div>
+<!--<ul>-->
+<!--<%# fix_asset_track.errors.full_messages.each do |message| %>-->
+<!--<li><%#= message %></li>-->
+<!--<%# end %>-->
+<!--</ul>-->
+<!--</div>-->
+<%# end %>
 
-  <div class="field">
-    <%= f.label :price %>
-    <%= f.text_field :price %>
-  </div>
+<!--<div class="field">-->
+<!--<%#= f.label :info_receive_date %>-->
+<!--<%#= f.text_field :info_receive_date %>-->
+<!--</div>-->
 
-  <div class="field">
-    <%= f.label :proposer %>
-    <%= f.text_field :proposer %>
-  </div>
+<!--<div class="field">-->
+<!--<%#= f.label :apply_id %>-->
+<!--<%#= f.text_field :apply_id %>-->
+<!--</div>-->
 
-  <div class="field">
-    <%= f.label :procurment_id %>
-    <%= f.text_field :procurment_id %>
-  </div>
+<!--<div class="field">-->
+<!--<%#= f.label :description %>-->
+<!--<%#= f.text_field :description %>-->
+<!--</div>-->
 
-  <div class="field">
-    <%= f.label :procurment_date %>
-    <%= f.text_field :procurment_date %>
-  </div>
+<!--<div class="field">-->
+<!--<%#= f.label :qty %>-->
+<!--<%#= f.text_field :qty %>-->
+<!--</div>-->
 
-  <div class="field">
-    <%= f.label :supplier %>
-    <%= f.text_field :supplier %>
-  </div>
+<!--<div class="field">-->
+<!--<%#= f.label :price %>-->
+<!--<%#= f.text_field :price %>-->
+<!--</div>-->
 
-  <div class="field">
-    <%= f.label :project %>
-    <%= f.text_field :project %>
-  </div>
+<!--<div class="field">-->
+<!--<%#= f.label :proposer %>-->
+<!--<%#= f.text_field :proposer %>-->
+<!--</div>-->
 
-  <div class="field">
-    <%= f.label :completed_id %>
-    <%= f.text_field :completed_id %>
-  </div>
+<!--<div class="field">-->
+<!--<%#= f.label :procurment_id %>-->
+<!--<%#= f.text_field :procurment_id %>-->
+<!--</div>-->
 
-  <div class="field">
-    <%= f.label :is_add_equipment %>
-    <%= f.check_box :is_add_equipment %>
-  </div>
+<!--<div class="field">-->
+<!--<%#= f.label :procurment_date %>-->
+<!--<%#= f.text_field :procurment_date %>-->
+<!--</div>-->
 
-  <div class="field">
-    <%= f.label :equipment_nr %>
-    <%= f.text_field :equipment_nr %>
-  </div>
+<!--<div class="field">-->
+<!--<%#= f.label :supplier %>-->
+<!--<%#= f.text_field :supplier %>-->
+<!--</div>-->
 
-  <div class="field">
-    <%= f.label :is_add_fix_asset %>
-    <%= f.check_box :is_add_fix_asset %>
-  </div>
+<!--<div class="field">-->
+<!--<%#= f.label :project %>-->
+<!--<%#= f.text_field :project %>-->
+<!--</div>-->
 
-  <div class="field">
-    <%= f.label :nr %>
-    <%= f.text_field :nr %>
-  </div>
+<!--<div class="field">-->
+<!--<%#= f.label :completed_id %>-->
+<!--<%#= f.text_field :completed_id %>-->
+<!--</div>-->
 
-  <div class="field">
-    <%= f.label :status %>
-    <%= f.number_field :status %>
-  </div>
+<!--<div class="field">-->
+<!--<%#= f.label :is_add_equipment %>-->
+<!--<%#= f.check_box :is_add_equipment %>-->
+<!--</div>-->
 
-  <div class="field">
-    <%= f.label :remark %>
-    <%= f.text_field :remark %>
-  </div>
+<!--<div class="field">-->
+<!--<%#= f.label :equipment_nr %>-->
+<!--<%#= f.text_field :equipment_nr %>-->
+<!--</div>-->
 
-  <div class="field">
-    <%= f.label :equipment_track_id %>
-    <%= f.number_field :equipment_track_id %>
-  </div>
+<!--<div class="field">-->
+<!--<%#= f.label :is_add_fix_asset %>-->
+<!--<%#= f.check_box :is_add_fix_asset %>-->
+<!--</div>-->
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+<!--<div class="field">-->
+<!--<%#= f.label :nr %>-->
+<!--<%#= f.text_field :nr %>-->
+<!--</div>-->
+
+<!--<div class="field">-->
+<!--<%#= f.label :status %>-->
+<!--<%#= f.number_field :status %>-->
+<!--</div>-->
+
+<!--<div class="field">-->
+<!--<%#= f.label :remark %>-->
+<!--<%#= f.text_field :remark %>-->
+<!--</div>-->
+
+<!--<div class="field">-->
+<!--<%#= f.label :equipment_track_id %>-->
+<!--<%#= f.number_field :equipment_track_id %>-->
+<!--</div>-->
+
+<!--<div class="actions">-->
+<!--<%#= f.submit %>-->
+<!--</div>-->
+<%## end %>
+

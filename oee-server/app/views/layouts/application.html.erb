@@ -96,19 +96,23 @@
         </ul>
       </li>
 
-      <li class="nav-users">
-        <%= link_to content_tag(:i, '', :class => 'fa fa-truck'), users_path, :title => '资产跟踪' %>
+      <li class="nav-fix-asset-tracks">
+        <%= link_to content_tag(:i, '', :class => 'fa fa-truck'),fix_asset_tracks_path, :title => '资产跟踪' %>
         <span>资产跟踪</span>
       </li>
 
+      <li class="nav-equipment-tracks">
+        <%= link_to content_tag(:i, '', :class => 'fa fa-cubes'), equipment_tracks_path, :title => '设备跟踪' %>
+        <span>设备跟踪</span>
+      </li>
 
       <li class="nav-users">
-        <%= link_to content_tag(:i, '', :class => 'fa fa-line-chart'), users_path, :title => '月资产平衡' %>
+        <%= link_to content_tag(:i, '', :class => 'fa fa-line-chart'), asset_balance_lists_path, :title => '月资产平衡' %>
         <span>月资产</span>
       </li>
 
       <li class="nav-users">
-        <%= link_to content_tag(:i, '', :class => 'fa fa-inbox'), users_path, :title => '资产盘点' %>
+        <%= link_to content_tag(:i, '', :class => 'fa fa-inbox'), inventory_lists_path, :title => '资产盘点' %>
         <span>盘点</span>
       </li>
 

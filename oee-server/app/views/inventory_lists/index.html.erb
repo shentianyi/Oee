@@ -1,0 +1,46 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Inventory Lists</h1>
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Name</th>
+      <th>Inventory date</th>
+      <th>Asset balance list</th>
+      <th>状态</th>
+      <th colspan="6"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @inventory_lists.each do |inventory_list| %>
+      <tr>
+        <td>
+          <input name="inventory-list-check[<%= inventory_list.id%>]" type="checkbox" id="<%= inventory_list.id %>">
+        </td>
+        <td><%= inventory_list.name %></td>
+        <td><%= inventory_list.inventory_date.localtime.strftime('%Y/%m/%d') %></td>
+        <td><%= inventory_list.asset_balance_list.blank? ? '' : inventory_list.asset_balance_list.id %></td>
+        <th><%= InventoryListStatus.display(inventory_list.status) %></th>
+        <td><%= link_to '盘点清单', inventory_items_inventory_list_path(inventory_list) %>
+          <span class="badge pull-right"><%= inventory_list.inventory_items.count %></td>
+        <th><%= link_to '导入数据', import_inventory_lists_path(id: inventory_list.id) %> </th>
+        <th>
+          <%= link_to "盘点重置", reset_inventory_inventory_lists_path({id: inventory_list.id, do: 'disable'}), class: "btn btn-danger", data: {confirm: "确定盘点?"} %>
+        </th>
+        <th>
+          <%= link_to "取消盘点重置", reset_inventory_inventory_lists_path({id: inventory_list.id, do: 'enable'}), class: "btn btn-warning", data: {confirm: "确定取消盘点重置?"} %>
+        </th>
+        <td><%= link_to 'Edit', edit_inventory_list_path(inventory_list) %></td>
+        <td><%= link_to 'Destroy', inventory_list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Inventory List', new_inventory_list_path %>

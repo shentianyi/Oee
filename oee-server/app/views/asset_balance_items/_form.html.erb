@@ -1,0 +1,127 @@
+<%= form_for(asset_balance_item) do |f| %>
+  <% if asset_balance_item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(asset_balance_item.errors.count, "error") %> prohibited this asset_balance_item from being saved:</h2>
+
+      <ul>
+      <% asset_balance_item.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :fix_asset_track_id %>
+    <%= f.text_field :fix_asset_track_id %>
+  </div>
+
+  <div class="field">
+    <%= f.label :cap_date %>
+    <%= f.datetime_select :cap_date %>
+  </div>
+
+  <div class="field">
+    <%= f.label :profit_center %>
+    <%= f.text_field :profit_center %>
+  </div>
+
+  <div class="field">
+    <%= f.label :asset_description %>
+    <%= f.text_field :asset_description %>
+  </div>
+
+  <div class="field">
+    <%= f.label :acquis_val %>
+    <%= f.text_field :acquis_val %>
+  </div>
+
+  <div class="field">
+    <%= f.label :accum_dep %>
+    <%= f.text_field :accum_dep %>
+  </div>
+
+  <div class="field">
+    <%= f.label :book_val %>
+    <%= f.text_field :book_val %>
+  </div>
+
+  <div class="field">
+    <%= f.label :asset_class %>
+    <%= f.text_field :asset_class %>
+  </div>
+
+  <div class="field">
+    <%= f.label :inventory_nr %>
+    <%= f.text_field :inventory_nr %>
+  </div>
+
+  <div class="field">
+    <%= f.label :ts_equipment_nr %>
+    <%= f.text_field :ts_equipment_nr %>
+  </div>
+
+  <div class="field">
+    <%= f.label :ts_project %>
+    <%= f.text_field :ts_project %>
+  </div>
+
+  <div class="field">
+    <%= f.label :ts_inventory_user %>
+    <%= f.text_field :ts_inventory_user %>
+  </div>
+
+  <div class="field">
+    <%= f.label :ts_keeper %>
+    <%= f.text_field :ts_keeper %>
+  </div>
+
+  <div class="field">
+    <%= f.label :ts_position %>
+    <%= f.text_field :ts_position %>
+  </div>
+
+  <div class="field">
+    <%= f.label :ts_nameplate_track %>
+    <%= f.text_field :ts_nameplate_track %>
+  </div>
+
+  <div class="field">
+    <%= f.label :ts_type %>
+    <%= f.text_field :ts_type %>
+  </div>
+
+  <div class="field">
+    <%= f.label :ts_equipment_type %>
+    <%= f.text_field :ts_equipment_type %>
+  </div>
+
+  <div class="field">
+    <%= f.label :ts_area %>
+    <%= f.text_field :ts_area %>
+  </div>
+
+  <div class="field">
+    <%= f.label :ts_supplier %>
+    <%= f.text_field :ts_supplier %>
+  </div>
+
+  <div class="field">
+    <%= f.label :status %>
+    <%= f.text_field :status %>
+  </div>
+
+  <div class="field">
+    <%= f.label :remark %>
+    <%= f.text_field :remark %>
+  </div>
+
+  <div class="field">
+    <%= f.label :ts_inventory_result %>
+    <%= f.text_field :ts_inventory_result %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

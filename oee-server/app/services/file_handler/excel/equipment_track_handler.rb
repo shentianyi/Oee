@@ -6,8 +6,10 @@ module FileHandler
       # 使用位置	区域 	操作指导书	维护指导书	说明书柜位	购置日期	放行周期(年)	预计再次放行时间	 放行提醒	 负责的工程师	 备注	操作
 
       HEADERS=[
-          :level, :type, :asset_nr, :name, :nr, :description, :product_id, :equipment_serial_id, :supplier, :status, :profit_center, :department, :project,
-          :location, :area, :operate_instructor, :maintain_instructor, :position, :procurment_date, :release_cycle, :next_release, :release_notice, :responsibilityer, :remark,  :operation
+          :level, :type, :asset_nr, :name, :nr, :description, :product_id, :equipment_serial_id, :supplier, :status,
+          :profit_center, :department, :project, :location, :area, :operate_instructor, :maintain_instructor,
+          :position, :procurment_date, :release_cycle, :next_release, :release_notice, :responsibilityer, :remark,
+          :operation
       ]
 
       def self.import(file)
@@ -32,6 +34,9 @@ module FileHandler
                   row[k] = row[k].sub(/\.0/, '') if k== :asset_nr
                 end
 
+                row[:type] = EquipmentType.decode(row[:type])
+                fa = FixAssetTrack.where(nr: row[:asset_nr], ancestry: nil).first
+
                 p row
 
                 count += 1
@@ -41,6 +46,7 @@ module FileHandler
                   e.destroy
                 else
                   e =EquipmentTrack.new(row.except(:operation))
+                  e.fix_asset_track=fa
                   unless e.save
                     puts e.errors.to_json
                     raise e.errors.to_json
@@ -77,7 +83,10 @@ module FileHandler
             row = {}
             HEADERS.each_with_index do |k, i|
               row[k] = book.cell(line, i+1).to_s.strip
+              row[k] = row[k].sub(/\.0/, '') if k== :asset_nr
             end
+
+            row[:type] = EquipmentType.decode(row[:type])
 
             mssg = validate_row(row, line)
             if mssg.result
@@ -118,6 +127,23 @@ module FileHandler
             end
           end
         end
+
+        if row[:type].blank?
+          msg.contents<<"设备类型不可为空"
+        else
+          if row[:type] == EquipmentType::FIX_ASSET
+            if row[:asset_nr].blank?
+              msg.contents<<"固定编号不可为空"
+            else
+              fa = FixAssetTrack.where(nr: row[:asset_nr], ancestry: nil).first
+              if fa.blank?
+                msg.contents<<"固定编号:#{row[:asset_nr]} 不存在"
+              end
+            end
+          end
+        end
+
+
 
         unless msg.result=(msg.contents.size==0)
           msg.content=msg.contents.join('/')

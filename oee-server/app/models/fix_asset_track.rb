@@ -1,6 +1,7 @@
 class FixAssetTrack < ApplicationRecord
 
-  # belongs_to :equipment_track
-
   has_ancestry
+  belongs_to :equipment_track
+
+
 end
