@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @budget.code %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @budget.type %>
+</p>
+
+<p>
+  <strong>Desc:</strong>
+  <%= @budget.desc %>
+</p>
+
+<p>
+  <strong>Capex:</strong>
+  <%= @budget.capex %>
+</p>
+
+<%= link_to 'Edit', edit_budget_path(@budget) %> |
+<%= link_to 'Back', budgets_path %>

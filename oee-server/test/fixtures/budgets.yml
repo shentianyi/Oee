@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  type: 
+  desc: MyString
+  capex: one
+
+two:
+  code: MyString
+  type: 
+  desc: MyString
+  capex: two

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  project: MyString
+  bu_code: MyString
+  desc: MyString
+
+two:
+  project: MyString
+  bu_code: MyString
+  desc: MyString

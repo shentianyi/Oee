@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  qty: 1
+  unit_price: 1.5
+  total_price: 1.5
+  budget: one
+
+two:
+  qty: 1
+  unit_price: 1.5
+  total_price: 1.5
+  budget: two

@@ -1,0 +1,1 @@
+json.array! @capexes, partial: 'capexes/capex', as: :capex

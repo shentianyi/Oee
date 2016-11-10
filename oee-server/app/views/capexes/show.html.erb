@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Project:</strong>
+  <%= @capex.project %>
+</p>
+
+<p>
+  <strong>Bu code:</strong>
+  <%= @capex.bu_code %>
+</p>
+
+<p>
+  <strong>Desc:</strong>
+  <%= @capex.desc %>
+</p>
+
+<%= link_to 'Edit', edit_capex_path(@capex) %> |
+<%= link_to 'Back', capexes_path %>

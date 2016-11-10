@@ -1,0 +1,32 @@
+<%= form_for(capex) do |f| %>
+  <% if capex.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(capex.errors.count, "error") %> prohibited this capex from being saved:</h2>
+
+      <ul>
+      <% capex.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :project %>
+    <%= f.text_field :project %>
+  </div>
+
+  <div class="field">
+    <%= f.label :bu_code %>
+    <%= f.select(:bu_code, BuCodeEnum.menu, {include_blank: false}) %>
+  </div>
+
+  <div class="field">
+    <%= f.label :desc %>
+    <%= f.text_field :desc %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

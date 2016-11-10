@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161110035017) do
+ActiveRecord::Schema.define(version: 20161110094922) do
 
   create_table "areas", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
@@ -71,6 +71,34 @@ ActiveRecord::Schema.define(version: 20161110035017) do
     t.string   "attachable_type"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+  end
+
+  create_table "budget_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "qty"
+    t.float    "unit_price",  limit: 24
+    t.float    "total_price", limit: 24
+    t.integer  "budget_id"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.index ["budget_id"], name: "index_budget_items_on_budget_id", using: :btree
+  end
+
+  create_table "budgets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "code"
+    t.integer  "type"
+    t.string   "desc"
+    t.integer  "capex_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["capex_id"], name: "index_budgets_on_capex_id", using: :btree
+  end
+
+  create_table "capexes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "project"
+    t.integer  "bu_code"
+    t.string   "desc"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "crafts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -434,6 +462,8 @@ ActiveRecord::Schema.define(version: 20161110035017) do
   end
 
   add_foreign_key "asset_balance_items", "fix_asset_tracks"
+  add_foreign_key "budget_items", "budgets"
+  add_foreign_key "budgets", "capexes"
   add_foreign_key "downtime_codes", "downtime_types"
   add_foreign_key "downtime_records", "crafts"
   add_foreign_key "downtime_records", "downtime_codes"

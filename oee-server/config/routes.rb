@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
 
 
+  resources :budget_items
+  resources :budgets
+  resources :capexes
   resources :user_inventory_tasks
   resources :user_area_items
   resources :areas

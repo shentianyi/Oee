@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Qty:</strong>
+  <%= @budget_item.qty %>
+</p>
+
+<p>
+  <strong>Unit price:</strong>
+  <%= @budget_item.unit_price %>
+</p>
+
+<p>
+  <strong>Total price:</strong>
+  <%= @budget_item.total_price %>
+</p>
+
+<p>
+  <strong>Budget:</strong>
+  <%= @budget_item.budget %>
+</p>
+
+<%= link_to 'Edit', edit_budget_item_path(@budget_item) %> |
+<%= link_to 'Back', budget_items_path %>
