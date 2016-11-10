@@ -24,7 +24,7 @@
 
     <div class="field">
       <%= f.label :asset_balance_list_id %>
-      <%= f.select(:asset_balance_list_id, AssetBalanceList.all.collect { |a| [a.id, a.id] }, {include_blank: false}) %>
+      <%= f.select(:asset_balance_list_id, AssetBalanceList.all.collect { |a| [a.id, a.id] }, {include_blank: true}) %>
     </div>
 
     <div class="field">

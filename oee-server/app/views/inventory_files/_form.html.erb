@@ -1,0 +1,32 @@
+<%= form_for(inventory_file) do |f| %>
+  <% if inventory_file.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(inventory_file.errors.count, "error") %> prohibited this inventory_file from being saved:</h2>
+
+      <ul>
+      <% inventory_file.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :path %>
+    <%= f.text_field :path %>
+  </div>
+
+  <div class="field">
+    <%= f.label :size %>
+    <%= f.text_field :size %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

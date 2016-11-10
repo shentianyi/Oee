@@ -57,6 +57,13 @@ gem 'rack-cors', :require => 'rack/cors'
 #
 gem 'ancestry'
 
+# For API
+gem 'rack-oauth2'
+#OAuth Provider
+gem 'doorkeeper'
+
+gem 'settingslogic'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri

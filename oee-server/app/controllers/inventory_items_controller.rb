@@ -93,7 +93,7 @@ class InventoryItemsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def inventory_item_params
     params.require(:inventory_item).permit(:inventory_list_id, :fix_asset_track_id, :cap_date, :profit_center, :asset_description, :acquis_val, :accum_dep, :book_val, :ts_equipment_nr,
-                                           :ts_project, :ts_inventory_user, :ts_keeper, :ts_position, :ts_nameplate_track, :ts_type, :ts_equipment_type, :ts_area, :ts_supplier,
-                                           :status, :remark, :ts_inventory_result)
+                                           :ts_project, :ts_inventory_user_id, :ts_keeper, :ts_position, :ts_nameplate_track, :ts_type, :ts_equipment_type, :ts_area_id, :ts_supplier,
+                                           :status, :remark, :ts_inventory_result, :current_area_id)
   end
 end

@@ -1,0 +1,1 @@
+json.array! @user_inventory_tasks, partial: 'user_inventory_tasks/user_inventory_task', as: :user_inventory_task

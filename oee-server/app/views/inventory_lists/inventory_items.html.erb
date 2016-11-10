@@ -56,13 +56,13 @@
         <td><%= inventory_item.book_val %></td>
         <td><%= inventory_item.ts_equipment_nr %></td>
         <td><%= inventory_item.ts_project %></td>
-        <td><%= inventory_item.ts_inventory_user %></td>
+        <td><%= inventory_item.ts_inventory_user.blank? ? inventory_item.ts_inventory_user_id : inventory_item.ts_inventory_user.name %></td>
         <td><%= inventory_item.ts_keeper %></td>
         <td><%= inventory_item.ts_position %></td>
         <td><%= inventory_item.ts_nameplate_track %></td>
         <td><%= inventory_item.ts_type %></td>
         <td><%= inventory_item.ts_equipment_type %></td>
-        <td><%= inventory_item.ts_area %></td>
+        <td><%= inventory_item.ts_area.desc %></td>
         <td><%= inventory_item.ts_supplier %></td>
         <td><%= inventory_item.status %></td>
         <td><%= inventory_item.remark %></td>

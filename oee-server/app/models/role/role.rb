@@ -4,7 +4,9 @@ class Role
   RoleMethods=[:admin?, :user]
   @@roles={
       :'100' => {:name => 'admin', :display => (I18n.t 'manage.user.role.admin')},
-      :'200' => {:name => 'user', :display => (I18n.t 'manage.user.role.user')}
+      :'200' => {:name => 'user', :display => (I18n.t 'manage.user.role.user')},
+      :'300' => {:name => 'engineer', :display => (I18n.t 'manage.user.role.engineer')},
+      :'400' => {:name => 'technician', :display => (I18n.t 'manage.user.role.technician')}
   }
 
   class<<self

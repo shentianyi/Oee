@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161109023218) do
+ActiveRecord::Schema.define(version: 20161110035017) do
+
+  create_table "areas", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "name"
+    t.string   "desc"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "asset_balance_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "fix_asset_track_id"
@@ -24,13 +31,13 @@ ActiveRecord::Schema.define(version: 20161109023218) do
     t.string   "inventory_nr"
     t.string   "ts_equipment_nr"
     t.string   "ts_project"
-    t.string   "ts_inventory_user"
+    t.string   "ts_inventory_user_id"
     t.string   "ts_keeper"
     t.string   "ts_position"
     t.string   "ts_nameplate_track"
     t.string   "ts_type"
     t.string   "ts_equipment_type"
-    t.string   "ts_area"
+    t.string   "ts_area_id"
     t.string   "ts_supplier"
     t.string   "status"
     t.string   "remark"
@@ -245,31 +252,40 @@ ActiveRecord::Schema.define(version: 20161109023218) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "inventory_files", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "name"
+    t.string   "path"
+    t.string   "size"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "inventory_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "inventory_list_id"
     t.integer  "fix_asset_track_id"
     t.datetime "cap_date"
     t.string   "profit_center"
     t.string   "asset_description"
-    t.float    "acquis_val",          limit: 24
-    t.float    "accum_dep",           limit: 24
-    t.float    "book_val",            limit: 24
+    t.float    "acquis_val",           limit: 24
+    t.float    "accum_dep",            limit: 24
+    t.float    "book_val",             limit: 24
     t.string   "ts_equipment_nr"
     t.string   "ts_project"
-    t.string   "ts_inventory_user"
+    t.string   "ts_inventory_user_id"
     t.string   "ts_keeper"
     t.string   "ts_position"
     t.string   "ts_nameplate_track"
     t.string   "ts_type"
     t.string   "ts_equipment_type"
-    t.string   "ts_area"
+    t.string   "ts_area_id"
     t.string   "ts_supplier"
     t.string   "status"
     t.string   "remark"
     t.string   "ts_inventory_result"
-    t.datetime "created_at",                                     null: false
-    t.datetime "updated_at",                                     null: false
-    t.boolean  "is_cover",                       default: false
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+    t.boolean  "is_cover",                        default: false
+    t.string   "current_area_id"
     t.index ["fix_asset_track_id"], name: "index_inventory_items_on_fix_asset_track_id", using: :btree
     t.index ["inventory_list_id"], name: "index_inventory_items_on_inventory_list_id", using: :btree
     t.index ["is_cover"], name: "index_inventory_items_on_is_cover", using: :btree
@@ -305,25 +321,93 @@ ActiveRecord::Schema.define(version: 20161109023218) do
     t.index ["machine_type_id"], name: "index_machines_on_machine_type_id", using: :btree
   end
 
+  create_table "oauth_access_grants", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "resource_owner_id",               null: false
+    t.integer  "application_id",                  null: false
+    t.string   "token",                           null: false
+    t.integer  "expires_in",                      null: false
+    t.text     "redirect_uri",      limit: 65535, null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "revoked_at"
+    t.string   "scopes"
+    t.index ["application_id"], name: "fk_rails_b4b53e07b8", using: :btree
+    t.index ["token"], name: "index_oauth_access_grants_on_token", unique: true, using: :btree
+  end
+
+  create_table "oauth_access_tokens", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "resource_owner_id"
+    t.integer  "application_id"
+    t.string   "token",                               null: false
+    t.string   "refresh_token"
+    t.integer  "expires_in"
+    t.datetime "revoked_at"
+    t.datetime "created_at",                          null: false
+    t.string   "scopes"
+    t.string   "previous_refresh_token", default: "", null: false
+    t.index ["application_id"], name: "fk_rails_732cb83ab7", using: :btree
+    t.index ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true, using: :btree
+    t.index ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id", using: :btree
+    t.index ["token"], name: "index_oauth_access_tokens_on_token", unique: true, using: :btree
+  end
+
+  create_table "oauth_applications", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "name",                                    null: false
+    t.string   "uid",                                     null: false
+    t.string   "secret",                                  null: false
+    t.text     "redirect_uri", limit: 65535,              null: false
+    t.string   "scopes",                     default: "", null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.index ["owner_id"], name: "index_oauth_applications_on_owner_id", using: :btree
+    t.index ["owner_type"], name: "index_oauth_applications_on_owner_type", using: :btree
+    t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
+  end
+
+  create_table "user_area_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "user_id"
+    t.integer  "area_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["area_id"], name: "index_user_area_items_on_area_id", using: :btree
+    t.index ["user_id"], name: "index_user_area_items_on_user_id", using: :btree
+  end
+
+  create_table "user_inventory_tasks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "user_id"
+    t.integer  "inventory_list_id"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer  "type"
+    t.integer  "target_qty"
+    t.integer  "real_qty"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.index ["inventory_list_id"], name: "index_user_inventory_tasks_on_inventory_list_id", using: :btree
+    t.index ["user_id"], name: "index_user_inventory_tasks_on_user_id", using: :btree
+  end
+
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.integer  "role"
     t.integer  "is_system",              default: 0
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                  default: "",  null: false
+    t.string   "encrypted_password",     default: "",  null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,   null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.integer  "failed_attempts",        default: 0,  null: false
+    t.integer  "failed_attempts",        default: 0,   null: false
     t.string   "unlock_token"
     t.datetime "locked_at"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.integer  "group_id",               default: 100
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
@@ -360,6 +444,12 @@ ActiveRecord::Schema.define(version: 20161109023218) do
   add_foreign_key "inventory_items", "inventory_lists"
   add_foreign_key "machines", "departments"
   add_foreign_key "machines", "machine_types"
+  add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
+  add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
+  add_foreign_key "user_area_items", "areas"
+  add_foreign_key "user_area_items", "users"
+  add_foreign_key "user_inventory_tasks", "inventory_lists"
+  add_foreign_key "user_inventory_tasks", "users"
   add_foreign_key "work_times", "crafts"
   add_foreign_key "work_times", "machine_types"
 end

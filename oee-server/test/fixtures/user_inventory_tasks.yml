@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  inventory_list: one
+  start_time: 2016-11-10 11:44:30
+  end_time: 2016-11-10 11:44:30
+  type: 1
+  target_qty: 1
+  real_qty: 1
+
+two:
+  user: two
+  inventory_list: two
+  start_time: 2016-11-10 11:44:30
+  end_time: 2016-11-10 11:44:30
+  type: 1
+  target_qty: 1
+  real_qty: 1

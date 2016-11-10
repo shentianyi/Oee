@@ -1,0 +1,27 @@
+<%= form_for(user_area_item) do |f| %>
+  <% if user_area_item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(user_area_item.errors.count, "error") %> prohibited this user_area_item from being saved:</h2>
+
+      <ul>
+      <% user_area_item.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :user_id %>
+    <%= f.select(:user_id, User.all.collect {|u| [u.name, u.id]}) %>
+  </div>
+
+  <div class="field">
+    <%= f.label :area_id %>
+    <%= f.select(:area_id, Area.all.collect {|a| [a.desc, a.id]}, {include_blank: false} ) %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

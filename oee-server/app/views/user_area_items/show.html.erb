@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @user_area_item.user %>
+</p>
+
+<p>
+  <strong>Area:</strong>
+  <%= @user_area_item.area %>
+</p>
+
+<%= link_to 'Edit', edit_user_area_item_path(@user_area_item) %> |
+<%= link_to 'Back', user_area_items_path %>

@@ -1,0 +1,1 @@
+json.array! @inventory_files, partial: 'inventory_files/inventory_file', as: :inventory_file

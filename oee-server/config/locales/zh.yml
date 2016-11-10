@@ -3,7 +3,9 @@ zh:
      user:
         role:
           admin: 管理员
-          user: 成员
+          user: 普通成员
+          technician: 技术员
+          engineer: 工程师
   activerecord:
       attributes:
         node:

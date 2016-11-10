@@ -1,0 +1,1 @@
+json.partial! "user_area_items/user_area_item", user_area_item: @user_area_item

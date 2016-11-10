@@ -1,6 +1,8 @@
 class InventoryList < ApplicationRecord
-  belongs_to :asset_balance_list, dependent: :destroy
+  belongs_to :asset_balance_list
   has_many :inventory_items, dependent: :destroy
+  has_many :user_area_items, dependent: :destroy
+  has_many :user_inventory_tasks, dependent: :destory
 
   after_create :init_inventory_items
 
@@ -26,7 +28,7 @@ class InventoryList < ApplicationRecord
                                           ts_nameplate_track: i.ts_nameplate_track,
                                           ts_type: i.ts_type,
                                           ts_equipment_type: i.ts_equipment_type,
-                                          ts_area: i.ts_area,
+                                          ts_area_id: i.ts_area_id,
 
                                           ts_supplier: i.ts_supplier,
                                           status: i.status,
@@ -41,6 +43,36 @@ class InventoryList < ApplicationRecord
 
   def has_un_covered_item
     self.inventory_items.where(is_cover: false).count>0
+  end
+
+
+  def generate_file user, type
+    inventories=[]
+    case type
+      when FileUploadType::OVERALL
+        inventories=self.inventory_items.where(ts_area_id: user.user_area_items.pluck(:area_id))
+      when FileUploadType::RECOVERY
+        inventories=self.inventory_items
+    end
+
+    InventoryFile.transaction do
+      file=InventoryFile.new()
+
+      File.open('uploadfiles/data/data.txt', 'w+') do |f|
+        inventories.each do |i|
+          ss = i.id.to_s + "," + i.fix_asset_track.nr.to_s + "," + i.ts_area_id.to_s + "\n"
+          f.write(ss)
+        end
+
+        file.path = f
+      end
+
+      if file.save
+        file
+      else
+        nil
+      end
+    end
   end
 
 end

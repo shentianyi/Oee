@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
 
 
+  resources :user_inventory_tasks
+  resources :user_area_items
+  resources :areas
+  resources :inventory_files
+  use_doorkeeper
+
   resources :inventory_items do
     member do
       get :cover_list
@@ -120,10 +126,31 @@ Rails.application.routes.draw do
 
 
   post 'users', to: 'users#create'
-  devise_for :users, controllers: {sessions: 'users/sessions'}, path: 'auth', path_names: { sign_in: 'login', sign_out: 'logout'}
+  devise_for :users, controllers: {sessions: 'users/sessions'}, path: 'auth', path_names: {sign_in: 'login', sign_out: 'logout'}
   resources :users
 
   root to: "welcome#index"
+
+  get 'api' => 'home#api', as: 'api'
+  namespace :api, :defaults => {:format => 'json'} do
+    namespace :v1 do
+      resources :users do
+        collection do
+          post :login
+          post :logout
+        end
+      end
+
+      resources :inventory_lists do
+        collection do
+          get :inventory_items
+          get :generate_file
+        end
+      end
+
+      resources :areas
+    end
+  end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

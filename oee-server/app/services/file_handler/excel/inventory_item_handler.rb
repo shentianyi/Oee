@@ -4,8 +4,8 @@ module FileHandler
 
       HEADERS=[
           :fix_asset_track_id, :cap_date, :profit_center, :asset_description, :acquis_val,
-          :accum_dep, :book_val, :ts_equipment_nr, :ts_project, :ts_inventory_user, :ts_keeper,
-          :ts_position, :ts_nameplate_track, :ts_type, :ts_equipment_type, :ts_area, :ts_supplier,
+          :accum_dep, :book_val, :ts_equipment_nr, :ts_project, :ts_inventory_user_id, :ts_keeper,
+          :ts_position, :ts_nameplate_track, :ts_type, :ts_equipment_type, :ts_area_id, :ts_supplier,
           :status, :remark, :ts_inventory_result, :operation
       ]
 
@@ -29,10 +29,14 @@ module FileHandler
               end
 
               asset=FixAssetTrack.where(nr: row[:fix_asset_track_id], ancestry: nil).first
+              area = Area.find_by_name(row[:ts_area_id])
+              user = User.find_by_name(row[:ts_inventory_user_id])
 
               count += 1
-              item =InventoryItem.new(row.except(:operation, :fix_asset_track_id))
+              item =InventoryItem.new(row.except(:operation, :fix_asset_track_id, :ts_area_id, :ts_inventory_user_id))
               item.fix_asset_track = asset
+              item.ts_area = area
+              item.ts_inventory_user = user
               item.inventory_list = inventory_list
               inventory_list.inventory_items<<item
               unless item.save
@@ -111,6 +115,22 @@ module FileHandler
             if inventory_list.inventory_items.pluck(:fix_asset_track_id).include?(asset.id)
               msg.contents<<"该清单中资产号：#{row[:fix_asset_track_id]}已存在"
             end
+          end
+        end
+
+        if row[:ts_area_id].blank?
+          msg.contents<<"TS使用区域不可为空"
+        else
+          unless area = Area.find_by_name(row[:ts_area_id])
+            msg.contents<<"区域名：#{row[:ts_area_id]} 不存在"
+          end
+        end
+
+        if row[:ts_inventory_user_id].blank?
+          msg.contents<<"TS盘点员不可为空"
+        else
+          unless user = User.find_by_name(row[:ts_inventory_user_id])
+            msg.contents<<"盘点员：#{row[:ts_inventory_user_id]} 不存在"
           end
         end
 

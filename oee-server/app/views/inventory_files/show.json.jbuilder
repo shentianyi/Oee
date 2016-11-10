@@ -1,0 +1,1 @@
+json.partial! "inventory_files/inventory_file", inventory_file: @inventory_file

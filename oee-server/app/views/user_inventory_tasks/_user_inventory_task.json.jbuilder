@@ -1,0 +1,2 @@
+json.extract! user_inventory_task, :id, :user_id, :inventory_list_id, :start_time, :end_time, :type, :target_qty, :real_qty, :created_at, :updated_at
+json.url user_inventory_task_url(user_inventory_task, format: :json)
