@@ -1,0 +1,1 @@
+json.array! @pam_items, partial: 'pam_items/pam_item', as: :pam_item

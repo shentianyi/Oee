@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
 
 
+  resources :pam_items do
+    collection do
+      match :purchase_import, to: :purchase_import, via: [:get, :post]
+      match :ts_import, to: :ts_import, via: [:get, :post]
+      match :finance_import, to: :finance_import, via: [:get, :post]
+    end
+  end
+  resources :pam_lists
   resources :budget_items
   resources :budgets
   resources :capexes

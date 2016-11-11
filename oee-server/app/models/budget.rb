@@ -3,4 +3,5 @@ class Budget < ApplicationRecord
   belongs_to :capex
 
   has_many :budget_items, dependent: :destroy
+  has_many :pam_lists, dependent: :destroy
 end

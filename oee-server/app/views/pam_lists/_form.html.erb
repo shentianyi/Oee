@@ -1,0 +1,57 @@
+<%= form_for(pam_list) do |f| %>
+  <% if pam_list.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(pam_list.errors.count, "error") %> prohibited this pam_list from being saved:</h2>
+
+      <ul>
+      <% pam_list.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :nr %>
+    <%= f.text_field :nr %>
+  </div>
+
+  <div class="field">
+    <%= f.label :cost %>
+    <%= f.text_field :cost %>
+  </div>
+
+  <div class="field">
+    <%= f.label :remained %>
+    <%= f.text_field :remained %>
+  </div>
+
+  <div class="field">
+    <%= f.label :is_final_approved %>
+    <%= f.check_box :is_final_approved %>
+  </div>
+
+  <div class="field">
+    <%= f.label :in_process %>
+    <%= f.text_field :in_process %>
+  </div>
+
+  <div class="field">
+    <%= f.label :approved %>
+    <%= f.text_field :approved %>
+  </div>
+
+  <div class="field">
+    <%= f.label :budget_not_applied %>
+    <%= f.text_field :budget_not_applied %>
+  </div>
+
+  <div class="field">
+    <%= f.label :budget_id %>
+    <%= f.select(:budget_id, Budget.all.collect { |b| [b.code, b.id] })  %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

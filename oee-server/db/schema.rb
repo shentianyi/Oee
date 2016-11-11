@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161110094922) do
+ActiveRecord::Schema.define(version: 20161111041254) do
 
   create_table "areas", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
@@ -393,6 +393,61 @@ ActiveRecord::Schema.define(version: 20161110094922) do
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
   end
 
+  create_table "pam_info_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "nr"
+    t.float    "cost",               limit: 24
+    t.float    "remained",           limit: 24
+    t.boolean  "is_final_approved",             default: false
+    t.string   "in_process"
+    t.string   "approved"
+    t.string   "budget_not_applied"
+    t.integer  "budget_id"
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+    t.index ["budget_id"], name: "index_pam_info_items_on_budget_id", using: :btree
+  end
+
+  create_table "pam_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "pa_no"
+    t.string   "description"
+    t.integer  "qty"
+    t.float    "total_cost",       limit: 24
+    t.string   "applicant"
+    t.datetime "applicant_date"
+    t.string   "supplier"
+    t.string   "sap_no"
+    t.string   "arrive_date"
+    t.boolean  "final_release",               default: false
+    t.string   "po_no"
+    t.float    "po_cost",          limit: 24
+    t.boolean  "invoice_prepared",            default: false
+    t.float    "invoice_amount",   limit: 24
+    t.string   "completed_date"
+    t.string   "completed_id"
+    t.string   "completed_status"
+    t.float    "completed_amount", limit: 24
+    t.boolean  "booking_status",              default: false
+    t.float    "final_cost",       limit: 24
+    t.integer  "pam_list_id"
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+    t.index ["pam_list_id"], name: "index_pam_items_on_pam_list_id", using: :btree
+  end
+
+  create_table "pam_lists", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "nr"
+    t.float    "cost",               limit: 24
+    t.float    "remained",           limit: 24
+    t.boolean  "is_final_approved"
+    t.string   "in_process"
+    t.string   "approved"
+    t.string   "budget_not_applied"
+    t.integer  "budget_id"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.index ["budget_id"], name: "index_pam_lists_on_budget_id", using: :btree
+  end
+
   create_table "user_area_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
     t.integer  "area_id"
@@ -476,6 +531,9 @@ ActiveRecord::Schema.define(version: 20161110094922) do
   add_foreign_key "machines", "machine_types"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
+  add_foreign_key "pam_info_items", "budgets"
+  add_foreign_key "pam_items", "pam_lists"
+  add_foreign_key "pam_lists", "budgets"
   add_foreign_key "user_area_items", "areas"
   add_foreign_key "user_area_items", "users"
   add_foreign_key "user_inventory_tasks", "inventory_lists"

@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nr:</strong>
+  <%= @pam_list.nr %>
+</p>
+
+<p>
+  <strong>Cost:</strong>
+  <%= @pam_list.cost %>
+</p>
+
+<p>
+  <strong>Remained:</strong>
+  <%= @pam_list.remained %>
+</p>
+
+<p>
+  <strong>Is final approved:</strong>
+  <%= @pam_list.is_final_approved %>
+</p>
+
+<p>
+  <strong>In process:</strong>
+  <%= @pam_list.in_process %>
+</p>
+
+<p>
+  <strong>Approved:</strong>
+  <%= @pam_list.approved %>
+</p>
+
+<p>
+  <strong>Budget not applied:</strong>
+  <%= @pam_list.budget_not_applied %>
+</p>
+
+<p>
+  <strong>Budget:</strong>
+  <%= @pam_list.budget %>
+</p>
+
+<%= link_to 'Edit', edit_pam_list_path(@pam_list) %> |
+<%= link_to 'Back', pam_lists_path %>

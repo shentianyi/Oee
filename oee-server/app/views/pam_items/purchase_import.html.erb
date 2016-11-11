@@ -1,0 +1,36 @@
+<p id="notice"><%= notice %></p>
+
+<div>
+  <ol class="breadcrumb">
+    <li>CAPEX</li>
+    <li><%= link_to 'PAM Item 列表', pam_items_path %></li>
+  </ol>
+
+  <hr class="hr-grey"/>
+
+  <form>
+    <fieldset>
+      <legend style="width: 180px;">采购</legend>
+      <div>
+        <b>选择数据文件：</b>
+        <input id="item-data-uploader" type="file" name="files[]" data-url="/pam_items/purchase_import"/>
+
+        <hr/>
+
+        <div id="item-data-uploader-preview"></div>
+        <div>
+          <b>下载模板：</b>
+          <a href="/files/<%= ImportTemplate.purchase_pam_excel_template %>">
+            <%= ImportTemplate::PURCHASE_PAM_EXCEL_TEMPLATE %></a>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        data_upload("#item-data-uploader");
+    });
+</script>

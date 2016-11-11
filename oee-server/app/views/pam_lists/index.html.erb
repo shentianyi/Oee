@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Pam Lists</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Nr</th>
+      <th>Cost</th>
+      <th>Remained</th>
+      <th>Is final approved</th>
+      <th>In process</th>
+      <th>Approved</th>
+      <th>Budget not applied</th>
+      <th>Budget</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pam_lists.each do |pam_list| %>
+      <tr>
+        <td><%= pam_list.nr %></td>
+        <td><%= pam_list.cost %></td>
+        <td><%= pam_list.remained %></td>
+        <td><%= pam_list.is_final_approved %></td>
+        <td><%= pam_list.in_process %></td>
+        <td><%= pam_list.approved %></td>
+        <td><%= pam_list.budget_not_applied %></td>
+        <td><%= pam_list.budget.code %></td>
+        <td><%= link_to 'Show', pam_list %></td>
+        <td><%= link_to 'Edit', edit_pam_list_path(pam_list) %></td>
+        <td><%= link_to 'Destroy', pam_list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Pam List', new_pam_list_path %>

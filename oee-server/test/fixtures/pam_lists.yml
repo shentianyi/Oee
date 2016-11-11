@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nr: MyString
+  cost: 1.5
+  remained: 1.5
+  is_final_approved: false
+  in_process: MyString
+  approved: MyString
+  budget_not_applied: MyString
+  budget: one
+
+two:
+  nr: MyString
+  cost: 1.5
+  remained: 1.5
+  is_final_approved: false
+  in_process: MyString
+  approved: MyString
+  budget_not_applied: MyString
+  budget: two

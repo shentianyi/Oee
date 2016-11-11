@@ -1,0 +1,1 @@
+json.partial! "pam_items/pam_item", pam_item: @pam_item

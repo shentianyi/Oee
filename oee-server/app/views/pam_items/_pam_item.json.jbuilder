@@ -1,0 +1,2 @@
+json.extract! pam_item, :id, :pa_no, :description, :qty, :total_cost, :applicant, :applicant_date, :supplier, :sap_no, :arrive_date, :final_release, :po_no, :po_cost, :invoice_prepared, :invoice_amount, :completed_date, :completed_id, :completed_status, :completed_amount, :booking_status, :final_cost, :pam_list_id, :created_at, :updated_at
+json.url pam_item_url(pam_item, format: :json)

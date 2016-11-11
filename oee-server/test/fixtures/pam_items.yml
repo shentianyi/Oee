@@ -1,0 +1,47 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  pa_no: MyString
+  description: MyString
+  qty: 1
+  total_cost: 1.5
+  applicant: MyString
+  applicant_date: 2016-11-11 12:12:54
+  supplier: MyString
+  sap_no: MyString
+  arrive_date: MyString
+  final_release: false
+  po_no: MyString
+  po_cost: 1.5
+  invoice_prepared: false
+  invoice_amount: 1.5
+  completed_date: MyString
+  completed_id: MyString
+  completed_status: MyString
+  completed_amount: 1.5
+  booking_status: false
+  final_cost: 1.5
+  pam_list: one
+
+two:
+  pa_no: MyString
+  description: MyString
+  qty: 1
+  total_cost: 1.5
+  applicant: MyString
+  applicant_date: 2016-11-11 12:12:54
+  supplier: MyString
+  sap_no: MyString
+  arrive_date: MyString
+  final_release: false
+  po_no: MyString
+  po_cost: 1.5
+  invoice_prepared: false
+  invoice_amount: 1.5
+  completed_date: MyString
+  completed_id: MyString
+  completed_status: MyString
+  completed_amount: 1.5
+  booking_status: false
+  final_cost: 1.5
+  pam_list: two

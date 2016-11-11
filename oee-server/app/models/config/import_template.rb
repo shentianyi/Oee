@@ -12,6 +12,9 @@ class ImportTemplate
   FIX_ASSET_TRACK_EXCEL_TEMPLATE='fix_asset_track_template.xlsx'
   ASSET_BALANCE_ITEM_EXCEL_TEMPLATE='asset_balance_item_template.xlsx'
   INVENTORY_ITEM_EXCEL_TEMPLATE='inventory_item_template.xlsx'
+  PURCHASE_PAM_EXCEL_TEMPLATE='purchase_pam_template.xlsx'
+  TS_PAM_EXCEL_TEMPLATE='ts_pam_template.xlsx'
+  FINANCE_PAM_EXCEL_TEMPLATE='finance_pam_template.xlsx'
 
   def self.method_missing(method_name, *args, &block)
     if method_name.to_s.include?('_template')
