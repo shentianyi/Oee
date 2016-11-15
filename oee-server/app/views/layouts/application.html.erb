@@ -113,61 +113,59 @@
 
       <li>
         <a href="#">
-          <i class="fa fa-hdd-o"></i>
+          <i class="fa fa-barcode"></i>
         </a>
         <span>盘点管理</span>
         <ul>
-          <li class="nav-users">
-            <%= link_to content_tag(:i, '', :class => 'fa fa-inbox'), inventory_lists_path, :title => '资产盘点' %>
-            <span>盘点</span>
+          <li class="nav-inventory-list">
+            <i class="fa fa-tasks"></i>
+            <%= link_to content_tag(:span, '资产盘点'), inventory_lists_path, :title => '资产盘点' %>
           </li>
 
-          <li class="nav-users">
-            <%= link_to content_tag(:i, '', :class => 'fa fa-inbox'), areas_path, :title => '盘点区域' %>
-            <span>盘点区域</span>
+          <li class="nav-areas">
+            <i class="fa fa-language"></i>
+            <%= link_to content_tag(:span, '盘点区域'), areas_path, :title => '盘点区域' %>
           </li>
 
-          <li class="nav-users">
-            <%= link_to content_tag(:i, '', :class => 'fa fa-inbox'), user_inventory_tasks_path, :title => '盘点任务' %>
-            <span>盘点任务</span>
+          <li class="nav-inventory-tasks">
+            <i class="fa fa-check-circle-o"></i>
+            <%= link_to content_tag(:span, '盘点任务'), user_inventory_tasks_path, :title => '盘点任务' %>
           </li>
         </ul>
       </li>
 
       <li>
         <a href="#">
-          <i class="fa fa-hdd-o"></i>
+          <i class="fa fa-calculator"></i>
         </a>
         <span>CAPEX</span>
-        <ul align="top">
-          <li class="nav-users">
-            <%= link_to content_tag(:i, '', :class => 'fa fa-list-alt'), capexes_path, :title => 'CAPEX' %>
-            <span>CAPEX</span>
+        <ul>
+          <li class="nav-capexe">
+            <i class="fa fa-shopping-bag"></i>
+            <%= link_to content_tag(:span, 'CAPEX'), capexes_path, :title => 'CAPEX' %>
           </li>
 
-          <li class="nav-users">
-            <%= link_to content_tag(:i, '', :class => 'fa fa-list-alt'), budgets_path, :title => 'BUDGET' %>
-            <span>BUDGET</span>
+          <li class="nav-budgets">
+            <i class="fa fa-credit-card"></i>
+            <%= link_to content_tag(:span, 'BUDGET'), budgets_path, :title => 'BUDGET' %>
           </li>
 
-          <li class="nav-users">
-            <%= link_to content_tag(:i, '', :class => 'fa fa-list-alt'), budget_items_path, :title => 'BUDGET ITEM' %>
-            <span>BUDGET ITEM</span>
+          <li class="nav-budget-items">
+            <i class="fa fa-bars"></i>
+            <%= link_to content_tag(:span, 'BUDGET ITEM'), budget_items_path, :title => 'BUDGET ITEM' %>
           </li>
 
-          <li class="nav-users">
-            <%= link_to content_tag(:i, '', :class => 'fa fa-list-alt'), pam_lists_path, :title => 'PAM' %>
-            <span>PAM</span>
+          <li class="nav-pam-lists">
+            <i class="fa fa-cube"></i>
+            <%= link_to content_tag(:span, 'PAM'), pam_lists_path, :title => 'PAM' %>
           </li>
 
-          <li class="nav-users">
-            <%= link_to content_tag(:i, '', :class => 'fa fa-list-alt'), pam_items_path, :title => 'PAM Item' %>
-            <span>PAM Item</span>
+          <li class="nav-pam-items">
+            <i class="fa fa-cubes"></i>
+            <%= link_to content_tag(:span, 'PAM ITEM'), pam_items_path, :title => 'PAM Item' %>
           </li>
         </ul>
-
       </li>
-
 
       <li style="position: absolute;bottom: 0;width:100%; text-align:center;">
         <%= link_to content_tag(:i, '', :class => 'fa fa-power-off'), destroy_user_session_path, method: :delete %>

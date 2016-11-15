@@ -55,6 +55,7 @@ body {
 .main {
   width: 100%;
   min-width: 500px;
+  min-height: 770px;
   display: table;
   overflow: hidden;
   .main-nav {
@@ -65,6 +66,7 @@ body {
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
     width: 75px;
+    min-height: 770px;
     text-align: center;
     color: $dark-white;
     background: $midnight-blue;
@@ -182,7 +184,7 @@ body {
         color: $green-sea !important;
       }
       // i::after {
-      //   -webkit-transform: rotate(45deg);
+      //   -webkit-transfrm: rotate(45deg);
       //   -ms-transform: rotate(45deg);
       //   -o-transform: rotate(45deg);
       //   transform: rotate(45deg);
@@ -201,8 +203,9 @@ body {
     position: absolute;
     top: 20px;
     bottom: 20px;
-    left: 105px;
+    left: 108px;
     right: 10px;
+    min-height: 770px;
     overflow-y: auto;
     overflow-x: hidden;
     display: table-cell;
