@@ -1,27 +1,47 @@
-<%= form_for(area) do |f| %>
-  <% if area.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(area.errors.count, "error") %> prohibited this area from being saved:</h2>
+<div id="areas">
+  <ol class="breadcrumb">
+    <li>盘点管理</li>
+    <li><%= link_to '盘点区域', areas_path %></li>
+    <li>{{action}}</li>
+  </ol>
 
-      <ul>
-      <% area.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+  <hr class="hr-grey"/>
+
+  <%= form_for(area) do |f| %>
+
+      <% if area.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(area.errors.count, "error") %> prohibited this craft from being saved:</h2>
+            <ul>
+              <% area.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
       <% end %>
-      </ul>
-    </div>
+
+      <div class="marco-npanel-default">
+        <div class="marco-nheading">
+          {{action}}
+          <div class="pull-right">
+            <button type="submit" class="marco-btn-normal">{{actionBtn}}</button>
+          </div>
+        </div>
+
+        <div class="marco-nbody row">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>名称</span>
+              <%= f.text_field :name %>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>描述</span>
+              <%= f.text_field :desc %>
+            </div>
+          </div>
+        </div>
+      </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
-  </div>
-
-  <div class="field">
-    <%= f.label :desc %>
-    <%= f.text_field :desc %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+</div>

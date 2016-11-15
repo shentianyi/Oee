@@ -90,6 +90,12 @@ layout.init = function () {
             PageAction('#equipment_tracks', '新增设备追踪', '编辑设备追踪', '上传设备追踪信息', '创建', '更新', '上传');
             break;
 
+        case "areas":
+            $('.nav-inventory').addClass('nav-active');
+            $('.nav-areas').addClass('nav-active');
+            PageAction('#areas', '新增盘点区域', '编辑盘点区域', '上传盘点区域信息', '创建', '更新', '上传');
+            break;
+
         default:
             // $('.nav-home').addClass('nav-active');
             //可以跳转 404
@@ -98,6 +104,8 @@ layout.init = function () {
 
     function PageAction(id, newAction, editAction, importAction, newBtn, editBtn, importBtn) {
         if ($(id).length == 0) return;
+
+        // vue.js
 
         var vueName = new Vue({
             el: id,
