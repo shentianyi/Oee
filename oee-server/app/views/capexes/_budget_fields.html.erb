@@ -1,0 +1,31 @@
+<p  style="background-color:white;">
+    <h2>Budget</h2>
+
+    <%= f.label :code, "Code" %>
+    <%= f.text_field :code %><br/><br/>
+
+    <%= f.label :desc, '描述' %>
+    <%= f.text_field :desc %><br/><br/>
+
+    <%= f.label :type, '类型' %>
+    <%= f.select(:type, BudgetType.menu, {include_blank: false}) %><br/><br/>
+
+    <div>
+      <%= f.link_to_remove "Remove this budget" %>
+    </div>
+
+    <%= f.fields_for :budget_items do |builder| %>
+        <%= render "budget_item_fields", :f => builder %>
+    <% end %>
+    <p>
+      <%= f.link_to_add "Add a budget item", :budget_items %><br/>
+    </p>
+
+    <%= f.fields_for :pam_lists do |builder| %>
+        <%= render "pam_list_fields", :f => builder %>
+    <% end %>
+    <p>
+      <%= f.link_to_add "Add a PAM List", :pam_lists %><br/>
+    </p>
+
+</p>

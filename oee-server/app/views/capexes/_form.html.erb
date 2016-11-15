@@ -1,32 +1,41 @@
-<%= form_for(capex) do |f| %>
-  <% if capex.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(capex.errors.count, "error") %> prohibited this capex from being saved:</h2>
 
-      <ul>
-      <% capex.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+
+<%= nested_form_for(capex) do |f| %>
+    <% if capex.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(capex.errors.count, "error") %> prohibited this capex from being saved:</h2>
+
+          <ul>
+            <% capex.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :project %>
+      <%= f.text_field :project %>
     </div>
-  <% end %>
 
-  <div class="field">
-    <%= f.label :project %>
-    <%= f.text_field :project %>
-  </div>
+    <div class="field">
+      <%= f.label :bu_code %>
+      <%= f.select(:bu_code, BuCodeEnum.menu, {include_blank: false}) %>
+    </div>
 
-  <div class="field">
-    <%= f.label :bu_code %>
-    <%= f.select(:bu_code, BuCodeEnum.menu, {include_blank: false}) %>
-  </div>
+    <div class="field">
+      <%= f.label :desc %>
+      <%= f.text_field :desc %>
+    </div>
 
-  <div class="field">
-    <%= f.label :desc %>
-    <%= f.text_field :desc %>
-  </div>
+    <%= f.fields_for :budgets do |builder| %>
+        <%= render "budget_fields", :f => builder %>
+    <% end %>
+    <div>
+      <%= f.link_to_add "Add a budget", :budgets %><br/>
+    </div>
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
 <% end %>

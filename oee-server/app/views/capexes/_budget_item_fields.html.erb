@@ -1,0 +1,15 @@
+<p class="fields">
+  <h2>Budget Item</h2>
+
+  <%= f.label :qty %>
+  <%= f.number_field :qty %><br/>
+
+  <%= f.label :unit_price %>
+  <%= f.text_field :unit_price %><br/>
+
+  <%= f.label :total_price %>
+  <%= f.text_field :total_price %><br/>
+
+  <%= f.link_to_remove "Remove this budget item" %>
+
+</p>

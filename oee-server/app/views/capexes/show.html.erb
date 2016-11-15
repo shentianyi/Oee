@@ -1,4 +1,5 @@
 <p id="notice"><%= notice %></p>
+<h1>Projects</h1>
 
 <p>
   <strong>Project:</strong>
@@ -14,6 +15,41 @@
   <strong>Desc:</strong>
   <%= @capex.desc %>
 </p>
+
+<ol>
+  <% @capex.budgets.each do |budget| %>
+      <h3>Budget</h3>
+    <li>
+      Code:<%= budget.code %><br/>
+      Type:<%= BudgetType.display(budget.type) %><br/>
+      <ul>
+        <% budget.budget_items.each do |item| %>
+            <h5>Budget Items</h5>
+            <li>
+              Qty:<%= item.qty %><br/>
+              Unit Price:<%= item.unit_price %><br/>
+              Total Price:<%= item.total_price %><br/>
+            </li>
+        <% end %>
+      </ul>
+
+      <ul>
+        <% budget.pam_lists.each do |pam| %>
+            <h5>Pam Lists</h5>
+            <li>
+              PAM NO.:<%= pam.nr %><br/>
+              Cost:<%= pam.cost %><br/>
+              Remained:<%= pam.remained %><br/>
+              PAM批准状态:<%= pam.is_final_approved ? 'Y|Final Approved' : 'N' %><br/>
+              申请中预算:<%= pam.in_process %><br/>
+              已批准预算:<%= pam.approved %><br/>
+              未申请预算:<%= pam.budget_not_applied %><br/>
+            </li>
+        <% end %>
+      </ul>
+    </li>
+  <% end %>
+</ol>
 
 <%= link_to 'Edit', edit_capex_path(@capex) %> |
 <%= link_to 'Back', capexes_path %>

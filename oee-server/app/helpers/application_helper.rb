@@ -41,6 +41,7 @@ module ApplicationHelper
       render :index
     end
   end
+
 end
 
 class String

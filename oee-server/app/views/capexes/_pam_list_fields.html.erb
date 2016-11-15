@@ -1,0 +1,27 @@
+<p class="fields">
+<h2>PAM List</h2>
+
+  <%= f.label :nr %>
+  <%= f.text_field :nr %>
+
+  <%= f.label :cost %>
+  <%= f.text_field :cost %>
+
+  <%= f.label :remained %>
+  <%= f.text_field :remained %>
+
+  <%= f.label :is_final_approved %>
+  <%= f.check_box :is_final_approved %>
+
+  <%= f.label :in_process %>
+  <%= f.text_field :in_process %>
+
+  <%= f.label :approved %>
+  <%= f.text_field :approved %>
+
+  <%= f.label :budget_not_applied %>
+  <%= f.text_field :budget_not_applied %>
+
+<%= f.link_to_remove "Remove this PAM List" %>
+
+</p>

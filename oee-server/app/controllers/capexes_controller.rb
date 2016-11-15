@@ -14,7 +14,8 @@ class CapexesController < ApplicationController
 
   # GET /capexes/new
   def new
-    @capex = Capex.new
+    @capex = Capex.new()
+    1.times { @capex.budgets.build }
   end
 
   # GET /capexes/1/edit
@@ -62,13 +63,16 @@ class CapexesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_capex
-      @capex = Capex.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_capex
+    @capex = Capex.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def capex_params
-      params.require(:capex).permit(:project, :bu_code, :desc)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def capex_params
+    params.require(:capex).permit(:project, :bu_code, :desc,
+                                  budgets_attributes: [:code, :type, :desc, :_destroy, :id,
+                                                       budget_items_attributes: [:qty, :unit_price, :total_price, :id, :_destroy],
+                                                       pam_lists_attributes: [:nr, :cost, :remained, :is_final_approved, :in_process, :approved, :budget_not_applied, :id, :_destroy]])
+  end
 end
