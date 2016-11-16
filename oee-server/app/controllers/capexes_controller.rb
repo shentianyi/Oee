@@ -75,7 +75,7 @@ class CapexesController < ApplicationController
                                       :code, :type, :desc, :_destroy, :id,
                                       budget_items_attributes: [:qty, :unit_price, :total_price, :id, :_destroy],
                                       pam_lists_attributes: [:nr, :cost, :remained, :is_final_approved, :in_process, :approved, :budget_not_applied, :id, :_destroy,
-                                                             pam_item_attributes: [
+                                                             pam_items_attributes: [
                                                                  :pa_no, :description, :qty, :total_cost, :applicant, :applicant_date,
                                                                  :supplier, :sap_no, :arrive_date, :final_release, :id, :_destroy
                                                              ]
