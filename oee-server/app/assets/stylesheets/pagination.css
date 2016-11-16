@@ -25,3 +25,16 @@
 .current {
     color: #ff6700;
 }
+
+.digg_pagination a {
+    color: #34495e !important;
+    background: transparent !important;
+    text-decoration: none;
+}
+
+.digg_pagination a:hover {
+    font-weight: bold;
+    color: #1abc9c !important;
+    background: transparent !important;
+    text-decoration: none;
+}

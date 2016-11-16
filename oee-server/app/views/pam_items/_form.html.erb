@@ -1,122 +1,162 @@
-<%= form_for(pam_item) do |f| %>
-  <% if pam_item.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(pam_item.errors.count, "error") %> prohibited this pam_item from being saved:</h2>
+<div id="pam_items">
+  <ol class="breadcrumb">
+    <li>CAPEX</li>
+    <li><%= link_to 'PAM ITEM列表', pam_items_path %></li>
+    <li>{{action}}</li>
+  </ol>
 
-      <ul>
-      <% pam_item.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+  <hr class="hr-grey"/>
+
+  <%= form_for(pam_item) do |f| %>
+
+      <% if pam_item.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(pam_item.errors.count, "error") %> prohibited this pam_item from being saved:</h2>
+            <ul>
+              <% pam_item.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
       <% end %>
-      </ul>
-    </div>
+
+      <div class="marco-npanel-default">
+        <div class="marco-nheading">
+          {{action}}
+          <div class="pull-right">
+            <button type="submit" class="marco-btn-normal">{{actionBtn}}</button>
+          </div>
+        </div>
+        <div class="marco-nbody row">
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <%= f.label :pa_no %>
+              <%= f.text_field :pa_no %>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>描述</span>
+              <%= f.text_field :description %>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>数量</span>
+              <%= f.text_field :qty %>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <%= f.label :total_cost %>
+              <%= f.text_field :total_cost %>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <%= f.label :applicant %>
+              <%= f.text_field :applicant %>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <%= f.label :applicant_date %>
+              <%= f.date_field :applicant_date %>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <%= f.label :supplier %>
+              <%= f.text_field :supplier %>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <%= f.label :sap_no %>
+              <%= f.text_field :sap_no %>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <%= f.label :arrive_date %>
+              <%= f.text_field :arrive_date %>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <%= f.label :final_release %>
+              <%= f.check_box :final_release %>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <%= f.label :po_no %>
+              <%= f.text_field :po_no %>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <%= f.label :po_cost %>
+              <%= f.text_field :po_cost %>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <%= f.label :invoice_prepared %>
+              <%= f.check_box :invoice_prepared %>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <%= f.label :invoice_amount %>
+              <%= f.text_field :invoice_amount %>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <%= f.label :completed_date %>
+              <%= f.text_field :completed_date %>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <%= f.label :completed_id %>
+              <%= f.text_field :completed_id %>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <%= f.label :completed_status %>
+              <%= f.text_field :completed_status %>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <%= f.label :completed_amount %>
+              <%= f.text_field :completed_amount %>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <%= f.label :booking_status %>
+              <%= f.check_box :booking_status %>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <%= f.label :final_cost %>
+              <%= f.text_field :final_cost %>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <%= f.label :pam_list_id %>
+              <%= f.select(:pam_list_id, PamList.all.collect { |p| [p.nr, p.id] }) %>
+            </div>
+          </div>
+        </div>
+      </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :pa_no %>
-    <%= f.text_field :pa_no %>
-  </div>
-
-  <div class="field">
-    <%= f.label :description %>
-    <%= f.text_field :description %>
-  </div>
-
-  <div class="field">
-    <%= f.label :qty %>
-    <%= f.number_field :qty %>
-  </div>
-
-  <div class="field">
-    <%= f.label :total_cost %>
-    <%= f.text_field :total_cost %>
-  </div>
-
-  <div class="field">
-    <%= f.label :applicant %>
-    <%= f.text_field :applicant %>
-  </div>
-
-  <div class="field">
-    <%= f.label :applicant_date %>
-    <%= f.date_field :applicant_date %>
-  </div>
-
-  <div class="field">
-    <%= f.label :supplier %>
-    <%= f.text_field :supplier %>
-  </div>
-
-  <div class="field">
-    <%= f.label :sap_no %>
-    <%= f.text_field :sap_no %>
-  </div>
-
-  <div class="field">
-    <%= f.label :arrive_date %>
-    <%= f.text_field :arrive_date %>
-  </div>
-
-  <div class="field">
-    <%= f.label :final_release %>
-    <%= f.check_box :final_release %>
-  </div>
-
-  <div class="field">
-    <%= f.label :po_no %>
-    <%= f.text_field :po_no %>
-  </div>
-
-  <div class="field">
-    <%= f.label :po_cost %>
-    <%= f.text_field :po_cost %>
-  </div>
-
-  <div class="field">
-    <%= f.label :invoice_prepared %>
-    <%= f.check_box :invoice_prepared %>
-  </div>
-
-  <div class="field">
-    <%= f.label :invoice_amount %>
-    <%= f.text_field :invoice_amount %>
-  </div>
-
-  <div class="field">
-    <%= f.label :completed_date %>
-    <%= f.text_field :completed_date %>
-  </div>
-
-  <div class="field">
-    <%= f.label :completed_id %>
-    <%= f.text_field :completed_id %>
-  </div>
-
-  <div class="field">
-    <%= f.label :completed_status %>
-    <%= f.text_field :completed_status %>
-  </div>
-
-  <div class="field">
-    <%= f.label :completed_amount %>
-    <%= f.text_field :completed_amount %>
-  </div>
-
-  <div class="field">
-    <%= f.label :booking_status %>
-    <%= f.check_box :booking_status %>
-  </div>
-
-  <div class="field">
-    <%= f.label :final_cost %>
-    <%= f.text_field :final_cost %>
-  </div>
-
-  <div class="field">
-    <%= f.label :pam_list_id %>
-    <%= f.select(:pam_list_id, PamList.all.collect { |p| [p.nr, p.id] }) %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+</div>

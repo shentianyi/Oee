@@ -1,31 +1,46 @@
-<p  style="background-color:white;">
-    <h2>Budget</h2>
-
-    <%= f.label :code, "Code" %>
-    <%= f.text_field :code %><br/><br/>
-
-    <%= f.label :desc, '描述' %>
-    <%= f.text_field :desc %><br/><br/>
-
-    <%= f.label :type, '类型' %>
-    <%= f.select(:type, BudgetType.menu, {include_blank: false}) %><br/><br/>
-
-    <div>
-      <%= f.link_to_remove "Remove this budget" %>
+<div class="row" style="margin:0; margin-top: 5px; border: 1px solid lightseagreen; padding: 10px;">
+  <div class="row" style="margin:0;">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <%= f.link_to_remove content_tag(:i, content_tag(:span, "删除BUDGET"), :class => 'fa fa-times-circle'), :class => "pull-right", :title => "删除BUDGET" %>
     </div>
+
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>代码</span>
+        <%= f.text_field :code %>
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>描述</span>
+        <%= f.text_field :desc %>
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>类型</span>
+        <%= f.select(:type, BudgetType.menu, {include_blank: false}) %>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hr-success">
+
+  <div class="row" style="margin:0; padding: 10px;">
+    <%= f.link_to_add content_tag(:i, content_tag(:span, "添加预算项"), :class => 'fa fa-plus'), :budget_items, :class => "pull-right", :style => "margin-top:5px;", :title => "添加 预算项" %>
 
     <%= f.fields_for :budget_items do |builder| %>
         <%= render "budget_item_fields", :f => builder %>
     <% end %>
-    <p>
-      <%= f.link_to_add "Add a budget item", :budget_items %><br/>
-    </p>
+  </div>
+
+  <hr class="hr-success">
+
+  <div class="row" style="margin:0; margin-top: 5px; padding: 10px;">
+    <%= f.link_to_add content_tag(:i, content_tag(:span, "添加PAM项"), :class => 'fa fa-plus'), :pam_lists, :class => "pull-right", :title => "添加 预算项" %>
 
     <%= f.fields_for :pam_lists do |builder| %>
         <%= render "pam_list_fields", :f => builder %>
     <% end %>
-    <p>
-      <%= f.link_to_add "Add a PAM List", :pam_lists %><br/>
-    </p>
-
-</p>
+  </div>
+</div>

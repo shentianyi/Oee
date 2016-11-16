@@ -133,17 +133,15 @@ module FileHandler
         else
           if row[:type] == EquipmentType::FIX_ASSET
             if row[:asset_nr].blank?
-              msg.contents<<"固定编号不可为空"
+              msg.contents<<"固定资产编号不可为空"
             else
               fa = FixAssetTrack.where(nr: row[:asset_nr], ancestry: nil).first
               if fa.blank?
-                msg.contents<<"固定编号:#{row[:asset_nr]} 不存在"
+                msg.contents<<"固定资产编号:#{row[:asset_nr]} 不存在"
               end
             end
           end
         end
-
-
 
         unless msg.result=(msg.contents.size==0)
           msg.content=msg.contents.join('/')

@@ -1,9 +1,22 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Pam Lists</h1>
+<ol class="breadcrumb">
+  <li>CAPEX</li>
+  <li>PAM列表</li>
+</ol>
 
-<table class="table">
-  <thead>
+<hr class="hr-grey"/>
+
+<div class="marco-npanel-default">
+  <div class="marco-nheading">
+    PAM列表
+    <div class="pull-right">
+      <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_pam_list_path %>
+    </div>
+  </div>
+
+  <table class="marco-nbody table table-bordered">
+    <thead>
     <tr>
       <th>Nr</th>
       <th>Cost</th>
@@ -13,29 +26,28 @@
       <th>Approved</th>
       <th>Budget not applied</th>
       <th>Budget</th>
-      <th colspan="3"></th>
+      <th>操作</th>
     </tr>
-  </thead>
+    </thead>
 
-  <tbody>
+    <tbody>
     <% @pam_lists.each do |pam_list| %>
-      <tr>
-        <td><%= pam_list.nr %></td>
-        <td><%= pam_list.cost %></td>
-        <td><%= pam_list.remained %></td>
-        <td><%= pam_list.is_final_approved %></td>
-        <td><%= pam_list.in_process %></td>
-        <td><%= pam_list.approved %></td>
-        <td><%= pam_list.budget_not_applied %></td>
-        <td><%= pam_list.budget.code %></td>
-        <td><%= link_to 'Show', pam_list %></td>
-        <td><%= link_to 'Edit', edit_pam_list_path(pam_list) %></td>
-        <td><%= link_to 'Destroy', pam_list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+        <tr>
+          <td><%= pam_list.nr %></td>
+          <td><%= pam_list.cost %></td>
+          <td><%= pam_list.remained %></td>
+          <td><%= pam_list.is_final_approved %></td>
+          <td><%= pam_list.in_process %></td>
+          <td><%= pam_list.approved %></td>
+          <td><%= pam_list.budget_not_applied %></td>
+          <td><%= pam_list.budget.code %></td>
+          <td>
+            <%#= link_to content_tag(:i, '', :class => 'fa fa-eye'), pam_list, :class => "marco-btn-primary", :title => "详情" %>
+            <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_pam_list_path(pam_list), :class => "marco-btn-primary", :title => "编辑" %>
+            <%= link_to content_tag(:i, '', :class => 'fa fa-close'), pam_list, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+          </td>
+        </tr>
     <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Pam List', new_pam_list_path %>
+    </tbody>
+  </table>
+</div>

@@ -4,13 +4,14 @@
   <ol class="breadcrumb">
     <li>CAPEX</li>
     <li><%= link_to 'PAM Item 列表', pam_items_path %></li>
+    <li>采购数据导入</li>
   </ol>
 
   <hr class="hr-grey"/>
 
   <form>
     <fieldset>
-      <legend style="width: 180px;">采购</legend>
+      <legend style="width: 130px;">采购数据导入</legend>
       <div>
         <b>选择数据文件：</b>
         <input id="item-data-uploader" type="file" name="files[]" data-url="/pam_items/purchase_import"/>
@@ -30,7 +31,7 @@
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        data_upload("#item-data-uploader");
-    });
+  $(document).ready(function () {
+    data_upload("#item-data-uploader");
+  });
 </script>

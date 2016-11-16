@@ -1,15 +1,26 @@
-<p class="fields">
-  <h2>Budget Item</h2>
+<div class="row" style="margin:0; margin-top: 5px; border: 2px solid #34495e; padding: 10px;">
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <%= f.link_to_remove content_tag(:i, content_tag(:span, "删除预算项"), :class => 'fa fa-close'), :class => "pull-right", :title => "删除预算项" %>
+  </div>
 
-  <%= f.label :qty %>
-  <%= f.number_field :qty %><br/>
+  <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="marco-igroup-oee">
+      <span>数量</span>
+      <%= f.text_field :qty %>
+    </div>
+  </div>
 
-  <%= f.label :unit_price %>
-  <%= f.text_field :unit_price %><br/>
+  <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="marco-igroup-oee">
+      <span>单价</span>
+      <%= f.text_field :unit_price %>
+    </div>
+  </div>
 
-  <%= f.label :total_price %>
-  <%= f.text_field :total_price %><br/>
-
-  <%= f.link_to_remove "Remove this budget item" %>
-
-</p>
+  <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="marco-igroup-oee">
+      <span>总价</span>
+      <%= f.text_field :total_price %>
+    </div>
+  </div>
+</div>

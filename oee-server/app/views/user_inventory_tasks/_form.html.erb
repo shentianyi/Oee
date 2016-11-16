@@ -1,52 +1,72 @@
-<%= form_for(user_inventory_task) do |f| %>
-  <% if user_inventory_task.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(user_inventory_task.errors.count, "error") %> prohibited this user_inventory_task from being saved:</h2>
+<div id="user_inventory_tasks">
+  <ol class="breadcrumb">
+    <li>盘点管理</li>
+    <li><%= link_to '盘点任务', user_inventory_tasks_path %></li>
+    <li>{{action}}</li>
+  </ol>
 
-      <ul>
-      <% user_inventory_task.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+  <hr class="hr-grey"/>
+
+  <%= form_for(user_inventory_task) do |f| %>
+
+      <% if user_inventory_task.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(user_inventory_task.errors.count, "error") %> prohibited this user_inventory_task from
+              being saved:</h2>
+            <ul>
+              <% user_inventory_task.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
       <% end %>
-      </ul>
-    </div>
+
+      <div class="marco-npanel-default">
+        <div class="marco-nheading">
+          {{action}}
+          <div class="pull-right">
+            <button type="submit" class="marco-btn-normal">{{actionBtn}}</button>
+          </div>
+        </div>
+
+        <div class="marco-nbody row">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>用户ID</span>
+              <%= f.text_field :user_id %>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>开始时间</span>
+              <%= f.text_field :start_time, :class => "datetimepicker" %>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>结束时间</span>
+              <%= f.text_field :end_time, :class => "datetimepicker" %>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>类型</span>
+              <%= f.text_field :type %>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>目标数量</span>
+              <%= f.text_field :target_qty %>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>实际数量</span>
+              <%= f.text_field :real_qty %>
+            </div>
+          </div>
+        </div>
+      </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :user_id %>
-    <%= f.text_field :user_id %>
-  </div>
-
-  <div class="field">
-    <%= f.label :inventory_list_id %>
-    <%= f.text_field :inventory_list_id %>
-  </div>
-
-  <div class="field">
-    <%= f.label :start_time %>
-    <%= f.datetime_select :start_time %>
-  </div>
-
-  <div class="field">
-    <%= f.label :end_time %>
-    <%= f.datetime_select :end_time %>
-  </div>
-
-  <div class="field">
-    <%= f.label :type %>
-    <%= f.number_field :type %>
-  </div>
-
-  <div class="field">
-    <%= f.label :target_qty %>
-    <%= f.number_field :target_qty %>
-  </div>
-
-  <div class="field">
-    <%= f.label :real_qty %>
-    <%= f.number_field :real_qty %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+</div>

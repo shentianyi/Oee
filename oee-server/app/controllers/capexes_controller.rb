@@ -71,8 +71,16 @@ class CapexesController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def capex_params
     params.require(:capex).permit(:project, :bu_code, :desc,
-                                  budgets_attributes: [:code, :type, :desc, :_destroy, :id,
-                                                       budget_items_attributes: [:qty, :unit_price, :total_price, :id, :_destroy],
-                                                       pam_lists_attributes: [:nr, :cost, :remained, :is_final_approved, :in_process, :approved, :budget_not_applied, :id, :_destroy]])
+                                  budgets_attributes: [
+                                      :code, :type, :desc, :_destroy, :id,
+                                      budget_items_attributes: [:qty, :unit_price, :total_price, :id, :_destroy],
+                                      pam_lists_attributes: [:nr, :cost, :remained, :is_final_approved, :in_process, :approved, :budget_not_applied, :id, :_destroy,
+                                                             pam_item_attributes: [
+                                                                 :pa_no, :description, :qty, :total_cost, :applicant, :applicant_date,
+                                                                 :supplier, :sap_no, :arrive_date, :final_release, :id, :_destroy
+                                                             ]
+                                      ]
+                                  ]
+    )
   end
 end

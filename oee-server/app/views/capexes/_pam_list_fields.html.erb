@@ -1,27 +1,59 @@
-<p class="fields">
-<h2>PAM List</h2>
+<div class="row" style="margin:0; margin-top: 5px; border: 2px solid #34495e; padding: 10px;">
+  <div class="row" style="margin:0;">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <%= f.link_to_remove content_tag(:i, content_tag(:span, "删除PAM项"), :class => 'fa fa-close'), :class => "pull-right", :title => "删除PAM项" %>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>Nr</span>
+        <%= f.text_field :nr %>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>Cost</span>
+        <%= f.text_field :cost %>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>Remained</span>
+        <%= f.text_field :remained %>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>Is_final_approved</span>
+        <%= f.check_box :is_final_approved %>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>In_process</span>
+        <%= f.text_field :in_process %>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>Approved</span>
+        <%= f.text_field :approved %>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>Budget_not_applied</span>
+        <%= f.text_field :budget_not_applied %>
+      </div>
+    </div>
+  </div>
 
-  <%= f.label :nr %>
-  <%= f.text_field :nr %>
+  <hr class="hr-success">
 
-  <%= f.label :cost %>
-  <%= f.text_field :cost %>
+  <div class="row" style="margin:0; padding: 10px;">
+    <%= f.link_to_add content_tag(:i, content_tag(:span, "添加PAM子项"), :class => 'fa fa-plus'), :pam_items, :class => "pull-right", :style => "margin-top:5px;", :title => "添加 pam子项" %>
 
-  <%= f.label :remained %>
-  <%= f.text_field :remained %>
-
-  <%= f.label :is_final_approved %>
-  <%= f.check_box :is_final_approved %>
-
-  <%= f.label :in_process %>
-  <%= f.text_field :in_process %>
-
-  <%= f.label :approved %>
-  <%= f.text_field :approved %>
-
-  <%= f.label :budget_not_applied %>
-  <%= f.text_field :budget_not_applied %>
-
-<%= f.link_to_remove "Remove this PAM List" %>
-
-</p>
+    <%= f.fields_for :pam_items do |builder| %>
+        <%= render "pam_item_fields", :f => builder %>
+    <% end %>
+  </div>
+</div>
