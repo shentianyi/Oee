@@ -1,70 +1,81 @@
 <p id="notice"><%= notice %></p>
 
-<li><%= link_to '返回', asset_balance_lists_path %></li>
-<h1>Asset Balance List : <%= @asset_balance_list.id %></h1>
-<h2>Asset Balance Items</h2>
+<ol class="breadcrumb">
+  <li><%= link_to '月资产平衡', asset_balance_lists_path %></li>
+  <li>清单列表</li>
+</ol>
 
-<div style="overflow: auto">
-  <table class="table">
-    <thead>
-    <tr>
-      <th>Asset</th>
-      <th>Cap date</th>
-      <th>Profit center</th>
-      <th>Asset description</th>
-      <th>Acquis val</th>
-      <th>Accum dep</th>
-      <th>Book val</th>
-      <th>Asset class</th>
-      <th>Inventory nr</th>
-      <th>Ts equipment nr</th>
-      <th>Ts project</th>
-      <th>Ts inventory user</th>
-      <th>Ts keeper</th>
-      <th>Ts position</th>
-      <th>Ts nameplate track</th>
-      <th>Ts type</th>
-      <th>Ts equipment type</th>
-      <th>Ts area</th>
-      <th>Ts supplier</th>
-      <th>Status</th>
-      <th>Remark</th>
-      <th>Ts inventory result</th>
-      <th colspan="3"></th>
-    </tr>
-    </thead>
+<hr class="hr-grey"/>
 
-    <tbody>
-    <% @asset_balance_items.each do |asset_balance_item| %>
-        <tr>
-          <td><%= asset_balance_item.fix_asset_track.nr %></td>
-          <td><%= asset_balance_item.cap_date.localtime.strftime('%Y/%m/%d') %></td>
-          <td><%= asset_balance_item.profit_center %></td>
-          <td><%= asset_balance_item.asset_description %></td>
-          <td><%= asset_balance_item.acquis_val %></td>
-          <td><%= asset_balance_item.accum_dep %></td>
-          <td><%= asset_balance_item.book_val %></td>
-          <td><%= asset_balance_item.asset_class %></td>
-          <td><%= asset_balance_item.inventory_nr %></td>
-          <td><%= asset_balance_item.ts_equipment_nr %></td>
-          <td><%= asset_balance_item.ts_project %></td>
-          <td><%= asset_balance_item.ts_inventory_user.name %></td>
-          <td><%= asset_balance_item.ts_keeper %></td>
-          <td><%= asset_balance_item.ts_position %></td>
-          <td><%= asset_balance_item.ts_nameplate_track %></td>
-          <td><%= asset_balance_item.ts_type %></td>
-          <td><%= asset_balance_item.ts_equipment_type %></td>
-          <td><%= asset_balance_item.ts_area.desc %></td>
-          <td><%= asset_balance_item.ts_supplier %></td>
-          <td><%= asset_balance_item.status %></td>
-          <td><%= asset_balance_item.remark %></td>
-          <td><%= asset_balance_item.ts_inventory_result %></td>
-          <td><%= link_to 'Show', asset_balance_item %></td>
-          <td><%= link_to 'Edit', edit_asset_balance_item_path(asset_balance_item) %></td>
-          <td><%= link_to 'Destroy', asset_balance_item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-    <% end %>
-    </tbody>
-  </table>
+<div class="marco-npanel-default">
+  <div class="marco-nheading">
+    [<%= @asset_balance_list.id %>]
+    月资产平衡清单列表
+  </div>
+
+  <div class="marco-nbody" style="overflow: auto; padding: 0;">
+    <table class="marco-nbody table table-bordered">
+      <thead>
+      <tr>
+        <th>Asset</th>
+        <th>Cap date</th>
+        <th>Profit center</th>
+        <th>Asset description</th>
+        <th>Acquis val</th>
+        <th>Accum dep</th>
+        <th>Book val</th>
+        <th>Asset class</th>
+        <th>Inventory nr</th>
+        <th>Ts equipment nr</th>
+        <th>Ts project</th>
+        <th>Ts inventory user</th>
+        <th>Ts keeper</th>
+        <th>Ts position</th>
+        <th>Ts nameplate track</th>
+        <th>Ts type</th>
+        <th>Ts equipment type</th>
+        <th>Ts area</th>
+        <th>Ts supplier</th>
+        <th>Status</th>
+        <th>Remark</th>
+        <th>Ts inventory result</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @asset_balance_items.each do |asset_balance_item| %>
+          <tr>
+            <td><%= asset_balance_item.fix_asset_track.nr %></td>
+            <td><%= asset_balance_item.cap_date.localtime.strftime('%Y/%m/%d') %></td>
+            <td><%= asset_balance_item.profit_center %></td>
+            <td><%= asset_balance_item.asset_description %></td>
+            <td><%= asset_balance_item.acquis_val %></td>
+            <td><%= asset_balance_item.accum_dep %></td>
+            <td><%= asset_balance_item.book_val %></td>
+            <td><%= asset_balance_item.asset_class %></td>
+            <td><%= asset_balance_item.inventory_nr %></td>
+            <td><%= asset_balance_item.ts_equipment_nr %></td>
+            <td><%= asset_balance_item.ts_project %></td>
+            <td><%= asset_balance_item.ts_inventory_user.name %></td>
+            <td><%= asset_balance_item.ts_keeper %></td>
+            <td><%= asset_balance_item.ts_position %></td>
+            <td><%= asset_balance_item.ts_nameplate_track %></td>
+            <td><%= asset_balance_item.ts_type %></td>
+            <td><%= asset_balance_item.ts_equipment_type %></td>
+            <td><%= asset_balance_item.ts_area.desc %></td>
+            <td><%= asset_balance_item.ts_supplier %></td>
+            <td><%= asset_balance_item.status %></td>
+            <td><%= asset_balance_item.remark %></td>
+            <td><%= asset_balance_item.ts_inventory_result %></td>
+            <td>
+              <%#= link_to content_tag(:i, '', :class => 'fa fa-eye'), asset_balance_item, :class => "marco-btn-success", :title => "详情" %>
+              <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_asset_balance_item_path(asset_balance_item), :class => "marco-btn-primary", :title => "编辑" %>
+              <%= link_to content_tag(:i, '', :class => 'fa fa-close'), asset_balance_item, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
-<br>

@@ -152,7 +152,8 @@ body {
           width: 160px;
           display: table;
           height: 25px;
-          border-bottom: 1px dashed #999;
+          border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+          margin-top: 5px;
           i {
             display: table-cell;
             padding-left: 10px;
@@ -808,7 +809,7 @@ body {
   position: fixed;
   top: 12px;
   right: 10px;
-  width: 200px;
+  min-width: 200px;
   padding: 4px;
   text-align: center;
   background: $marco-bg;

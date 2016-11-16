@@ -15,7 +15,8 @@
   <%= form_for(equipment_track) do |f| %>
       <% if equipment_track.errors.any? %>
           <div id="error_explanation">
-            <h2><%= pluralize(equipment_track.errors.count, "error") %> prohibited this equipment_track from being saved:</h2>
+            <h2><%= pluralize(equipment_track.errors.count, "error") %> prohibited this equipment_track from being
+              saved:</h2>
 
             <ul>
               <% equipment_track.errors.full_messages.each do |message| %>
@@ -38,7 +39,7 @@
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="marco-igroup-oee">
                 <span>设备分级</span>
-                <%= f.text_field :level%>
+                <%= f.text_field :level %>
               </div>
             </div>
 
@@ -150,7 +151,7 @@
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="marco-igroup-oee">
                 <span>购置日期</span>
-                <%= f.text_field :procurment_date, :class=>'datepicker' %>
+                <%= f.text_field :procurment_date, :class => 'datepicker' %>
               </div>
             </div>
 
@@ -164,7 +165,7 @@
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="marco-igroup-oee">
                 <span>预计再次放行时间</span>
-                <%= f.text_field :next_release, :class=>'datepicker' %>
+                <%= f.text_field :next_release, :class => 'datepicker' %>
               </div>
             </div>
 
@@ -210,134 +211,134 @@
 <!--之前的数据-->
 
 <!--<%#= form_for(equipment_track) do |f| %>-->
-  <!--<%# if equipment_track.errors.any? %>-->
-    <!--<div id="error_explanation">-->
-      <!--<h2><%#= pluralize(equipment_track.errors.count, "error") %> prohibited this equipment_track from being saved:</h2>-->
+<!--<%# if equipment_track.errors.any? %>-->
+<!--<div id="error_explanation">-->
+<!--<h2><%#= pluralize(equipment_track.errors.count, "error") %> prohibited this equipment_track from being saved:</h2>-->
 
-      <!--<ul>-->
-      <!--<%# equipment_track.errors.full_messages.each do |message| %>-->
-        <!--<li><%#= message %></li>-->
-      <!--<%# end %>-->
-      <!--</ul>-->
-    <!--</div>-->
-  <!--<%# end %>-->
+<!--<ul>-->
+<!--<%# equipment_track.errors.full_messages.each do |message| %>-->
+<!--<li><%#= message %></li>-->
+<!--<%# end %>-->
+<!--</ul>-->
+<!--</div>-->
+<!--<%# end %>-->
 
-  <!--<div class="field">-->
-    <!--<%#= f.label :level %>-->
-    <!--<%#= f.text_field :level %>-->
-  <!--</div>-->
+<!--<div class="field">-->
+<!--<%#= f.label :level %>-->
+<!--<%#= f.text_field :level %>-->
+<!--</div>-->
 
-  <!--<div class="field">-->
-    <!--<%#= f.label :name %>-->
-    <!--<%#= f.text_field :name %>-->
-  <!--</div>-->
+<!--<div class="field">-->
+<!--<%#= f.label :name %>-->
+<!--<%#= f.text_field :name %>-->
+<!--</div>-->
 
-  <!--<div class="field">-->
-    <!--<%#= f.label :nr %>-->
-    <!--<%#= f.text_field :nr %>-->
-  <!--</div>-->
+<!--<div class="field">-->
+<!--<%#= f.label :nr %>-->
+<!--<%#= f.text_field :nr %>-->
+<!--</div>-->
 
-  <!--<div class="field">-->
-    <!--<%#= f.label :type %>-->
-    <!--<%#= f.select(:type, EquipmentType.menu, {include_blank: true}) %>-->
-  <!--</div>-->
+<!--<div class="field">-->
+<!--<%#= f.label :type %>-->
+<!--<%#= f.select(:type, EquipmentType.menu, {include_blank: true}) %>-->
+<!--</div>-->
 
-  <!--<div class="field">-->
-    <!--<%#= f.label :asset_nr %>-->
-    <!--<%#= f.text_field :asset_nr %>-->
-  <!--</div>-->
+<!--<div class="field">-->
+<!--<%#= f.label :asset_nr %>-->
+<!--<%#= f.text_field :asset_nr %>-->
+<!--</div>-->
 
-  <!--<div class="field">-->
-    <!--<%#= f.label :description %>-->
-    <!--<%#= f.text_field :description %>-->
-  <!--</div>-->
+<!--<div class="field">-->
+<!--<%#= f.label :description %>-->
+<!--<%#= f.text_field :description %>-->
+<!--</div>-->
 
-  <!--<div class="field">-->
-    <!--<%#= f.label :product_id %>-->
-    <!--<%#= f.text_field :product_id %>-->
-  <!--</div>-->
+<!--<div class="field">-->
+<!--<%#= f.label :product_id %>-->
+<!--<%#= f.text_field :product_id %>-->
+<!--</div>-->
 
-  <!--<div class="field">-->
-    <!--<%#= f.label :equipment_serial_id %>-->
-    <!--<%#= f.text_field :equipment_serial_id %>-->
-  <!--</div>-->
+<!--<div class="field">-->
+<!--<%#= f.label :equipment_serial_id %>-->
+<!--<%#= f.text_field :equipment_serial_id %>-->
+<!--</div>-->
 
-  <!--<div class="field">-->
-    <!--<%#= f.label :supplier %>-->
-    <!--<%#= f.text_field :supplier %>-->
-  <!--</div>-->
+<!--<div class="field">-->
+<!--<%#= f.label :supplier %>-->
+<!--<%#= f.text_field :supplier %>-->
+<!--</div>-->
 
-  <!--<div class="field">-->
-    <!--<%#= f.label :status %>-->
-    <!--<%#= f.text_field :status %>-->
-  <!--</div>-->
+<!--<div class="field">-->
+<!--<%#= f.label :status %>-->
+<!--<%#= f.text_field :status %>-->
+<!--</div>-->
 
-  <!--<div class="field">-->
-    <!--<%#= f.label :profit_center %>-->
-    <!--<%#= f.text_field :profit_center %>-->
-  <!--</div>-->
+<!--<div class="field">-->
+<!--<%#= f.label :profit_center %>-->
+<!--<%#= f.text_field :profit_center %>-->
+<!--</div>-->
 
-  <!--<div class="field">-->
-    <!--<%#= f.label :department %>-->
-    <!--<%#= f.text_field :department %>-->
-  <!--</div>-->
+<!--<div class="field">-->
+<!--<%#= f.label :department %>-->
+<!--<%#= f.text_field :department %>-->
+<!--</div>-->
 
-  <!--<div class="field">-->
-    <!--<%#= f.label :project %>-->
-    <!--<%#= f.text_field :project %>-->
-  <!--</div>-->
+<!--<div class="field">-->
+<!--<%#= f.label :project %>-->
+<!--<%#= f.text_field :project %>-->
+<!--</div>-->
 
-  <!--<div class="field">-->
-    <!--<%#= f.label :location %>-->
-    <!--<%#= f.text_field :location %>-->
-  <!--</div>-->
+<!--<div class="field">-->
+<!--<%#= f.label :location %>-->
+<!--<%#= f.text_field :location %>-->
+<!--</div>-->
 
-  <!--<div class="field">-->
-    <!--<%#= f.label :area %>-->
-    <!--<%#= f.text_field :area %>-->
-  <!--</div>-->
+<!--<div class="field">-->
+<!--<%#= f.label :area %>-->
+<!--<%#= f.text_field :area %>-->
+<!--</div>-->
 
-  <!--<div class="field">-->
-    <!--<%#= f.label :position %>-->
-    <!--<%#= f.text_field :position %>-->
-  <!--</div>-->
+<!--<div class="field">-->
+<!--<%#= f.label :position %>-->
+<!--<%#= f.text_field :position %>-->
+<!--</div>-->
 
-  <!--<div class="field">-->
-    <!--<%#= f.label :procurment_date %>-->
-    <!--<%#= f.text_field :procurment_date %>-->
-  <!--</div>-->
+<!--<div class="field">-->
+<!--<%#= f.label :procurment_date %>-->
+<!--<%#= f.text_field :procurment_date %>-->
+<!--</div>-->
 
-  <!--<div class="field">-->
-    <!--<%#= f.label :release_cycle %>-->
-    <!--<%#= f.text_field :release_cycle %>-->
-  <!--</div>-->
+<!--<div class="field">-->
+<!--<%#= f.label :release_cycle %>-->
+<!--<%#= f.text_field :release_cycle %>-->
+<!--</div>-->
 
-  <!--<div class="field">-->
-    <!--<%#= f.label :next_release %>-->
-    <!--<%#= f.text_field :next_release %>-->
-  <!--</div>-->
+<!--<div class="field">-->
+<!--<%#= f.label :next_release %>-->
+<!--<%#= f.text_field :next_release %>-->
+<!--</div>-->
 
-  <!--<div class="field">-->
-    <!--<%#= f.label :release_notice %>-->
-    <!--<%#= f.text_field :release_notice %>-->
-  <!--</div>-->
+<!--<div class="field">-->
+<!--<%#= f.label :release_notice %>-->
+<!--<%#= f.text_field :release_notice %>-->
+<!--</div>-->
 
-  <!--<div class="field">-->
-    <!--<%#= f.label :responsibilityer %>-->
-    <!--<%#= f.text_field :responsibilityer %>-->
-  <!--</div>-->
+<!--<div class="field">-->
+<!--<%#= f.label :responsibilityer %>-->
+<!--<%#= f.text_field :responsibilityer %>-->
+<!--</div>-->
 
-  <!--<div class="field">-->
-    <!--<%#= f.label :remark %>-->
-    <!--<%#= f.text_field :remark %>-->
-  <!--</div>-->
+<!--<div class="field">-->
+<!--<%#= f.label :remark %>-->
+<!--<%#= f.text_field :remark %>-->
+<!--</div>-->
 
-  <!--<div class="field">-->
-    <!--<%#= f.label :is_top %>-->
-    <!--<%#= f.check_box :is_top %>-->
-  <!--</div>-->
+<!--<div class="field">-->
+<!--<%#= f.label :is_top %>-->
+<!--<%#= f.check_box :is_top %>-->
+<!--</div>-->
 
-  <!--<div class="actions">-->
-    <!--<%#= f.submit %>-->
-  <!--</div>-->
+<!--<div class="actions">-->
+<!--<%#= f.submit %>-->
+<!--</div>-->
 <!--<%# end %>-->

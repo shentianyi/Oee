@@ -11,61 +11,61 @@ layout.init = function () {
 
         case "users":
             $('.nav-users').addClass('nav-active');
-            PageAction('#users', '新增用户', '编辑用户', '上传用户', '创建', '更新', '上传');
+            PageAction('#users', '新增用户', '编辑用户', '上传用户', '用户详情', '创建', '更新', '上传');
             break;
 
         case "crafts":
             $('.nav-basic').addClass('nav-active');
             $('.nav-crafts').addClass('nav-active');
-            PageAction('#crafts', '新增工艺', '编辑工艺', '上传工艺信息', '创建', '更新', '上传');
+            PageAction('#crafts', '新增工艺', '编辑工艺', '上传工艺信息', '工艺详情', '创建', '更新', '上传');
             break;
 
         case "departments":
             $('.nav-basic').addClass('nav-active');
             $('.nav-departments').addClass('nav-active');
-            PageAction('#departemnts', '新增部门', '编辑部门', '上传部门信息', '创建', '更新', '上传');
+            PageAction('#departemnts', '新增部门', '编辑部门', '上传部门信息', '部门详情', '创建', '更新', '上传');
             break;
 
         case "downtime_types":
             $('.nav-basic').addClass('nav-active');
             $('.nav-downtime_types').addClass('nav-active');
-            PageAction('#downtime_types', '新增停机类型', '编辑停机类型', '上传停机类型信息', '创建', '更新', '上传');
+            PageAction('#downtime_types', '新增停机类型', '编辑停机类型', '上传停机类型信息', '停机类型详情', '创建', '更新', '上传');
             break;
 
         case "downtime_codes":
             $('.nav-basic').addClass('nav-active');
             $('.nav-downtime_codes').addClass('nav-active');
-            PageAction('#downtime_codes', '新增停机代码', '编辑停机代码', '上传停机代码信息', '创建', '更新', '上传');
+            PageAction('#downtime_codes', '新增停机代码', '编辑停机代码', '上传停机代码信息', '停机代码详情', '创建', '更新', '上传');
             break;
 
         case "work_times":
             $('.nav-basic').addClass('nav-active');
             $('.nav-work_times').addClass('nav-active');
-            PageAction('#work_times', '新增标准工时', '编辑标准工时', '上传标准工时信息', '创建', '更新', '上传');
+            PageAction('#work_times', '新增标准工时', '编辑标准工时', '上传标准工时信息', '标准工时详情', '创建', '更新', '上传');
             break;
 
         case "machine_types":
             $('.nav-basic').addClass('nav-active');
             $('.nav-machine_types').addClass('nav-active');
-            PageAction('#machine_types', '新增机器类型', '编辑机器类型', '上传机器类型信息', '创建', '更新', '上传');
+            PageAction('#machine_types', '新增机器类型', '编辑机器类型', '上传机器类型信息', '机器类型详情', '创建', '更新', '上传');
             break;
 
         case "machines":
             $('.nav-basic').addClass('nav-active');
             $('.nav-machines').addClass('nav-active');
-            PageAction('#machines', '新增机器', '编辑机器', '上传机器信息', '创建', '更新', '上传');
+            PageAction('#machines', '新增机器', '编辑机器', '上传机器信息', '机器详情', '创建', '更新', '上传');
             break;
 
         case "work_shifts":
             $('.nav-basic').addClass('nav-active');
             $('.nav-work_shifts').addClass('nav-active');
-            PageAction('#work_shifts', '新增班次设置', '编辑班次设置', '上传班次设置信息', '创建', '更新', '上传');
+            PageAction('#work_shifts', '新增班次设置', '编辑班次设置', '上传班次设置信息', '班次设置详情', '创建', '更新', '上传');
             break;
 
         case "holidays":
             $('.nav-basic').addClass('nav-active');
             $('.nav-holidays').addClass('nav-active');
-            PageAction('#holidays', '新增节假日', '编辑节假日', '上传节假日信息', '创建', '更新', '上传');
+            PageAction('#holidays', '新增节假日', '编辑节假日', '上传节假日信息', '节假日详情', '创建', '更新', '上传');
             break;
 
         //OEE 管理
@@ -76,24 +76,71 @@ layout.init = function () {
                 $('.nav-display_downtime_records').addClass('nav-active');
             } else {
                 $('.nav-downtime_records').addClass('nav-active');
-                PageAction('#downtime_records', '新增停机记录', '编辑停机记录', '上传停机记录信息', '创建', '更新', '上传');
+                PageAction('#downtime_records', '新增停机记录', '编辑停机记录', '上传停机记录信息', '停机记录详情', '创建', '更新', '上传');
             }
             break;
 
         case "fix_asset_tracks":
             $('.nav-fix-asset-tracks').addClass('nav-active');
-            PageAction('#fix_asset_tracks', '新增固定资产追踪', '编辑固定资产追踪', '上传固定资产追踪信息', '创建', '更新', '上传');
+            PageAction('#fix_asset_tracks', '新增固定资产追踪', '编辑固定资产追踪', '上传固定资产追踪信息', '固定资产跟踪详情', '创建', '更新', '上传');
             break;
 
         case "equipment_tracks":
             $('.nav-equipment-tracks').addClass('nav-active');
-            PageAction('#equipment_tracks', '新增设备追踪', '编辑设备追踪', '上传设备追踪信息', '创建', '更新', '上传');
+            PageAction('#equipment_tracks', '新增设备追踪', '编辑设备追踪', '上传设备追踪信息', '设备跟踪详情', '创建', '更新', '上传');
+            break;
+
+        case "asset_balance_lists":
+            $('.nav-asset_balance_lists').addClass('nav-active');
+            PageAction('#asset_balance_lists', '新增月资产平衡', '编辑月资产平衡', '上传月资产平衡信息', '月资产平衡详情', '创建', '更新', '上传');
+            break;
+
+        case "inventory_lists":
+            $('.nav-inventory').addClass('nav-active');
+            $('.nav-inventory_lists').addClass('nav-active');
+            PageAction('#inventory_lists', '新增资产盘点', '编辑资产盘点', '上传资产盘点信息', '资产盘点详情', '创建', '更新', '上传');
             break;
 
         case "areas":
             $('.nav-inventory').addClass('nav-active');
             $('.nav-areas').addClass('nav-active');
-            PageAction('#areas', '新增盘点区域', '编辑盘点区域', '上传盘点区域信息', '创建', '更新', '上传');
+            PageAction('#areas', '新增盘点区域', '编辑盘点区域', '上传盘点区域信息', '盘点区域详情', '创建', '更新', '上传');
+            break;
+
+        case "user_inventory_tasks":
+            $('.nav-inventory').addClass('nav-active');
+            $('.nav-user_inventory_tasks').addClass('nav-active');
+            PageAction('#user_inventory_tasks', '新增盘点任务', '编辑盘点任务', '上传盘点任务信息', '盘点任务详情', '创建', '更新', '上传');
+            break;
+
+        case "capexes":
+            $('.nav-capex').addClass('nav-active');
+            $('.nav-capexe').addClass('nav-active');
+            PageAction('#capexs', '新增CAPEX', '编辑CAPEX', '上传CAPEX信息', 'CAPEX 详情', '创建', '更新', '上传');
+            break;
+
+        case "budgets":
+            $('.nav-capex').addClass('nav-active');
+            $('.nav-budgets').addClass('nav-active');
+            PageAction('#budgets', '新增BUDGET', '编辑BUDGET', '上传BUDGET信息', 'BUDGET 详情', '创建', '更新', '上传');
+            break;
+
+        case "budget_items":
+            $('.nav-capex').addClass('nav-active');
+            $('.nav-budget_items').addClass('nav-active');
+            PageAction('#budget_items', '新增BUDGET ITEM', '编辑BUDGET ITEM', '上传BUDGET ITEM信息', 'BUDGET ITEM详情', '创建', '更新', '上传');
+            break;
+
+        case "pam_lists":
+            $('.nav-capex').addClass('nav-active');
+            $('.nav-pam_lists').addClass('nav-active');
+            PageAction('#pam_lists', '新增PAM', '编辑PAM', '上传PAM信息', 'PAM 详情', '创建', '更新', '上传');
+            break;
+
+        case "pam_items":
+            $('.nav-capex').addClass('nav-active');
+            $('.nav-pam_items').addClass('nav-active');
+            PageAction('#pam_items', '新增PAM ITEM', '编辑PAM ITEM', '上传PAM ITEM信息', 'PAM ITEM 详情', '创建', '更新', '上传');
             break;
 
         default:
@@ -102,11 +149,10 @@ layout.init = function () {
             break;
     }
 
-    function PageAction(id, newAction, editAction, importAction, newBtn, editBtn, importBtn) {
+    function PageAction(id, newAction, editAction, importAction, showAction, newBtn, editBtn, importBtn) {
         if ($(id).length == 0) return;
 
         // vue.js
-
         var vueName = new Vue({
             el: id,
             data: {
@@ -121,6 +167,8 @@ layout.init = function () {
         } else if (pathname[pathname.length - 1] == "import") {
             vueName.action = importAction;
             vueName.actionBtn = importBtn;
+        } else {
+            vueName.action = showAction;
         }
     }
 

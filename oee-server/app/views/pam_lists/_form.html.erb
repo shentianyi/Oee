@@ -1,57 +1,81 @@
-<%= form_for(pam_list) do |f| %>
-  <% if pam_list.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(pam_list.errors.count, "error") %> prohibited this pam_list from being saved:</h2>
+<div id="pam_lists">
+  <ol class="breadcrumb">
+    <li>CAPEX</li>
+    <li><%= link_to 'PAM列表', pam_lists_path %></li>
+    <li>{{action}}</li>
+  </ol>
 
-      <ul>
-      <% pam_list.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+  <hr class="hr-grey"/>
+
+  <%= form_for(pam_list) do |f| %>
+
+      <% if pam_list.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(pam_list.errors.count, "error") %> prohibited this pam_list from being saved:</h2>
+            <ul>
+              <% pam_list.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
       <% end %>
-      </ul>
-    </div>
+      <div class="marco-npanel-default">
+        <div class="marco-nheading">
+          {{action}}
+          <div class="pull-right">
+            <button type="submit" class="marco-btn-normal">{{actionBtn}}</button>
+          </div>
+        </div>
+        <div class="marco-nbody row">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>Nr</span>
+              <%= f.text_field :nr %>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>Cost</span>
+              <%= f.text_field :cost %>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>Remained</span>
+              <%= f.text_field :remained %>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>is_final_approved</span>
+              <%= f.check_box :is_final_approved %>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>in_process</span>
+              <%= f.text_field :in_process %>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>approved</span>
+              <%= f.text_field :approved %>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>budget_not_applied</span>
+              <%= f.text_field :budget_not_applied %>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>budget_id</span>
+              <%= f.select(:budget_id, Budget.all.collect { |b| [b.code, b.id] }) %>
+            </div>
+          </div>
+        </div>
+      </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :nr %>
-    <%= f.text_field :nr %>
-  </div>
-
-  <div class="field">
-    <%= f.label :cost %>
-    <%= f.text_field :cost %>
-  </div>
-
-  <div class="field">
-    <%= f.label :remained %>
-    <%= f.text_field :remained %>
-  </div>
-
-  <div class="field">
-    <%= f.label :is_final_approved %>
-    <%= f.check_box :is_final_approved %>
-  </div>
-
-  <div class="field">
-    <%= f.label :in_process %>
-    <%= f.text_field :in_process %>
-  </div>
-
-  <div class="field">
-    <%= f.label :approved %>
-    <%= f.text_field :approved %>
-  </div>
-
-  <div class="field">
-    <%= f.label :budget_not_applied %>
-    <%= f.text_field :budget_not_applied %>
-  </div>
-
-  <div class="field">
-    <%= f.label :budget_id %>
-    <%= f.select(:budget_id, Budget.all.collect { |b| [b.code, b.id] })  %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+</div>

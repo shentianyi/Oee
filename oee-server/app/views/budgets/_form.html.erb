@@ -1,37 +1,64 @@
-<%= form_for(budget) do |f| %>
-  <% if budget.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(budget.errors.count, "error") %> prohibited this budget from being saved:</h2>
+<div id="budgets">
+  <ol class="breadcrumb">
+    <li>CAPEX</li>
+    <li><%= link_to 'BUDGET列表', budgets_path %></li>
+    <li>{{action}}</li>
+  </ol>
 
-      <ul>
-      <% budget.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+  <hr class="hr-grey"/>
+
+  <%= form_for(budget) do |f| %>
+
+      <% if budget.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(budget.errors.count, "error") %> prohibited this budget from being saved:</h2>
+            <ul>
+              <% budget.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
       <% end %>
-      </ul>
-    </div>
+
+      <div class="marco-npanel-default">
+        <div class="marco-nheading">
+          {{action}}
+          <div class="pull-right">
+            <button type="submit" class="marco-btn-normal">{{actionBtn}}</button>
+          </div>
+        </div>
+
+        <div class="marco-nbody row">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>代码</span>
+              <%= f.text_field :code %>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>类型</span>
+              <%= f.select(:type, BudgetType.menu, {include_blank: false}) %>
+            </div>
+          </div>
+
+
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>描述</span>
+              <%= f.text_field :desc %>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>CAPEX ID</span>
+              <%= f.select(:capex_id, Capex.all.collect { |c| [c.project, c.id] }, {include_blank: false}) %>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :code %>
-    <%= f.text_field :code %>
-  </div>
-
-  <div class="field">
-    <%= f.label :type %>
-    <%= f.select(:type, BudgetType.menu, {include_blank: false}) %>
-  </div>
-
-  <div class="field">
-    <%= f.label :desc %>
-    <%= f.text_field :desc %>
-  </div>
-
-  <div class="field">
-    <%= f.label :capex_id %>
-    <%= f.select(:capex_id, Capex.all.collect{|c| [c.project, c.id]}, {include_blank: false}) %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+</div>

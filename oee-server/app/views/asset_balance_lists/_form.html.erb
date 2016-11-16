@@ -1,25 +1,44 @@
-<%= form_for(asset_balance_list) do |f| %>
-  <% if asset_balance_list.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(asset_balance_list.errors.count, "error") %> prohibited this asset_balance_list from being saved:</h2>
+<div id="asset_balance_lists">
+  <ol class="breadcrumb">
+    <li><%= link_to '月资产平衡', asset_balance_lists_path %></li>
+    <li>{{action}}</li>
+  </ol>
 
-      <ul>
-      <% asset_balance_list.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+  <hr class="hr-grey"/>
+
+  <%= form_for(asset_balance_list) do |f| %>
+
+      <% if asset_balance_list.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(asset_balance_list.errors.count, "error") %> prohibited this craft from being saved:</h2>
+            <ul>
+              <% asset_balance_list.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
       <% end %>
-      </ul>
-    </div>
+
+      <div class="marco-npanel-default">
+        <div class="marco-nheading">
+          {{action}}
+          <div class="pull-right">
+            <button type="submit" class="marco-btn-normal">{{actionBtn}}</button>
+          </div>
+        </div>
+        <div class="marco-nbody row">
+
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>日期</span>
+              <%= f.text_field :balance_date, :class=>'datepicker' %>
+            </div>
+          </div>
+
+        </div>
+      </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :balance_date %>
-    <%= f.date_field :balance_date %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+</div>
 
 <script type="text/javascript">
     layout.date_picker('.datepicker');

@@ -1,37 +1,61 @@
-<%= form_for(budget_item) do |f| %>
-  <% if budget_item.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(budget_item.errors.count, "error") %> prohibited this budget_item from being saved:</h2>
+<div id="budget_items">
+  <ol class="breadcrumb">
+    <li>CAPEX</li>
+    <li><%= link_to 'BUDGET列表', budget_items_path %></li>
+    <li>{{action}}</li>
+  </ol>
 
-      <ul>
-      <% budget_item.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+  <hr class="hr-grey"/>
+
+  <%= form_for(budget_item) do |f| %>
+      <% if budget_item.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(budget_item.errors.count, "error") %> prohibited this budget_item from being saved:</h2>
+            <ul>
+              <% budget_item.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
       <% end %>
-      </ul>
-    </div>
+
+      <div class="marco-npanel-default">
+        <div class="marco-nheading">
+          {{action}}
+          <div class="pull-right">
+            <button type="submit" class="marco-btn-normal">{{actionBtn}}</button>
+          </div>
+        </div>
+
+        <div class="marco-nbody row">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>数量</span>
+              <%= f.text_field :qty %>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>单价</span>
+              <%= f.text_field :unit_price %>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>总价</span>
+              <%= f.text_field :total_price %>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>BUDGET ID</span>
+              <%= f.select(:budget_id, Budget.all.collect { |b| [b.code, b.id] }, {include_blank: false}) %>
+            </div>
+          </div>
+
+        </div>
+      </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :qty %>
-    <%= f.number_field :qty %>
-  </div>
-
-  <div class="field">
-    <%= f.label :unit_price %>
-    <%= f.text_field :unit_price %>
-  </div>
-
-  <div class="field">
-    <%= f.label :total_price %>
-    <%= f.text_field :total_price %>
-  </div>
-
-  <div class="field">
-    <%= f.label :budget_id %>
-    <%= f.select(:budget_id, Budget.all.collect{|b| [b.code, b.id]}, {include_blank: false}) %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+</div>

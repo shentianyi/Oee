@@ -1,46 +1,61 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Inventory Lists</h1>
+<ol class="breadcrumb">
+  <li>盘点管理</li>
+  <li>资产盘点</li>
+</ol>
 
-inventory_lists
-<table class="table">
-  <thead>
+<hr class="hr-grey"/>
+
+<div class="marco-npanel-default">
+  <div class="marco-nheading">
+    资产盘点列表
+    <div class="pull-right">
+      <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_inventory_list_path %>
+    </div>
+  </div>
+
+  <table class="marco-nbody table table-bordered">
+    <thead>
     <tr>
       <th></th>
       <th>Name</th>
       <th>Inventory date</th>
       <th>Asset balance list</th>
       <th>状态</th>
-      <th colspan="6"></th>
+      <th>盘点清单</th>
+      <th>盘点重置与取消</th>
+      <th>操作</th>
     </tr>
-  </thead>
+    </thead>
 
-  <tbody>
+    <tbody>
     <% @inventory_lists.each do |inventory_list| %>
-      <tr>
-        <td>
-          <input name="inventory-list-check[<%= inventory_list.id%>]" type="checkbox" id="<%= inventory_list.id %>">
-        </td>
-        <td><%= inventory_list.name %></td>
-        <td><%= inventory_list.inventory_date.localtime.strftime('%Y/%m/%d') %></td>
-        <td><%= inventory_list.asset_balance_list.blank? ? '' : inventory_list.asset_balance_list.id %></td>
-        <th><%= InventoryListStatus.display(inventory_list.status) %></th>
-        <td><%= link_to '盘点清单', inventory_items_inventory_list_path(inventory_list) %>
-          <span class="badge pull-right"><%= inventory_list.inventory_items.count %></td>
-        <th><%= link_to '导入数据', import_inventory_lists_path(id: inventory_list.id) %> </th>
-        <th>
-          <%= link_to "盘点重置", reset_inventory_inventory_lists_path({id: inventory_list.id, do: 'disable'}), class: "btn btn-danger", data: {confirm: "确定盘点?"} %>
-        </th>
-        <th>
-          <%= link_to "取消盘点重置", reset_inventory_inventory_lists_path({id: inventory_list.id, do: 'enable'}), class: "btn btn-warning", data: {confirm: "确定取消盘点重置?"} %>
-        </th>
-        <td><%= link_to 'Edit', edit_inventory_list_path(inventory_list) %></td>
-        <td><%= link_to 'Destroy', inventory_list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+        <tr>
+          <td><input name="inventory-list-check[<%= inventory_list.id %>]" type="checkbox" id="<%= inventory_list.id %>"></td>
+          <td><%= inventory_list.name %></td>
+          <td><%= inventory_list.inventory_date.localtime.strftime('%Y/%m/%d') %></td>
+          <td><%= inventory_list.asset_balance_list.blank? ? '' : inventory_list.asset_balance_list.id %></td>
+          <td><%= InventoryListStatus.display(inventory_list.status) %></td>
+
+          <td>
+            <%= link_to '盘点清单', inventory_items_inventory_list_path(inventory_list) %>
+            <span class="badge pull-right" style="background: lightseagreen;"><%= inventory_list.inventory_items.count %></span>
+          </td>
+
+          <td>
+            <%= link_to "重置", reset_inventory_inventory_lists_path({id: inventory_list.id, do: 'disable'}), :class=>"marco-btn-danger", data: {confirm: "确定盘点?"} %>
+
+            <%= link_to "取消重置", reset_inventory_inventory_lists_path({id: inventory_list.id, do: 'enable'}), :class=>"marco-btn-danger",  data: {confirm: "确定取消盘点重置?"} %>
+          </td>
+
+          <td>
+            <%= link_to content_tag(:i, '', :class => "fa fa-cloud-upload"), import_inventory_lists_path(id: inventory_list.id), :class => "marco-btn-success", :title => "上传盘点数据"%>
+            <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_inventory_list_path(inventory_list), :class => "marco-btn-primary", :title => "编辑" %>
+            <%= link_to content_tag(:i, '', :class => 'fa fa-close'), inventory_list, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+          </td>
+        </tr>
     <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Inventory List', new_inventory_list_path %>
+    </tbody>
+  </table>
+</div>

@@ -1,31 +1,42 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Capexes</h1>
+<ol class="breadcrumb">
+  <li>CAPEX</li>
+  <li>CAPEX</li>
+</ol>
 
-<table class="table">
-  <thead>
+<hr class="hr-grey"/>
+
+<div class="marco-npanel-default">
+  <div class="marco-nheading">
+    CAPEX列表
+    <div class="pull-right">
+      <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_capex_path %>
+    </div>
+  </div>
+
+  <table class="marco-nbody table table-bordered">
+    <thead>
     <tr>
       <th>Project</th>
       <th>Bu code</th>
-      <th>Desc</th>
-      <th colspan="3"></th>
+      <th>描述</th>
+      <th>操作</th>
     </tr>
-  </thead>
+    </thead>
 
-  <tbody>
+    <tbody>
     <% @capexes.each do |capex| %>
-      <tr>
-        <td><%= capex.project %></td>
-        <td><%= BuCodeEnum.display(capex.bu_code) %></td>
-        <td><%= capex.desc %></td>
-        <td><%= link_to 'Show', capex %></td>
-        <td><%= link_to 'Edit', edit_capex_path(capex) %></td>
-        <td><%= link_to 'Destroy', capex, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+        <tr>
+          <td><%= capex.project %></td>
+          <td><%= BuCodeEnum.display(capex.bu_code) %></td>
+          <td><%= capex.desc %></td>
+          <td>
+            <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_capex_path(capex), :class => "marco-btn-primary", :title => "编辑" %>
+            <%= link_to content_tag(:i, '', :class => 'fa fa-close'), capex, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+          </td>
+        </tr>
     <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Capex', new_capex_path %>
+    </tbody>
+  </table>
+</div>

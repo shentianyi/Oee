@@ -4,13 +4,14 @@
   <ol class="breadcrumb">
     <li>CAPEX</li>
     <li><%= link_to 'PAM Item 列表', pam_items_path %></li>
+    <li>TS数据导入</li>
   </ol>
 
   <hr class="hr-grey"/>
 
   <form>
     <fieldset>
-      <legend style="width: 180px;">TS</legend>
+      <legend style="width: 120px;">TS数据导入</legend>
       <div>
         <b>选择数据文件：</b>
         <input id="item-data-uploader" type="file" name="files[]" data-url="/pam_items/ts_import"/>

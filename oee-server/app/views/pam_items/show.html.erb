@@ -1,109 +1,122 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Pa no:</strong>
-  <%= @pam_item.pa_no %>
-</p>
+<%= render 'form', pam_item: @pam_item %>
 
-<p>
-  <strong>Description:</strong>
-  <%= @pam_item.description %>
-</p>
+<script type="text/javascript" charset="utf-8">
+  $('.breadcrumb li').last().html('PAM ITEM详情');
 
-<p>
-  <strong>Qty:</strong>
-  <%= @pam_item.qty %>
-</p>
+  $('input').attr('disabled', 'disabled');
 
-<p>
-  <strong>Total cost:</strong>
-  <%= @pam_item.total_cost %>
-</p>
+  $('.marco-btn-normal').css({display: 'none'});
+</script>
 
-<p>
-  <strong>Applicant:</strong>
-  <%= @pam_item.applicant %>
-</p>
 
-<p>
-  <strong>Applicant date:</strong>
-  <%= @pam_item.applicant_date %>
-</p>
+<!--<p id="notice"><%#= notice %></p>-->
 
-<p>
-  <strong>Supplier:</strong>
-  <%= @pam_item.supplier %>
-</p>
+<!--<p>-->
+<!--<strong>Pa no:</strong>-->
+<!--<%#= @pam_item.pa_no %>-->
+<!--</p>-->
 
-<p>
-  <strong>Sap no:</strong>
-  <%= @pam_item.sap_no %>
-</p>
+<!--<p>-->
+<!--<strong>Description:</strong>-->
+<!--<%#= @pam_item.description %>-->
+<!--</p>-->
 
-<p>
-  <strong>Arrive date:</strong>
-  <%= @pam_item.arrive_date %>
-</p>
+<!--<p>-->
+<!--<strong>Qty:</strong>-->
+<!--<%#= @pam_item.qty %>-->
+<!--</p>-->
 
-<p>
-  <strong>Final release:</strong>
-  <%= @pam_item.final_release %>
-</p>
+<!--<p>-->
+<!--<strong>Total cost:</strong>-->
+<!--<%#= @pam_item.total_cost %>-->
+<!--</p>-->
 
-<p>
-  <strong>Po no:</strong>
-  <%= @pam_item.po_no %>
-</p>
+<!--<p>-->
+<!--<strong>Applicant:</strong>-->
+<!--<%#= @pam_item.applicant %>-->
+<!--</p>-->
 
-<p>
-  <strong>Po cost:</strong>
-  <%= @pam_item.po_cost %>
-</p>
+<!--<p>-->
+<!--<strong>Applicant date:</strong>-->
+<!--<%#= @pam_item.applicant_date %>-->
+<!--</p>-->
 
-<p>
-  <strong>Invoice prepared:</strong>
-  <%= @pam_item.invoice_prepared %>
-</p>
+<!--<p>-->
+<!--<strong>Supplier:</strong>-->
+<!--<%#= @pam_item.supplier %>-->
+<!--</p>-->
 
-<p>
-  <strong>Invoice amount:</strong>
-  <%= @pam_item.invoice_amount %>
-</p>
+<!--<p>-->
+<!--<strong>Sap no:</strong>-->
+<!--<%#= @pam_item.sap_no %>-->
+<!--</p>-->
 
-<p>
-  <strong>Completed date:</strong>
-  <%= @pam_item.completed_date %>
-</p>
+<!--<p>-->
+<!--<strong>Arrive date:</strong>-->
+<!--<%#= @pam_item.arrive_date %>-->
+<!--</p>-->
 
-<p>
-  <strong>Completed:</strong>
-  <%= @pam_item.completed_id %>
-</p>
+<!--<p>-->
+<!--<strong>Final release:</strong>-->
+<!--<%#= @pam_item.final_release %>-->
+<!--</p>-->
 
-<p>
-  <strong>Completed status:</strong>
-  <%= @pam_item.completed_status %>
-</p>
+<!--<p>-->
+<!--<strong>Po no:</strong>-->
+<!--<%#= @pam_item.po_no %>-->
+<!--</p>-->
 
-<p>
-  <strong>Completed amount:</strong>
-  <%= @pam_item.completed_amount %>
-</p>
+<!--<p>-->
+<!--<strong>Po cost:</strong>-->
+<!--<%#= @pam_item.po_cost %>-->
+<!--</p>-->
 
-<p>
-  <strong>Booking status:</strong>
-  <%= @pam_item.booking_status %>
-</p>
+<!--<p>-->
+<!--<strong>Invoice prepared:</strong>-->
+<!--<%#= @pam_item.invoice_prepared %>-->
+<!--</p>-->
 
-<p>
-  <strong>Final cost:</strong>
-  <%= @pam_item.final_cost %>
-</p>
+<!--<p>-->
+<!--<strong>Invoice amount:</strong>-->
+<!--<%#= @pam_item.invoice_amount %>-->
+<!--</p>-->
 
-<p>
-  <strong>Pam list:</strong>
-  <%= @pam_item.pam_list %>
-</p>
+<!--<p>-->
+<!--<strong>Completed date:</strong>-->
+<!--<%#= @pam_item.completed_date %>-->
+<!--</p>-->
 
-<%= link_to 'Edit', edit_pam_item_path(@pam_item) %> |
-<%= link_to 'Back', pam_items_path %>
+<!--<p>-->
+<!--<strong>Completed:</strong>-->
+<!--<%#= @pam_item.completed_id %>-->
+<!--</p>-->
+
+<!--<p>-->
+<!--<strong>Completed status:</strong>-->
+<!--<%#= @pam_item.completed_status %>-->
+<!--</p>-->
+
+<!--<p>-->
+<!--<strong>Completed amount:</strong>-->
+<!--<%#= @pam_item.completed_amount %>-->
+<!--</p>-->
+
+<!--<p>-->
+<!--<strong>Booking status:</strong>-->
+<!--<%#= @pam_item.booking_status %>-->
+<!--</p>-->
+
+<!--<p>-->
+<!--<strong>Final cost:</strong>-->
+<!--<%#= @pam_item.final_cost %>-->
+<!--</p>-->
+
+<!--<p>-->
+<!--<strong>Pam list:</strong>-->
+<!--<%#= @pam_item.pam_list %>-->
+<!--</p>-->
+
+<%#= link_to 'Edit', edit_pam_item_path(@pam_item) %>
+<!--<%#= link_to 'Back', pam_items_path %>-->

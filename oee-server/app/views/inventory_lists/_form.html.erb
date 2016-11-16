@@ -1,38 +1,61 @@
-<%= form_for(inventory_list) do |f| %>
-    <% if inventory_list.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(inventory_list.errors.count, "error") %> prohibited this inventory_list from being
-            saved:</h2>
+<div id="inventory_lists">
+  <ol class="breadcrumb">
+    <li>盘点管理</li>
+    <li><%= link_to '资产盘点', inventory_lists_path %></li>
+    <li>{{action}}</li>
+  </ol>
 
-          <ul>
-            <% inventory_list.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-            <% end %>
-          </ul>
+  <hr class="hr-grey"/>
+
+  <%= form_for(inventory_list) do |f| %>
+
+      <% if inventory_list.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(inventory_list.errors.count, "error") %> prohibited this inventory_list from being saved:</h2>
+            <ul>
+              <% inventory_list.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+      <% end %>
+
+      <div class="marco-npanel-default">
+        <div class="marco-nheading">
+          {{action}}
+          <div class="pull-right">
+            <button type="submit" class="marco-btn-normal">{{actionBtn}}</button>
+          </div>
         </div>
-    <% end %>
 
-    <div class="field">
-      <%= f.label :name %>
-      <%= f.text_field :name %>
-    </div>
+        <div class="marco-nbody row">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>名称</span>
+              <%= f.text_field :name %>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>日期</span>
+              <%= f.text_field :inventory_date %>
+            </div>
+          </div>
 
-    <div class="field">
-      <%= f.label :inventory_date %>
-      <%= f.date_field :inventory_date %>
-    </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>平衡项</span>
+              <%= f.select(:asset_balance_list_id, AssetBalanceList.all.collect { |a| [a.id, a.id] }, {include_blank: true}) %>
+            </div>
+          </div>
 
-    <div class="field">
-      <%= f.label :asset_balance_list_id %>
-      <%= f.select(:asset_balance_list_id, AssetBalanceList.all.collect { |a| [a.id, a.id] }, {include_blank: true}) %>
-    </div>
-
-    <div class="field">
-      <%= f.label :status, '状态' %>
-      <%= f.select(:status, InventoryListStatus.menu, {include_blank: false}) %>
-    </div>
-
-    <div class="actions">
-      <%= f.submit %>
-    </div>
-<% end %>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>状态</span>
+              <%= f.select(:status, InventoryListStatus.menu, {include_blank: false}) %>
+            </div>
+          </div>
+        </div>
+      </div>
+  <% end %>
+</div>

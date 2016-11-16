@@ -19,76 +19,78 @@
 
   <div class="marco-nbody" style="overflow: auto; padding: 0;">
     <table class="table table-bordered">
-  <thead>
-    <tr>
-      <th>设备分级</th>
-      <th>设备名称</th>
-      <th>设备编号</th>
-      <th>设备类型</th>
-      <th>固定资产编号</th>
-      <th>型号/规格/配置</th>
-      <th>Cutting生产编号</th>
-      <th>设备序列号</th>
-      <th>供应商</th>
-      <th>使用状态</th>
-      <th>成本中心</th>
-      <th>使用部门</th>
-      <th>使用项目</th>
-      <th>使用位置</th>
-      <th>区域</th>
-      <th>操作指导书</th>
-      <th>维护指导书</th>
-      <th>说明书柜位</th>
-      <th>购置日期</th>
-      <th>放行周期(年）</th>
-      <th>预计再次放行时间</th>
-      <th>放行提醒</th>
-      <th>负责的工程师</th>
-      <th>备注</th>
-      <th>是否最新创建</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @equipment_tracks.each do |equipment_track| %>
+      <thead>
       <tr>
-        <td><%= equipment_track.level %></td>
-        <td><%= equipment_track.name %></td>
-        <td><%= equipment_track.nr %></td>
-        <td><%= EquipmentType.get_type_name equipment_track.type %></td>
-        <td><%= equipment_track.asset_nr %></td>
-        <td><%= equipment_track.description %></td>
-        <td><%= equipment_track.product_id %></td>
-        <td><%= equipment_track.equipment_serial_id %></td>
-        <td><%= equipment_track.supplier %></td>
-        <td><%= equipment_track.status %></td>
-        <td><%= equipment_track.profit_center %></td>
-        <td><%= equipment_track.department %></td>
-        <td><%= equipment_track.project %></td>
-        <td><%= equipment_track.location %></td>
-        <td><%= equipment_track.area %></td>
-
-        <td><%= equipment_track.operate_instructor %></td>
-        <td><%= equipment_track.maintain_instructor %></td>
-
-        <td><%= equipment_track.position %></td>
-        <td><%= equipment_track.procurment_date %></td>
-        <td><%= equipment_track.release_cycle %></td>
-        <td><%= equipment_track.next_release %></td>
-        <td><%= equipment_track.release_notice %></td>
-        <td><%= equipment_track.responsibilityer %></td>
-        <td><%= equipment_track.remark %></td>
-        <td><%= equipment_track.is_top %></td>
-        <td><%= link_to 'Show', equipment_track %></td>
-        <td><%= link_to 'Edit', edit_equipment_track_path(equipment_track) %></td>
-        <td><%= link_to 'Destroy', equipment_track, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>设备分级</th>
+        <th>设备名称</th>
+        <th>设备编号</th>
+        <th>设备类型</th>
+        <th>固定资产编号</th>
+        <th>型号/规格/配置</th>
+        <th>Cutting生产编号</th>
+        <th>设备序列号</th>
+        <th>供应商</th>
+        <th>使用状态</th>
+        <th>成本中心</th>
+        <th>使用部门</th>
+        <th>使用项目</th>
+        <th>使用位置</th>
+        <th>区域</th>
+        <th>操作指导书</th>
+        <th>维护指导书</th>
+        <th>说明书柜位</th>
+        <th>购置日期</th>
+        <th>放行周期(年）</th>
+        <th>预计再次放行时间</th>
+        <th>放行提醒</th>
+        <th>负责的工程师</th>
+        <th>备注</th>
+        <th>是否最新创建</th>
+        <th>操作</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
-</div>
-<br>
+      </thead>
+
+      <tbody>
+      <% @equipment_tracks.each do |equipment_track| %>
+          <tr>
+            <td><%= equipment_track.level %></td>
+            <td><%= equipment_track.name %></td>
+            <td><%= equipment_track.nr %></td>
+            <td><%= EquipmentType.get_type_name equipment_track.type %></td>
+            <td><%= equipment_track.asset_nr %></td>
+            <td><%= equipment_track.description %></td>
+            <td><%= equipment_track.product_id %></td>
+            <td><%= equipment_track.equipment_serial_id %></td>
+            <td><%= equipment_track.supplier %></td>
+            <td><%= equipment_track.status %></td>
+            <td><%= equipment_track.profit_center %></td>
+            <td><%= equipment_track.department %></td>
+            <td><%= equipment_track.project %></td>
+            <td><%= equipment_track.location %></td>
+            <td><%= equipment_track.area %></td>
+
+            <td><%= equipment_track.operate_instructor %></td>
+            <td><%= equipment_track.maintain_instructor %></td>
+
+            <td><%= equipment_track.position %></td>
+            <td><%= equipment_track.procurment_date %></td>
+            <td><%= equipment_track.release_cycle %></td>
+            <td><%= equipment_track.next_release %></td>
+            <td><%= equipment_track.release_notice %></td>
+            <td><%= equipment_track.responsibilityer %></td>
+            <td><%= equipment_track.remark %></td>
+            <td><%= equipment_track.is_top %></td>
+            <td>
+              <%= link_to content_tag(:i, '', :class => 'fa fa-eye'), equipment_track, :class => "marco-btn-success", :title => "详情" %>
+              <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_equipment_track_path(equipment_track), :class => "marco-btn-primary", :title => "编辑" %>
+              <%= link_to content_tag(:i, '', :class => 'fa fa-close'), equipment_track, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+  <br>
 </div>
 
 

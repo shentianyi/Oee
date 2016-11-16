@@ -1,41 +1,67 @@
+<div id="capexs">
+  <ol class="breadcrumb">
+    <li>CAPEX</li>
+    <li><%= link_to 'CAPEX', capexes_path %></li>
+    <li>{{action}}</li>
+  </ol>
 
+  <hr class="hr-grey"/>
 
-<%= nested_form_for(capex) do |f| %>
-    <% if capex.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(capex.errors.count, "error") %> prohibited this capex from being saved:</h2>
+  <%= nested_form_for(capex) do |f| %>
+      <% if capex.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(capex.errors.count, "error") %> prohibited this capex from being saved:</h2>
+            <ul>
+              <% capex.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+      <% end %>
 
-          <ul>
-            <% capex.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-            <% end %>
-          </ul>
+      <div class="marco-npanel-default">
+        <div class="marco-nheading">
+          {{action}}
+          <div class="pull-right">
+            <button type="submit" class="marco-btn-normal">{{actionBtn}}</button>
+          </div>
         </div>
-    <% end %>
 
-    <div class="field">
-      <%= f.label :project %>
-      <%= f.text_field :project %>
-    </div>
+        <div class="marco-nbody">
+          <div class="row" style="margin:0;">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>项目</span>
+                <%= f.text_field :project %>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>BU代码</span>
+                <%= f.select(:bu_code, BuCodeEnum.menu, {include_blank: false}) %>
+              </div>
+            </div>
 
-    <div class="field">
-      <%= f.label :bu_code %>
-      <%= f.select(:bu_code, BuCodeEnum.menu, {include_blank: false}) %>
-    </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>描述</span>
+                <%= f.text_field :desc %>
+              </div>
+            </div>
+          </div>
 
-    <div class="field">
-      <%= f.label :desc %>
-      <%= f.text_field :desc %>
-    </div>
+          <hr class="hr-grey" style="margin-bottom: 2px;">
 
-    <%= f.fields_for :budgets do |builder| %>
-        <%= render "budget_fields", :f => builder %>
-    <% end %>
-    <div>
-      <%= f.link_to_add "Add a budget", :budgets %><br/>
-    </div>
+          <div class="row" style="margin:0; ">
+            <h3 style="color:lightseagreen; margin-top:5px;">Budget</h3>
 
-    <div class="actions">
-      <%= f.submit %>
-    </div>
-<% end %>
+            <%= f.fields_for :budgets do |builder| %>
+                <%= render "budget_fields", :f => builder %>
+            <% end %>
+
+            <%= f.link_to_add content_tag(:i, content_tag(:span, "添加BUDGET"), :class => 'fa fa-plus-circle'), :budgets, :class => "pull-right", :style => "margin-top:5px; font-size: 1.2em;", :title => "添加 预算项" %>
+          </div>
+        </div>
+      </div>
+  <% end %>
+</div>
