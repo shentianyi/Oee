@@ -2,6 +2,7 @@ class InventoryItem < ApplicationRecord
   belongs_to :inventory_list
   belongs_to :fix_asset_track
   belongs_to :ts_area, class_name: 'Area'
+  belongs_to :current_area, class_name: 'Area'
   belongs_to :ts_inventory_user, class_name: 'User'
 
   def cover_item
