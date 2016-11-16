@@ -32,6 +32,7 @@
           <td><%= BuCodeEnum.display(capex.bu_code) %></td>
           <td><%= capex.desc %></td>
           <td>
+            <%= link_to content_tag(:i, '', :class => 'fa fa-eye'), capex, :class => "marco-btn-success", :title => "详情" %>
             <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_capex_path(capex), :class => "marco-btn-primary", :title => "编辑" %>
             <%= link_to content_tag(:i, '', :class => 'fa fa-close'), capex, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
           </td>
