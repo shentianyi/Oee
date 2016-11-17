@@ -29,6 +29,7 @@
   <div class="row" style="margin:0; padding: 10px;">
     <%= f.link_to_add content_tag(:i, content_tag(:span, "添加预算项"), :class => 'fa fa-plus'), :budget_items, :class => "pull-right", :style => "margin-top:5px;", :title => "添加 预算项" %>
 
+    <span>预算项</span>
     <%= f.fields_for :budget_items do |builder| %>
         <%= render "budget_item_fields", :f => builder %>
     <% end %>
@@ -38,6 +39,8 @@
 
   <div class="row" style="margin:0; margin-top: 5px; padding: 10px;">
     <%= f.link_to_add content_tag(:i, content_tag(:span, "添加PAM项"), :class => 'fa fa-plus'), :pam_lists, :class => "pull-right", :title => "添加 预算项" %>
+
+    <span>PAM</span>
 
     <%= f.fields_for :pam_lists do |builder| %>
         <%= render "pam_list_fields", :f => builder %>
