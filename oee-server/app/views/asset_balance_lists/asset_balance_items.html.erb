@@ -7,6 +7,33 @@
 
 <hr class="hr-grey"/>
 
+<div class="all-search row">
+  <form method="get" action="<%= send("child_search_#{@model.pluralize}_path") %>">
+    <div class="marco-igroup-oee">
+      <input type="hidden" name="id" value="<%= @asset_balance_list.id %>"/>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>固定资产号</span>
+        <input type="text" name="asset_balance_item[nr]" value="<%= @nr %>"/>
+        <input type="hidden" name="asset_balance_item[nr_fuzzy]"/>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>使用区域</span>
+        <%= select_tag('asset_balance_item[ts_area_id]', options_from_collection_for_select(Area.all, :id, :desc, @ts_area_id), {include_blank: true}) %>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
+      <button type="submit" class="marco-btn-default"  style="width: 180px; height: 40px; line-height: 40px;">查找</button>
+    </div>
+  </form>
+</div>
+
 <div class="marco-npanel-default">
   <div class="marco-nheading">
     [<%= @asset_balance_list.id %>]
@@ -79,3 +106,10 @@
     </table>
   </div>
 </div>
+
+<div class="digg_pagination">
+  <%= will_paginate @asset_balance_items, :container => false, params: params.to_unsafe_h %>
+</div>
+<script type="text/javascript">
+    layout.date_picker('.datepicker');
+</script>

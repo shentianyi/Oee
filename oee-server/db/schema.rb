@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161111041254) do
+ActiveRecord::Schema.define(version: 20161116090104) do
 
   create_table "areas", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
@@ -393,6 +393,20 @@ ActiveRecord::Schema.define(version: 20161111041254) do
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
   end
 
+  create_table "pam_info_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "nr"
+    t.float    "cost",               limit: 24
+    t.float    "remained",           limit: 24
+    t.boolean  "is_final_approved",             default: false
+    t.string   "in_process"
+    t.string   "approved"
+    t.string   "budget_not_applied"
+    t.integer  "budget_id"
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+    t.index ["budget_id"], name: "index_pam_info_items_on_budget_id", using: :btree
+  end
+
   create_table "pam_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "pa_no"
     t.string   "description"
@@ -451,9 +465,15 @@ ActiveRecord::Schema.define(version: 20161111041254) do
     t.integer  "type"
     t.integer  "target_qty"
     t.integer  "real_qty"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.integer  "data_file_id"
+    t.integer  "error_file_id"
+    t.integer  "status",            default: 100
+    t.index ["data_file_id"], name: "index_user_inventory_tasks_on_data_file_id", using: :btree
+    t.index ["error_file_id"], name: "index_user_inventory_tasks_on_error_file_id", using: :btree
     t.index ["inventory_list_id"], name: "index_user_inventory_tasks_on_inventory_list_id", using: :btree
+    t.index ["status"], name: "index_user_inventory_tasks_on_status", using: :btree
     t.index ["user_id"], name: "index_user_inventory_tasks_on_user_id", using: :btree
   end
 
@@ -517,6 +537,7 @@ ActiveRecord::Schema.define(version: 20161111041254) do
   add_foreign_key "machines", "machine_types"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
+  add_foreign_key "pam_info_items", "budgets"
   add_foreign_key "pam_items", "pam_lists"
   add_foreign_key "pam_lists", "budgets"
   add_foreign_key "user_area_items", "areas"

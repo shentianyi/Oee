@@ -4,7 +4,7 @@ class BudgetItemsController < ApplicationController
   # GET /budget_items
   # GET /budget_items.json
   def index
-    @budget_items = BudgetItem.all
+    @budget_items = BudgetItem.all.paginate(page: params[:page])
   end
 
   # GET /budget_items/1

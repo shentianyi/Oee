@@ -4,7 +4,7 @@ class AssetBalanceItemsController < ApplicationController
   # GET /asset_balance_items
   # GET /asset_balance_items.json
   def index
-    @asset_balance_items = AssetBalanceItem.all
+    @asset_balance_items = AssetBalanceItem.all.paginate(page: params[:page])
   end
 
   # GET /asset_balance_items/1

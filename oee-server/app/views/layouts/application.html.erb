@@ -129,7 +129,12 @@
 
           <li class="nav-user_inventory_tasks">
             <i class="fa fa-check-circle-o"></i>
-            <%= link_to content_tag(:span, '盘点任务'), user_inventory_tasks_path, :title => '盘点任务' %>
+            <%= link_to content_tag(:span, '盘点任务分配'), user_area_items_path, :title => '盘点任务' %>
+          </li>
+
+          <li class="nav-user_inventory_tasks">
+            <i class="fa fa-check-circle-o"></i>
+            <%= link_to content_tag(:span, '盘点上传记录'), user_inventory_tasks_path, :title => '盘点上传记录' %>
           </li>
         </ul>
       </li>

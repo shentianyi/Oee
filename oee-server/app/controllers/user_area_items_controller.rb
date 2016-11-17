@@ -4,7 +4,7 @@ class UserAreaItemsController < ApplicationController
   # GET /user_area_items
   # GET /user_area_items.json
   def index
-    @user_area_items = UserAreaItem.all
+    @user_area_items = UserAreaItem.all.paginate(page: params[:page])
   end
 
   # GET /user_area_items/1

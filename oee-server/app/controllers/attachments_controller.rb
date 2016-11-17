@@ -4,7 +4,7 @@ class AttachmentsController < ApplicationController
   # GET /attachments
   # GET /attachments.json
   def index
-    @attachments = Attachment.all
+    @attachments = Attachment.all.paginate(page: params[:page])
   end
 
   # GET /attachments/1

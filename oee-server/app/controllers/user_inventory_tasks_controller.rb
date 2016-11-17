@@ -4,7 +4,8 @@ class UserInventoryTasksController < ApplicationController
   # GET /user_inventory_tasks
   # GET /user_inventory_tasks.json
   def index
-    @user_inventory_tasks = UserInventoryTask.all
+    @http_host=request.env["HTTP_HOST"]
+    @user_inventory_tasks = UserInventoryTask.all.paginate(page: params[:page])
   end
 
   # GET /user_inventory_tasks/1

@@ -4,7 +4,7 @@ class EquipmentTracksController < ApplicationController
   # GET /equipment_tracks
   # GET /equipment_tracks.json
   def index
-    @equipment_tracks = EquipmentTrack.all
+    @equipment_tracks = EquipmentTrack.all.paginate(page: params[:page])
   end
 
   # GET /equipment_tracks/1

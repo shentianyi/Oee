@@ -7,6 +7,23 @@
 
 <hr class="hr-grey"/>
 
+<div class="all-search row">
+  <form method="get" action="<%= send("search_#{@model.pluralize}_path") %>">
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>区域名称</span>
+        <input type="text" name="area[name]" value="<%= @name %>"/>
+        <input type="hidden" name="area[name_fuzzy]"/>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
+      <button type="submit" class="marco-btn-default"  style="width: 180px; height: 40px; line-height: 40px;">查找</button>
+    </div>
+  </form>
+</div>
+
 <div class="marco-npanel-default">
   <div class="marco-nheading">
     盘点区域列表
@@ -38,4 +55,8 @@
     <% end %>
     </tbody>
   </table>
+</div>
+
+<div class="digg_pagination">
+  <%= will_paginate @areas, :container => false, params: params.to_unsafe_h %>
 </div>

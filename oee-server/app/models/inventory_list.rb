@@ -46,13 +46,13 @@ class InventoryList < ApplicationRecord
   end
 
 
-  def generate_file user, type
+  def generate_download_file user, type
     inventories=[]
     case type
       when FileUploadType::OVERALL
         inventories=self.inventory_items.where(ts_area_id: user.user_area_items.pluck(:area_id))
       when FileUploadType::RECOVERY
-        inventories=self.inventory_items
+        inventories=self.inventory_items.where.not('ts_area_id <=> current_area_id')
     end
 
     InventoryFile.transaction do

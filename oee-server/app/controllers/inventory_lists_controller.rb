@@ -4,7 +4,7 @@ class InventoryListsController < ApplicationController
   # GET /inventory_lists
   # GET /inventory_lists.json
   def index
-    @inventory_lists = InventoryList.all
+    @inventory_lists = InventoryList.all.paginate(page: params[:page])
   end
 
   # GET /inventory_lists/1

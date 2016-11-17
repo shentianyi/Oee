@@ -6,6 +6,55 @@
 
 <hr class="hr-grey"/>
 
+<div class="all-search row">
+  <form method="get" action="<%= send("search_#{@model.pluralize}_path") %>">
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>设备名称</span>
+        <input type="text" name="equipment_track[name]" value="<%= @name %>"/>
+        <input type="hidden" name="equipment_track[name_fuzzy]"/>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>设备编号</span>
+        <input type="text" name="equipment_track[nr]" value="<%= @nr %>"/>
+        <input type="hidden" name="equipment_track[nr_fuzzy]"/>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>固定资产号</span>
+        <input type="text" name="equipment_track[asset_nr]" value="<%= @asset_nr %>"/>
+        <input type="hidden" name="equipment_track[asset_nr_fuzzy]"/>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>使用状态</span>
+        <input type="text" name="equipment_track[status]" value="<%= @status %>"/>
+        <input type="hidden" name="equipment_track[status_fuzzy]"/>
+      </div>
+    </div>
+
+    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>购置日期</span>
+        <input type="text" name="equipment_track[procurment_date][start]" class="datepicker" value="<%= @procurment_date_start %>"/>
+        <span>~</span>
+        <input type="text" name="equipment_track[procurment_date][end]" class="datepicker" value="<%= @procurment_date_end %>"/>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
+      <button type="submit" class="marco-btn-default"  style="width: 180px; height: 40px; line-height: 40px;">查找</button>
+    </div>
+  </form>
+</div>
+
 <div class="marco-npanel-default">
   <div class="marco-nheading">
     设备跟踪列表
@@ -94,5 +143,13 @@
   <br>
 </div>
 
+<div class="digg_pagination">
+  <%= will_paginate @equipment_tracks, :container => false, params: params.to_unsafe_h %>
+</div>
+<br>
 
+
+<script type="text/javascript">
+    layout.date_picker('.datepicker');
+</script>
 

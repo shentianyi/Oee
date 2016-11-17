@@ -4,7 +4,7 @@ class PamItemsController < ApplicationController
   # GET /pam_items
   # GET /pam_items.json
   def index
-    @pam_items = PamItem.all
+    @pam_items = PamItem.all.paginate(page: params[:page])
   end
 
   # GET /pam_items/1

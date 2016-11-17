@@ -6,6 +6,32 @@
 
 <hr class="hr-grey"/>
 
+<div class="all-search row">
+  <form method="get" action="<%= send("search_#{@model.pluralize}_path") %>">
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>资产平衡单号</span>
+        <input type="text" name="asset_balance_list[id]" value="<%= @id %>"/>
+        <input type="hidden" name="asset_balance_list[id_fuzzy]"/>
+      </div>
+    </div>
+
+    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>月份</span>
+        <input type="text" name="asset_balance_list[balance_date][start]" class="datepicker" value="<%= @balance_date_start %>"/>
+        <span>~</span>
+        <input type="text" name="asset_balance_list[balance_date][end]" class="datepicker" value="<%= @balance_date_end %>"/>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
+      <button type="submit" class="marco-btn-default"  style="width: 180px; height: 40px; line-height: 40px;">查找</button>
+    </div>
+  </form>
+</div>
+
 <div class="marco-npanel-default">
   <div class="marco-nheading">
     月资产平衡列表
@@ -41,3 +67,10 @@
     </tbody>
   </table>
 </div>
+
+<div class="digg_pagination">
+  <%= will_paginate @asset_balance_lists, :container => false, params: params.to_unsafe_h %>
+</div>
+<script type="text/javascript">
+    layout.date_picker('.datepicker');
+</script>

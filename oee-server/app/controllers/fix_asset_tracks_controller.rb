@@ -4,7 +4,7 @@ class FixAssetTracksController < ApplicationController
   # GET /fix_asset_tracks
   # GET /fix_asset_tracks.json
   def index
-    @fix_asset_tracks = FixAssetTrack.all
+    @fix_asset_tracks = FixAssetTrack.all.paginate(page: params[:page])
   end
 
   # GET /fix_asset_tracks/1

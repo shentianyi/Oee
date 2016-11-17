@@ -6,6 +6,53 @@
 
 <hr class="hr-grey"/>
 
+<div class="all-search row">
+  <form method="get" action="<%= send("search_#{@model.pluralize}_path") %>">
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>固定资产号</span>
+        <input type="text" name="fix_asset_track[nr]" value="<%= @nr %>"/>
+        <input type="hidden" name="fix_asset_track[nr_fuzzy]"/>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>设备编号</span>
+        <input type="text" name="fix_asset_track[equipment_nr]" value="<%= @equipment_nr %>"/>
+        <input type="hidden" name="fix_asset_track[equipment_nr_fuzzy]"/>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>竣工单号</span>
+        <input type="text" name="fix_asset_track[completed_id]" value="<%= @completed_id %>"/>
+        <input type="hidden" name="fix_asset_track[completed_id_fuzzy]"/>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>竣工单状态</span>
+        <%= select_tag('fix_asset_track[status]', options_for_select(FixAssetStatus.menu, @status), {include_blank: true}) %>
+      </div>
+    </div>
+
+    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>资料接收日期</span>
+        <input type="text" name="fix_asset_track[info_receive_date][start]" class="datepicker" value="<%= @info_receive_date_start %>"/>
+        <span>~</span>
+        <input type="text" name="fix_asset_track[info_receive_date][end]" class="datepicker" value="<%= @info_receive_date_end %>"/>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
+      <button type="submit" class="marco-btn-default"  style="width: 180px; height: 40px; line-height: 40px;">查找</button>
+    </div>
+  </form>
+</div>
 
 <div class="marco-npanel-default">
   <div class="marco-nheading">
@@ -80,5 +127,13 @@
     </table>
   </div>
 </div>
+
+<div class="digg_pagination">
+  <%= will_paginate @fix_asset_tracks, :container => false, params: params.to_unsafe_h %>
+</div>
 <br>
 
+
+<script type="text/javascript">
+    layout.date_picker('.datepicker');
+</script>

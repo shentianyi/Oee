@@ -4,7 +4,7 @@ class WorkShiftsController < ApplicationController
   # GET /work_shifts
   # GET /work_shifts.json
   def index
-    @work_shifts = WorkShift.all
+    @work_shifts = WorkShift.all.paginate(page: params[:page])
   end
 
   # GET /work_shifts/1

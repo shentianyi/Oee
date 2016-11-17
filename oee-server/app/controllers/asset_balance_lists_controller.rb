@@ -1,10 +1,10 @@
 class AssetBalanceListsController < ApplicationController
-  before_action :set_asset_balance_list, only: [:show, :edit, :update, :destroy, :asset_balance_items]
+  before_action :set_asset_balance_list, only: [:show, :edit, :update, :destroy, :asset_balance_items, :child_search]
 
   # GET /asset_balance_lists
   # GET /asset_balance_lists.json
   def index
-    @asset_balance_lists = AssetBalanceList.all
+    @asset_balance_lists = AssetBalanceList.all.paginate(page: params[:page])
   end
 
   # GET /asset_balance_lists/1
@@ -87,14 +87,33 @@ class AssetBalanceListsController < ApplicationController
     @page_start=(params[:page].nil? ? 0 : (params[:page].to_i-1))*20
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_asset_balance_list
-      @asset_balance_list = AssetBalanceList.find(params[:id])
+  def child_search
+    condition = {}
+
+    unless params[:asset_balance_item][:nr].blank?
+      condition[:fix_asset_track_id] = FixAssetTrack.where("nr like ?", "%#{params[:asset_balance_item][:nr]}%").pluck(:id)
+      instance_variable_set("@nr", params[:asset_balance_item][:nr])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def asset_balance_list_params
-      params.require(:asset_balance_list).permit(:balance_date)
+    unless params[:asset_balance_item][:ts_area_id].blank?
+      condition[:ts_area_id] = params[:asset_balance_item][:ts_area_id]
+      instance_variable_set("@ts_area_id", params[:asset_balance_item][:ts_area_id])
     end
+
+    @asset_balance_items = @asset_balance_list.asset_balance_items.where(condition).paginate(:page => params[:page])
+    @page_start=(params[:page].nil? ? 0 : (params[:page].to_i-1))*20
+
+    render :asset_balance_items
+  end
+
+  private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_asset_balance_list
+    @asset_balance_list = AssetBalanceList.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def asset_balance_list_params
+    params.require(:asset_balance_list).permit(:balance_date)
+  end
 end

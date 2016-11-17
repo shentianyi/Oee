@@ -4,7 +4,7 @@ class InventoryFilesController < ApplicationController
   # GET /inventory_files
   # GET /inventory_files.json
   def index
-    @inventory_files = InventoryFile.all
+    @inventory_files = InventoryFile.all.paginate(page: params[:page])
   end
 
   # GET /inventory_files/1

@@ -23,14 +23,34 @@ module Api
         end
       end
 
-      def generate_file
+      def generate_download_file
         inventory_list = InventoryList.find_by_id(params[:id])
         render json: {result: 0, content: '当前无数据'} unless inventory_list
 
-        if file=inventory_list.generate_file(current_user, params[:type].to_i)
+        if file=inventory_list.generate_download_file(current_user, params[:type].to_i)
           render json: {result: 1, content: request.base_url + file.path.url}
         else
           render json: {result: 0, content: '当前无数据'}
+        end
+      end
+
+      def generate_upload_file
+        unless list = InventoryList.find_by_id(params[:inventory_list_id])
+          render json: {result: 0, content: "盘点单#{params[:inventory_list_id]}不存在"}
+        end
+
+        unless [FileUploadType::OVERALL, FileUploadType::RECOVERY].include?(params[:type].to_i)
+          render json: {result: 0, content: "盘点类型#{params[:type]}不正确"}
+        end
+
+        if params[:data].length<1
+          render json: {result: 0, content: "数据为空"}
+        end
+
+        if UserInventoryTaskService.create params, current_user, list
+          render json: {result: 1, content: '数据上传成功'}
+        else
+          render json: {result: 0, content: '数据上传失败'}
         end
       end
 

@@ -4,7 +4,7 @@ class EquipmentDepreciationsController < ApplicationController
   # GET /equipment_depreciations
   # GET /equipment_depreciations.json
   def index
-    @equipment_depreciations = EquipmentDepreciation.all
+    @equipment_depreciations = EquipmentDepreciation.all.paginate(page: params[:page])
   end
 
   # GET /equipment_depreciations/1

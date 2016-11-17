@@ -4,7 +4,7 @@ class EquipmentReleasesController < ApplicationController
   # GET /equipment_releases
   # GET /equipment_releases.json
   def index
-    @equipment_releases = EquipmentRelease.all
+    @equipment_releases = EquipmentRelease.all.paginate(page: params[:page])
   end
 
   # GET /equipment_releases/1

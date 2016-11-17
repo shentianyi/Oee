@@ -2,17 +2,17 @@
 
 <ol class="breadcrumb">
   <li>盘点管理</li>
-  <li>盘点任务</li>
+  <li>盘点上传记录</li>
 </ol>
 
 <hr class="hr-grey"/>
 
 <div class="marco-npanel-default">
   <div class="marco-nheading">
-    盘点任务列表
-    <div class="pull-right">
-      <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_user_inventory_task_path %>
-    </div>
+    盘点上传记录
+    <!--<div class="pull-right">-->
+      <!--<%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_user_inventory_task_path %>-->
+    <!--</div>-->
   </div>
 
   <table class="marco-nbody table table-bordered">
@@ -25,6 +25,9 @@
       <th>Type</th>
       <th>Target qty</th>
       <th>Real qty</th>
+      <th>状态</th>
+      <th>数据文件</th>
+      <th>错误文件</th>
       <th>操作</th>
     </tr>
     </thead>
@@ -32,13 +35,18 @@
     <tbody>
     <% @user_inventory_tasks.each do |user_inventory_task| %>
         <tr>
-          <td><%= user_inventory_task.user %></td>
-          <td><%= user_inventory_task.inventory_list %></td>
-          <td><%= user_inventory_task.start_time %></td>
-          <td><%= user_inventory_task.end_time %></td>
-          <td><%= user_inventory_task.type %></td>
+          <td><%= user_inventory_task.user.name %></td>
+          <td><%= user_inventory_task.inventory_list.name %></td>
+          <td><%= user_inventory_task.start_time.localtime.strftime('%Y/%m/%d %H:%M') %></td>
+          <td><%= user_inventory_task.end_time.localtime.strftime('%Y/%m/%d %H:%M') %></td>
+          <td><%= FileUploadType.display user_inventory_task.type %></td>
           <td><%= user_inventory_task.target_qty %></td>
           <td><%= user_inventory_task.real_qty %></td>
+          <td><%= UserInventoryTaskStatus.display user_inventory_task.status %></td>
+          <td>
+            <a href="http://<%= @http_host + user_inventory_task.data_file.path.url %>" target="_blank"> <%= @http_host + user_inventory_task.data_file.path.url %></a>
+          </td>
+          <td></td>
           <td>
             <%#= link_to content_tag(:i, '', :class => 'fa fa-eye'), user_inventory_task, :class => "marco-btn-primary", :title => "详情" %>
             <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_user_inventory_task_path(user_inventory_task), :class => "marco-btn-primary", :title => "编辑" %>

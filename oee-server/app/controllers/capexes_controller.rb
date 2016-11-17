@@ -4,7 +4,7 @@ class CapexesController < ApplicationController
   # GET /capexes
   # GET /capexes.json
   def index
-    @capexes = Capex.all
+    @capexes = Capex.all.paginate(page: params[:page])
   end
 
   # GET /capexes/1
