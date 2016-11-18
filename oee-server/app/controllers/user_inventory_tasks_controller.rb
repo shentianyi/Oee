@@ -62,6 +62,14 @@ class UserInventoryTasksController < ApplicationController
     end
   end
 
+  def search
+    super { |query|
+      @http_host = params[:http_host]
+
+      query
+    }
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user_inventory_task
