@@ -107,6 +107,12 @@ layout.init = function () {
             PageAction('#areas', '新增盘点区域', '编辑盘点区域', '上传盘点区域信息', '盘点区域详情', '创建', '更新', '上传');
             break;
 
+        case "user_area_items":
+            $('.nav-inventory').addClass('nav-active');
+            $('.nav-user_area_items').addClass('nav-active');
+            // PageAction('#user_inventory_tasks', '新增盘点任务', '编辑盘点任务', '上传盘点任务信息', '盘点任务详情', '创建', '更新', '上传');
+            break;
+
         case "user_inventory_tasks":
             $('.nav-inventory').addClass('nav-active');
             $('.nav-user_inventory_tasks').addClass('nav-active');
