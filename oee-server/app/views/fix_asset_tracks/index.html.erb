@@ -48,8 +48,10 @@
         <input type="text" name="fix_asset_track[info_receive_date][end]" class="datepicker" value="<%= @info_receive_date_end %>"/>
       </div>
     </div>
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
-      <button type="submit" class="marco-btn-default"  style="width: 180px; height: 40px; line-height: 40px;">查找</button>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <button type="submit" class="marco-btn-default" style="width: 100px; height: 40px; line-height: 40px;">查找</button>
+
+      <button type="button" class="marco-btn-success" style="width: 100px; height: 40px; line-height: 40px;">导出</button>
     </div>
   </form>
 </div>
@@ -98,7 +100,7 @@
             <td><%= fix_asset_track.is_add_fix_asset ? '是' : '否' %></td>
             <td><%= fix_asset_track.nr %></td>
 
-            <td><%= fix_asset_track.is_add_equipment ? '是' : '否'  %></td>
+            <td><%= fix_asset_track.is_add_equipment ? '是' : '否' %></td>
             <td><%= fix_asset_track.equipment_nr %></td>
 
             <td><%= fix_asset_track.completed_id %></td>
@@ -135,5 +137,5 @@
 
 
 <script type="text/javascript">
-    layout.date_picker('.datepicker');
+  layout.date_picker('.datepicker');
 </script>

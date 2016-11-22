@@ -229,7 +229,7 @@ body {
   background: $marco-bg;
   color: $marco-color;
   border: 1px solid $marco-bg;
-  border-radius: 3px;
+  //border-radius: 3px;
   &:hover, &:link {
     outline: none;
     background: lighten($marco-bg, 10%);

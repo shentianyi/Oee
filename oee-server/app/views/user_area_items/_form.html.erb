@@ -1,27 +1,47 @@
-<%= form_for(user_area_item) do |f| %>
-  <% if user_area_item.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(user_area_item.errors.count, "error") %> prohibited this user_area_item from being saved:</h2>
+<div id="user_area_items">
+  <ol class="breadcrumb">
+    <li>盘点管理</li>
+    <li><%= link_to '盘点任务分配', user_area_items_path %></li>
+    <li>{{action}}</li>
+  </ol>
 
-      <ul>
-      <% user_area_item.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+  <hr class="hr-grey"/>
+
+  <%= form_for(user_area_item) do |f| %>
+
+      <% if user_area_item.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(user_area_item.errors.count, "error") %> prohibited this user_area_item from being saved:</h2>
+            <ul>
+              <% user_area_item.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
       <% end %>
-      </ul>
-    </div>
+
+      <div class="marco-npanel-default">
+        <div class="marco-nheading">
+          {{action}}
+          <div class="pull-right">
+            <button type="submit" class="marco-btn-normal">{{actionBtn}}</button>
+          </div>
+        </div>
+        <div class="marco-nbody row">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <%= f.label :user_id %>
+              <%= f.select(:user_id, User.all.collect {|u| [u.name, u.id]}) %>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <%= f.label :area_id %>
+              <%= f.select(:area_id, Area.all.collect {|a| [a.desc, a.id]}, {include_blank: false} ) %>
+            </div>
+          </div>
+        </div>
+      </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :user_id %>
-    <%= f.select(:user_id, User.all.collect {|u| [u.name, u.id]}) %>
-  </div>
-
-  <div class="field">
-    <%= f.label :area_id %>
-    <%= f.select(:area_id, Area.all.collect {|a| [a.desc, a.id]}, {include_blank: false} ) %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+</div>
