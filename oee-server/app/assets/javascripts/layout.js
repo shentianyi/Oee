@@ -86,7 +86,20 @@ layout.init = function () {
             break;
 
         case "equipment_tracks":
+            $('.nav-equipments').addClass('nav-active');
             $('.nav-equipment-tracks').addClass('nav-active');
+            PageAction('#equipment_tracks', '新增设备放行记录', '编辑设备放行记录', '上传设备放行记录信息', '设备放行记录详情', '创建', '更新', '上传');
+            break;
+
+        case "equipment_releases":
+            $('.nav-equipments').addClass('nav-active');
+            $('.nav-equipment_releases').addClass('nav-active');
+            PageAction('#equipment_tracks', '新增设备折旧记录', '编辑设备折旧记录', '上传设备折旧记录信息', '设备折旧记录详情', '创建', '更新', '上传');
+            break;
+
+        case "equipment_depreciations":
+            $('.nav-equipments').addClass('nav-active');
+            $('.nav-equipment_depreciations').addClass('nav-active');
             PageAction('#equipment_tracks', '新增设备追踪', '编辑设备追踪', '上传设备追踪信息', '设备跟踪详情', '创建', '更新', '上传');
             break;
 
