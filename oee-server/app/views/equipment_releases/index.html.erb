@@ -1,6 +1,67 @@
 <p id="notice"><%= notice %></p>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <h1>Equipment Releases</h1>
+
+<div class="all-search row">
+  <form method="get" action="<%= send("search_#{@model.pluralize}_path") %>">
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>放行序号</span>
+        <input type="text" name="equipment_release[release_index]" value="<%= @release_index %>"/>
+        <input type="hidden" name="equipment_release[release_index_fuzzy]"/>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>所属设备编号</span>
+        <%= select_tag('equipment_release[equipment_track_id]', options_from_collection_for_select(EquipmentTrack.all, :id, :nr, @equipment_track_id), {include_blank: true}) %>
+      </div>
+    </div>
+
+    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>放行时间</span>
+        <input type="text" name="equipment_release[release_time][start]" class="datepicker" value="<%= @release_time_start %>"/>
+        <span>~</span>
+        <input type="text" name="equipment_release[release_time][end]" class="datepicker" value="<%= @release_time_end %>"/>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
+      <button type="submit" class="marco-btn-default"  style="width: 180px; height: 40px; line-height: 40px;">查找</button>
+    </div>
+  </form>
+</div>
 
 <div class="marco-nheading">
   设备放行表
@@ -12,7 +73,7 @@
 </div>
 
 
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>所属设备编号</th>
@@ -36,5 +97,13 @@
   </tbody>
 </table>
 
+<div class="digg_pagination">
+  <%= will_paginate @equipment_releases, :container => false, params: params.to_unsafe_h %>
+</div>
 <br>
+
+
+<script type="text/javascript">
+    layout.date_picker('.datepicker');
+</script>
 

@@ -7,6 +7,32 @@
 
 <hr class="hr-grey"/>
 
+<div class="all-search row">
+  <form method="get" action="<%= send("search_#{@model.pluralize}_path") %>">
+
+    <input type="hidden" name="http_host" value="<%= @http_host %>"/>
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>项目</span>
+        <input type="text" name="capex[project]" value="<%= @project %>"/>
+        <input type="hidden" name="capex[project_fuzzy]"/>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>部门</span>
+        <%= select_tag('capex[bu_code]', options_for_select(BuCodeEnum.menu, @bu_code), {include_blank: true}) %>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
+      <button type="submit" class="marco-btn-default" style="width: 180px; height: 40px; line-height: 40px;">查找</button>
+    </div>
+  </form>
+</div>
+
 <div class="marco-npanel-default">
   <div class="marco-nheading">
     CAPEX列表
@@ -18,8 +44,8 @@
   <table class="marco-nbody table table-bordered">
     <thead>
     <tr>
-      <th>Project</th>
-      <th>Bu code</th>
+      <th>项目</th>
+      <th>部门</th>
       <th>描述</th>
       <th>操作</th>
     </tr>
@@ -41,3 +67,8 @@
     </tbody>
   </table>
 </div>
+
+<div class="digg_pagination">
+  <%= will_paginate @capexes, :container => false, params: params.to_unsafe_h %>
+</div>
+<br>

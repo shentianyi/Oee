@@ -27,3 +27,8 @@
 <br>
 
 <%= link_to 'New User Area Item', new_user_area_item_path %>
+
+<div class="digg_pagination">
+  <%= will_paginate @user_area_items, :container => false, params: params.to_unsafe_h %>
+</div>
+<br>

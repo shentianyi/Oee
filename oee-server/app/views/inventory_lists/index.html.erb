@@ -7,6 +7,45 @@
 
 <hr class="hr-grey"/>
 
+<div class="all-search row">
+  <form method="get" action="<%= send("search_#{@model.pluralize}_path") %>">
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>盘点单名称</span>
+        <input type="text" name="inventory_list[name]" value="<%= @name %>"/>
+        <input type="hidden" name="inventory_list[name_fuzzy]"/>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>状态</span>
+        <%= select_tag('inventory_list[status]', options_for_select(InventoryListStatus.menu, @status), {include_blank: true}) %>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>月资产平衡单</span>
+        <%= select_tag('inventory_list[asset_balance_list_id]', options_from_collection_for_select(AssetBalanceList.all, :id, :id, @asset_balance_list_id), {include_blank: true}) %>
+      </div>
+    </div>
+
+    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>盘点日期</span>
+        <input type="text" name="inventory_list[inventory_date][start]" class="datepicker" value="<%= @inventory_date_start %>"/>
+        <span>~</span>
+        <input type="text" name="inventory_list[inventory_date][end]" class="datepicker" value="<%= @inventory_date_end %>"/>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
+      <button type="submit" class="marco-btn-default"  style="width: 180px; height: 40px; line-height: 40px;">查找</button>
+    </div>
+  </form>
+</div>
+
 <div class="marco-npanel-default">
   <div class="marco-nheading">
     资产盘点列表
@@ -18,9 +57,9 @@
   <table class="marco-nbody table table-bordered">
     <thead>
     <tr>
-      <th>Name</th>
-      <th>Inventory date</th>
-      <th>Asset balance list</th>
+      <th>盘点单名称</th>
+      <th>盘点日期</th>
+      <th>月资产平衡单</th>
       <th>状态</th>
       <th>盘点清单</th>
       <th>盘点重置与取消</th>
@@ -53,3 +92,13 @@
   </tbody>
 </table>
 </div>
+
+<div class="digg_pagination">
+  <%= will_paginate @inventory_lists, :container => false, params: params.to_unsafe_h %>
+</div>
+<br>
+
+
+<script type="text/javascript">
+    layout.date_picker('.datepicker');
+</script>

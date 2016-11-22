@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= f.label :depreciation_time %>
-    <%= f.datetime_select :depreciation_time %>
+    <%= f.date_field :depreciation_time %>
   </div>
 
   <div class="field">
@@ -33,7 +33,7 @@
 
   <div class="field">
     <%= f.label :equipment_track_id %>
-    <%= f.text_field :equipment_track_id %>
+    <%= f.select(:equipment_track_id, EquipmentTrack.all.collect { |e| [e.nr, e.id] }) %>
   </div>
 
   <div class="actions">

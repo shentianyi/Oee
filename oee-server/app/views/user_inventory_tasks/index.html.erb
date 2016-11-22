@@ -7,24 +7,56 @@
 
 <hr class="hr-grey"/>
 
+<div class="all-search row">
+  <form method="get" action="<%= send("search_#{@model.pluralize}_path") %>">
+
+    <input type="hidden" name="http_host" value="<%= @http_host %>"/>
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>员工</span>
+        <%= select_tag('user_inventory_task[user_id]', options_from_collection_for_select(User.all, :id, :name, @user_id), {include_blank: true}) %>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>盘点单</span>
+        <%= select_tag('user_inventory_task[inventory_list_id]', options_from_collection_for_select(InventoryList.all, :id, :name, @inventory_list_id), {include_blank: true}) %>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>状态</span>
+        <%= select_tag('user_inventory_task[status]', options_for_select(UserInventoryTaskStatus.menu, @status), {include_blank: true}) %>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
+      <button type="submit" class="marco-btn-default" style="width: 180px; height: 40px; line-height: 40px;">查找</button>
+    </div>
+  </form>
+</div>
+
 <div class="marco-npanel-default">
   <div class="marco-nheading">
     盘点上传记录
     <!--<div class="pull-right">-->
-      <!--<%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_user_inventory_task_path %>-->
+    <!--<%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_user_inventory_task_path %>-->
     <!--</div>-->
   </div>
 
   <table class="marco-nbody table table-bordered">
     <thead>
     <tr>
-      <th>User</th>
-      <th>Inventory list</th>
-      <th>Start time</th>
-      <th>End time</th>
-      <th>Type</th>
-      <th>Target qty</th>
-      <th>Real qty</th>
+      <th>员工</th>
+      <th>盘点单</th>
+      <th>开始时间</th>
+      <th>结束时间</th>
+      <th>盘点类型</th>
+      <th>目标任务量</th>
+      <th>实际盘点量</th>
       <th>状态</th>
       <th>数据文件</th>
       <th>错误文件</th>
@@ -57,3 +89,8 @@
     </tbody>
   </table>
 </div>
+
+<div class="digg_pagination">
+  <%= will_paginate @user_inventory_tasks, :container => false, params: params.to_unsafe_h %>
+</div>
+<br>

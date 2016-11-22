@@ -1,5 +1,5 @@
 class InventoryListsController < ApplicationController
-  before_action :set_inventory_list, only: [:show, :edit, :update, :destroy, :inventory_items]
+  before_action :set_inventory_list, only: [:show, :edit, :update, :destroy, :inventory_items, :child_search]
 
   # GET /inventory_lists
   # GET /inventory_lists.json
@@ -62,7 +62,8 @@ class InventoryListsController < ApplicationController
   end
 
   def inventory_items
-    @inventory_items = @inventory_list.inventory_items
+    @inventory_items = @inventory_list.inventory_items.paginate(:page => params[:page])
+    @page_start=(params[:page].nil? ? 0 : (params[:page].to_i-1))*20
   end
 
   def import
@@ -121,6 +122,30 @@ class InventoryListsController < ApplicationController
     redirect_to action: :index
   end
 
+  def child_search
+    condition = {}
+
+    unless params[:inventory_item][:fix_asset_track_id].blank?
+      condition[:fix_asset_track_id] = FixAssetTrack.where("nr like ?", "%#{params[:inventory_item][:fix_asset_track_id]}%").pluck(:id)
+      instance_variable_set("@fix_asset_track_id", params[:inventory_item][:fix_asset_track_id])
+    end
+
+    unless params[:inventory_item][:ts_equipment_nr].blank?
+      condition[:ts_equipment_nr] = params[:inventory_item][:ts_equipment_nr]
+      instance_variable_set("@ts_equipment_nr", params[:inventory_item][:ts_equipment_nr])
+    end
+
+    if params[:inventory_item][:cap_date][:start].present? && params[:inventory_item][:cap_date][:end].present?
+      condition[:cap_date] = Time.parse(params[:inventory_item][:cap_date][:start]).utc.to_s..Time.parse(params[:inventory_item][:cap_date][:end]).utc.to_s
+      instance_variable_set("@cap_date_start", params[:inventory_item][:cap_date][:start])
+      instance_variable_set("@cap_date_end", params[:inventory_item][:cap_date][:end])
+    end
+
+    @inventory_items = @inventory_list.inventory_items.where(condition).paginate(:page => params[:page])
+    @page_start=(params[:page].nil? ? 0 : (params[:page].to_i-1))*20
+
+    render :inventory_items
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
