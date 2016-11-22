@@ -393,20 +393,6 @@ ActiveRecord::Schema.define(version: 20161116090104) do
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
   end
 
-  create_table "pam_info_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "nr"
-    t.float    "cost",               limit: 24
-    t.float    "remained",           limit: 24
-    t.boolean  "is_final_approved",             default: false
-    t.string   "in_process"
-    t.string   "approved"
-    t.string   "budget_not_applied"
-    t.integer  "budget_id"
-    t.datetime "created_at",                                    null: false
-    t.datetime "updated_at",                                    null: false
-    t.index ["budget_id"], name: "index_pam_info_items_on_budget_id", using: :btree
-  end
-
   create_table "pam_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "pa_no"
     t.string   "description"
@@ -481,22 +467,21 @@ ActiveRecord::Schema.define(version: 20161116090104) do
     t.string   "name"
     t.integer  "role"
     t.integer  "is_system",              default: 0
-    t.string   "email",                  default: "",  null: false
-    t.string   "encrypted_password",     default: "",  null: false
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,   null: false
+    t.integer  "sign_in_count",          default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.integer  "failed_attempts",        default: 0,   null: false
+    t.integer  "failed_attempts",        default: 0,  null: false
     t.string   "unlock_token"
     t.datetime "locked_at"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-    t.integer  "group_id",               default: 100
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
@@ -537,7 +522,6 @@ ActiveRecord::Schema.define(version: 20161116090104) do
   add_foreign_key "machines", "machine_types"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
-  add_foreign_key "pam_info_items", "budgets"
   add_foreign_key "pam_items", "pam_lists"
   add_foreign_key "pam_lists", "budgets"
   add_foreign_key "user_area_items", "areas"
