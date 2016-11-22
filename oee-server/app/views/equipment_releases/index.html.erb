@@ -1,36 +1,12 @@
 <p id="notice"><%= notice %></p>
 
 
+<ol class="breadcrumb">
+  <li>设备跟踪</li>
+  <li>设备放行记录</li>
+</ol>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h1>Equipment Releases</h1>
-
+<hr class="hr-grey"/>
 <div class="all-search row">
   <form method="get" action="<%= send("search_#{@model.pluralize}_path") %>">
 
@@ -49,6 +25,11 @@
       </div>
     </div>
 
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
+      <button type="submit" class="marco-btn-default"  style="width: 100px; height: 40px; line-height: 40px;">查找</button>
+      <button type="button" class="marco-btn-success" style="width: 100px; height: 40px; line-height: 40px;">导出</button>
+    </div>
+
     <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
       <div class="marco-igroup-oee">
         <span>放行时间</span>
@@ -57,9 +38,7 @@
         <input type="text" name="equipment_release[release_time][end]" class="datepicker" value="<%= @release_time_end %>"/>
       </div>
     </div>
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
-      <button type="submit" class="marco-btn-default"  style="width: 180px; height: 40px; line-height: 40px;">查找</button>
-    </div>
+
   </form>
 </div>
 
