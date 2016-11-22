@@ -1,14 +1,27 @@
-<p id="notice"><%= notice %></p>
+<!--<p id="notice"><%#= notice %></p>-->
 
-<p>
-  <strong>Name:</strong>
-  <%= @area.name %>
-</p>
+<!--<p>-->
+  <!--<strong>Name:</strong>-->
+  <!--<%#= @area.name %>-->
+<!--</p>-->
 
-<p>
-  <strong>Desc:</strong>
-  <%= @area.desc %>
-</p>
+<!--<p>-->
+  <!--<strong>Desc:</strong>-->
+  <!--<%#= @area.desc %>-->
+<!--</p>-->
 
-<%= link_to 'Edit', edit_area_path(@area) %> |
-<%= link_to 'Back', areas_path %>
+<%#= link_to 'Edit', edit_area_path(@area) %>
+<!--<%#= link_to 'Back', areas_path %>-->
+<%= render 'form', area: @area %>
+
+<script type="text/javascript" charset="utf-8">
+  $('.breadcrumb li').last().html('盘点区域详情');
+
+  $('input').attr('disabled', 'disabled');
+
+  $('select').attr('disabled', 'disabled');
+
+  $('.marco-btn-normal').css({display: 'none'});
+
+  $('.marco-npanel-default a').remove();
+</script>

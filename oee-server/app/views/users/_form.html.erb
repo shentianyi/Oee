@@ -48,7 +48,7 @@
               <%= f.select(:role, Role.menu, {include_blank: false}) %>
             </div>
           </div>
-          <div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
             <span>所属系统</span>
             <%= f.select(:group_id, UserGroupEnum.menu, {include_blank: false}) %>
           </div>

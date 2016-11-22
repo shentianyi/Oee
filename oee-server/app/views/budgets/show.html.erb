@@ -1,24 +1,44 @@
-<p id="notice"><%= notice %></p>
+<%= render 'form', budget: @budget %>
 
-<p>
-  <strong>Code:</strong>
-  <%= @budget.code %>
-</p>
+<script type="text/javascript" charset="utf-8">
+  $('.breadcrumb li').last().html('BUDGET 详情');
 
-<p>
-  <strong>Type:</strong>
-  <%= @budget.type %>
-</p>
+  $('input').attr('disabled', 'disabled');
 
-<p>
-  <strong>Desc:</strong>
-  <%= @budget.desc %>
-</p>
+  $('select').attr('disabled', 'disabled');
 
-<p>
-  <strong>Capex:</strong>
-  <%= @budget.capex %>
-</p>
+  $('.marco-btn-normal').css({display: 'none'});
 
-<%= link_to 'Edit', edit_budget_path(@budget) %> |
-<%= link_to 'Back', budgets_path %>
+  $('.marco-npanel-default a').remove();
+</script>
+
+
+
+
+
+
+
+<!--<p id="notice"><%#= notice %></p>-->
+
+<!--<p>-->
+  <!--<strong>Code:</strong>-->
+  <!--<%#= @budget.code %>-->
+<!--</p>-->
+
+<!--<p>-->
+  <!--<strong>Type:</strong>-->
+  <!--<%#= @budget.type %>-->
+<!--</p>-->
+
+<!--<p>-->
+  <!--<strong>Desc:</strong>-->
+  <!--<%#= @budget.desc %>-->
+<!--</p>-->
+
+<!--<p>-->
+  <!--<strong>Capex:</strong>-->
+  <!--<%#= @budget.capex %>-->
+<!--</p>-->
+
+<%#= link_to 'Edit', edit_budget_path(@budget) %> |
+<%#= link_to 'Back', budgets_path %>

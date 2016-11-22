@@ -1,39 +1,53 @@
-<p id="notice"><%= notice %></p>
+<!--<p id="notice"><%#= notice %></p>-->
 
-<p>
-  <strong>User:</strong>
-  <%= @user_inventory_task.user %>
-</p>
+<!--<p>-->
+  <!--<strong>User:</strong>-->
+  <!--<%#= @user_inventory_task.user %>-->
+<!--</p>-->
 
-<p>
-  <strong>Inventory list:</strong>
-  <%= @user_inventory_task.inventory_list %>
-</p>
+<!--<p>-->
+  <!--<strong>Inventory list:</strong>-->
+  <!--<%#= @user_inventory_task.inventory_list %>-->
+<!--</p>-->
 
-<p>
-  <strong>Start time:</strong>
-  <%= @user_inventory_task.start_time %>
-</p>
+<!--<p>-->
+  <!--<strong>Start time:</strong>-->
+  <!--<%#= @user_inventory_task.start_time %>-->
+<!--</p>-->
 
-<p>
-  <strong>End time:</strong>
-  <%= @user_inventory_task.end_time %>
-</p>
+<!--<p>-->
+  <!--<strong>End time:</strong>-->
+  <!--<%#= @user_inventory_task.end_time %>-->
+<!--</p>-->
 
-<p>
-  <strong>Type:</strong>
-  <%= @user_inventory_task.type %>
-</p>
+<!--<p>-->
+  <!--<strong>Type:</strong>-->
+  <!--<%#= @user_inventory_task.type %>-->
+<!--</p>-->
 
-<p>
-  <strong>Target qty:</strong>
-  <%= @user_inventory_task.target_qty %>
-</p>
+<!--<p>-->
+  <!--<strong>Target qty:</strong>-->
+  <!--<%#= @user_inventory_task.target_qty %>-->
+<!--</p>-->
 
-<p>
-  <strong>Real qty:</strong>
-  <%= @user_inventory_task.real_qty %>
-</p>
+<!--<p>-->
+  <!--<strong>Real qty:</strong>-->
+  <!--<%#= @user_inventory_task.real_qty %>-->
+<!--</p>-->
 
-<%= link_to 'Edit', edit_user_inventory_task_path(@user_inventory_task) %> |
-<%= link_to 'Back', user_inventory_tasks_path %>
+<%#= link_to 'Edit', edit_user_inventory_task_path(@user_inventory_task) %>
+<!--<%#= link_to 'Back', user_inventory_tasks_path %>-->
+
+<%= render 'form', user_inventory_task: @user_inventory_task %>
+
+<script type="text/javascript" charset="utf-8">
+  $('.breadcrumb li').last().html(' 盘点上传记录详情');
+
+  $('input').attr('disabled', 'disabled');
+
+  $('select').attr('disabled', 'disabled');
+
+  $('.marco-btn-normal').css({display: 'none'});
+
+  $('.marco-npanel-default a').remove();
+</script>
