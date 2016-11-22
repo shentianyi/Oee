@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     if current_user && current_user.admin?
-      @users=User.all.paginate(:page => params[:page])
+      @users=User.where(group_id: current_user.group_id).paginate(:page => params[:page])
     else
       # render :json => "404 页面未找到"
       render file: "#{Rails.root}/public/404.html" , status: 404

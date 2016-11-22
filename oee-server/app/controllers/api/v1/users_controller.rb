@@ -10,10 +10,10 @@ module Api
       def login
         p params
 
-        # login_info=JSON.parse(params[:user])
-        login_info=params["user"]
+        # login_info=JSON.parse(params)
+        login_info=params#["user"]
 
-        if (user=User.find_for_database_authentication(email: login_info["email"])) && user.valid_password?(login_info["password"])
+        if (user=User.find_for_database_authentication(email: login_info["email"].to_s)) && user.valid_password?(login_info["password"].to_s)
           render json: {
                      result: true,
                      content: '登陆成功',

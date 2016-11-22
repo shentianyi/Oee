@@ -38,13 +38,13 @@
           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
             <div class="marco-igroup-oee">
               <span>日期</span>
-              <%= f.text_field :inventory_date %>
+              <%= f.date_field :inventory_date %>
             </div>
           </div>
 
           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
             <div class="marco-igroup-oee">
-              <span>平衡项</span>
+              <span>月资产平衡单号</span>
               <%= f.select(:asset_balance_list_id, AssetBalanceList.all.collect { |a| [a.id, a.id] }, {include_blank: true}) %>
             </div>
           </div>

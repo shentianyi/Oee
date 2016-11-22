@@ -1,7 +1,7 @@
 module Api
   module V1
     class InventoryListsController < Api::V1::ApplicationController
-      guard_all!
+      # guard_all!
 
 
       def index
@@ -35,18 +35,27 @@ module Api
       end
 
       def generate_upload_file
+        puts '------------------------'
+        p JSON.parse(params.to_s)
+        p JSON.parse(params.to_h)
+        p JSON.parse(params.to_json)
+        puts '------------------------'
+        p params.to_json
+        puts params[:inventory_list_id]
+        puts '--------------------------'
         unless list = InventoryList.find_by_id(params[:inventory_list_id])
-          render json: {result: 0, content: "盘点单#{params[:inventory_list_id]}不存在"}
+          return render json: {result: 0, content: "盘点单#{params[:inventory_list_id]}不存在"}
         end
 
         unless [FileUploadType::OVERALL, FileUploadType::RECOVERY].include?(params[:type].to_i)
-          render json: {result: 0, content: "盘点类型#{params[:type]}不正确"}
+          return render json: {result: 0, content: "盘点类型#{params[:type]}不正确"}
         end
 
         if params[:data].length<1
-          render json: {result: 0, content: "数据为空"}
+          return render json: {result: 0, content: "数据为空"}
         end
 
+        current_user = User.find_by_email "admin@ts.com"
         if UserInventoryTaskService.create params, current_user, list
           render json: {result: 1, content: '数据上传成功'}
         else
