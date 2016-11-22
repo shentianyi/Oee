@@ -1,8 +1,11 @@
 <p id="login-notice"><%= notice %></p>
 
-<h1>Welcome#index</h1>
-<p>Find me in app/views/welcome/index.html.erb</p>
+<% if current_user.group_id == UserGroupEnum::FIXASSET %>
+    <h1 style="font-size: 46px; align-content: center ">固定资产系统</h1>
+<% else %>
+    <h1 style="font-size: 46px; align-content: center ">OEE系统</h1>
+<% end %>
 
 <script type="text/javascript" charset="utf-8">
-  layout.notice('popMsg-success', $('#login-notice').html());
+    layout.notice('popMsg-success', $('#login-notice').html());
 </script>
