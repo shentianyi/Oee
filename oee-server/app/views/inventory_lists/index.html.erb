@@ -41,7 +41,7 @@
       </div>
     </div>
     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
-      <button type="submit" class="marco-btn-default"  style="width: 100px; height: 40px; line-height: 40px;">查找</button>
+      <button type="submit" class="marco-btn-default" style="width: 100px; height: 40px; line-height: 40px;">查找</button>
       <button type="button" class="marco-btn-success" style="width: 100px; height: 40px; line-height: 40px;">导出</button>
 
     </div>
@@ -55,44 +55,45 @@
       <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_inventory_list_path %>
     </div>
   </div>
-
-  <table class="marco-nbody table table-bordered">
-    <thead>
-    <tr>
-      <th>盘点单名称</th>
-      <th>盘点日期</th>
-      <th>月资产平衡单</th>
-      <th>状态</th>
-      <th>盘点清单</th>
-      <th>盘点重置与取消</th>
-      <th>操作</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    <% @inventory_lists.each do |inventory_list| %>
+  <div style="overflow: auto; padding: 0;">
+    <table class="marco-nbody table table-bordered">
+      <thead>
       <tr>
-        <td><%= inventory_list.name %></td>
-        <td><%= inventory_list.inventory_date.localtime.strftime('%Y/%m/%d') %></td>
-        <td><%= inventory_list.asset_balance_list.blank? ? '' : inventory_list.asset_balance_list.id %></td>
-        <th><%= InventoryListStatus.display(inventory_list.status) %></th>
-        <td><%= link_to '盘点清单', inventory_items_inventory_list_path(inventory_list) %>
-          <span class="badge pull-right"><%= inventory_list.inventory_items.count %></td>
-        <td>
-          <%= link_to "重置", reset_inventory_inventory_lists_path({id: inventory_list.id, do: 'disable'}), :class=>"marco-btn-danger", data: {confirm: "确定盘点?"} %>
-
-          <%= link_to "取消重置", reset_inventory_inventory_lists_path({id: inventory_list.id, do: 'enable'}), :class=>"marco-btn-danger",  data: {confirm: "确定取消盘点重置?"} %>
-        </td>
-
-        <td>
-          <%= link_to content_tag(:i, '', :class => "fa fa-cloud-upload"), import_inventory_lists_path(id: inventory_list.id), :class => "marco-btn-success", :title => "上传盘点数据"%>
-          <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_inventory_list_path(inventory_list), :class => "marco-btn-primary", :title => "编辑" %>
-          <%= link_to content_tag(:i, '', :class => 'fa fa-close'), inventory_list, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
-        </td>
+        <th>盘点单名称</th>
+        <th>盘点日期</th>
+        <th>月资产平衡单</th>
+        <th>状态</th>
+        <th>盘点清单</th>
+        <th>盘点重置与取消</th>
+        <th>操作</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+      </thead>
+
+      <tbody>
+      <% @inventory_lists.each do |inventory_list| %>
+          <tr>
+            <td><%= inventory_list.name %></td>
+            <td><%= inventory_list.inventory_date.localtime.strftime('%Y/%m/%d') %></td>
+            <td><%= inventory_list.asset_balance_list.blank? ? '' : inventory_list.asset_balance_list.id %></td>
+            <th><%= InventoryListStatus.display(inventory_list.status) %></th>
+            <td><%= link_to '盘点清单', inventory_items_inventory_list_path(inventory_list) %>
+              <span class="badge pull-right"><%= inventory_list.inventory_items.count %></td>
+            <td>
+              <%= link_to "重置", reset_inventory_inventory_lists_path({id: inventory_list.id, do: 'disable'}), :class => "marco-btn-danger", data: {confirm: "确定盘点?"} %>
+
+              <%= link_to "取消重置", reset_inventory_inventory_lists_path({id: inventory_list.id, do: 'enable'}), :class => "marco-btn-danger", data: {confirm: "确定取消盘点重置?"} %>
+            </td>
+
+            <td>
+              <%= link_to content_tag(:i, '', :class => "fa fa-cloud-upload"), import_inventory_lists_path(id: inventory_list.id), :class => "marco-btn-success", :title => "上传盘点数据" %>
+              <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_inventory_list_path(inventory_list), :class => "marco-btn-primary", :title => "编辑" %>
+              <%= link_to content_tag(:i, '', :class => 'fa fa-close'), inventory_list, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <div class="digg_pagination">
@@ -102,5 +103,5 @@
 
 
 <script type="text/javascript">
-    layout.date_picker('.datepicker');
+  layout.date_picker('.datepicker');
 </script>

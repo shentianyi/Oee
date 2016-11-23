@@ -28,7 +28,7 @@
     </div>
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <button type="submit" class="marco-btn-default"  style="width: 100px; height: 40px; line-height: 40px;">查找</button>
+      <button type="submit" class="marco-btn-default" style="width: 100px; height: 40px; line-height: 40px;">查找</button>
       <button type="button" class="marco-btn-success" style="width: 100px; height: 40px; line-height: 40px;">导出</button>
     </div>
   </form>
@@ -41,38 +41,38 @@
       <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_asset_balance_list_path %>
     </div>
   </div>
+  <div style="overflow: auto; padding: 0;">
+    <table class="marco-nbody table table-bordered">
+      <thead>
+      <tr>
+        <th>资产平衡单号</th>
+        <th>月份</th>
+        <th>清单</th>
+        <th>操作</th>
+      </tr>
+      </thead>
 
-  <table class="marco-nbody table table-bordered">
-    <thead>
-    <tr>
-      <th>资产平衡单号</th>
-      <th>月份</th>
-      <th>清单</th>
-      <th>操作</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    <% @asset_balance_lists.each do |asset_balance_list| %>
-        <tr>
-          <td><%= asset_balance_list.id %></td>
-          <td><%= asset_balance_list.balance_date.localtime.strftime('%Y/%m/%d') %></td>
-          <td><%= link_to '清单列表', asset_balance_items_asset_balance_list_path(asset_balance_list) %>
-            <span class="badge pull-right" ><%= asset_balance_list.asset_balance_items.count %></td>
-          <td>
-            <%= link_to content_tag(:i, '', :class => "fa fa-cloud-upload"), import_asset_balance_lists_path(id: asset_balance_list.id), :class => "marco-btn-success", :title => "导入数据"  %>
-            <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_asset_balance_list_path(asset_balance_list), :class => "marco-btn-primary", :title => "编辑" %>
-            <%= link_to content_tag(:i, '', :class => 'fa fa-close'), asset_balance_list, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
-          </td>
-        </tr>
-    <% end %>
-    </tbody>
-  </table>
+      <tbody>
+      <% @asset_balance_lists.each do |asset_balance_list| %>
+          <tr>
+            <td><%= asset_balance_list.id %></td>
+            <td><%= asset_balance_list.balance_date.localtime.strftime('%Y/%m/%d') %></td>
+            <td><%= link_to '清单列表', asset_balance_items_asset_balance_list_path(asset_balance_list) %>
+              <span class="badge pull-right"><%= asset_balance_list.asset_balance_items.count %></td>
+            <td>
+              <%= link_to content_tag(:i, '', :class => "fa fa-cloud-upload"), import_asset_balance_lists_path(id: asset_balance_list.id), :class => "marco-btn-success", :title => "导入数据" %>
+              <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_asset_balance_list_path(asset_balance_list), :class => "marco-btn-primary", :title => "编辑" %>
+              <%= link_to content_tag(:i, '', :class => 'fa fa-close'), asset_balance_list, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
-
 <div class="digg_pagination">
   <%= will_paginate @asset_balance_lists, :container => false, params: params.to_unsafe_h %>
 </div>
 <script type="text/javascript">
-    layout.date_picker('.datepicker');
+  layout.date_picker('.datepicker');
 </script>

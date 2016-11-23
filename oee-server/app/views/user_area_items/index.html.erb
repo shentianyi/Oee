@@ -14,8 +14,8 @@
     </div>
   </div>
 
-  <div class="marco-nbody" style="overflow: auto; padding: 0;">
-    <table class="table table-bordered">
+
+    <table class="marco-nbody table table-bordered">
       <thead>
       <tr>
         <th>User</th>
@@ -33,15 +33,14 @@
               <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_user_area_item_path(user_area_item), :class => "marco-btn-primary", :title => "编辑" %>
               <%= link_to content_tag(:i, '', :class => 'fa fa-close'), user_area_item, :class => "marco-btn-danger", :title => "删除" %>
             </td>
-
           </tr>
       <% end %>
       </tbody>
     </table>
-  </div>
+
 </div>
 
 <div class="digg_pagination">
   <%= will_paginate @user_area_items, :container => false, params: params.to_unsafe_h %>
 </div>
-<br>
+

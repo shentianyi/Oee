@@ -16,36 +16,37 @@
       <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_downtime_code_path %>
     </div>
   </div>
+  <div style="overflow: auto; padding: 0;">
+    <table class="marco-nbody table table-bordered">
+      <thead>
+      <tr>
+        <th>NO</th>
+        <th>代码</th>
+        <th>停机类型</th>
+        <th>描述</th>
+        <th>操作</th>
+      </tr>
+      </thead>
 
-  <table class="marco-nbody table table-bordered">
-    <thead>
-    <tr>
-      <th>NO</th>
-      <th>代码</th>
-      <th>停机类型</th>
-      <th>描述</th>
-      <th>操作</th>
-    </tr>
-    </thead>
+      <tbody>
+      <% @downtime_codes.each_with_index do |downtime_code, index| %>
+          <tr>
+            <td><%= index+@downtime_codes.offset+1 %></td>
+            <td><%= downtime_code.nr %></td>
+            <td><%= downtime_code.downtime_type.name %></td>
+            <td><%= downtime_code.description %></td>
+            <td>
+              <%#= link_to 'Show', downtime_code %>
 
-    <tbody>
-    <% @downtime_codes.each_with_index do |downtime_code, index| %>
-        <tr>
-          <td><%= index+@downtime_codes.offset+1 %></td>
-          <td><%= downtime_code.nr %></td>
-          <td><%= downtime_code.downtime_type.name %></td>
-          <td><%= downtime_code.description %></td>
-          <td>
-            <%#= link_to 'Show', downtime_code %>
+              <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_downtime_code_path(downtime_code), :class => "marco-btn-primary", :title => "编辑" %>
 
-            <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_downtime_code_path(downtime_code), :class => "marco-btn-primary", :title => "编辑" %>
-
-            <%= link_to content_tag(:i, '', :class => 'fa fa-close'), downtime_code, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
-          </td>
-        </tr>
-    <% end %>
-    </tbody>
-  </table>
+              <%= link_to content_tag(:i, '', :class => 'fa fa-close'), downtime_code, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <div class="digg_pagination">

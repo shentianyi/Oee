@@ -42,42 +42,50 @@
       <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_equipment_depreciation_path %>
     </div>
   </div>
+  <div style="overflow: auto; padding: 0;">
+    <table class="marco-nbody table table-bordered">
+      <thead>
+      <tr>
+        <th>折旧时间</th>
+        <th>当月原值</th>
+        <th>当月折旧</th>
+        <th>当月净值</th>
+        <th>所属设备编号</th>
+        <th>操作</th>
+      </tr>
+      </thead>
 
-  <table class="table">
-    <thead>
-    <tr>
-      <th>折旧时间</th>
-      <th>当月原值</th>
-      <th>当月折旧</th>
-      <th>当月净值</th>
-      <th>所属设备编号</th>
-      <th colspan="3"></th>
-    </tr>
-    </thead>
+      <tbody>
+      <% @equipment_depreciations.each do |equipment_depreciation| %>
+          <tr>
+            <td><%= equipment_depreciation.depreciation_time.localtime.strftime('%Y/%m') %></td>
+            <td><%= equipment_depreciation.original_val %></td>
+            <td><%= equipment_depreciation.depreciation_val %></td>
+            <td><%= equipment_depreciation.net_val %></td>
+            <td><%= equipment_depreciation.equipment_track.nr %></td>
+            <td>
+              <%= link_to content_tag(:i, '', :class => 'fa fa-eye'), equipment_depreciation, :class => "marco-btn-success", :title => "详情" %>
 
-    <tbody>
-    <% @equipment_depreciations.each do |equipment_depreciation| %>
-        <tr>
-          <td><%= equipment_depreciation.depreciation_time.localtime.strftime('%Y/%m') %></td>
-          <td><%= equipment_depreciation.original_val %></td>
-          <td><%= equipment_depreciation.depreciation_val %></td>
-          <td><%= equipment_depreciation.net_val %></td>
-          <td><%= equipment_depreciation.equipment_track.nr %></td>
-          <td><%= link_to 'Show', equipment_depreciation %></td>
-          <td><%= link_to 'Edit', edit_equipment_depreciation_path(equipment_depreciation) %></td>
-          <td><%= link_to 'Destroy', equipment_depreciation, method: :delete, data: {confirm: 'Are you sure?'} %></td>
-        </tr>
-    <% end %>
-    </tbody>
-  </table>
-</div>
-  <div class="digg_pagination">
-    <%= will_paginate @equipment_depreciations, :container => false, params: params.to_unsafe_h %>
+              <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_equipment_depreciation_path(equipment_depreciation), :class => "marco-btn-primary", :title => "编辑" %>
+
+              <%= link_to content_tag(:i, '', :class => 'fa fa-close'), equipment_depreciation, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+            </td>
+            <!--<td><%#= link_to 'Show', equipment_depreciation %></td>-->
+            <!--<td><%#= link_to 'Edit', edit_equipment_depreciation_path(equipment_depreciation) %></td>-->
+            <!--<td><%#= link_to 'Destroy', equipment_depreciation, method: :delete, data: {confirm: 'Are you sure?'} %></td>-->
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
   </div>
-  <br>
+</div>
+<div class="digg_pagination">
+  <%= will_paginate @equipment_depreciations, :container => false, params: params.to_unsafe_h %>
+</div>
+<br>
 
 
-  <script type="text/javascript">
-    layout.date_picker('.datepicker');
-  </script>
+<script type="text/javascript">
+  layout.date_picker('.datepicker');
+</script>
 

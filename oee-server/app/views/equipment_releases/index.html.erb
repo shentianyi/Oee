@@ -51,14 +51,14 @@
   </div>
 
 
-  <div class="marco-nbody" style="overflow: auto; padding: 0;">
-    <table class="table">
+  <div style="overflow: auto; padding: 0;">
+    <table class="marco-nbody table table-bordered">
       <thead>
       <tr>
         <th>所属设备编号</th>
         <th>放行序号</th>
         <th>放行时间</th>
-        <th colspan="3"></th>
+        <th>操作</th>
       </tr>
       </thead>
 
@@ -68,9 +68,14 @@
             <td><%= equipment_release.equipment_track.nr %></td>
             <td><%= equipment_release.release_index %></td>
             <td><%= equipment_release.release_time.localtime.strftime('%Y/%m/%d') %></td>
-            <td><%= link_to 'Show', equipment_release %></td>
-            <td><%= link_to 'Edit', edit_equipment_release_path(equipment_release) %></td>
-            <td><%= link_to 'Destroy', equipment_release, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+            <td>
+              <!--<%#= link_to content_tag(:i, '', :class => 'fa fa-eye'), equipment_release, :class => "marco-btn-success", :title => "详情" %>-->
+              <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_equipment_release_path(equipment_release), :class => "marco-btn-primary", :title => "编辑" %>
+              <%= link_to content_tag(:i, '', :class => 'fa fa-close'), equipment_release, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+            </td>
+            <!--<td><%#= link_to 'Show', equipment_release %></td>-->
+            <!--<td><%#= link_to 'Edit', edit_equipment_release_path(equipment_release) %></td>-->
+            <!--<td><%#= link_to 'Destroy', equipment_release, method: :delete, data: {confirm: 'Are you sure?'} %></td>-->
           </tr>
       <% end %>
       </tbody>

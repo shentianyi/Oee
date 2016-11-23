@@ -41,34 +41,34 @@
       <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_capex_path %>
     </div>
   </div>
+  <div style="overflow: auto; padding: 0;">
+    <table class="marco-nbody table table-bordered">
+      <thead>
+      <tr>
+        <th>项目</th>
+        <th>部门</th>
+        <th>描述</th>
+        <th>操作</th>
+      </tr>
+      </thead>
 
-  <table class="marco-nbody table table-bordered">
-    <thead>
-    <tr>
-      <th>项目</th>
-      <th>部门</th>
-      <th>描述</th>
-      <th>操作</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    <% @capexes.each do |capex| %>
-        <tr>
-          <td><%= capex.project %></td>
-          <td><%= BuCodeEnum.display(capex.bu_code) %></td>
-          <td><%= capex.desc %></td>
-          <td>
-            <%= link_to content_tag(:i, '', :class => 'fa fa-eye'), capex, :class => "marco-btn-success", :title => "详情" %>
-            <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_capex_path(capex), :class => "marco-btn-primary", :title => "编辑" %>
-            <%= link_to content_tag(:i, '', :class => 'fa fa-close'), capex, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
-          </td>
-        </tr>
-    <% end %>
-    </tbody>
-  </table>
+      <tbody>
+      <% @capexes.each do |capex| %>
+          <tr>
+            <td><%= capex.project %></td>
+            <td><%= BuCodeEnum.display(capex.bu_code) %></td>
+            <td><%= capex.desc %></td>
+            <td>
+              <%= link_to content_tag(:i, '', :class => 'fa fa-eye'), capex, :class => "marco-btn-success", :title => "详情" %>
+              <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_capex_path(capex), :class => "marco-btn-primary", :title => "编辑" %>
+              <%= link_to content_tag(:i, '', :class => 'fa fa-close'), capex, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
-
 <div class="digg_pagination">
   <%= will_paginate @capexes, :container => false, params: params.to_unsafe_h %>
 </div>

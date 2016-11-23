@@ -14,37 +14,37 @@
       <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_department_path %>
     </div>
   </div>
+  <div style="overflow: auto; padding: 0;">
+    <table class="marco-nbody table table-bordered">
+      <thead>
+      <tr>
+        <th>NO.</th>
+        <th>部门</th>
+        <th>名称</th>
+        <th>描述</th>
+        <th>操作</th>
+      </tr>
+      </thead>
 
-  <table class="marco-nbody table table-bordered">
-    <thead>
-    <tr>
-      <th>NO.</th>
-      <th>部门</th>
-      <th>名称</th>
-      <th>描述</th>
-      <th>操作</th>
-    </tr>
-    </thead>
+      <tbody>
+      <% @departments.each_with_index do |department, index| %>
+          <tr>
+            <td><%= index+@departments.offset+1 %></td>
+            <td><%= department.nr %></td>
+            <td><%= department.name %></td>
+            <td><%= department.description %></td>
+            <td>
+              <%#= link_to 'Show', department %>
 
-    <tbody>
-    <% @departments.each_with_index do |department, index| %>
-        <tr>
-          <td><%= index+@departments.offset+1 %></td>
-          <td><%= department.nr %></td>
-          <td><%= department.name %></td>
-          <td><%= department.description %></td>
-          <td>
-            <%#= link_to 'Show', department %>
+              <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_department_path(department), :class => "marco-btn-primary", :title => "编辑" %>
 
-            <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_department_path(department), :class => "marco-btn-primary", :title => "编辑" %>
-
-            <%= link_to content_tag(:i, '', :class => 'fa fa-close'), department, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
-        </tr>
-    <% end %>
-    </tbody>
-  </table>
+              <%= link_to content_tag(:i, '', :class => 'fa fa-close'), department, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
-
 <div class="digg_pagination">
   <%= will_paginate @departments, :container => false %>
 </div>

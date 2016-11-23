@@ -16,37 +16,38 @@
       <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_downtime_type_path %>
     </div>
   </div>
+  <div style="overflow: auto; padding: 0;">
+    <table class="marco-nbody table table-bordered">
+      <thead>
+      <tr>
+        <th>NO</th>
+        <th>编号</th>
+        <th>名称</th>
+        <th>描述</th>
+        <th>操作</th>
+      </tr>
+      </thead>
 
-  <table class="marco-nbody table table-bordered">
-    <thead>
-    <tr>
-      <th>NO</th>
-      <th>编号</th>
-      <th>名称</th>
-      <th>描述</th>
-      <th>操作</th>
-    </tr>
-    </thead>
+      <tbody>
+      <% @downtime_types.each_with_index do |downtime_type, index| %>
+          <tr>
+            <td><%= index+@downtime_types.offset+1 %></td>
+            <td><%= downtime_type.nr %></td>
+            <td><%= downtime_type.name %></td>
+            <td><%= downtime_type.description %></td>
+            <td>
+              <%#= link_to 'Show', downtime_type %>
 
-    <tbody>
-    <% @downtime_types.each_with_index do |downtime_type, index| %>
-        <tr>
-          <td><%= index+@downtime_types.offset+1 %></td>
-          <td><%= downtime_type.nr %></td>
-          <td><%= downtime_type.name %></td>
-          <td><%= downtime_type.description %></td>
-          <td>
-            <%#= link_to 'Show', downtime_type %>
+              <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_downtime_type_path(downtime_type), :class => "marco-btn-primary", :title => "编辑" %>
 
-            <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_downtime_type_path(downtime_type), :class => "marco-btn-primary", :title => "编辑" %>
+              <%= link_to content_tag(:i, '', :class => 'fa fa-close'), downtime_type, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
 
-            <%= link_to content_tag(:i, '', :class => 'fa fa-close'), downtime_type, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
-
-          </td>
-        </tr>
-    <% end %>
-    </tbody>
-  </table>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <div class="digg_pagination">

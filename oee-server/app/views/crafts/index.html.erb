@@ -16,35 +16,36 @@
       <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_craft_path %>
     </div>
   </div>
+  <div style="overflow: auto; padding: 0;">
+    <table class="marco-nbody table table-bordered">
+      <thead>
+      <tr>
+        <th>NO</th>
+        <th>工艺</th>
+        <th>描述</th>
+        <th>操作</th>
+      </tr>
+      </thead>
 
-  <table class="marco-nbody table table-bordered">
-    <thead>
-    <tr>
-      <th>NO</th>
-      <th>工艺</th>
-      <th>描述</th>
-      <th>操作</th>
-    </tr>
-    </thead>
+      <tbody>
+      <% @crafts.each_with_index do |craft, index| %>
+          <tr>
+            <td><%= index+@crafts.offset+1 %></td>
+            <td><%= craft.nr %></td>
+            <td><%= craft.description %></td>
+            <td>
+              <%#= link_to 'Show', craft %>
 
-    <tbody>
-    <% @crafts.each_with_index do |craft, index| %>
-        <tr>
-          <td><%= index+@crafts.offset+1 %></td>
-          <td><%= craft.nr %></td>
-          <td><%= craft.description %></td>
-          <td>
-            <%#= link_to 'Show', craft %>
+              <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_craft_path(craft), :class => "marco-btn-primary", :title => "编辑" %>
 
-            <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_craft_path(craft), :class => "marco-btn-primary", :title => "编辑" %>
+              <%= link_to content_tag(:i, '', :class => 'fa fa-close'), craft, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
 
-            <%= link_to content_tag(:i, '', :class => 'fa fa-close'), craft, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
-
-          </td>
-        </tr>
-    <% end %>
-    </tbody>
-  </table>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <div class="digg_pagination">
