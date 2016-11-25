@@ -22,6 +22,7 @@
     <table class="marco-nbody table table-bordered">
       <thead>
       <tr>
+        <th>NO.</th>
         <th>Pa no</th>
         <th>Description</th>
         <th>Qty</th>
@@ -48,8 +49,9 @@
       </thead>
 
       <tbody>
-      <% @pam_items.each do |pam_item| %>
+      <% @pam_items.each_with_index do |pam_item, i| %>
           <tr>
+            <td><%= i+1 %></td>
             <td><%= pam_item.pa_no %></td>
             <td><%= pam_item.description %></td>
             <td><%= pam_item.qty %></td>

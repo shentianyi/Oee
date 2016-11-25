@@ -45,6 +45,7 @@
   <table class="marco-nbody table table-bordered">
     <thead>
     <tr>
+      <th>NO.</th>
       <th>资产平衡单号</th>
       <th>月份</th>
       <th>清单</th>
@@ -53,8 +54,9 @@
     </thead>
 
     <tbody>
-    <% @asset_balance_lists.each do |asset_balance_list| %>
+    <% @asset_balance_lists.each_with_index do |asset_balance_list, i| %>
         <tr>
+          <td><%= i+1 %></td>
           <td><%= asset_balance_list.id %></td>
           <td><%= asset_balance_list.balance_date.localtime.strftime('%Y/%m/%d') %></td>
           <td><%= link_to '清单列表', asset_balance_items_asset_balance_list_path(asset_balance_list) %>

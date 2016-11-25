@@ -46,6 +46,7 @@
 <table class="table">
   <thead>
     <tr>
+      <th>NO.</th>
       <th>折旧时间</th>
       <th>当月原值</th>
       <th>当月折旧</th>
@@ -56,8 +57,9 @@
   </thead>
 
   <tbody>
-    <% @equipment_depreciations.each do |equipment_depreciation| %>
+    <% @equipment_depreciations.each_with_index do |equipment_depreciation, i| %>
       <tr>
+        <td><%= i+1 %></td>
         <td><%= equipment_depreciation.depreciation_time.localtime.strftime('%Y/%m') %></td>
         <td><%= equipment_depreciation.original_val %></td>
         <td><%= equipment_depreciation.depreciation_val %></td>

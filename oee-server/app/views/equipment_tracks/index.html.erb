@@ -72,6 +72,7 @@
     <table class="table table-bordered">
       <thead>
       <tr>
+        <th>NO.</th>
         <!--<th>设备分级</th>-->
         <th>设备名称</th>
         <th>设备编号</th>
@@ -102,8 +103,9 @@
       </thead>
 
       <tbody>
-      <% @equipment_tracks.each do |equipment_track| %>
+      <% @equipment_tracks.each_with_index do |equipment_track, i| %>
           <tr>
+            <td><%= i+1 %></td>
             <!--<td><%= equipment_track.level %></td>-->
             <td><%= equipment_track.name %></td>
             <td><%= equipment_track.nr %></td>

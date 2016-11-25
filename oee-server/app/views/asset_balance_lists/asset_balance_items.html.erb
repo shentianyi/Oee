@@ -44,6 +44,7 @@
     <table class="marco-nbody table table-bordered">
       <thead>
       <tr>
+        <th>NO.</th>
         <th>Asset</th>
         <th>Cap date</th>
         <th>Profit center</th>
@@ -71,8 +72,9 @@
       </thead>
 
       <tbody>
-      <% @asset_balance_items.each do |asset_balance_item| %>
+      <% @asset_balance_items.each_with_index do |asset_balance_item, i| %>
           <tr>
+            <td><%= i+1 %></td>
             <td><%= asset_balance_item.fix_asset_track.nr %></td>
             <td><%= asset_balance_item.cap_date.localtime.strftime('%Y/%m/%d') %></td>
             <td><%= asset_balance_item.profit_center %></td>

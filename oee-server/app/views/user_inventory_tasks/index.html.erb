@@ -51,6 +51,7 @@
   <table class="marco-nbody table table-bordered">
     <thead>
     <tr>
+      <th>NO.</th>
       <th>员工</th>
       <th>盘点单</th>
       <th>开始时间</th>
@@ -66,8 +67,9 @@
     </thead>
 
     <tbody>
-    <% @user_inventory_tasks.each do |user_inventory_task| %>
+    <% @user_inventory_tasks.each_with_index do |user_inventory_task, i| %>
         <tr>
+          <td><%= i+1 %></td>
           <td><%= user_inventory_task.user.name %></td>
           <td><%= user_inventory_task.inventory_list.name %></td>
           <td><%= user_inventory_task.start_time.localtime.strftime('%Y/%m/%d %H:%M') %></td>

@@ -19,6 +19,7 @@
     <table class="table table-bordered">
       <thead>
       <tr>
+        <th>NO.</th>
         <th>User</th>
         <th>Area</th>
         <th>操作</th>
@@ -27,8 +28,9 @@
 
 
 
-      <% @user_area_items.each do |user_area_item| %>
+      <% @user_area_items.each_with_index do |user_area_item, i| %>
           <tr>
+            <td><%= i+1 %></td>
             <td><%= user_area_item.user.name %></td>
             <td><%= user_area_item.area.desc %></td>
             <td>

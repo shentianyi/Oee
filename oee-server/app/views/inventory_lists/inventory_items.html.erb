@@ -58,6 +58,7 @@
     <table class="table">
       <thead>
       <tr>
+        <th>NO.</th>
         <th>是否已覆盖</th>
         <th>Asset</th>
         <th>Cap date</th>
@@ -85,8 +86,9 @@
       </thead>
 
       <tbody>
-      <% @inventory_items.each do |inventory_item| %>
+      <% @inventory_items.each_with_index do |inventory_item, i| %>
           <tr>
+            <td><%= i+1 %></td>
             <td><%= inventory_item.is_cover==true ? '是' : '否' %></td>
             <td><%= inventory_item.fix_asset_track.nr %></td>
             <td><%= inventory_item.cap_date.localtime.strftime('%Y/%m/%d') %></td>

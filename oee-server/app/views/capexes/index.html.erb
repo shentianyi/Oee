@@ -45,6 +45,7 @@
   <table class="marco-nbody table table-bordered">
     <thead>
     <tr>
+      <th>NO.</th>
       <th>项目</th>
       <th>部门</th>
       <th>描述</th>
@@ -53,8 +54,9 @@
     </thead>
 
     <tbody>
-    <% @capexes.each do |capex| %>
+    <% @capexes.each_with_index do |capex, i| %>
         <tr>
+          <td><%= i+1 %></td>
           <td><%= capex.project %></td>
           <td><%= BuCodeEnum.display(capex.bu_code) %></td>
           <td><%= capex.desc %></td>

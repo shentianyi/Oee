@@ -69,7 +69,8 @@
     <table class="table table-bordered">
       <thead>
       <tr>
-        <th>追加固定资产</th>
+        <th>NO.</th>
+        <th>追加资产</th>
         <th>固定资产号</th>
 
         <th>追加设备</th>
@@ -95,8 +96,9 @@
       </thead>
 
       <tbody>
-      <% @fix_asset_tracks.each do |fix_asset_track| %>
+      <% @fix_asset_tracks.each_with_index do |fix_asset_track, i| %>
           <tr>
+            <td><%= i+1 %></td>
             <td><%= fix_asset_track.is_add_fix_asset ? '是' : '否' %></td>
             <td><%= fix_asset_track.nr %></td>
 

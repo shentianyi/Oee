@@ -36,6 +36,7 @@
   <table class="marco-nbody table table-bordered">
     <thead>
     <tr>
+      <th>NO.</th>
       <th>名称</th>
       <th>描述</th>
       <th>操作</th>
@@ -43,8 +44,9 @@
     </thead>
 
     <tbody>
-    <% @areas.each do |area| %>
+    <% @areas.each_with_index do |area, i| %>
         <tr>
+          <td><%= i+1 %></td>
           <td><%= area.name %></td>
           <td><%= area.desc %></td>
           <td>

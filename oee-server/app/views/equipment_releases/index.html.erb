@@ -55,6 +55,7 @@
 <table class="table">
   <thead>
     <tr>
+      <th>NO.</th>
       <th>所属设备编号</th>
       <th>放行序号</th>
       <th>放行时间</th>
@@ -63,8 +64,9 @@
   </thead>
 
   <tbody>
-    <% @equipment_releases.each do |equipment_release| %>
+    <% @equipment_releases.each_with_index do |equipment_release, i| %>
       <tr>
+        <td><%= i+1 %></td>
         <td><%= equipment_release.equipment_track.nr %></td>
         <td><%= equipment_release.release_index %></td>
         <td><%= equipment_release.release_time.localtime.strftime('%Y/%m/%d') %></td>
