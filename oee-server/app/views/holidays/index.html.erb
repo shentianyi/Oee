@@ -16,38 +16,38 @@
       <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_holiday_path %>
     </div>
   </div>
+  <div style="overflow: auto; padding: 0;">
+    <table class="marco-nbody table table-bordered">
+      <thead>
+      <tr>
+        <th>NO</th>
+        <th>节假日</th>
+        <th>类型</th>
+        <th>备注</th>
+        <th>操作</th>
+      </tr>
+      </thead>
 
-  <table class="marco-nbody table table-bordered">
-    <thead>
-    <tr>
-      <th>NO</th>
-      <th>节假日</th>
-      <th>类型</th>
-      <th>备注</th>
-      <th>操作</th>
-    </tr>
-    </thead>
+      <tbody>
+      <% @holidays.each_with_index do |holiday, index| %>
+          <tr>
+            <td><%= index+@holidays.offset+1 %></td>
+            <td><%= holiday.holiday %></td>
+            <td><%= HolidayType.display holiday.type %></td>
+            <td><%= holiday.remark %></td>
+            <td>
+              <%#= link_to 'Show', holiday %>
+              <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_holiday_path(holiday), :class => "marco-btn-primary", :title => "编辑" %>
 
-    <tbody>
-    <% @holidays.each_with_index do |holiday, index| %>
-        <tr>
-          <td><%= index+@holidays.offset+1 %></td>
-          <td><%= holiday.holiday %></td>
-          <td><%= HolidayType.display holiday.type %></td>
-          <td><%= holiday.remark %></td>
-          <td>
-            <%#= link_to 'Show', holiday %>
-            <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_holiday_path(holiday), :class => "marco-btn-primary", :title => "编辑" %>
+              <%= link_to content_tag(:i, '', :class => 'fa fa-close'), holiday, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
 
-            <%= link_to content_tag(:i, '', :class => 'fa fa-close'), holiday, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
-
-          </td>
-        </tr>
-    <% end %>
-    </tbody>
-  </table>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
-
 <div class="digg_pagination">
   <%= will_paginate @holidays, :container => false %>
 </div>

@@ -15,8 +15,7 @@
   </div>
 
 
-  <div class="marco-nbody" style="overflow: auto; padding: 0;">
-    <table class="table table-bordered">
+    <table class="marco-nbody table table-bordered">
       <thead>
       <tr>
         <th>NO.</th>
@@ -25,7 +24,6 @@
         <th>操作</th>
       </tr>
       </thead>
-
 
 
       <% @user_area_items.each_with_index do |user_area_item, i| %>
@@ -38,18 +36,14 @@
               <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_user_area_item_path(user_area_item), :class => "marco-btn-primary", :title => "编辑" %>
               <%= link_to content_tag(:i, '', :class => 'fa fa-close'), user_area_item, :class => "marco-btn-danger", :title => "删除" %>
             </td>
-
           </tr>
       <% end %>
       </tbody>
     </table>
-  </div>
-  <br>
-</div>
-<br>
 
+</div>
 
 <div class="digg_pagination">
   <%= will_paginate @user_area_items, :container => false, params: params.to_unsafe_h %>
 </div>
-<br>
+

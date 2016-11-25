@@ -1,24 +1,42 @@
-<p id="notice"><%= notice %></p>
+<%= render 'form', budget_item: @budget_item %>
 
-<p>
-  <strong>Qty:</strong>
-  <%= @budget_item.qty %>
-</p>
+<script type="text/javascript" charset="utf-8">
+  $('.breadcrumb li').last().html('budget_item详情');
 
-<p>
-  <strong>Unit price:</strong>
-  <%= @budget_item.unit_price %>
-</p>
+  $('input').attr('disabled', 'disabled');
 
-<p>
-  <strong>Total price:</strong>
-  <%= @budget_item.total_price %>
-</p>
+  $('select').attr('disabled', 'disabled');
 
-<p>
-  <strong>Budget:</strong>
-  <%= @budget_item.budget %>
-</p>
+  $('.marco-btn-normal').css({display: 'none'});
 
-<%= link_to 'Edit', edit_budget_item_path(@budget_item) %> |
-<%= link_to 'Back', budget_items_path %>
+  $('.marco-npanel-default a').remove();
+</script>
+
+
+
+
+<!--<p id="notice"><%#= notice %></p>-->
+
+<!--<p>-->
+  <!--<strong>Qty:</strong>-->
+  <!--<%#= @budget_item.qty %>-->
+<!--</p>-->
+
+<!--<p>-->
+  <!--<strong>Unit price:</strong>-->
+  <!--<%#= @budget_item.unit_price %>-->
+<!--</p>-->
+
+<!--<p>-->
+  <!--<strong>Total price:</strong>-->
+  <!--<%#= @budget_item.total_price %>-->
+<!--</p>-->
+
+<!--<p>-->
+  <!--<strong>Budget:</strong>-->
+  <!--<%#= @budget_item.budget %>-->
+<!--</p>-->
+
+<%#= link_to 'Edit', edit_budget_item_path(@budget_item) %> |
+<%#= link_to 'Back', budget_items_path %>
+

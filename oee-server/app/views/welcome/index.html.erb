@@ -1,11 +1,13 @@
 <p id="login-notice"><%= notice %></p>
 
 <% if current_user.group_id == UserGroupEnum::FIXASSET %>
-    <h1 style="font-size: 46px; align-content: center ">固定资产系统</h1>
+    <h1>欢迎登陆 固定资产系统</h1>
+    <hr class="hr-grey"/>
 <% else %>
-    <h1 style="font-size: 46px; align-content: center ">OEE系统</h1>
+    <h1>欢迎登陆 OEE系统</h1>
+    <hr class="hr-grey"/>
 <% end %>
 
 <script type="text/javascript" charset="utf-8">
-    layout.notice('popMsg-success', $('#login-notice').html());
+  layout.notice('popMsg-success', $('#login-notice').html());
 </script>

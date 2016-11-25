@@ -1,6 +1,5 @@
 <p id="notice"><%= notice %></p>
 
-
 <ol class="breadcrumb">
   <li>设备跟踪</li>
   <li>设备放行记录</li>
@@ -26,7 +25,7 @@
     </div>
 
     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
-      <button type="submit" class="marco-btn-default"  style="width: 100px; height: 40px; line-height: 40px;">查找</button>
+      <button type="submit" class="marco-btn-default" style="width: 100px; height: 40px; line-height: 40px;">查找</button>
       <button type="button" class="marco-btn-success" style="width: 100px; height: 40px; line-height: 40px;">导出</button>
     </div>
 
@@ -41,19 +40,19 @@
 
   </form>
 </div>
+<div class="marco-npanel-default">
+  <div class="marco-nheading">
+    设备放行表
+    <div class="pull-right">
+      <%= link_to content_tag(:i, content_tag(:span, "导入数据 "), :class => "fa fa-cloud-upload"), import_equipment_releases_path %>
 
-<div class="marco-nheading">
-  设备放行表
-  <div class="pull-right">
-    <%= link_to content_tag(:i, content_tag(:span, "导入数据 "), :class => "fa fa-cloud-upload"), import_equipment_releases_path %>
-
-    <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_equipment_release_path %>
+      <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_equipment_release_path %>
+    </div>
   </div>
-</div>
 
 
-<table class="table">
-  <thead>
+  <table class="table">
+    <thead>
     <tr>
       <th>NO.</th>
       <th>所属设备编号</th>
@@ -61,26 +60,31 @@
       <th>放行时间</th>
       <th colspan="3"></th>
     </tr>
-  </thead>
+    </thead>
 
-  <tbody>
+    <tbody>
     <% @equipment_releases.each_with_index do |equipment_release, i| %>
-      <tr>
-        <td><%= i+1 %></td>
-        <td><%= equipment_release.equipment_track.nr %></td>
-        <td><%= equipment_release.release_index %></td>
-        <td><%= equipment_release.release_time.localtime.strftime('%Y/%m/%d') %></td>
-        <td><%= link_to 'Show', equipment_release %></td>
-        <td><%= link_to 'Edit', edit_equipment_release_path(equipment_release) %></td>
-        <td><%= link_to 'Destroy', equipment_release, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+        <tr>
+          <td><%= i+1 %></td>
+          <td><%= equipment_release.equipment_track.nr %></td>
+          <td><%= equipment_release.release_index %></td>
+          <td><%= equipment_release.release_time.localtime.strftime('%Y/%m/%d') %></td>
+          <td>
+            <!--<%#= link_to content_tag(:i, '', :class => 'fa fa-eye'), equipment_release, :class => "marco-btn-success", :title => "详情" %>-->
+            <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_equipment_release_path(equipment_release), :class => "marco-btn-primary", :title => "编辑" %>
+            <%= link_to content_tag(:i, '', :class => 'fa fa-close'), equipment_release, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+          </td>
+        </tr>
     <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>
+
 
 <div class="digg_pagination">
   <%= will_paginate @equipment_releases, :container => false, params: params.to_unsafe_h %>
 </div>
+
 <br>
 
 

@@ -125,35 +125,6 @@ ActiveRecord::Schema.define(version: 20161116090104) do
     t.index ["downtime_type_id"], name: "index_downtime_codes_on_downtime_type_id", using: :btree
   end
 
-  create_table "downtime_data", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "fors_werk"
-    t.string   "fors_faufnr"
-    t.string   "fors_faufpo"
-    t.string   "fors_lnr"
-    t.string   "fors_einres"
-    t.string   "pk_sch"
-    t.datetime "pk_datum"
-    t.string   "pk_sch_std"
-    t.string   "pk_sch_t"
-    t.string   "pd_prod_nr"
-    t.float    "pd_teb",        limit: 24
-    t.float    "pd_stueck",     limit: 24
-    t.float    "pd_auss_ruest", limit: 24
-    t.float    "pd_auss_prod",  limit: 24
-    t.string   "pd_bemerk"
-    t.string   "pd_user"
-    t.datetime "pd_erf_dat"
-    t.datetime "pd_von"
-    t.datetime "pd_bis"
-    t.string   "pd_stoer"
-    t.float    "pd_std",        limit: 24
-    t.integer  "pd_laenge"
-    t.string   "pd_rf"
-    t.boolean  "is_naturl"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-  end
-
   create_table "downtime_records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "fors_werk"
     t.string   "fors_faufnr"
@@ -274,10 +245,10 @@ ActiveRecord::Schema.define(version: 20161116090104) do
 
   create_table "holidays", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.date     "holiday"
-    t.integer  "type"
+    t.integer  "type",       default: 100
     t.string   "remark"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "inventory_files", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -467,21 +438,22 @@ ActiveRecord::Schema.define(version: 20161116090104) do
     t.string   "name"
     t.integer  "role"
     t.integer  "is_system",              default: 0
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                  default: "",  null: false
+    t.string   "encrypted_password",     default: "",  null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,   null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.integer  "failed_attempts",        default: 0,  null: false
+    t.integer  "failed_attempts",        default: 0,   null: false
     t.string   "unlock_token"
     t.datetime "locked_at"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.integer  "group_id",               default: 100
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
