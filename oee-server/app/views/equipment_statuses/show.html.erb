@@ -1,14 +1,15 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @equipment_status.name %>
-</p>
+<%= render 'form', equipment_status: @equipment_status %>
 
-<p>
-  <strong>Desc:</strong>
-  <%= @equipment_status.desc %>
-</p>
+<script type="text/javascript" charset="utf-8">
+  $('.breadcrumb li').last().html('设备状态详情');
 
-<%= link_to 'Edit', edit_equipment_status_path(@equipment_status) %> |
-<%= link_to 'Back', equipment_statuses_path %>
+  $('input').attr('disabled', 'disabled');
+
+  $('select').attr('disabled', 'disabled');
+
+  $('.marco-btn-normal').css({display: 'none'});
+
+  $('.marco-npanel-default a').remove();
+</script>

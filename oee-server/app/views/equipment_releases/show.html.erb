@@ -1,19 +1,11 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Equipment track:</strong>
-  <%= @equipment_release.equipment_track %>
-</p>
+<%= render 'form', equipment_release: @equipment_release %>
 
-<p>
-  <strong>Release index:</strong>
-  <%= @equipment_release.release_index %>
-</p>
+<script type="text/javascript" charset="utf-8">
+  $('.breadcrumb li').last().html('设备放行记录详情');
 
-<p>
-  <strong>Release time:</strong>
-  <%= @equipment_release.release_time %>
-</p>
+  $('input').attr('disabled', 'disabled');
 
-<%= link_to 'Edit', edit_equipment_release_path(@equipment_release) %> |
-<%= link_to 'Back', equipment_releases_path %>
+  $('.marco-btn-normal').css({display: 'none'});
+</script>

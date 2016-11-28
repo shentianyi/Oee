@@ -1,33 +1,56 @@
-<%= form_for(equipment_release) do |f| %>
-    <% if equipment_release.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(equipment_release.errors.count, "error") %> prohibited this equipment_release from being
-            saved:</h2>
+<div id="equipment_releases">
+  <ol class="breadcrumb">
+    <li>设备跟踪</li>
+    <li><%= link_to '设备放行记录', equipment_releases_path %></li>
+    <li>{{action}}</li>
+  </ol>
 
-          <ul>
-            <% equipment_release.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-            <% end %>
-          </ul>
+  <hr class="hr-grey"/>
+
+  <%= form_for(equipment_release) do |f| %>
+      <% if equipment_release.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(equipment_release.errors.count, "error") %> prohibited this equipment_release from being
+              saved:</h2>
+
+            <ul>
+              <% equipment_release.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+      <% end %>
+
+      <div class="marco-npanel-default">
+        <div class="marco-nheading">
+          {{action}}
+          <div class="pull-right">
+            <button type="submit" class="marco-btn-normal">{{actionBtn}}</button>
+          </div>
         </div>
-    <% end %>
 
-    <div class="field">
-      <%= f.label :equipment_track_id %>
-      <%= f.select(:equipment_track_id, EquipmentTrack.all.collect { |e| [e.nr, e.id] }) %>
-    </div>
+        <div class="marco-nbody row">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>所属设备编号</span>
+              <%= f.select(:equipment_track_id, EquipmentTrack.all.collect { |e| [e.nr, e.id] }) %>
+            </div>
+          </div>
 
-    <div class="field">
-      <%= f.label :release_index %>
-      <%= f.number_field :release_index %>
-    </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>放行序号</span>
+              <%= f.number_field :release_index %>
+            </div>
+          </div>
 
-    <div class="field">
-      <%= f.label :release_time %>
-      <%= f.date_field :release_time %>
-    </div>
-
-    <div class="actions">
-      <%= f.submit %>
-    </div>
-<% end %>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>放行时间</span>
+              <%= f.text_field :release_time %>
+            </div>
+          </div>
+        </div>
+      </div>
+  <% end %>
+</div>
