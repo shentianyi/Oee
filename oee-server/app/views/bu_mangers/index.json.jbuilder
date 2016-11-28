@@ -1,0 +1,1 @@
+json.array! @bu_mangers, partial: 'bu_mangers/bu_manger', as: :bu_manger

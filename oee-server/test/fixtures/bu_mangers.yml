@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nr: MyString
+  name: MyString
+  finance_nr: MyString
+  desc: MyString
+
+two:
+  nr: MyString
+  name: MyString
+  finance_nr: MyString
+  desc: MyString

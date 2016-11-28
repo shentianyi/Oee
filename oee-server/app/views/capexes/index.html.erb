@@ -59,7 +59,7 @@
           <tr>
             <td><%= i+1 %></td>
             <td><%= capex.project %></td>
-            <td><%= BuCodeEnum.display(capex.bu_code) %></td>
+            <td><%= capex.bu.blank? ? '' : capex.bu.nr %></td>
             <td><%= capex.desc %></td>
             <td>
               <%= link_to content_tag(:i, '', :class => 'fa fa-eye'), capex, :class => "marco-btn-success", :title => "详情" %>

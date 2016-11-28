@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @equipment_status.name %>
+</p>
+
+<p>
+  <strong>Desc:</strong>
+  <%= @equipment_status.desc %>
+</p>
+
+<%= link_to 'Edit', edit_equipment_status_path(@equipment_status) %> |
+<%= link_to 'Back', equipment_statuses_path %>

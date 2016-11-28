@@ -36,6 +36,13 @@ module FileHandler
 
                 row[:type] = EquipmentType.decode(row[:type])
                 fa = FixAssetTrack.where(nr: row[:asset_nr], ancestry: nil).first
+                if row[:department]
+                  b=BuManger.find_by_nr(row[:department])
+                  row[:department] = row[:profit_center] = b.id
+                else
+                  b=BuManger.find_by_finance_nr(row[:profit_center])
+                  row[:department] = row[:profit_center] = b.id
+                end
 
                 p row
 
@@ -113,6 +120,14 @@ module FileHandler
           msg.object = {has_create: true}
         end
 
+        if row[:status].blank?
+          msg.contents<<"设备使用状态不可为空"
+        else
+          if (s = EquipmentStatus.find_by_name(row[:status])).blank?
+            msg.contents<<"设备使用状态:#{row[:status]}未找到"
+          end
+        end
+
         if row[:nr].blank?
           msg.contents<<"设备编号不可为空"
         else
@@ -139,6 +154,24 @@ module FileHandler
               if fa.blank?
                 msg.contents<<"固定资产编号:#{row[:asset_nr]} 不存在"
               end
+            end
+          end
+        end
+
+        if row[:profit_center].blank? && row[:department].blank?
+          msg.contents<<"成本中心和使用部门不可为空"
+        else
+          unless row[:profit_center].blank?
+            if (b1=BuManger.find_by_finance_nr(row[:profit_center])).blank?
+              msg.contents<<"成本中心#{row[:profit_center]}不存在"
+            end
+
+            if (b2=BuManger.find_by_nr(row[:department])).blank?
+              msg.contents<<"使用部门#{row[:department]}不存在"
+            end
+
+            if b1 && b2 && b1!=b2
+              msg.contents<<"成本中心#{row[:profit_center]}和使用部门#{row[:department]}的对应关系不正确"
             end
           end
         end

@@ -15,6 +15,7 @@ class ImportTemplate
   PURCHASE_PAM_EXCEL_TEMPLATE='purchase_pam_template.xlsx'
   TS_PAM_EXCEL_TEMPLATE='ts_pam_template.xlsx'
   FINANCE_PAM_EXCEL_TEMPLATE='finance_pam_template.xlsx'
+  BU_MANGER_EXCEL_TEMPLATE='bu_manger_template.xlsx'
 
   def self.method_missing(method_name, *args, &block)
     if method_name.to_s.include?('_template')

@@ -1,0 +1,2 @@
+module BuMangersHelper
+end

@@ -1,0 +1,2 @@
+class BuManger < ApplicationRecord
+end

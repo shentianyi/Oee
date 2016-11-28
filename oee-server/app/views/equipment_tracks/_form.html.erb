@@ -59,7 +59,7 @@
 
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="marco-igroup-oee">
-                <span>T型号/规格/配置</span>
+                <span>设备类型</span>
                 <%= f.select(:type, EquipmentType.menu, {include_blank: true}) %>
               </div>
             </div>
@@ -102,7 +102,7 @@
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="marco-igroup-oee">
                 <span>使用状态</span>
-                <%= f.text_field :status %>
+                <%= f.select(:status, EquipmentStatus.all.collect{|e| [e.name, e.id]}) %>
               </div>
             </div>
 
@@ -138,6 +138,20 @@
               <div class="marco-igroup-oee">
                 <span>区域</span>
                 <%= f.text_field :area %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>操作指导书</span>
+                <%= f.text_field :operate_instructor %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>维护指导书</span>
+                <%= f.text_field :maintain_instructor %>
               </div>
             </div>
 

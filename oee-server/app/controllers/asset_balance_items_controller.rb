@@ -73,6 +73,6 @@ class AssetBalanceItemsController < ApplicationController
                                                  :accum_dep, :book_val, :asset_class, :inventory_nr, :ts_equipment_nr,
                                                  :ts_project, :ts_inventory_user_id, :ts_keeper, :ts_position, :ts_nameplate_track,
                                                  :ts_type, :ts_equipment_type, :ts_area_id, :ts_supplier, :status,
-                                                 :remark, :ts_inventory_result)
+                                                 :remark, :ts_inventory_result, :is_move)
     end
 end

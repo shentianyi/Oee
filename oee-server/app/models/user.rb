@@ -18,6 +18,9 @@ class User < ApplicationRecord
   has_many :user_area_items, dependent: :destroy
   has_many :user_inventory_tasks, dependent: :destroy
 
+  scope :fix_assets,->{where(group_id: UserGroupEnum::FIXASSET)}
+  scope :oees,->{where(group_id: UserGroupEnum::OEE)}
+
   # the last access token for user
   def access_token
     access_tokens.where(application_id: Settings.default_app.id,

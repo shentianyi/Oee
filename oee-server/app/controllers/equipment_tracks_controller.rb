@@ -77,16 +77,28 @@ class EquipmentTracksController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_equipment_track
-      @equipment_track = EquipmentTrack.find(params[:id])
-    end
+  def search
+    super { |query|
+      if params.has_key? "normal"
+        query=EquipmentTrack.normal
+      elsif params.has_key? "scrap"
+        query=EquipmentTrack.scrap
+      end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def equipment_track_params
-      params.require(:equipment_track).permit(:level, :name, :nr, :type, :asset_nr, :description, :product_id, :equipment_serial_id, :supplier, :status, :profit_center,
-                                              :department, :project, :location, :area, :position, :procurment_date, :release_cycle, :next_release, :release_notice,
-                                              :responsibilityer, :remark, :is_top, :operate_instructor, :maintain_instructor)
-    end
+      query
+    }
+  end
+
+  private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_equipment_track
+    @equipment_track = EquipmentTrack.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def equipment_track_params
+    params.require(:equipment_track).permit(:level, :name, :nr, :type, :asset_nr, :description, :product_id, :equipment_serial_id, :supplier, :status, :profit_center,
+                                            :department, :project, :location, :area, :position, :procurment_date, :release_cycle, :next_release, :release_notice,
+                                            :responsibilityer, :remark, :is_top, :operate_instructor, :maintain_instructor)
+  end
 end

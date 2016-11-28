@@ -1,0 +1,1 @@
+json.partial! "bu_mangers/bu_manger", bu_manger: @bu_manger

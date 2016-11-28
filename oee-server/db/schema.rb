@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161116090104) do
+ActiveRecord::Schema.define(version: 20161128040609) do
 
   create_table "areas", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20161116090104) do
     t.datetime "lock_at"
     t.integer  "lock_batch",                       default: 0
     t.boolean  "locked",                           default: false
+    t.boolean  "is_move",                          default: false
     t.index ["asset_balance_list_id"], name: "index_asset_balance_items_on_asset_balance_list_id", using: :btree
     t.index ["fix_asset_track_id"], name: "index_asset_balance_items_on_fix_asset_track_id", using: :btree
     t.index ["locked"], name: "index_asset_balance_items_on_locked", using: :btree
@@ -73,6 +74,15 @@ ActiveRecord::Schema.define(version: 20161116090104) do
     t.datetime "updated_at",      null: false
   end
 
+  create_table "bu_mangers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "nr"
+    t.string   "name"
+    t.string   "finance_nr"
+    t.string   "desc"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "budget_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "qty"
     t.float    "unit_price",  limit: 24
@@ -91,6 +101,15 @@ ActiveRecord::Schema.define(version: 20161116090104) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["capex_id"], name: "index_budgets_on_capex_id", using: :btree
+  end
+
+  create_table "bus", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "nr"
+    t.string   "name"
+    t.string   "finance_nr"
+    t.string   "desc"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "capexes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -123,6 +142,35 @@ ActiveRecord::Schema.define(version: 20161116090104) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.index ["downtime_type_id"], name: "index_downtime_codes_on_downtime_type_id", using: :btree
+  end
+
+  create_table "downtime_data", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "fors_werk"
+    t.string   "fors_faufnr"
+    t.string   "fors_faufpo"
+    t.string   "fors_lnr"
+    t.string   "fors_einres"
+    t.string   "pk_sch"
+    t.datetime "pk_datum"
+    t.string   "pk_sch_std"
+    t.string   "pk_sch_t"
+    t.string   "pd_prod_nr"
+    t.float    "pd_teb",        limit: 24
+    t.float    "pd_stueck",     limit: 24
+    t.float    "pd_auss_ruest", limit: 24
+    t.float    "pd_auss_prod",  limit: 24
+    t.string   "pd_bemerk"
+    t.string   "pd_user"
+    t.datetime "pd_erf_dat"
+    t.datetime "pd_von"
+    t.datetime "pd_bis"
+    t.string   "pd_stoer"
+    t.float    "pd_std",        limit: 24
+    t.integer  "pd_laenge"
+    t.string   "pd_rf"
+    t.boolean  "is_naturl"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "downtime_records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -188,6 +236,14 @@ ActiveRecord::Schema.define(version: 20161116090104) do
     t.index ["equipment_track_id"], name: "index_equipment_releases_on_equipment_track_id", using: :btree
   end
 
+  create_table "equipment_statuses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "name"
+    t.string   "desc"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "group_id",   default: 100
+  end
+
   create_table "equipment_tracks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "level"
     t.string   "name"
@@ -198,7 +254,6 @@ ActiveRecord::Schema.define(version: 20161116090104) do
     t.string   "product_id"
     t.string   "equipment_serial_id"
     t.string   "supplier"
-    t.string   "status"
     t.string   "profit_center"
     t.string   "department"
     t.string   "project"
@@ -216,6 +271,7 @@ ActiveRecord::Schema.define(version: 20161116090104) do
     t.datetime "updated_at",                                    null: false
     t.string   "operate_instructor"
     t.string   "maintain_instructor"
+    t.integer  "status",                         default: 6
   end
 
   create_table "fix_asset_tracks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -245,10 +301,10 @@ ActiveRecord::Schema.define(version: 20161116090104) do
 
   create_table "holidays", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.date     "holiday"
-    t.integer  "type",       default: 100
+    t.integer  "type"
     t.string   "remark"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "inventory_files", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -362,6 +418,20 @@ ActiveRecord::Schema.define(version: 20161116090104) do
     t.index ["owner_id"], name: "index_oauth_applications_on_owner_id", using: :btree
     t.index ["owner_type"], name: "index_oauth_applications_on_owner_type", using: :btree
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
+  end
+
+  create_table "pam_info_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "nr"
+    t.float    "cost",               limit: 24
+    t.float    "remained",           limit: 24
+    t.boolean  "is_final_approved",             default: false
+    t.string   "in_process"
+    t.string   "approved"
+    t.string   "budget_not_applied"
+    t.integer  "budget_id"
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+    t.index ["budget_id"], name: "index_pam_info_items_on_budget_id", using: :btree
   end
 
   create_table "pam_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -494,6 +564,7 @@ ActiveRecord::Schema.define(version: 20161116090104) do
   add_foreign_key "machines", "machine_types"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
+  add_foreign_key "pam_info_items", "budgets"
   add_foreign_key "pam_items", "pam_lists"
   add_foreign_key "pam_lists", "budgets"
   add_foreign_key "user_area_items", "areas"

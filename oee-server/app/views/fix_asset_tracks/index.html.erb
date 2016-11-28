@@ -35,10 +35,53 @@
 
     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
       <div class="marco-igroup-oee">
+        <span>物资采购申请单号</span>
+        <input type="text" name="fix_asset_track[apply_id]" value="<%= @apply_id %>"/>
+        <input type="hidden" name="fix_asset_track[apply_id_fuzzy]"/>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>申请人</span>
+        <input type="text" name="fix_asset_track[proposer]" value="<%= @proposer %>"/>
+        <input type="hidden" name="fix_asset_track[proposer_fuzzy]"/>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>采购订单号</span>
+        <input type="text" name="fix_asset_track[procurment_id]" value="<%= @procurment_id %>"/>
+        <input type="hidden" name="fix_asset_track[procurment_id_fuzzy]"/>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>使用费用(项目)</span>
+        <input type="text" name="fix_asset_track[project]" value="<%= @project %>"/>
+        <input type="hidden" name="fix_asset_track[project_fuzzy]"/>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
+        <span>供应商</span>
+        <input type="text" name="fix_asset_track[supplier]" value="<%= @supplier %>"/>
+        <input type="hidden" name="fix_asset_track[supplier_fuzzy]"/>
+      </div>
+    </div>
+
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="marco-igroup-oee">
         <span>竣工单状态</span>
         <%= select_tag('fix_asset_track[status]', options_for_select(FixAssetStatus.menu, @status), {include_blank: true}) %>
       </div>
     </div>
+
+
 
     <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
       <div class="marco-igroup-oee">
@@ -48,9 +91,12 @@
         <input type="text" name="fix_asset_track[info_receive_date][end]" class="datepicker" value="<%= @info_receive_date_end %>"/>
       </div>
     </div>
+
+
+
+
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <button type="submit" class="marco-btn-default" style="width: 100px; height: 40px; line-height: 40px;">查找</button>
-
       <button type="button" class="marco-btn-success" style="width: 100px; height: 40px; line-height: 40px;">导出</button>
     </div>
   </form>

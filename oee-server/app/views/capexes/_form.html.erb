@@ -38,7 +38,7 @@
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="marco-igroup-oee">
                 <span>BU代码</span>
-                <%= f.select(:bu_code, BuCodeEnum.menu, {include_blank: false}) %>
+                <%= f.select(:bu_code, BuManger.all.collect {|b| [b.nr, b.id]}, {include_blank: false}) %>
               </div>
             </div>
 

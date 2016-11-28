@@ -6,11 +6,10 @@ module FileHandler
           :fix_asset_track_id, :cap_date, :profit_center, :asset_description, :acquis_val,
           :accum_dep, :book_val, :asset_class, :inventory_nr, :ts_equipment_nr, :ts_project,
           :ts_inventory_user_id, :ts_keeper, :ts_position, :ts_nameplate_track, :ts_type,
-          :ts_equipment_type, :ts_area_id, :ts_supplier, :status, :remark, :ts_inventory_result, :operation
+          :ts_equipment_type, :ts_area_id, :ts_supplier, :status, :remark, :ts_inventory_result, :is_move, :operation
       ]
 
       def self.import(file, asset_balance_list)
-        p file
         msg = Message.new
         book = Roo::Excelx.new file.full_path
         book.default_sheet = book.sheets.first

@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
 
 
+  resources :bu_mangers do
+    collection do
+      get :search
+      match :import, to: :import, via: [:get, :post]
+    end
+  end
+
+  resources :equipment_statuses
   resources :pam_items do
     collection do
       get :search

@@ -125,12 +125,32 @@
                 <i class="fa fa-tasks"></i>
                 <%= link_to content_tag(:span, '设备折旧表'), equipment_depreciations_path, :title => '设备折旧表' %>
               </li>
+
+              <li class="nav-equipment_depreciations">
+                <i class="fa fa-tasks"></i>
+                <%= link_to content_tag(:span, '设备状态'), equipment_statuses_path, :title => '设备状态' %>
+              </li>
             </ul>
           </li>
 
+
+
           <li class="nav-asset_balance_lists">
-            <%= link_to content_tag(:i, '', :class => 'fa fa-line-chart'), asset_balance_lists_path, :title => '月资产平衡' %>
-            <span>月资产</span>
+            <a href="#">
+              <i class="fa fa-barcode"></i>
+            </a>
+            <span>固定资产</span>
+            <ul>
+              <li class="nav-inventory_lists">
+                <i class="fa fa-tasks"></i>
+                <%= link_to content_tag(:span, '月资产平衡表'), asset_balance_lists_path, :title => '月固定资产平衡表' %>
+              </li>
+
+              <li class="nav-areas">
+                <i class="fa fa-language"></i>
+                <%= link_to content_tag(:span, 'BU管理'), bu_mangers_path, :title => 'BU管理' %>
+              </li>
+            </ul>
           </li>
 
           <li class="nav-inventory">

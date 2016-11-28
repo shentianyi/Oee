@@ -81,7 +81,7 @@
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="marco-igroup-oee">
                 <%#= f.label :procurment_id %>
-                <span>Pepcurment</span>
+                <span>采购订单号</span>
                 <%= f.text_field :procurment_id %>
               </div>
             </div>
@@ -109,7 +109,7 @@
 
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="marco-igroup-oee">
-                <span>采购订单号</span>
+                <span>竣工单号</span>
                 <%= f.text_field :completed_id %>
               </div>
             </div>
@@ -173,7 +173,7 @@
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="marco-igroup-oee">
                 <span>竣工单状态</span>
-                <%= f.text_field :status %>
+                <%= f.select(:status, FixAssetStatus.menu, {include_blank: :false}) %>
               </div>
             </div>
 
@@ -184,12 +184,12 @@
               </div>
             </div>
 
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-              <div class="marco-igroup-oee">
-                <span>Equipment track</span>
-                <%= f.text_field :equipment_track_id %>
-              </div>
-            </div>
+            <!--<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">-->
+              <!--<div class="marco-igroup-oee">-->
+                <!--<span>Equipment track</span>-->
+                <!--<%= f.text_field :equipment_track_id %>-->
+              <!--</div>-->
+            <!--</div>-->
           </div>
         </div>
       </div>
