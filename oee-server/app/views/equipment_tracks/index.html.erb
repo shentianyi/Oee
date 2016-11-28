@@ -10,7 +10,7 @@
 <div class="all-search row">
   <form method="get" action="<%= send("search_#{@model.pluralize}_path") %>">
 
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
       <div class="marco-igroup-oee">
         <span>设备名称</span>
         <input type="text" name="equipment_track[name]" value="<%= @name %>"/>
@@ -18,7 +18,7 @@
       </div>
     </div>
 
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
       <div class="marco-igroup-oee">
         <span>设备编号</span>
         <input type="text" name="equipment_track[nr]" value="<%= @nr %>"/>
@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
       <div class="marco-igroup-oee">
         <span>设备等级</span>
         <input type="text" name="equipment_track[level]" value="<%= @level %>"/>
@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
       <div class="marco-igroup-oee">
         <span>固定资产号</span>
         <input type="text" name="equipment_track[asset_nr]" value="<%= @asset_nr %>"/>
@@ -43,7 +43,7 @@
     </div>
 
 
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
       <div class="marco-igroup-oee">
         <span>设备序列号</span>
         <input type="text" name="equipment_track[equipment_serial_id]" value="<%= @equipment_serial_id %>"/>
@@ -51,7 +51,7 @@
       </div>
     </div>
 
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
       <div class="marco-igroup-oee">
         <span>供应商</span>
         <input type="text" name="equipment_track[supplier]" value="<%= @supplier %>"/>
@@ -59,7 +59,7 @@
       </div>
     </div>
 
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
       <div class="marco-igroup-oee">
         <span>使用项目</span>
         <input type="text" name="equipment_track[project]" value="<%= @project %>"/>
@@ -67,7 +67,7 @@
       </div>
     </div>
 
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
       <div class="marco-igroup-oee">
         <span>区域</span>
         <input type="text" name="equipment_track[area]" value="<%= @area %>"/>
@@ -75,7 +75,7 @@
       </div>
     </div>
 
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
       <div class="marco-igroup-oee">
         <span>使用位置</span>
         <input type="text" name="equipment_track[location]" value="<%= @location %>"/>
@@ -83,28 +83,28 @@
       </div>
     </div>
 
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
       <div class="marco-igroup-oee">
         <span>使用状态</span>
         <%= select_tag('equipment_track[status]', options_from_collection_for_select(EquipmentStatus.all, :id, :name, @status), {include_blank: true}) %>
       </div>
     </div>
 
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
       <div class="marco-igroup-oee">
         <span>使用部门</span>
         <%= select_tag('equipment_track[department]', options_from_collection_for_select(BuManger.all, :id, :nr, @department), {include_blank: true}) %>
       </div>
     </div>
 
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
       <div class="marco-igroup-oee">
         <span>成本中心</span>
         <%= select_tag('equipment_track[profit_center]', options_from_collection_for_select(BuManger.all, :id, :finance_nr, @profit_center), {include_blank: true}) %>
       </div>
     </div>
 
-    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
       <div class="marco-igroup-oee">
         <span>购置日期</span>
         <input type="text" name="equipment_track[procurment_date][start]" class="datepicker" value="<%= @procurment_date_start %>"/>
@@ -112,11 +112,25 @@
         <input type="text" name="equipment_track[procurment_date][end]" class="datepicker" value="<%= @procurment_date_end %>"/>
       </div>
     </div>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <button type="submit" class="marco-btn-default" style="width: 100px; height: 40px; line-height: 40px;" name="search">查找</button>
-      <button type="submit" class="marco-btn-success" style="width: 100px; height: 40px; line-height: 40px;" name="download">导出</button>
-      <button type="submit" class="marco-btn-default" style="width: 100px; height: 40px; line-height: 40px;" name="normal">账上设备</button>
-      <button type="submit" class="marco-btn-default" style="width: 100px; height: 40px; line-height: 40px;" name="scrap">非账上设备</button>
+
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+      <button type="submit" class="marco-btn-default" style="width: 100px; height: 38px; line-height: 35px;" name="search">
+        <i class="fa fa-search"></i>
+        <span>查找</span>
+      </button>
+
+      <button type="submit" class="marco-btn-success pull-right" style="width: 100px; height: 38px; line-height: 35px;" name="download">
+        <i class="fa fa-cloud-download"></i>
+        <span>导出数据</span>
+      </button>
+
+    </div>
+
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+      <button type="submit" class="marco-btn-default" style="width: 100px; height: 38px; line-height: 35px;" name="normal">账上设备</button>
+
+      <button type="submit" class="marco-btn-default pull-right" style="width: 100px; height: 38px; line-height: 35px;" name="scrap">非账上设备</button>
+
     </div>
   </form>
 </div>
@@ -187,7 +201,7 @@
             <!--<td><%= equipment_track.area %></td>-->
 
             <td>
-              <a href="<%= equipment_track.operate_instructor %>"><%= equipment_track.operate_instructor %></a>
+              <a href="javascript: window.open('file:///<%= equipment_track.operate_instructor %>');" target="_blank"><%= equipment_track.operate_instructor %></a>
             </td>
             <td><%= equipment_track.maintain_instructor %></td>
 

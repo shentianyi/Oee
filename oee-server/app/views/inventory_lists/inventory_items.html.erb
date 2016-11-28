@@ -92,7 +92,7 @@
             <td><%= inventory_item.is_cover==true ? '是' : '否' %></td>
             <td><%= inventory_item.fix_asset_track.nr %></td>
             <td><%= inventory_item.cap_date.localtime.strftime('%Y/%m/%d') %></td>
-            <td><%= inventory_item.profit_center %></td>
+            <td><%= inventory_item.bu.blank? ? '' : inventory_item.bu.finance_nr %></td>
             <td><%= inventory_item.asset_description %></td>
             <td><%= inventory_item.acquis_val %></td>
             <td><%= inventory_item.accum_dep %></td>

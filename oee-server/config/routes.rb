@@ -109,6 +109,8 @@ Rails.application.routes.draw do
       match :import, to: :import, via: [:get, :post]
     end
   end
+  post 'asset_balance_lists/report', to: 'asset_balance_lists#report'
+
   resources :fix_asset_tracks do
     collection do
       get :search

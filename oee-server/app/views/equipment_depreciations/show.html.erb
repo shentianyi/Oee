@@ -1,29 +1,3 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Depreciation time:</strong>
-  <%= @equipment_depreciation.depreciation_time %>
-</p>
-
-<p>
-  <strong>Original val:</strong>
-  <%= @equipment_depreciation.original_val %>
-</p>
-
-<p>
-  <strong>Depreciation val:</strong>
-  <%= @equipment_depreciation.depreciation_val %>
-</p>
-
-<p>
-  <strong>Net val:</strong>
-  <%= @equipment_depreciation.net_val %>
-</p>
-
-<p>
-  <strong>Equipment track:</strong>
-  <%= @equipment_depreciation.equipment_track %>
-</p>
-
-<%= link_to 'Edit', edit_equipment_depreciation_path(@equipment_depreciation) %> |
-<%= link_to 'Back', equipment_depreciations_path %>
+<%= render 'form', equipment_depreciation: @equipment_depreciation %>

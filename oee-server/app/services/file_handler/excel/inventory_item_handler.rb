@@ -31,6 +31,8 @@ module FileHandler
               asset=FixAssetTrack.where(nr: row[:fix_asset_track_id], ancestry: nil).first
               area = Area.find_by_name(row[:ts_area_id])
               user = User.find_by_name(row[:ts_inventory_user_id])
+              bu = BuManger.find_by_finance_nr(row[:profit_center])
+              row[:profit_center] = bu.id
 
               count += 1
               item =InventoryItem.new(row.except(:operation, :fix_asset_track_id, :ts_area_id, :ts_inventory_user_id))
@@ -131,6 +133,14 @@ module FileHandler
         else
           unless user = User.find_by_name(row[:ts_inventory_user_id])
             msg.contents<<"盘点员：#{row[:ts_inventory_user_id]} 不存在"
+          end
+        end
+
+        if row[:profit_center].blank?
+          msg.contents<<"成本中心不可为空"
+        else
+          if BuManger.find_by_finance_nr(row[:profit_center]).blank?
+            msg.contents<<"成本中心：#{row[:profit_center]} 不存在"
           end
         end
 

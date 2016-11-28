@@ -1,24 +1,3 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Nr:</strong>
-  <%= @bu_manger.nr %>
-</p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @bu_manger.name %>
-</p>
-
-<p>
-  <strong>Finance nr:</strong>
-  <%= @bu_manger.finance_nr %>
-</p>
-
-<p>
-  <strong>Desc:</strong>
-  <%= @bu_manger.desc %>
-</p>
-
-<%= link_to 'Edit', edit_bu_manger_path(@bu_manger) %> |
-<%= link_to 'Back', bu_mangers_path %>
+<%= render 'form', bu_manger: @bu_manger %>

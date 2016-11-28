@@ -34,6 +34,10 @@ module FileHandler
                   row[:ts_inventory_user_id] = user.id
                 end
 
+                bu = BuManger.find_by_finance_nr(row[:profit_center])
+                row[:profit_center] = bu.id
+
+
                 count += 1
                 item =AssetBalanceItem.new(row.except(:operation, :fix_asset_track_id, :ts_area_id))
                 item.fix_asset_track = asset
@@ -125,6 +129,14 @@ module FileHandler
         else
           unless area = Area.find_by_name(row[:ts_area_id])
             msg.contents<<"区域名：#{row[:ts_area_id]} 不存在"
+          end
+        end
+
+        if row[:profit_center].blank?
+          msg.contents<<"成本中心不可为空"
+        else
+          if BuManger.find_by_finance_nr(row[:profit_center]).blank?
+            msg.contents<<"成本中心：#{row[:profit_center]} 不存在"
           end
         end
 

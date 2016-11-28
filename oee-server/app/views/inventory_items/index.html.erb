@@ -36,7 +36,7 @@
         <td><%= inventory_item.inventory_list %></td>
         <td><%= inventory_item.fix_asset_track %></td>
         <td><%= inventory_item.cap_date %></td>
-        <td><%= inventory_item.profit_center %></td>
+        <td><%= inventory_item.bu.blank? ? '' : inventory_item.bu.finance_nr %></td>
         <td><%= inventory_item.asset_description %></td>
         <td><%= inventory_item.acquis_val %></td>
         <td><%= inventory_item.accum_dep %></td>

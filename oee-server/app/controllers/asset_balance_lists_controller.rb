@@ -147,6 +147,18 @@ class AssetBalanceListsController < ApplicationController
     end
   end
 
+  def report
+    asset_balance_list_id =  params["asset-balance-list-check"].blank? ? '' : params["asset-balance-list-check"].keys.first
+
+    if asset_balance_list=AssetBalanceList.find_by_id(asset_balance_list_id)
+      send_data(asset_balance_list.to_report_xlsx,
+                :type => "application/vnd.openxmlformates-officedocument.spreadsheetml.sheet",
+                :filename => "固定资产报表#{asset_balance_list_id}详细导出.xlsx")
+    else
+      redirect_to :back, notice: '请选择需要导出报表的固定资产平衡单.'
+    end
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_asset_balance_list

@@ -1,6 +1,9 @@
-<h1>Editing Bu Manger</h1>
-
 <%= render 'form', bu_manger: @bu_manger %>
 
-<%= link_to 'Show', @bu_manger %> |
-<%= link_to 'Back', bu_mangers_path %>
+<script type="text/javascript" charset="utf-8">
+  $('.breadcrumb li').last().html('BU 管理详情');
+
+  $('input').attr('disabled', 'disabled');
+
+  $('.marco-btn-normal').css({display: 'none'});
+</script>

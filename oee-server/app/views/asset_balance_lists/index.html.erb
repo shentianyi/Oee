@@ -43,34 +43,42 @@
   </div>
   <div style="overflow: auto; padding: 0;">
 
-    <table class="marco-nbody table table-bordered">
-      <thead>
-      <tr>
-        <th>NO.</th>
-        <th>资产平衡单号</th>
-        <th>月份</th>
-        <th>清单</th>
-        <th>操作</th>
-      </tr>
-      </thead>
 
-      <tbody>
-      <% @asset_balance_lists.each_with_index do |asset_balance_list, i| %>
+    <%= form_tag controller: 'asset_balance_lists', action: 'report', method: 'post' do %>
+        <input type="submit" class="btn btn-warning" value="导出报表"/>
+        <table class="marco-nbody table table-bordered">
+          <thead>
           <tr>
-            <td><%= i+1 %></td>
-            <td><%= asset_balance_list.id %></td>
-            <td><%= asset_balance_list.balance_date.localtime.strftime('%Y/%m/%d') %></td>
-            <td><%= link_to '清单列表', asset_balance_items_asset_balance_list_path(asset_balance_list) %>
-              <span class="badge pull-right"><%= asset_balance_list.asset_balance_items.count %></td>
-            <td>
-              <%= link_to content_tag(:i, '', :class => "fa fa-cloud-upload"), import_asset_balance_lists_path(id: asset_balance_list.id), :class => "marco-btn-success", :title => "导入数据" %>
-              <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_asset_balance_list_path(asset_balance_list), :class => "marco-btn-primary", :title => "编辑" %>
-              <%= link_to content_tag(:i, '', :class => 'fa fa-close'), asset_balance_list, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
-            </td>
+            <th></th>
+            <th>NO.</th>
+            <th>资产平衡单号</th>
+            <th>月份</th>
+            <th>清单</th>
+            <th>操作</th>
           </tr>
-      <% end %>
-      </tbody>
-    </table>
+          </thead>
+
+          <tbody>
+          <% @asset_balance_lists.each_with_index do |asset_balance_list, i| %>
+              <tr>
+                <td>
+                  <input name="asset-balance-list-check[<%= asset_balance_list.id %>]" type="checkbox" id="<%= asset_balance_list.id %>" class='print-check'>
+                </td>
+                <td><%= i+1 %></td>
+                <td><%= asset_balance_list.id %></td>
+                <td><%= asset_balance_list.balance_date.localtime.strftime('%Y/%m/%d') %></td>
+                <td><%= link_to '清单列表', asset_balance_items_asset_balance_list_path(asset_balance_list) %>
+                  <span class="badge pull-right"><%= asset_balance_list.asset_balance_items.count %></td>
+                <td>
+                  <%= link_to content_tag(:i, '', :class => "fa fa-cloud-upload"), import_asset_balance_lists_path(id: asset_balance_list.id), :class => "marco-btn-success", :title => "导入数据" %>
+                  <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_asset_balance_list_path(asset_balance_list), :class => "marco-btn-primary", :title => "编辑" %>
+                  <%= link_to content_tag(:i, '', :class => 'fa fa-close'), asset_balance_list, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+    <% end %>
 
   </div>
 </div>
@@ -79,4 +87,5 @@
 </div>
 <script type="text/javascript">
     layout.date_picker('.datepicker');
+    init_check();
 </script>

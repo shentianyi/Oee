@@ -4,6 +4,14 @@
   <title>OeeServer</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!--360默认是极速模式-->
+  <meta name="renderer" content="webkit">
+  <!--IE默认设置为最高版本-->
+  <meta name="renderer" content="ie-stand">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
   <%= csrf_meta_tags %>
 
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => 'reload' %>
@@ -126,14 +134,12 @@
                 <%= link_to content_tag(:span, '设备折旧表'), equipment_depreciations_path, :title => '设备折旧表' %>
               </li>
 
-              <li class="nav-equipment_depreciations">
+              <li class="nav-equipment_statuses">
                 <i class="fa fa-tasks"></i>
                 <%= link_to content_tag(:span, '设备状态'), equipment_statuses_path, :title => '设备状态' %>
               </li>
             </ul>
           </li>
-
-
 
           <li class="nav-asset_balance_lists">
             <a href="#">
@@ -146,7 +152,7 @@
                 <%= link_to content_tag(:span, '月资产平衡表'), asset_balance_lists_path, :title => '月固定资产平衡表' %>
               </li>
 
-              <li class="nav-areas">
+              <li class="nav-bu_mangers">
                 <i class="fa fa-language"></i>
                 <%= link_to content_tag(:span, 'BU管理'), bu_mangers_path, :title => 'BU管理' %>
               </li>
@@ -231,7 +237,7 @@
 </div>
 
 <script type="text/javascript">
-    layout.init();
+  layout.init();
 </script>
 </body>
 

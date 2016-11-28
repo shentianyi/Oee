@@ -182,7 +182,7 @@
             <td><%= i+1 %></td>
             <td><%= asset_balance_item.fix_asset_track.nr %></td>
             <td><%= asset_balance_item.cap_date.localtime.strftime('%Y/%m/%d') %></td>
-            <td><%= asset_balance_item.profit_center %></td>
+            <td><%= asset_balance_item.bu.blank? ? '' : asset_balance_item.bu.finance_nr %></td>
             <td><%= asset_balance_item.asset_description %></td>
             <td><%= asset_balance_item.acquis_val %></td>
             <td><%= asset_balance_item.accum_dep %></td>
