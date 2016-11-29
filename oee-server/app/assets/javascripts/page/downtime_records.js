@@ -70,6 +70,13 @@ DTR.oee = function (cls, width, title, xAxis, series) {
     var charts = $(cls).highcharts({
         chart: {
             type: 'column',
+            // options3d: {
+            //     enabled: true,
+            //     alpha: 15,
+            //     beta: 15,
+            //     viewDistance: 25,
+            //     depth: 40
+            // },
             width: width,
             zoomType: 'xy',
             panning: true,
@@ -83,7 +90,7 @@ DTR.oee = function (cls, width, title, xAxis, series) {
                     y: -30
                 },
                 theme: {
-                    fill: 'white',
+                    fill: '#2c3e50',
                     stroke: 'silver',
                     r: 0,
                     states: {
@@ -123,7 +130,9 @@ DTR.oee = function (cls, width, title, xAxis, series) {
         legend: {
             align: 'center',
             verticalAlign: 'bottom',
-            shadow: false
+            shadow: false,
+            borderWidth: 1,
+            borderColor: "#2c3e50"
         },
         tooltip: {
             formatter: function () {
@@ -133,10 +142,13 @@ DTR.oee = function (cls, width, title, xAxis, series) {
         },
         plotOptions: {
             column: {
+                grouping: false,
                 pointWidth: 25,
                 pointPadding: 0.2,
                 cursor: 'pointer',
                 stacking: 'normal',
+                borderWidth: "2",
+                borderColor: "red",
                 dataLabels: {
                     enabled: true,
                     format: '{y}%',
@@ -330,8 +342,8 @@ function oee_parsed_data(dimensionality, Oee) {
             });
         }
 
-        OeeOee.push({color: '#2980b9', y: Oee[oee].oee});
-        OeeOeeJ1.push({color: '#3498db', y: Oee[oee].oee_j1});
+        OeeOee.push(Oee[oee].oee);
+        OeeOeeJ1.push(Oee[oee].oee_j1);
         OeeAvailability.push({color: '#a94442', y: Oee[oee].availability});
         OeeAvailabilityJ1.push({color: '#e74c3c', y: Oee[oee].availability_j1});
         OeePerformance.push({color: '#e67e22', y: Oee[oee].performance});
@@ -339,7 +351,8 @@ function oee_parsed_data(dimensionality, Oee) {
 
     var OeeSeries = new Array(), AvailSeries = new Array(), PerSeries = new Array();
 
-    OeeSeries.push({name: 'OEE', data: OeeOee}, {name: 'OEE_J1', data: OeeOeeJ1});
+
+    OeeSeries.push({name: 'OEE', data: OeeOee, color: "#2980b9"}, {name: 'OEE_J1', data: OeeOeeJ1, color: "#3498db"});
     AvailSeries.push({name: 'Availablity', data: OeeAvailability}, {name: 'Availablity_J1', data: OeeAvailabilityJ1});
     PerSeries.push({name: 'Performance', data: OeePerformance});
 
