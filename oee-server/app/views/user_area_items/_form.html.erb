@@ -31,7 +31,7 @@
           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
             <div class="marco-igroup-oee">
               <%= f.label :user_id %>
-              <%= f.select(:user_id, User.all.collect {|u| [u.name, u.id]}) %>
+              <%= f.select(:user_id, User.all.collect {|u| [u.name, u.id]}, {include_blank: false}) %>
             </div>
           </div>
 

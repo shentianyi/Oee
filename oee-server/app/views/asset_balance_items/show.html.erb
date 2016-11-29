@@ -2,7 +2,7 @@
 
 <p>
   <strong>Fix asset track:</strong>
-  <%= @asset_balance_item.fix_asset_track %>
+  <%= @asset_balance_item.fix_asset_track.nr %>
 </p>
 
 <p>
@@ -12,7 +12,7 @@
 
 <p>
   <strong>Profit center:</strong>
-  <%= @asset_balance_item.profit_center %>
+  <%= @asset_balance_item.bu.finance_nr %>
 </p>
 
 <p>
@@ -57,7 +57,7 @@
 
 <p>
   <strong>Ts inventory user:</strong>
-  <%= @asset_balance_item.ts_inventory_user %>
+  <%= @asset_balance_item.ts_inventory_user.name %>
 </p>
 
 <p>
@@ -87,7 +87,7 @@
 
 <p>
   <strong>Ts area:</strong>
-  <%= @asset_balance_item.ts_area %>
+  <%= @asset_balance_item.ts_area.name %>
 </p>
 
 <p>
@@ -108,6 +108,11 @@
 <p>
   <strong>Ts inventory result:</strong>
   <%= @asset_balance_item.ts_inventory_result %>
+</p>
+
+<p>
+  <strong>资产转出:</strong>
+  <%= AssetMoveEnum.display(@asset_balance_item.is_move) %>
 </p>
 
 <%= link_to 'Edit', edit_asset_balance_item_path(@asset_balance_item) %> |

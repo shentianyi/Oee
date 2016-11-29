@@ -102,7 +102,7 @@
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="marco-igroup-oee">
                 <span>使用状态</span>
-                <%= f.select(:status, EquipmentStatus.all.collect{|e| [e.name, e.id]}) %>
+                <%= f.select(:status, EquipmentStatus.all.collect{|e| [e.name, e.id]}, {include_blank: false}) %>
               </div>
             </div>
 
