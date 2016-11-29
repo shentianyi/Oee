@@ -19,6 +19,7 @@ DTR.show_charts = function (downTimeRecords) {
             downtime_records: downTimeRecords
         },
         success: function (data) {
+            console.log(data);
             //如果 返回值正确，继续执行
             if (data.result) {
                 //只有在机器维度的时候 执行 Bu OEE图表展示

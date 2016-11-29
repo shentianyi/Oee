@@ -68,8 +68,8 @@
     </div>
 
     <div class="field">
-      <%= f.label :ts_inventory_user %>
-      <%= f.select(:ts_inventory_user, User.fix_assets.collect { |u| [u.name, u.id] }, {include_blank: false}) %>
+      <%= f.label :ts_inventory_user_id %>
+      <%= f.select(:ts_inventory_user_id, User.fix_assets.collect { |u| [u.name, u.id] }, {include_blank: false}) %>
     </div>
 
     <div class="field">
@@ -98,8 +98,8 @@
     </div>
 
     <div class="field">
-      <%= f.label :ts_area %>
-      <%= f.select(:ts_area, Area.all.collect { |a| [a.name, a.id] }, {include_blank: false}) %>
+      <%= f.label :ts_area_id %>
+      <%= f.select(:ts_area_id, Area.all.collect { |a| [a.name, a.id] }, {include_blank: false}) %>
     </div>
 
     <div class="field">

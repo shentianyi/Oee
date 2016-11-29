@@ -202,7 +202,7 @@
             <td><%= asset_balance_item.inventory_nr %></td>
             <td><%= asset_balance_item.ts_inventory_result %></td>
             <td><%= asset_balance_item.remark %></td>
-            <td><%= asset_balance_item.is_move ? '已转出' : '正常' %></td>
+            <td><%= AssetMoveEnum.display asset_balance_item.is_move %></td>
             <td>
               <%#= link_to content_tag(:i, '', :class => 'fa fa-eye'), asset_balance_item, :class => "marco-btn-success", :title => "详情" %>
               <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_asset_balance_item_path(asset_balance_item), :class => "marco-btn-primary", :title => "编辑" %>

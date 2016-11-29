@@ -1,12 +1,17 @@
 class AssetMoveEnum
-  MOVE=0
-  NORMAL=1
+  NORMAL=0
+  MOVE=1
+
 
   def self.display(type)
     case type
       when MOVE
         '已转出'
       when NORMAL
+        '正常'
+      when true
+        '已转出'
+      when false
         '正常'
     end
   end

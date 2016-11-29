@@ -62,6 +62,7 @@ class DowntimeRecord < ApplicationRecord
 
         data<<{
             machine: rb.machine.department,
+            target: rb.machine.department.target,
             oee: (availability*performance*100).roundf(2),
             oee_j1: (availability_j1*performance*100).roundf(2),
             availability: (availability*100).roundf(2),
@@ -115,6 +116,7 @@ class DowntimeRecord < ApplicationRecord
         data.insert(sort_by_performance(data, (performance*100).roundf(2)), {
             machine: rm.machine,
             bu: rm.machine.department,
+            target: rm.machine.department.target,
             oee: (availability*performance*100).roundf(2),
             oee_j1: (availability_j1*performance*100).roundf(2),
             availability: (availability*100).roundf(2),
