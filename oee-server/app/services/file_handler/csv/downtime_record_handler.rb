@@ -21,8 +21,9 @@ module FileHandler
         # begin
         count = 0
         count_natual = 0
-        # validate_msg = validate_import(file)
-        if true #validate_msg.result
+        all_holiday = Holiday.all.pluck(:holiday).map {|d| d.to_s}
+        validate_msg = validate_import(file)
+        if validate_msg.result
           DowntimeRecord.transaction do
 
             #machine hash container
@@ -45,6 +46,10 @@ module FileHandler
                   end
                 end
                 params[header] = row[header]
+              end
+
+              if all_holiday.include?(params['PK_Datum'].to_date.to_s)
+                next
               end
 
               #supplement params
@@ -275,7 +280,7 @@ module FileHandler
           end
           msg.result = true
           puts "------------------#{count_natual}---------------------------count #{count}-----------------------------------------".red
-          msg.content = '停机记录  上传成功'
+          msg.content = "停机记录 #{count_natual}条 上传成功, 系统判断另增  #{count}条"
         else
           msg.result = false
           msg.content = validate_msg.content

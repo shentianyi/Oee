@@ -124,6 +124,8 @@ class DowntimeRecord < ApplicationRecord
             performance: (performance*100).roundf(2)
         })
       end
+
+      data=data.sort_by{|d| d[:machine][:id]}
       #############################################################################################################################################
     elsif dimensionality==DimensionalityEnum::TIME
       ###########################################################################################################################        by time
