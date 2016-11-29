@@ -33,7 +33,7 @@ class FixAssetTrack < ApplicationRecord
                             asset.is_add_fix_asset ? 'Y' : 'N',
 
                             asset.nr,
-                            asset.status,
+                            FixAssetStatus.display(asset.status),
                             asset.remark
                         ]
       }

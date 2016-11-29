@@ -64,6 +64,8 @@ class EquipmentTrack < ApplicationRecord
         row_2 = []
         if equipment_depreciation = equipment.equipment_depreciations.last
           row_2 = [equipment_depreciation.original_val, equipment_depreciation.depreciation_val, equipment_depreciation.net_val]
+        else
+          row_2 = ['', '', '']
         end
 
         row_3 = [
