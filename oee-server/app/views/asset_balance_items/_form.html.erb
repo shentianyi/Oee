@@ -109,7 +109,7 @@
 
     <div class="field">
       <%= f.label :status %>
-      <%= f.text_field :status %>
+      <%= f.select(:status, EquipmentStatus.all.collect {|s| [s.name, s.id]}, {include_blank: false}) %>
     </div>
 
     <div class="field">

@@ -4,7 +4,7 @@ class DowntimeTypesController < ApplicationController
   # GET /downtime_types
   # GET /downtime_types.json
   def index
-    @downtime_types = DowntimeType.all.paginate(:page=> params[:page]).order(nr: :asc)
+    @downtime_types = DowntimeType.all.paginate(:page=> params[:page])#.order(nr: :desc)
   end
 
   # GET /downtime_types/1

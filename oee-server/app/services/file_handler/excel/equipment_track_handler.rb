@@ -43,6 +43,7 @@ module FileHandler
                   b=BuManger.find_by_finance_nr(row[:profit_center])
                   row[:department] = row[:profit_center] = b.id
                 end
+                row[:status] = EquipmentStatus.find_by_name(row[:status]).id
 
                 p row
 
@@ -107,6 +108,8 @@ module FileHandler
               sheet.add_row row.values<<mssg.content
             end
           end
+
+          msg.object = {} if msg.object.blank?
         end
         p.use_shared_strings = true
         p.serialize(tmp_file)
@@ -173,6 +176,14 @@ module FileHandler
             if b1 && b2 && b1!=b2
               msg.contents<<"成本中心#{row[:profit_center]}和使用部门#{row[:department]}的对应关系不正确"
             end
+          end
+        end
+
+        if row[:status].blank?
+          msg.contents<<"使用状态不可为空"
+        else
+          if EquipmentStatus.find_by_name(row[:status]).blank?
+            msg.contents<<"使用状态：#{row[:status]} 不存在"
           end
         end
 

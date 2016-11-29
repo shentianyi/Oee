@@ -125,7 +125,7 @@ class DowntimeRecord < ApplicationRecord
         })
       end
 
-      data=data.sort_by{|d| d[:machine][:id]}
+      data=data.sort_by{|d| d[:bu][:id]}
       #############################################################################################################################################
     elsif dimensionality==DimensionalityEnum::TIME
       ###########################################################################################################################        by time
@@ -336,7 +336,7 @@ class DowntimeRecord < ApplicationRecord
             machine: q.machine.nr,
             bu: q.machine.department.nr,
             downtime_code: q.downtime_code.nr,
-            downtime_start: q.pd_von,
+            downtime_start: q.pd_von.localtime.strftime("%y/%m/%d %H:%S"),
             time: q.pd_std
         }
       end

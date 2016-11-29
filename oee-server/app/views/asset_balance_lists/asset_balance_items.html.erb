@@ -190,7 +190,7 @@
             <td><%= asset_balance_item.asset_class %></td>
             <td><%= asset_balance_item.ts_equipment_nr %></td>
             <td><%= asset_balance_item.ts_project %></td>
-            <td><%= asset_balance_item.ts_inventory_user.name %></td>
+            <td><%= asset_balance_item.ts_inventory_user.blank? ? '' : asset_balance_item.ts_inventory_user.name %></td>
             <td><%= asset_balance_item.ts_keeper %></td>
             <td><%= asset_balance_item.ts_position %></td>
             <td><%= asset_balance_item.ts_nameplate_track %></td>
@@ -198,7 +198,7 @@
             <td><%= asset_balance_item.ts_equipment_type %></td>
             <td><%= asset_balance_item.ts_area.desc %></td>
             <td><%= asset_balance_item.ts_supplier %></td>
-            <td><%= asset_balance_item.status %></td>
+            <td><%= asset_balance_item.equipment_status.blank? ? '' : asset_balance_item.equipment_status.name %></td>
             <td><%= asset_balance_item.inventory_nr %></td>
             <td><%= asset_balance_item.ts_inventory_result %></td>
             <td><%= asset_balance_item.remark %></td>

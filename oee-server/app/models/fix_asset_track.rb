@@ -2,6 +2,7 @@ class FixAssetTrack < ApplicationRecord
 
   has_ancestry
   belongs_to :equipment_track
+  has_many :asset_balance_items#, dependent: :destroy
 
   def self.to_xlsx assets
     p = Axlsx::Package.new

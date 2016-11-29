@@ -109,14 +109,14 @@
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="marco-igroup-oee">
                 <span>成本中心</span>
-                <%= f.text_field :profit_center %>
+                <%= f.select(:profit_center, BuManger.all.collect {|b| [b.finance_nr, b.id]}, {include_blank: false}) %>
               </div>
             </div>
 
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="marco-igroup-oee">
                 <span>使用部门</span>
-                <%= f.text_field :department %>
+                <%= f.select(:department, BuManger.all.collect {|b| [b.nr, b.id]}, {include_blank: false}) %>
               </div>
             </div>
 
@@ -204,12 +204,12 @@
               </div>
             </div>
 
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-              <div class="marco-igroup-oee">
-                <span>Is top</span>
-                <%= f.text_field :is_top %>
-              </div>
-            </div>
+            <!--<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">-->
+              <!--<div class="marco-igroup-oee">-->
+                <!--<span>Is top</span>-->
+                <!--<%= f.text_field :is_top %>-->
+              <!--</div>-->
+            <!--</div>-->
           </div>
         </div>
       </div>

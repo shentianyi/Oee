@@ -6,7 +6,7 @@ class EquipmentTrack < ApplicationRecord
 
   has_many :equipment_depreciations, :dependent => :destroy
   has_many :equipment_releases, :dependent => :destroy
-  has_one :fix_asset_track, :dependent => :destroy
+  has_one :fix_asset_track#, :dependent => :destroy
   belongs_to :equipment_status, class_name: 'EquipmentStatus', foreign_key: :status
   belongs_to :finance_bu, class_name: 'BuManger', foreign_key: :profit_center
   belongs_to :ts_bu, class_name: 'BuManger', foreign_key: :department

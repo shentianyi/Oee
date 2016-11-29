@@ -73,10 +73,10 @@ class InventoryItemsController < ApplicationController
         end
       end
     end
-    @inventory_items=@inventory_list.inventory_items#.paginate(:page => params[:page])
-    #@page_start=(params[:page].nil? ? 0 : (params[:page].to_i-1))*20
+    @inventory_items=@inventory_list.inventory_items.paginate(:page => params[:page])
+    @page_start=(params[:page].nil? ? 0 : (params[:page].to_i-1))*20
 
-    render 'inventory_lists/inventory_items'
+    redirect_to "/inventory_lists/#{@inventory_list.id}/inventory_items"
   end
 
 

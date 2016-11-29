@@ -149,14 +149,14 @@
             <td><%= fix_asset_track.completed_id %></td>
             <td><%= FixAssetStatus.display fix_asset_track.status %></td>
 
-            <!--<td><%= fix_asset_track.info_receive_date.localtime.strftime('%Y%m%d') %></td>-->
+            <!--<td><%= fix_asset_track.info_receive_date.blank? ? '' : fix_asset_track.info_receive_date.localtime.strftime('%Y%m%d') %></td>-->
             <!--<td><%= fix_asset_track.apply_id %></td>-->
             <td><%= fix_asset_track.description %></td>
             <td><%= fix_asset_track.qty %></td>
             <td><%= fix_asset_track.price %></td>
             <td><%= fix_asset_track.proposer %></td>
             <!--<td><%= fix_asset_track.procurment_id %></td>-->
-            <!--<td><%= fix_asset_track.procurment_date.localtime.strftime('%Y%m%d') %></td>-->
+            <!--<td><%= fix_asset_track.procurment_date.blank? ? '' : fix_asset_track.procurment_date.localtime.strftime('%Y%m%d') %></td>-->
             <!--<td><%= fix_asset_track.supplier %></td>-->
             <!--<td><%= fix_asset_track.project %></td>-->
             <td><%= fix_asset_track.remark %></td>

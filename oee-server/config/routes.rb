@@ -75,6 +75,7 @@ Rails.application.routes.draw do
 
     collection do
       get :search
+      get :child_search
       match :import, to: :import, via: [:get, :post]
     end
   end

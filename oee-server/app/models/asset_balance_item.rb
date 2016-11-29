@@ -4,6 +4,7 @@ class AssetBalanceItem < ApplicationRecord
   belongs_to :ts_area, class_name: 'Area'
   belongs_to :ts_inventory_user, class_name: 'User'
   belongs_to :bu, class_name: 'BuManger', foreign_key: :profit_center
+  belongs_to :equipment_status, class_name: 'EquipmentStatus', foreign_key: :status
 
   default_scope { where(locked: false) }
 end

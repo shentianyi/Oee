@@ -1,7 +1,7 @@
 class InventoryList < ApplicationRecord
   belongs_to :asset_balance_list
   has_many :inventory_items, dependent: :destroy
-  has_many :user_area_items, dependent: :destroy
+  # has_many :user_area_items, dependent: :destroy
   has_many :user_inventory_tasks, dependent: :destroy
 
   after_create :init_inventory_items

@@ -6,7 +6,7 @@ module FileHandler
           :fix_asset_track_id, :cap_date, :profit_center, :asset_description, :acquis_val,
           :accum_dep, :book_val, :asset_class, :inventory_nr, :ts_equipment_nr, :ts_project,
           :ts_inventory_user_id, :ts_keeper, :ts_position, :ts_nameplate_track, :ts_type,
-          :ts_equipment_type, :ts_area_id, :ts_supplier, :status, :remark, :ts_inventory_result, :is_move, :operation
+          :ts_equipment_type, :ts_area_id, :ts_supplier, :remark, :status, :ts_inventory_result, :is_move, :operation
       ]
 
       def self.import(file, asset_balance_list)
@@ -25,6 +25,7 @@ module FileHandler
                 HEADERS.each_with_index do |k, i|
                   row[k] = book.cell(line, i+1).to_s.strip
                   row[k] = row[k].sub(/\.0/, '') if k==:fix_asset_track_id
+                  row[k] = row[k].sub(/\.0/, '') if k==:ts_inventory_user_id
                 end
 
                 asset=FixAssetTrack.where(nr: row[:fix_asset_track_id], ancestry: nil).first
@@ -36,6 +37,8 @@ module FileHandler
 
                 bu = BuManger.find_by_finance_nr(row[:profit_center])
                 row[:profit_center] = bu.id
+                row[:status] = EquipmentStatus.find_by_name(row[:status]).id
+                row[:is_move] = row[:is_move].blank? ? false : row[:is_move]
 
 
                 count += 1
@@ -137,6 +140,14 @@ module FileHandler
         else
           if BuManger.find_by_finance_nr(row[:profit_center]).blank?
             msg.contents<<"成本中心：#{row[:profit_center]} 不存在"
+          end
+        end
+
+        if row[:status].blank?
+          msg.contents<<"使用状态不可为空"
+        else
+          if EquipmentStatus.find_by_name(row[:status]).blank?
+            msg.contents<<"使用状态：#{row[:status]} 不存在"
           end
         end
 
