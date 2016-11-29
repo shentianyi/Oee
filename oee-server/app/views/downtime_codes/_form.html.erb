@@ -40,7 +40,7 @@
           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
             <div class="marco-igroup-oee">
               <span>停机类型</span>
-              <%= f.select(:downtime_type_id, DowntimeType.all.collect { |dtt| [dtt.name, dtt.id] }) %>
+              <%= f.select(:downtime_type_id, DowntimeType.all.collect { |dtt| [dtt.name, dtt.id] }, {include_blank: false}) %>
             </div>
           </div>
 

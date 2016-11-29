@@ -72,7 +72,7 @@
           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
             <div class="marco-igroup-oee">
               <span>budget_id</span>
-              <%= f.select(:budget_id, Budget.all.collect { |b| [b.code, b.id] }) %>
+              <%= f.select(:budget_id, Budget.all.collect { |b| [b.code, b.id] }, {include_blank: false}) %>
             </div>
           </div>
         </div>
