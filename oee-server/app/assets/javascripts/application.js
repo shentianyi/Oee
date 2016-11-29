@@ -19,4 +19,6 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require jquery_nested_form
+//= require highstock-all
+//= require highcharts-3d
 //= require_tree .
