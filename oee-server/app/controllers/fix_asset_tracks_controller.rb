@@ -45,6 +45,7 @@ class FixAssetTracksController < ApplicationController
         format.html { redirect_to @fix_asset_track, notice: 'Fix asset track was successfully updated.' }
         format.json { render :show, status: :ok, location: @fix_asset_track }
       else
+        p @fix_asset_track.errors
         format.html { render :edit }
         format.json { render json: @fix_asset_track.errors, status: :unprocessable_entity }
       end
@@ -77,6 +78,13 @@ class FixAssetTracksController < ApplicationController
     end
   end
 
+  def search
+    super{|query|
+      query=FixAssetTrack.to_do_list
+    }
+    query
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_fix_asset_track
@@ -85,6 +93,8 @@ class FixAssetTracksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def fix_asset_track_params
-      params.require(:fix_asset_track).permit(:info_receive_date, :apply_id, :description, :qty, :price, :proposer, :procurment_id, :procurment_date, :supplier, :project, :completed_id, :is_add_equipment, :equipment_nr, :is_add_fix_asset, :nr, :status, :remark, :equipment_track_id)
+      params.require(:fix_asset_track).permit(:info_receive_date, :apply_id, :description, :qty, :price, :proposer, :procurment_id, :procurment_date,
+                                              :supplier, :project, :completed_id, :is_add_equipment, :equipment_nr, :is_add_fix_asset, :nr, :status,
+                                              :remark, :equipment_track_id, :processing_id)
     end
 end

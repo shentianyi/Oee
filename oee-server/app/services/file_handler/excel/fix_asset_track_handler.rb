@@ -4,7 +4,7 @@ module FileHandler
 
       HEADERS=[
           :info_receive_date, :apply_id, :description, :qty, :price, :proposer, :procurment_date, :supplier,
-          :project, :procurment_id, :completed_id, :is_add_equipment, :equipment_nr, :is_add_fix_asset, :nr,
+          :project, :procurment_id, :completed_id, :is_add_equipment, :equipment_nr, :nr, :processing_id,
           :status, :remark
       ]
 
@@ -23,10 +23,9 @@ module FileHandler
                 row = {}
                 HEADERS.each_with_index do |k, i|
                   row[k] = book.cell(line, i+1).to_s.strip
-                  row[k] = row[k].sub(/\.0/, '') if [:nr, :equipment_nr, :apply_id, :procurment_id].include?(k)
+                  row[k] = row[k].sub(/\.0/, '') if [:nr, :equipment_nr, :apply_id, :procurment_id, :processing_id].include?(k)
                 end
 
-                row[:is_add_fix_asset] = row[:is_add_fix_asset]=='Y' ? true : false
                 row[:is_add_equipment] = row[:is_add_equipment]=='Y' ? true : false
                 row[:status] = FixAssetStatus.decode(row[:status])
 
@@ -34,7 +33,7 @@ module FileHandler
 
                 count += 1
 
-                if row[:is_add_fix_asset]
+                if row[:is_add_equipment]
                   pf = FixAssetTrack.find_by_nr(row[:nr])
                   f = pf.children.new(row.except(:operation))
                 else
@@ -75,10 +74,9 @@ module FileHandler
             row = {}
             HEADERS.each_with_index do |k, i|
               row[k] = book.cell(line, i+1).to_s.strip
-              row[k] = row[k].sub(/\.0/, '') if [:nr, :equipment_nr, :apply_id, :procurment_id].include?(k)
+              row[k] = row[k].sub(/\.0/, '') if [:nr, :equipment_nr, :apply_id, :procurment_id, :is_add_equipment].include?(k)
             end
 
-            row[:is_add_fix_asset] = row[:is_add_fix_asset]=='Y' ? true : false
             row[:is_add_equipment] = row[:is_add_equipment]=='Y' ? true : false
 
             mssg = validate_row(row, line)
@@ -101,16 +99,23 @@ module FileHandler
 
       def self.validate_row(row, line)
         msg = Message.new(contents: [])
-        if row[:nr].blank?
-          msg.contents<<"固定资产编号不可为空"
-        else
-          f = FixAssetTrack.find_by_nr(row[:nr])
-          if row[:is_add_fix_asset] && f.blank?
-            msg.contents<<"固定资产编号:#{row[:nr]}不存在, 不可追加"
-          end
 
-          if !row[:is_add_fix_asset] && !f.blank?
-            msg.contents<<"固定资产编号:#{row[:nr]}已存在"
+        if row[:apply_id].blank?
+          msg.contents<<"物资采购申请单号不可为空"
+        end
+
+        if row[:nr].blank? || row[:equipment_nr].blank?
+          msg.contents<<"固定资产编号或设备编号不可为空"
+        else
+          if row[:is_add_equipment]
+            if FixAssetTrack.where(nr: row[:nr], equipment_nr: row{:equipment_nr}, is_add_equipment: false).first.blank?
+              msg.contents<<"固定资产编号：#{row[:nr]}且设备编号：#{row{:equipment_nr}}不存在, 不可追加"
+            end
+          else
+            if FixAssetTrack.where(nr: row[:nr], equipment_nr: row{:equipment_nr}, is_add_equipment: false).first
+              msg.contents<<"固定资产编号：#{row[:nr]}且设备编号：#{row{:equipment_nr}}已存在"
+            end
+
           end
         end
 

@@ -1,7 +1,7 @@
 <style type="text/css">
-  .marco-igroup-oee > span {
-    min-width: 130px;
-  }
+    .marco-igroup-oee > span {
+        min-width: 130px;
+    }
 </style>
 
 <div id="fix_asset_tracks">
@@ -102,7 +102,7 @@
 
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="marco-igroup-oee">
-                <span>使用费用(项目)</span>
+                <span>所属部门(项目)</span>
                 <%= f.text_field :project %>
               </div>
             </div>
@@ -116,9 +116,8 @@
 
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="marco-igroup-oee">
-                <span>发票情况</span>
-                <%#= f.text_field :completed_id %>
-                <input type="text" value="发票情况">
+                <span>在建工程号</span>
+                <%= f.text_field :processing_id %>
               </div>
             </div>
           </div>
@@ -126,40 +125,22 @@
           <div class="row">
             <hr class="hr-grey" style="margin-bottom:3px;"/>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-              <span style="color:lightseagreen;">追加到其他设备号时打钩并填写</span>
+              <span style="color:lightseagreen;">追加到其他设备号和资产号时打钩</span>
 
               <div class="marco-igroup-oee">
-                <%#= f.label :is_add_equipment %>
                 <span>是否追加</span>
                 <%= f.check_box :is_add_equipment %>
               </div>
             </div>
 
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-              <span style="color:lightseagreen;">其他设备号</span>
-
               <div class="marco-igroup-oee">
                 <span>设备号</span>
                 <%= f.text_field :equipment_nr %>
               </div>
             </div>
-          </div>
-
-          <div class="row">
-            <hr class="hr-grey" style="margin-bottom:3px;"/>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-              <span style="color:lightseagreen;">追加到其他固定资产号时打钩并填写</span>
-
-              <div class="marco-igroup-oee">
-                <%#= f.label :is_add_fix_asset %>
-                <span>是否追加</span>
-                <%= f.check_box :is_add_fix_asset %>
-              </div>
-            </div>
 
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-              <span style="color:lightseagreen;">其他固定资产号</span>
-
               <div class="marco-igroup-oee">
                 <span>固定资产号</span>
                 <%= f.text_field :nr %>
@@ -173,7 +154,11 @@
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="marco-igroup-oee">
                 <span>竣工单状态</span>
-                <%= f.select(:status, FixAssetStatus.menu, {include_blank: :false}) %>
+                <% if params[:action] == 'new' %>
+                    <%= f.select(:status, FixAssetStatus.default_menu, {include_blank: :false}) %>
+                <% else %>
+                    <%= f.select(:status, FixAssetStatus.menu, {include_blank: :false}) %>
+                <% end %>
               </div>
             </div>
 
@@ -184,12 +169,6 @@
               </div>
             </div>
 
-            <!--<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">-->
-              <!--<div class="marco-igroup-oee">-->
-                <!--<span>Equipment track</span>-->
-                <!--<%= f.text_field :equipment_track_id %>-->
-              <!--</div>-->
-            <!--</div>-->
           </div>
         </div>
       </div>
@@ -197,7 +176,7 @@
 </div>
 
 <script type="text/javascript">
-  layout.date_picker('.datepicker');
+    layout.date_picker('.datepicker');
 </script>
 
 <!--之前的数据-->

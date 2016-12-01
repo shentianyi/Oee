@@ -4,6 +4,26 @@ class FixAssetTrack < ApplicationRecord
   belongs_to :equipment_track
   has_many :asset_balance_items#, dependent: :destroy
 
+  validates_uniqueness_of :equipment_nr, scope: :is_add_equipment, if: :new_equipment_and_asset
+  validates_uniqueness_of :nr, scope: :is_add_equipment, if: :new_equipment_and_asset
+  validate :exist_equipment_and_asset, if: :add_equipment_and_asset
+
+  scope :to_do_list, -> { where(status: FixAssetStatus.to_do_list) }
+
+  def new_equipment_and_asset
+    !is_add_equipment
+  end
+
+  def add_equipment_and_asset
+    is_add_equipment
+  end
+
+  def exist_equipment_and_asset
+    if FixAssetTrack.where(nr: self.nr, equipment_nr: self.equipment_nr, is_add_equipment: false).first.blank?
+      errors.add(:nr, "资产号：#{self.nr}且设备号：#{self.equipment_nr}不存在，不可追加")
+    end
+  end
+
   def self.to_xlsx assets
     p = Axlsx::Package.new
     wb = p.workbook

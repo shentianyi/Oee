@@ -90,9 +90,21 @@
       </div>
     </div>
 
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <button type="submit" class="marco-btn-default" style="width: 100px; height: 40px; line-height: 40px;" name="search">查找</button>
-      <button type="submit" class="marco-btn-success" style="width: 100px; height: 40px; line-height: 40px;" name="download">导出</button>
+    <div class="col-lg-4 col-md-4 col-sm-9 col-xs-9">
+      <button type="submit" class="marco-btn-default" style="width: 100px; height: 38px; line-height: 35px;" name="search">
+        <i class="fa fa-search"></i>
+        <span>查找</span>
+      </button>
+
+      <button type="submit" class="marco-btn-success" style="width: 100px; height: 38px; line-height: 35px;" name="download">
+        <i class="fa fa-cloud-download"></i>
+        <span>导出数据</span>
+      </button>
+
+      <button type="submit" class="marco-btn-success pull-right" style="width: 100px; height: 38px; line-height: 35px;" name="to_do_list">
+        <i class="fa fa-align-right"></i>
+        <span>To Do List</span>
+      </button>
     </div>
   </form>
 </div>
@@ -111,10 +123,9 @@
       <thead>
       <tr>
         <th>NO.</th>
-        <th>追加资产</th>
+        <!--<th>追加资产</th>-->
+        <th>是否追加</th>
         <th>固定资产号</th>
-
-        <th>追加设备</th>
         <th>设备编号</th>
 
         <th>竣工单号</th>
@@ -140,10 +151,9 @@
       <% @fix_asset_tracks.each_with_index do |fix_asset_track, i| %>
           <tr>
             <td><%= i+1 %></td>
-            <td><%= fix_asset_track.is_add_fix_asset ? '是' : '否' %></td>
-            <td><%= fix_asset_track.nr %></td>
-
+            <!--<td><%#= fix_asset_track.is_add_fix_asset ? '是' : '否' %></td>-->
             <td><%= fix_asset_track.is_add_equipment ? '是' : '否' %></td>
+            <td><%= fix_asset_track.nr %></td>
             <td><%= fix_asset_track.equipment_nr %></td>
 
             <td><%= fix_asset_track.completed_id %></td>

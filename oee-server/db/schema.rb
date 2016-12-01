@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161129042036) do
+ActiveRecord::Schema.define(version: 20161201071143) do
 
   create_table "areas", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
@@ -101,6 +101,15 @@ ActiveRecord::Schema.define(version: 20161129042036) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["capex_id"], name: "index_budgets_on_capex_id", using: :btree
+  end
+
+  create_table "bus", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "nr"
+    t.string   "name"
+    t.string   "finance_nr"
+    t.string   "desc"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "capexes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -288,6 +297,7 @@ ActiveRecord::Schema.define(version: 20161129042036) do
     t.datetime "created_at",                                    null: false
     t.datetime "updated_at",                                    null: false
     t.string   "ancestry"
+    t.string   "processing_id"
     t.index ["ancestry"], name: "index_fix_asset_tracks_on_ancestry", using: :btree
   end
 
@@ -410,6 +420,20 @@ ActiveRecord::Schema.define(version: 20161129042036) do
     t.index ["owner_id"], name: "index_oauth_applications_on_owner_id", using: :btree
     t.index ["owner_type"], name: "index_oauth_applications_on_owner_type", using: :btree
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
+  end
+
+  create_table "pam_info_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "nr"
+    t.float    "cost",               limit: 24
+    t.float    "remained",           limit: 24
+    t.boolean  "is_final_approved",             default: false
+    t.string   "in_process"
+    t.string   "approved"
+    t.string   "budget_not_applied"
+    t.integer  "budget_id"
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+    t.index ["budget_id"], name: "index_pam_info_items_on_budget_id", using: :btree
   end
 
   create_table "pam_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -542,6 +566,7 @@ ActiveRecord::Schema.define(version: 20161129042036) do
   add_foreign_key "machines", "machine_types"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
+  add_foreign_key "pam_info_items", "budgets"
   add_foreign_key "pam_items", "pam_lists"
   add_foreign_key "pam_lists", "budgets"
   add_foreign_key "user_area_items", "areas"
