@@ -98,7 +98,9 @@ class EquipmentTracksController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def equipment_track_params
     params.require(:equipment_track).permit(:level, :name, :nr, :type, :asset_nr, :description, :product_id, :equipment_serial_id, :supplier, :status, :profit_center,
-                                            :department, :project, :location, :area, :position, :procurment_date, :release_cycle, :next_release, :release_notice,
-                                            :responsibilityer, :remark, :is_top, :operate_instructor, :maintain_instructor)
+                                            :department, :project, :location, :ts_area_id, :position, :cap_date, :release_cycle, :next_release, :release_notice,
+                                            :asset_bu_id, :remark, :is_top, :operate_instructor, :maintain_instructor, :asset_class, :inventory_user_id, :keeper,
+                                            :nameplate_track, :ts_type, :ts_equipment_type,:inventory_result, :process_params, :maintain_plan, :machine_down,
+                                            :big_maintain_plan, :instruction, :replacement_list, :equip_create_way)
   end
 end

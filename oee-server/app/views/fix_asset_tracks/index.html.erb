@@ -124,7 +124,7 @@
       <tr>
         <th>NO.</th>
         <!--<th>追加资产</th>-->
-        <th>是否追加</th>
+        <th>固定资产创建方式</th>
         <th>固定资产号</th>
         <th>设备编号</th>
 
@@ -152,7 +152,7 @@
           <tr>
             <td><%= i+1 %></td>
             <!--<td><%#= fix_asset_track.is_add_fix_asset ? '是' : '否' %></td>-->
-            <td><%= fix_asset_track.is_add_equipment ? '是' : '否' %></td>
+            <td><%= EquipmentAddEnum.display(fix_asset_track.equip_create_way) %></td>
             <td><%= fix_asset_track.nr %></td>
             <td><%= fix_asset_track.equipment_nr %></td>
 

@@ -4,7 +4,7 @@ module FileHandler
 
       HEADERS=[
           :info_receive_date, :apply_id, :description, :qty, :price, :proposer, :procurment_date, :supplier,
-          :project, :procurment_id, :completed_id, :is_add_equipment, :equipment_nr, :nr, :processing_id,
+          :project, :procurment_id, :completed_id, :equip_create_way, :equipment_nr, :nr, :processing_id,
           :status, :remark
       ]
 
@@ -16,7 +16,7 @@ module FileHandler
         validate_msg = validate_import(file)
         if validate_msg.result
           #validate file
-          begin
+          # begin
             count = 0
             EquipmentTrack.transaction do
               2.upto(book.last_row) do |line|
@@ -26,17 +26,19 @@ module FileHandler
                   row[k] = row[k].sub(/\.0/, '') if [:nr, :equipment_nr, :apply_id, :procurment_id, :processing_id].include?(k)
                 end
 
-                row[:is_add_equipment] = row[:is_add_equipment]=='Y' ? true : false
+                row[:equip_create_way] = EquipmentAddEnum.decode(row[:equip_create_way])
                 row[:status] = FixAssetStatus.decode(row[:status])
 
                 p row
 
                 count += 1
 
-                if row[:is_add_equipment]
+                if row[:equip_create_way]==EquipmentAddEnum::ADD_EQUIPMENT
                   pf = FixAssetTrack.find_by_nr(row[:nr])
                   f = pf.children.new(row.except(:operation))
-                else
+                elsif row[:equip_create_way]==EquipmentAddEnum::CREATE_EQUIPMENT
+                  f =FixAssetTrack.new(row.except(:operation))
+                elsif row[:equip_create_way]==EquipmentAddEnum::ONE_ASSET_SOME_EQUIPMENTS
                   f =FixAssetTrack.new(row.except(:operation))
                 end
 
@@ -48,11 +50,11 @@ module FileHandler
             end
             msg.result = true
             msg.content = "导入固定资产信息成功, #{count}条记录成功改变！"
-          rescue => e
-            puts e.backtrace
-            msg.result = false
-            msg.content = e.message
-          end
+          # rescue => e
+          #   puts e.backtrace
+          #   msg.result = false
+          #   msg.content = e.message
+          # end
         else
           msg.result = false
           msg.content = validate_msg.content
@@ -74,10 +76,10 @@ module FileHandler
             row = {}
             HEADERS.each_with_index do |k, i|
               row[k] = book.cell(line, i+1).to_s.strip
-              row[k] = row[k].sub(/\.0/, '') if [:nr, :equipment_nr, :apply_id, :procurment_id, :is_add_equipment].include?(k)
+              row[k] = row[k].sub(/\.0/, '') if [:nr, :equipment_nr, :apply_id, :procurment_id, :processing_id].include?(k)
             end
 
-            row[:is_add_equipment] = row[:is_add_equipment]=='Y' ? true : false
+            # row[:equip_create_way] = EquipmentAddEnum.decode(row[:equip_create_way])
 
             mssg = validate_row(row, line)
             if mssg.result
@@ -107,15 +109,18 @@ module FileHandler
         if row[:nr].blank? || row[:equipment_nr].blank?
           msg.contents<<"固定资产编号或设备编号不可为空"
         else
-          if row[:is_add_equipment]
-            if FixAssetTrack.where(nr: row[:nr], equipment_nr: row{:equipment_nr}, is_add_equipment: false).first.blank?
-              msg.contents<<"固定资产编号：#{row[:nr]}且设备编号：#{row{:equipment_nr}}不存在, 不可追加"
+          if EquipmentAddEnum.get_enum_names.include?(row[:equip_create_way])
+            if row[:equip_create_way]==EquipmentAddEnum.display(EquipmentAddEnum::ADD_EQUIPMENT)
+              if FixAssetTrack.where(nr: row[:nr], equipment_nr: row[:equipment_nr], equip_create_way: EquipmentAddEnum::CREATE_EQUIPMENT).first.blank?
+                msg.contents<<"固定资产编号：#{row[:nr]}且设备编号：#{row[:equipment_nr]}不存在, 不可追加"
+              end
+            else
+              if FixAssetTrack.where(nr: row[:nr], equipment_nr: row[:equipment_nr], equip_create_way: EquipmentAddEnum::CREATE_EQUIPMENT).first
+                msg.contents<<"固定资产编号：#{row[:nr]}且设备编号：#{row[:equipment_nr]}已存在"
+              end
             end
           else
-            if FixAssetTrack.where(nr: row[:nr], equipment_nr: row{:equipment_nr}, is_add_equipment: false).first
-              msg.contents<<"固定资产编号：#{row[:nr]}且设备编号：#{row{:equipment_nr}}已存在"
-            end
-
+            msg.contents<<"固定资产新建方式只可选择以下值:#{EquipmentAddEnum.get_enum_names.join('|')}!"
           end
         end
 

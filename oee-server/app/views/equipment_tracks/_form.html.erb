@@ -102,21 +102,21 @@
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="marco-igroup-oee">
                 <span>使用状态</span>
-                <%= f.select(:status, EquipmentStatus.all.collect{|e| [e.name, e.id]}, {include_blank: false}) %>
+                <%= f.select(:status, EquipmentStatus.all.collect{|e| [e.name, e.id]}, {include_blank: true}) %>
               </div>
             </div>
 
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="marco-igroup-oee">
                 <span>成本中心</span>
-                <%= f.select(:profit_center, BuManger.all.collect {|b| [b.finance_nr, b.id]}, {include_blank: false}) %>
+                <%= f.select(:profit_center, BuManger.all.collect {|b| [b.finance_nr, b.id]}, {include_blank: true}) %>
               </div>
             </div>
 
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="marco-igroup-oee">
                 <span>使用部门</span>
-                <%= f.select(:department, BuManger.all.collect {|b| [b.nr, b.id]}, {include_blank: false}) %>
+                <%= f.select(:department, BuManger.all.collect {|b| [b.nr, b.id]}, {include_blank: true}) %>
               </div>
             </div>
 
@@ -137,7 +137,7 @@
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="marco-igroup-oee">
                 <span>区域</span>
-                <%= f.text_field :area %>
+                <%= f.select(:ts_area_id, Area.all.collect {|a| [a.name, a.id]}, {include_blank: true}) %>
               </div>
             </div>
 
@@ -165,7 +165,7 @@
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="marco-igroup-oee">
                 <span>购置日期</span>
-                <%= f.text_field :procurment_date, :class => 'datepicker' %>
+                <%= f.text_field :cap_date, :class => 'datepicker' %>
               </div>
             </div>
 
@@ -193,7 +193,7 @@
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="marco-igroup-oee">
                 <span>负责的工程师</span>
-                <%= f.text_field :responsibilityer %>
+                <%= f.select(:asset_bu_id, BuManger.all.collect {|b| [b.nr, b.id]}, {include_blank: true}) %>
               </div>
             </div>
 

@@ -17,6 +17,10 @@ class EquipmentType < BaseType
     @@type_name[type]
   end
 
+  def self.get_type_names
+    @@type_name.values
+  end
+
   def self.display(type)
     case type
       when EQUIPMENT

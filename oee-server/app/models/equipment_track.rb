@@ -1,8 +1,11 @@
 class EquipmentTrack < ApplicationRecord
   self.inheritance_column = :_type_disabled
 
-  validates_presence_of :nr, :message => "设备名称不可为空!"
-  validates_uniqueness_of :nr, :message => "设备名称已存在!"
+  has_ancestry
+
+  validates_presence_of :nr, :message => "设备编号不可为空!"
+  # validates_presence_of :asset_nr, :message => "资产编号不可为空!"
+  # validates_uniqueness_of :nr, :message => "设备名称已存在!"
 
   has_many :equipment_depreciations, :dependent => :destroy
   has_many :equipment_releases, :dependent => :destroy
@@ -10,6 +13,9 @@ class EquipmentTrack < ApplicationRecord
   belongs_to :equipment_status, class_name: 'EquipmentStatus', foreign_key: :status
   belongs_to :finance_bu, class_name: 'BuManger', foreign_key: :profit_center
   belongs_to :ts_bu, class_name: 'BuManger', foreign_key: :department
+  belongs_to :ts_area, class_name: 'Area'
+  belongs_to :inventory_user, class_name: 'User'
+  belongs_to :asset_manager_bu, class_name: 'BuManger', foreign_key: :asset_bu_id
 
 
   scope :normal, -> { where(status: EquipmentStatus.normal) }

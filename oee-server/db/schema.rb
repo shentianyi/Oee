@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161201071143) do
+ActiveRecord::Schema.define(version: 20161206081228) do
 
   create_table "areas", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
@@ -234,6 +234,9 @@ ActiveRecord::Schema.define(version: 20161201071143) do
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.string   "remark"
+    t.string   "reason"
+    t.string   "report"
+    t.string   "user_id"
     t.index ["equipment_track_id"], name: "index_equipment_releases_on_equipment_track_id", using: :btree
   end
 
@@ -259,13 +262,13 @@ ActiveRecord::Schema.define(version: 20161201071143) do
     t.string   "department"
     t.string   "project"
     t.string   "location"
-    t.string   "area"
+    t.string   "ts_area_id"
     t.string   "position"
-    t.datetime "procurment_date"
+    t.datetime "cap_date"
     t.float    "release_cycle",       limit: 24, default: 0.0
     t.datetime "next_release"
     t.string   "release_notice"
-    t.string   "responsibilityer"
+    t.string   "asset_bu_id"
     t.string   "remark"
     t.boolean  "is_top",                         default: true
     t.datetime "created_at",                                    null: false
@@ -273,6 +276,22 @@ ActiveRecord::Schema.define(version: 20161201071143) do
     t.string   "operate_instructor"
     t.string   "maintain_instructor"
     t.integer  "status",                         default: 6
+    t.string   "asset_class"
+    t.integer  "inventory_user_id"
+    t.string   "keeper"
+    t.string   "nameplate_track"
+    t.string   "ts_type"
+    t.string   "ts_equipment_type"
+    t.string   "inventory_result"
+    t.string   "process_params"
+    t.string   "maintain_plan"
+    t.string   "machine_down"
+    t.string   "big_maintain_plan"
+    t.string   "instruction"
+    t.string   "replacement_list"
+    t.string   "ancestry"
+    t.integer  "equip_create_way"
+    t.index ["ancestry"], name: "index_equipment_tracks_on_ancestry", using: :btree
   end
 
   create_table "fix_asset_tracks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -298,6 +317,7 @@ ActiveRecord::Schema.define(version: 20161201071143) do
     t.datetime "updated_at",                                    null: false
     t.string   "ancestry"
     t.string   "processing_id"
+    t.integer  "equip_create_way",              default: 100
     t.index ["ancestry"], name: "index_fix_asset_tracks_on_ancestry", using: :btree
   end
 

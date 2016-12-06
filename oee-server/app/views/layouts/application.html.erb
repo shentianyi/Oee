@@ -107,6 +107,29 @@
           </li>
 
       <% else %>
+          <li class="nav-basic">
+            <a href="#">
+              <i class="fa fa-newspaper-o"></i>
+            </a>
+            <span>基础</span>
+
+            <ul>
+              <li class="nav-bu_mangers">
+                <i class="fa fa-language"></i>
+                <%= link_to content_tag(:span, 'BU管理'), bu_mangers_path, :title => 'BU管理' %>
+              </li>
+
+              <li class="nav-equipment_statuses">
+                <i class="fa fa-tasks"></i>
+                <%= link_to content_tag(:span, '设备状态'), equipment_statuses_path, :title => '设备状态' %>
+              </li>
+
+              <li class="nav-areas">
+                <i class="fa fa-language"></i>
+                <%= link_to content_tag(:span, '盘点区域'), areas_path, :title => '盘点区域' %>
+              </li>
+            </ul>
+          </li>
 
           <li class="nav-fix-asset-tracks">
             <%= link_to content_tag(:i, '', :class => 'fa fa-truck'), fix_asset_tracks_path, :title => '固定资产竣工表' %>
@@ -133,11 +156,6 @@
                 <i class="fa fa-tasks"></i>
                 <%= link_to content_tag(:span, '设备折旧表'), equipment_depreciations_path, :title => '设备折旧表' %>
               </li>
-
-              <li class="nav-equipment_statuses">
-                <i class="fa fa-tasks"></i>
-                <%= link_to content_tag(:span, '设备状态'), equipment_statuses_path, :title => '设备状态' %>
-              </li>
             </ul>
           </li>
 
@@ -152,10 +170,7 @@
                 <%= link_to content_tag(:span, '月资产平衡表'), asset_balance_lists_path, :title => '月固定资产平衡表' %>
               </li>
 
-              <li class="nav-bu_mangers">
-                <i class="fa fa-language"></i>
-                <%= link_to content_tag(:span, 'BU管理'), bu_mangers_path, :title => 'BU管理' %>
-              </li>
+
             </ul>
           </li>
 
@@ -168,11 +183,6 @@
               <li class="nav-inventory_lists">
                 <i class="fa fa-tasks"></i>
                 <%= link_to content_tag(:span, '资产盘点'), inventory_lists_path, :title => '资产盘点' %>
-              </li>
-
-              <li class="nav-areas">
-                <i class="fa fa-language"></i>
-                <%= link_to content_tag(:span, '盘点区域'), areas_path, :title => '盘点区域' %>
               </li>
 
               <li class="nav-user_area_items">
@@ -237,7 +247,7 @@
 </div>
 
 <script type="text/javascript">
-  layout.init();
+    layout.init();
 </script>
 </body>
 

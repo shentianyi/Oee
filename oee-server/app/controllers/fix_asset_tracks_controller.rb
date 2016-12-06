@@ -66,14 +66,14 @@ class FixAssetTracksController < ApplicationController
     if request.post?
       puts "--------------------------------------"
       msg = Message.new
-      begin
+      # begin
         file=params[:files][0]
         fd = FileData.new(data: file, original_name: file.original_filename, path: $upload_data_file_path, path_name: "#{Time.now.strftime('%Y%m%d%H%M%S%L')}~#{file.original_filename}")
         fd.save
         msg = FileHandler::Excel::FixAssetTrackHandler.import(fd)
-      rescue => e
-        msg.content = e.message
-      end
+      # rescue => e
+      #   msg.content = e.message
+      # end
       render json: msg
     end
   end
@@ -95,6 +95,6 @@ class FixAssetTracksController < ApplicationController
     def fix_asset_track_params
       params.require(:fix_asset_track).permit(:info_receive_date, :apply_id, :description, :qty, :price, :proposer, :procurment_id, :procurment_date,
                                               :supplier, :project, :completed_id, :is_add_equipment, :equipment_nr, :is_add_fix_asset, :nr, :status,
-                                              :remark, :equipment_track_id, :processing_id)
+                                              :remark, :equipment_track_id, :processing_id, :equip_create_way)
     end
 end

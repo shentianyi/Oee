@@ -125,11 +125,10 @@
           <div class="row">
             <hr class="hr-grey" style="margin-bottom:3px;"/>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-              <span style="color:lightseagreen;">追加到其他设备号和资产号时打钩</span>
 
               <div class="marco-igroup-oee">
-                <span>是否追加</span>
-                <%= f.check_box :is_add_equipment %>
+                <span>固定资产创建方式</span>
+                <%= f.select(:equip_create_way, EquipmentAddEnum.menu, {include_blank: :true}) %>
               </div>
             </div>
 
@@ -155,9 +154,9 @@
               <div class="marco-igroup-oee">
                 <span>竣工单状态</span>
                 <% if params[:action] == 'new' %>
-                    <%= f.select(:status, FixAssetStatus.default_menu, {include_blank: :false}) %>
+                    <%= f.select(:status, FixAssetStatus.default_menu, {include_blank: :true}) %>
                 <% else %>
-                    <%= f.select(:status, FixAssetStatus.menu, {include_blank: :false}) %>
+                    <%= f.select(:status, FixAssetStatus.menu, {include_blank: :true}) %>
                 <% end %>
               </div>
             </div>
