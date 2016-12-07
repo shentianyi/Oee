@@ -60,26 +60,37 @@
       <tr>
         <th>NO.</th>
         <th>是否已覆盖</th>
-        <th>Asset</th>
-        <th>Cap date</th>
-        <th>Profit center</th>
-        <th>Asset description</th>
-        <th>Acquis val</th>
-        <th>Accum dep</th>
-        <th>Book val</th>
+        <th>RFID编号</th>
+        <th>资产编号</th>
         <th>设备编号</th>
-        <th>使用项目</th>
-        <th>盘点负责人</th>
-        <th>保管人</th>
-        <th>现位置</th>
-        <th>铭牌跟踪</th>
-        <th>类别</th>
-        <th>设备种类</th>
-        <th>使用区域</th>
-        <th>盘点区域</th>
-        <th>供应商</th>
+
+        <th>资产创建方式</th>
+        <th>设备类型</th>
+
         <th>使用状态</th>
-        <th>盘点结果</th>
+        <th>使用项目</th>
+        <th>使用区域</th>
+        <th>铭牌跟踪</th>
+
+        <th>使用状态-盘点</th>
+        <th>使用项目-盘点</th>
+        <th>使用区域-盘点</th>
+        <th>铭牌跟踪-盘点</th>
+
+
+        <!--<th>设备编号</th>-->
+        <!--<th>使用项目</th>-->
+        <!--<th>盘点负责人</th>-->
+        <!--<th>保管人</th>-->
+        <!--<th>现位置</th>-->
+        <!--<th>铭牌跟踪</th>-->
+        <!--<th>类别</th>-->
+        <!--<th>设备种类</th>-->
+        <!--<th>使用区域</th>-->
+        <!--<th>盘点区域</th>-->
+        <!--<th>供应商</th>-->
+        <!--<th>使用状态</th>-->
+        <!--<th>盘点结果</th>-->
         <th>Remark</th>
         <th>操作</th>
       </tr>
@@ -90,27 +101,27 @@
           <tr>
             <td><%= i+1 %></td>
             <td><%= inventory_item.is_cover==true ? '是' : '否' %></td>
-            <td><%= inventory_item.fix_asset_track.nr %></td>
-            <td><%= inventory_item.cap_date.localtime.strftime('%Y/%m/%d') %></td>
-            <td><%= inventory_item.bu.blank? ? '' : inventory_item.bu.finance_nr %></td>
-            <td><%= inventory_item.asset_description %></td>
-            <td><%= inventory_item.acquis_val %></td>
-            <td><%= inventory_item.accum_dep %></td>
-            <td><%= inventory_item.book_val %></td>
+            <td><%= inventory_item.rfid_nr %></td>
+            <td><%= inventory_item.asset_nr %></td>
             <td><%= inventory_item.ts_equipment_nr %></td>
-            <td><%= inventory_item.ts_project %></td>
-            <td><%= inventory_item.ts_inventory_user.blank? ? inventory_item.ts_inventory_user_id : inventory_item.ts_inventory_user.name %></td>
-            <td><%= inventory_item.ts_keeper %></td>
-            <td><%= inventory_item.ts_position %></td>
-            <td><%= inventory_item.ts_nameplate_track %></td>
-            <td><%= inventory_item.ts_type %></td>
-            <td><%= inventory_item.ts_equipment_type %></td>
-            <td><%= inventory_item.ts_area.desc %></td>
-            <td><%= inventory_item.current_area.blank? ? '' : inventory_item.current_area.desc %></td>
-            <td><%= inventory_item.ts_supplier %></td>
-            <td><%= inventory_item.status %></td>
 
-            <td><%= inventory_item.ts_inventory_result %></td>
+            <td><%= inventory_item.equipment_track.blank? ? '' : EquipmentAddEnum.display(inventory_item.equipment_track.equip_create_way) %></td>
+            <td><%= inventory_item.equipment_track.blank? ? '' : EquipmentType.display(inventory_item.equipment_track.type) %></td>
+
+            <td><%= inventory_item.ts_status.blank? ? '' : inventory_item.ts_status.name %></td>
+            <td><%= inventory_item.ts_project %></td>
+            <td><%= inventory_item.ts_area.blank? ? '' : inventory_item.ts_area.name %></td>
+            <td><%= inventory_item.ts_nameplate_track %></td>
+
+            <td><%= inventory_item.curr_status.blank? ? '' : inventory_item.curr_status.name %></td>
+            <td><%= inventory_item.current_project %></td>
+            <td><%= inventory_item.current_area.blank? ? '' : inventory_item.current_area.name %></td>
+            <td><%= inventory_item.current_nameplate %></td>
+
+
+
+
+            <!--<td><%= inventory_item.ts_inventory_result %></td>-->
             <td><%= inventory_item.remark %></td>
             <td>
               <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_inventory_item_path(inventory_item), :class => "marco-btn-primary", :title => "编辑" %>

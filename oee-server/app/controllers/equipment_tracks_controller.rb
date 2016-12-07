@@ -101,6 +101,6 @@ class EquipmentTracksController < ApplicationController
                                             :department, :project, :location, :ts_area_id, :position, :cap_date, :release_cycle, :next_release, :release_notice,
                                             :asset_bu_id, :remark, :is_top, :operate_instructor, :maintain_instructor, :asset_class, :inventory_user_id, :keeper,
                                             :nameplate_track, :ts_type, :ts_equipment_type,:inventory_result, :process_params, :maintain_plan, :machine_down,
-                                            :big_maintain_plan, :instruction, :replacement_list, :equip_create_way)
+                                            :big_maintain_plan, :instruction, :replacement_list, :equip_create_way, :rfid_nr)
   end
 end

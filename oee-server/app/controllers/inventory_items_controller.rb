@@ -94,6 +94,7 @@ class InventoryItemsController < ApplicationController
   def inventory_item_params
     params.require(:inventory_item).permit(:inventory_list_id, :fix_asset_track_id, :cap_date, :profit_center, :asset_description, :acquis_val, :accum_dep, :book_val, :ts_equipment_nr,
                                            :ts_project, :ts_inventory_user_id, :ts_keeper, :ts_position, :ts_nameplate_track, :ts_type, :ts_equipment_type, :ts_area_id, :ts_supplier,
-                                           :status, :remark, :ts_inventory_result, :current_area_id)
+                                           :status, :remark, :ts_inventory_result, :current_area_id, :current_status, :current_project, :current_nameplate, :equipment_track_id, :rfid_nr,
+                                           :asset_nr, :ancestory)
   end
 end

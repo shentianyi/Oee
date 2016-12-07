@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161206081228) do
+ActiveRecord::Schema.define(version: 20161207081822) do
 
   create_table "areas", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
@@ -291,6 +291,7 @@ ActiveRecord::Schema.define(version: 20161206081228) do
     t.string   "replacement_list"
     t.string   "ancestry"
     t.integer  "equip_create_way"
+    t.string   "rfid_nr"
     t.index ["ancestry"], name: "index_equipment_tracks_on_ancestry", using: :btree
   end
 
@@ -363,6 +364,14 @@ ActiveRecord::Schema.define(version: 20161206081228) do
     t.datetime "updated_at",                                      null: false
     t.boolean  "is_cover",                        default: false
     t.string   "current_area_id"
+    t.string   "current_status"
+    t.string   "current_project"
+    t.string   "current_nameplate"
+    t.integer  "equipment_track_id"
+    t.string   "rfid_nr"
+    t.string   "asset_nr"
+    t.string   "ancestry"
+    t.index ["ancestry"], name: "index_inventory_items_on_ancestry", using: :btree
     t.index ["fix_asset_track_id"], name: "index_inventory_items_on_fix_asset_track_id", using: :btree
     t.index ["inventory_list_id"], name: "index_inventory_items_on_inventory_list_id", using: :btree
     t.index ["is_cover"], name: "index_inventory_items_on_is_cover", using: :btree

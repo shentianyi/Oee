@@ -4,6 +4,6 @@ class AddAncestryToEquipmentTracks < ActiveRecord::Migration[5.0]
     add_index :equipment_tracks, :ancestry
 
 
-    add_column :equipment_tracks, :equip_create_way, :integer
+    add_column :equipment_tracks, :equip_create_way, :integer, default: 100
   end
 end

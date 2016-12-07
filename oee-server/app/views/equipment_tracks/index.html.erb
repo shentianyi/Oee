@@ -152,6 +152,7 @@
       <tr>
         <th>NO.</th>
         <!--<th>设备分级</th>-->
+        <th>RFID编号</th>
         <th>设备名称</th>
         <th>设备编号</th>
         <th>设备类型</th>
@@ -185,6 +186,7 @@
           <tr>
             <td><%= i+1 %></td>
             <!--<td><%= equipment_track.level %></td>-->
+            <td><%= equipment_track.rfid_nr %></td>
             <td><%= equipment_track.name %></td>
             <td><%= equipment_track.nr %></td>
             <td><%= EquipmentType.get_type_name equipment_track.type %></td>

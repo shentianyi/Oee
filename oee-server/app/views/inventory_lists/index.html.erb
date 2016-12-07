@@ -25,12 +25,12 @@
       </div>
     </div>
 
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-      <div class="marco-igroup-oee">
-        <span>月资产平衡单</span>
-        <%= select_tag('inventory_list[asset_balance_list_id]', options_from_collection_for_select(AssetBalanceList.all, :id, :id, @asset_balance_list_id), {include_blank: true}) %>
-      </div>
-    </div>
+    <!--<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">-->
+      <!--<div class="marco-igroup-oee">-->
+        <!--<span>月资产平衡单</span>-->
+        <!--<%= select_tag('inventory_list[asset_balance_list_id]', options_from_collection_for_select(AssetBalanceList.all, :id, :id, @asset_balance_list_id), {include_blank: true}) %>-->
+      <!--</div>-->
+    <!--</div>-->
 
     <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
       <div class="marco-igroup-oee">
@@ -42,7 +42,7 @@
     </div>
     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
       <button type="submit" class="marco-btn-default" style="width: 100px; height: 40px; line-height: 40px;">查找</button>
-      <button type="button" class="marco-btn-success" style="width: 100px; height: 40px; line-height: 40px;">导出</button>
+      <!--<button type="button" class="marco-btn-success" style="width: 100px; height: 40px; line-height: 40px;">导出</button>-->
 
     </div>
   </form>
@@ -63,31 +63,32 @@
       <th>NO.</th>
       <th>盘点单名称</th>
       <th>盘点日期</th>
-      <th>月资产平衡单</th>
+      <!--<th>月资产平衡单</th>-->
       <th>状态</th>
       <th>盘点清单</th>
-      <th>盘点重置与取消</th>
+      <!--<th>盘点重置与取消</th>-->
       <th>操作</th>
     </tr>
     </thead>
 
     <tbody>
-    <% @inventory_lists.each do |inventory_list| %>
+    <% @inventory_lists.each_with_index do |inventory_list, i| %>
         <tr>
+          <td><%= i+1 %></td>
           <td><%= inventory_list.name %></td>
           <td><%= inventory_list.inventory_date.localtime.strftime('%Y/%m/%d') %></td>
-          <td><%= inventory_list.asset_balance_list.blank? ? '' : inventory_list.asset_balance_list.id %></td>
+          <!--<td><%= inventory_list.asset_balance_list.blank? ? '' : inventory_list.asset_balance_list.id %></td>-->
           <th><%= InventoryListStatus.display(inventory_list.status) %></th>
           <td><%= link_to '盘点清单', inventory_items_inventory_list_path(inventory_list) %>
             <span class="badge pull-right"><%= inventory_list.inventory_items.count %></td>
-          <td>
-            <%= link_to "重置", reset_inventory_inventory_lists_path({id: inventory_list.id, do: 'disable'}), :class => "marco-btn-danger", data: {confirm: "确定盘点?"} %>
+          <!--<td>-->
+            <!--<%= link_to "重置", reset_inventory_inventory_lists_path({id: inventory_list.id, do: 'disable'}), :class => "marco-btn-danger", data: {confirm: "确定盘点?"} %>-->
 
-            <%= link_to "取消重置", reset_inventory_inventory_lists_path({id: inventory_list.id, do: 'enable'}), :class => "marco-btn-danger", data: {confirm: "确定取消盘点重置?"} %>
-          </td>
+            <!--<%= link_to "取消重置", reset_inventory_inventory_lists_path({id: inventory_list.id, do: 'enable'}), :class => "marco-btn-danger", data: {confirm: "确定取消盘点重置?"} %>-->
+          <!--</td>-->
 
           <td>
-            <%= link_to content_tag(:i, '', :class => "fa fa-cloud-upload"), import_inventory_lists_path(id: inventory_list.id), :class => "marco-btn-success", :title => "上传盘点数据" %>
+            <!--<%= link_to content_tag(:i, '', :class => "fa fa-cloud-upload"), import_inventory_lists_path(id: inventory_list.id), :class => "marco-btn-success", :title => "上传盘点数据" %>-->
             <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_inventory_list_path(inventory_list), :class => "marco-btn-primary", :title => "编辑" %>
             <%= link_to content_tag(:i, '', :class => 'fa fa-close'), inventory_list, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
           </td>

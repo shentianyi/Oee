@@ -4,6 +4,7 @@ class EquipmentTrack < ApplicationRecord
   has_ancestry
 
   validates_presence_of :nr, :message => "设备编号不可为空!"
+  validates_presence_of :rfid_nr, :message => "RFID不可为空!"
   # validates_presence_of :asset_nr, :message => "资产编号不可为空!"
   # validates_uniqueness_of :nr, :message => "设备名称已存在!"
 
@@ -18,8 +19,16 @@ class EquipmentTrack < ApplicationRecord
   belongs_to :asset_manager_bu, class_name: 'BuManger', foreign_key: :asset_bu_id
 
 
+  validate :check_uniq_rfid
+
   scope :normal, -> { where(status: EquipmentStatus.normal) }
   scope :scrap, -> { where(status: EquipmentStatus.scrap) }
+
+  def check_uniq_rfid
+    if self.rfid_nr.present? && EquipmentTrack.find_by_rfid_nr(self.rfid_nr)
+      errors.add(:rfid_nr, "RFID：#{self.rfid_nr}已存在，不可重复!")
+    end
+  end
 
   def self.to_xlsx equipments
     # head1 = ["序号", "设备分级", "设备类型", "资产编号", "设备名称", "设备编号", "型号规格配置", "Cutting生产编号", "设备序列号", "供应商", "使用状态", "成本中心",
