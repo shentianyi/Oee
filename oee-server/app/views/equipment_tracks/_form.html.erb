@@ -38,8 +38,8 @@
           <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="marco-igroup-oee">
-                <span>设备分级</span>
-                <%= f.text_field :level %>
+                <span>资产创建方式</span>
+                <%= f.select(:equip_create_way, EquipmentAddEnum.menu, {include_blank: true}) %>
               </div>
             </div>
 
@@ -75,6 +75,13 @@
               <div class="marco-igroup-oee">
                 <span>固定资产编号</span>
                 <%= f.text_field :asset_nr %>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="marco-igroup-oee">
+                <span>设备分级</span>
+                <%= f.text_field :level %>
               </div>
             </div>
 
@@ -171,7 +178,7 @@
 
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="marco-igroup-oee">
-                <span>购置日期</span>
+                <span>CAP 日期</span>
                 <%= f.text_field :cap_date, :class => 'datepicker' %>
               </div>
             </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161207081822) do
+ActiveRecord::Schema.define(version: 20161220082816) do
 
   create_table "areas", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
@@ -85,11 +85,13 @@ ActiveRecord::Schema.define(version: 20161207081822) do
 
   create_table "budget_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "qty"
-    t.float    "unit_price",  limit: 24
-    t.float    "total_price", limit: 24
+    t.float    "unit_price",    limit: 24
+    t.float    "total_price",   limit: 24
     t.integer  "budget_id"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.float    "exchange_rate", limit: 24
+    t.float    "total_euro",    limit: 24
     t.index ["budget_id"], name: "index_budget_items_on_budget_id", using: :btree
   end
 
@@ -215,6 +217,9 @@ ActiveRecord::Schema.define(version: 20161207081822) do
     t.integer  "equipment_track_id"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+    t.float    "acquis_val",         limit: 24
+    t.float    "accum_val",          limit: 24
+    t.float    "book_val",           limit: 24
     t.index ["equipment_track_id"], name: "index_equipment_depreciations_on_equipment_track_id", using: :btree
   end
 

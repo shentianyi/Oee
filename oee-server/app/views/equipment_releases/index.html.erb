@@ -55,9 +55,13 @@
     <thead>
     <tr>
       <th>NO.</th>
-      <th>所属设备编号</th>
+      <th>所属设备RFID编号</th>
       <th>放行序号</th>
       <th>放行时间</th>
+      <th>放行原因</th>
+      <th>放行报告</th>
+      <th>放行责任人</th>
+      <th>备注</th>
       <th colspan="3"></th>
     </tr>
     </thead>
@@ -66,9 +70,13 @@
     <% @equipment_releases.each_with_index do |equipment_release, i| %>
         <tr>
           <td><%= i+1 %></td>
-          <td><%= equipment_release.equipment_track.nr %></td>
+          <td><%= equipment_release.equipment_track.rfid_nr %></td>
           <td><%= equipment_release.release_index %></td>
           <td><%= equipment_release.release_time.localtime.strftime('%Y/%m/%d') %></td>
+          <td><%= equipment_release.reason %></td>
+          <td><%= equipment_release.report %></td>
+          <td><%= equipment_release.user_id %></td>
+          <td><%= equipment_release.remark %></td>
           <td>
             <!--<%#= link_to content_tag(:i, '', :class => 'fa fa-eye'), equipment_release, :class => "marco-btn-success", :title => "详情" %>-->
             <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_equipment_release_path(equipment_release), :class => "marco-btn-primary", :title => "编辑" %>

@@ -48,11 +48,14 @@
   <thead>
   <tr>
     <th>NO.</th>
+    <th>所属设备编号</th>
     <th>折旧时间</th>
     <th>当月原值</th>
     <th>当月折旧</th>
     <th>当月净值</th>
-    <th>所属设备编号</th>
+    <th>当月原值</th>
+    <th>当月折旧</th>
+    <th>当月净值</th>
     <th colspan="3"></th>
   </tr>
   </thead>
@@ -61,11 +64,15 @@
   <% @equipment_depreciations.each_with_index do |equipment_depreciation, i| %>
       <tr>
         <td><%= i+1 %></td>
+        <td><%= equipment_depreciation.equipment_track.rfid_nr %></td>
         <td><%= equipment_depreciation.depreciation_time.localtime.strftime('%Y/%m') %></td>
         <td><%= equipment_depreciation.original_val %></td>
         <td><%= equipment_depreciation.depreciation_val %></td>
         <td><%= equipment_depreciation.net_val %></td>
-        <td><%= equipment_depreciation.equipment_track.nr %></td>
+        <td><%= equipment_depreciation.acquis_val %></td>
+        <td><%= equipment_depreciation.accum_val %></td>
+        <td><%= equipment_depreciation.book_val %></td>
+
         <td>
           <%= link_to content_tag(:i, '', :class => 'fa fa-eye'), equipment_depreciation, :class => "marco-btn-success", :title => "详情" %>
 

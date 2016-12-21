@@ -5,6 +5,22 @@ class Capex < ApplicationRecord
   accepts_nested_attributes_for :budgets, :allow_destroy => true
 
 
+  def calc_percent t1, t2
+    t2==0 ? '-' : (((t1.to_f/t2)*100).to_s+'%')
+  end
+
+  def sum_budget index
+    self.budgets.map { |b| b.budget_items[index].blank? ? 0 : b.budget_items[index].total_price }.reduce(0) { |bt, bv| bt += bv.to_f }
+  end
+
+  def sum_pams_column column
+    self.budgets.map{|b| b.pam_lists.pluck(column).reduce(0){|total, val| total += val.to_f}}.reduce(0){|t,v| t+=v}
+  end
+
+  def sum_pam_items_cloumn column
+    self.budgets.map{|b| b.pam_lists.map{|l| l.pam_items.pluck(column).reduce(0){|lt, lv| lt+=lv.to_f}}.reduce(0){|it, iv| it+=iv.to_f} }.reduce(0){|t,v| t+=v.to_f}
+  end
+
   def self.to_xlsx capexes
     p = Axlsx::Package.new
     wb = p.workbook

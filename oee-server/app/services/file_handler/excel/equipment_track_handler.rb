@@ -87,13 +87,18 @@ module FileHandler
 
                 count += 1
                 if ['update', 'UPDATE'].include?(row[:operation])
-                  if row[:type] == EquipmentType::FIX_ASSET
-                    e=EquipmentTrack.where(nr: row[:nr], asset_nr: row[:asset_nr], ancestry: nil).first
-                  else
-                    e=EquipmentTrack.find_by_nr(row[:nr])
-                  end
+                  # if row[:type] == EquipmentType::FIX_ASSET
+                  #   e=EquipmentTrack.where(nr: row[:nr], asset_nr: row[:asset_nr], ancestry: nil).first
+                  # else
+                  #   e=EquipmentTrack.find_by_nr(row[:nr])
+                  # end
+                  e=EquipmentTrack.find_by_rfid_nr(row[:rfid_nr])
 
                   e.update(row.except(:operation))
+                  unless e.save
+                    puts e.errors.to_json
+                    raise e.errors.to_json
+                  end
                 elsif ['delete', 'DELETE'].include?(row[:operation])
                   if row[:type] == EquipmentType::FIX_ASSET
                     #TODO 追加的怎么删除？
@@ -202,6 +207,10 @@ module FileHandler
           msg.contents<<"源数据中设备编号:#{row[:nr]}重复！"
         end
 
+        if row[:rfid_nr].blank?
+          msg.contents<<"RFID编号不可为空"
+        end
+
         unless row[:asset_bu_id].blank?
           if (bb=BuManger.find_by_nr(row[:asset_bu_id])).blank?
             msg.contents<<"资产管理部门#{row[:asset_bu_id]}不存在"
@@ -235,19 +244,22 @@ module FileHandler
         else
           if EquipmentType.get_type_names.include?(row[:type])
             if ['update', 'delete', 'UPDATE', 'DELETE'].include?(row[:operation])
-              if row[:type] == EquipmentType.display(EquipmentType::FIX_ASSET)
-                if row[:nr].blank? || row[:asset_nr].blank?
-                  msg.contents<<"固定资产号或设备编号不可为空"
-                else
-                  if EquipmentTrack.where(nr: row[:nr], asset_nr: row[:asset_nr]).first.blank?
-                    msg.contents<<"设备编号#{row[:nr]},固定资产号#{row[:asset_nr]}不存在"
-                  end
-                end
-              else
-                if EquipmentTrack.find_by_nr(row[:nr]).blank?
-                  msg.contents<<"设备编号#{row[:nr]}不存在"
-                end
+              if EquipmentTrack.find_by_rfid_nr(row[:rfid_nr]).blank?
+                msg.contents<<"RFID编号#{row[:rfid_nr]}不存在"
               end
+              # if row[:type] == EquipmentType.display(EquipmentType::FIX_ASSET)
+              #   if row[:nr].blank? || row[:asset_nr].blank?
+              #     msg.contents<<"固定资产号或设备编号不可为空"
+              #   else
+              #     if EquipmentTrack.where(nr: row[:nr], asset_nr: row[:asset_nr]).first.blank?
+              #       msg.contents<<"设备编号#{row[:nr]},固定资产号#{row[:asset_nr]}不存在"
+              #     end
+              #   end
+              # else
+              #   if EquipmentTrack.find_by_nr(row[:nr]).blank?
+              #     msg.contents<<"设备编号#{row[:nr]}不存在"
+              #   end
+              # end
             else
               #new
               if row[:type] == EquipmentType.display(EquipmentType::FIX_ASSET)

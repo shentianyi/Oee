@@ -1,5 +1,5 @@
 class UserInventoryTasksController < ApplicationController
-  before_action :set_user_inventory_task, only: [:show, :edit, :update, :destroy]
+  before_action :set_user_inventory_task, only: [:show, :edit, :update, :destroy, :update_inventory_result]
 
   # GET /user_inventory_tasks
   # GET /user_inventory_tasks.json
@@ -70,14 +70,40 @@ class UserInventoryTasksController < ApplicationController
     }
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user_inventory_task
-      @user_inventory_task = UserInventoryTask.find(params[:id])
+  def update_inventory_result
+    if @user_inventory_task.data_file.blank?
+      flash[:notice] = '盘点数据没有存文件，请重新上传'
+    else
+      msg=UserInventoryTaskService.update_inventory_data(JSON.parse(File.read("public" + @user_inventory_task.data_file.path.url)), @user_inventory_task.type)
+
+      if msg.result
+        @user_inventory_task.update_attributes(status: UserInventoryTaskStatus::CLOSE)
+        flash[:notice] = '盘点数据更新成功'
+      else
+        @user_inventory_task.update_attributes(status: UserInventoryTaskStatus::ERROR)
+
+        file=InventoryFile.new()
+        File.open('uploadfiles/data/error.json', 'w+') do |f|
+          f.write(msg.content)
+          file.path = f
+        end
+        @user_inventory_task.err_file=file
+        @user_inventory_task.save
+        flash[:notice] = '盘点数据更新失败，详情查看错误文件'
+      end
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def user_inventory_task_params
-      params.require(:user_inventory_task).permit(:user_id, :inventory_list_id, :start_time, :end_time, :type, :target_qty, :real_qty)
-    end
+    redirect_to action: :index
+  end
+
+  private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user_inventory_task
+    @user_inventory_task = UserInventoryTask.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def user_inventory_task_params
+    params.require(:user_inventory_task).permit(:user_id, :inventory_list_id, :start_time, :end_time, :type, :target_qty, :real_qty)
+  end
 end

@@ -3,7 +3,7 @@ module FileHandler
     class EquipmentReleaseHandler<Base
 
       HEADERS=[
-          :nr, :release_index, :release_time, :operation
+          :nr, :release_index, :release_time, :reason, :report, :user_id, :remark, :operation
       ]
 
       def self.import(file)
@@ -29,7 +29,7 @@ module FileHandler
                 end
                 count += 1
 
-                et = EquipmentTrack.find_by_nr(row[:nr])
+                et = EquipmentTrack.find_by_rfid_nr(row[:nr])
 
                 e =EquipmentRelease.new(row.except(:operation, :nr))
                 e.equipment_track = et
@@ -67,6 +67,7 @@ module FileHandler
             row = {}
             HEADERS.each_with_index do |k, i|
               row[k] = book.cell(line, i+1).to_s.strip
+              row[k] = row[k].sub(/\.0/, '') if k== :nr
             end
 
             mssg = validate_row(row, line)
@@ -90,10 +91,10 @@ module FileHandler
       def self.validate_row(row, line)
         msg = Message.new(contents: [])
         if row[:nr].blank?
-          msg.contents<<"设备编号不可为空"
+          msg.contents<<"RFID编号不可为空"
         else
-          if EquipmentTrack.find_by_nr(row[:nr]).blank?
-            msg.contents<<"设备编号:#{row[:nr]}未找到"
+          if EquipmentTrack.find_by_rfid_nr(row[:nr]).blank?
+            msg.contents<<"RFID编号:#{row[:nr]}未找到"
           end
         end
 
