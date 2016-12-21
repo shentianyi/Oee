@@ -24,7 +24,9 @@
         <div class="marco-nheading">
           {{action}}
           <div class="pull-right">
-            <button type="submit" class="marco-btn-normal">{{actionBtn}}</button>
+            <% if current_user.admin? %>
+                <button type="submit" class="marco-btn-normal">{{actionBtn}}</button>
+            <% end %>
           </div>
         </div>
 

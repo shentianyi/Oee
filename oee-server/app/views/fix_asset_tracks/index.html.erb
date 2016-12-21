@@ -113,9 +113,11 @@
   <div class="marco-nheading">
     固定资产跟踪列表
     <div class="pull-right">
-      <%= link_to content_tag(:i, content_tag(:span, "导入数据 "), :class => "fa fa-cloud-upload"), import_fix_asset_tracks_path %>
+      <% if current_user.admin? %>
+          <%= link_to content_tag(:i, content_tag(:span, "导入数据 "), :class => "fa fa-cloud-upload"), import_fix_asset_tracks_path %>
 
-      <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_fix_asset_track_path %>
+          <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_fix_asset_track_path %>
+      <% end %>
     </div>
   </div>
   <div style="overflow: auto; padding: 0;">
@@ -173,8 +175,10 @@
             <!--<td><%= fix_asset_track.equipment_track_id %></td>-->
             <td>
               <%= link_to content_tag(:i, '', :class => 'fa fa-eye'), fix_asset_track, :class => "marco-btn-success", :title => "详情" %>
-              <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_fix_asset_track_path(fix_asset_track), :class => "marco-btn-primary", :title => "编辑" %>
-              <%= link_to content_tag(:i, '', :class => 'fa fa-close'), fix_asset_track, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+              <% if current_user.admin? %>
+                  <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_fix_asset_track_path(fix_asset_track), :class => "marco-btn-primary", :title => "编辑" %>
+                  <%= link_to content_tag(:i, '', :class => 'fa fa-close'), fix_asset_track, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+              <% end %>
             </td>
           </tr>
       <% end %>
@@ -190,5 +194,5 @@
 
 
 <script type="text/javascript">
-  layout.date_picker('.datepicker');
+    layout.date_picker('.datepicker');
 </script>

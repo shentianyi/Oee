@@ -10,7 +10,9 @@
   <div class="marco-nheading">
     用户列表
     <div class="pull-right">
+
       <%= link_to content_tag(:i, content_tag(:span, " 新建"), :class => "fa fa-plus-square"), new_user_path %>
+
     </div>
   </div>
   <table class="marco-nbody table table-bordered">
@@ -50,5 +52,5 @@
 </div>
 
 <script type="text/javascript" charset="utf-8">
-  layout.notice('popMsg-danger', $('#notice').html());
+    layout.notice('popMsg-danger', $('#notice').html());
 </script>

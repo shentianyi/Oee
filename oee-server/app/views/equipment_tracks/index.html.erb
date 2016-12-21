@@ -127,7 +127,7 @@
     </div>
 
     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
-      <%= link_to "下载数据", send("download_#{@model.pluralize}_path"),data: { confirm: 'Are you sure?' },:class=>'btn btn-default', :style=> "width: 100px; height: 38px; line-height: 35px;" %>
+      <%= link_to "下载数据", send("download_#{@model.pluralize}_path"), data: {confirm: 'Are you sure?'}, :class => 'btn btn-default', :style => "width: 100px; height: 38px; line-height: 35px;" %>
     </div>
     <!--<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">-->
     <!--<button type="submit" class="marco-btn-default" style="width: 100px; height: 38px; line-height: 35px;" name="normal">账上设备</button>-->
@@ -142,9 +142,11 @@
   <div class="marco-nheading">
     设备跟踪列表
     <div class="pull-right">
-      <%= link_to content_tag(:i, content_tag(:span, "导入数据 "), :class => "fa fa-cloud-upload"), import_equipment_tracks_path %>
+      <% if current_user.admin? %>
+          <%= link_to content_tag(:i, content_tag(:span, "导入数据 "), :class => "fa fa-cloud-upload"), import_equipment_tracks_path %>
 
-      <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_equipment_track_path %>
+          <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_equipment_track_path %>
+      <% end %>
     </div>
   </div>
 
@@ -223,8 +225,10 @@
             <td><%= equipment_track.remark %></td>
             <td>
               <%= link_to content_tag(:i, '', :class => 'fa fa-eye'), equipment_track, :class => "marco-btn-success", :title => "详情" %>
-              <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_equipment_track_path(equipment_track), :class => "marco-btn-primary", :title => "编辑" %>
-              <%= link_to content_tag(:i, '', :class => 'fa fa-close'), equipment_track, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+              <% if current_user.admin? %>
+                  <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_equipment_track_path(equipment_track), :class => "marco-btn-primary", :title => "编辑" %>
+                  <%= link_to content_tag(:i, '', :class => 'fa fa-close'), equipment_track, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+              <% end %>
             </td>
           </tr>
       <% end %>

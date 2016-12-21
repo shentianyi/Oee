@@ -41,8 +41,10 @@
       <%= link_to content_tag(:i, content_tag(:span, "Over View"), :class => "fa fa-plus-square"), overview_capexes_path %>
       <%= link_to content_tag(:i, content_tag(:span, "Detail By Project"), :class => "fa fa-plus-square"), detail_by_project_capexes_path %>
       <%= link_to content_tag(:i, content_tag(:span, "All Code"), :class => "fa fa-plus-square"), all_code_capexes_path %>
-      <%= link_to content_tag(:i, content_tag(:span, "导入"), :class => "fa fa-plus-square"), import_capexes_path %>
-      <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_capex_path %>
+      <% if current_user.admin? %>
+          <%= link_to content_tag(:i, content_tag(:span, "导入"), :class => "fa fa-plus-square"), import_capexes_path %>
+          <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_capex_path %>
+      <% end %>
     </div>
   </div>
   <div style="overflow: auto; padding: 0;">
@@ -67,8 +69,10 @@
             <td><%= capex.desc %></td>
             <td>
               <%= link_to content_tag(:i, '', :class => 'fa fa-eye'), capex, :class => "marco-btn-success", :title => "详情" %>
-              <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_capex_path(capex), :class => "marco-btn-primary", :title => "编辑" %>
-              <%= link_to content_tag(:i, '', :class => 'fa fa-close'), capex, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+              <% if current_user.admin? %>
+                  <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_capex_path(capex), :class => "marco-btn-primary", :title => "编辑" %>
+                  <%= link_to content_tag(:i, '', :class => 'fa fa-close'), capex, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+              <% end %>
             </td>
           </tr>
       <% end %>

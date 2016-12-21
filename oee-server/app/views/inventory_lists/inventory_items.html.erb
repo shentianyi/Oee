@@ -36,7 +36,7 @@
     </div>
 
     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
-      <button type="submit" class="marco-btn-default"  style="width: 180px; height: 40px; line-height: 40px;">查找</button>
+      <button type="submit" class="marco-btn-default" style="width: 180px; height: 40px; line-height: 40px;">查找</button>
     </div>
   </form>
 </div>
@@ -119,13 +119,13 @@
             <td><%= inventory_item.current_nameplate %></td>
 
 
-
-
             <!--<td><%= inventory_item.ts_inventory_result %></td>-->
             <td><%= inventory_item.remark %></td>
             <td>
-              <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_inventory_item_path(inventory_item), :class => "marco-btn-primary", :title => "编辑" %>
-              <%= link_to content_tag(:i, '', :class => 'fa fa-close'), inventory_item, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+              <% if current_user.admin? %>
+                  <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_inventory_item_path(inventory_item), :class => "marco-btn-primary", :title => "编辑" %>
+                  <%= link_to content_tag(:i, '', :class => 'fa fa-close'), inventory_item, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+              <% end %>
             </td>
           </tr>
       <% end %>
