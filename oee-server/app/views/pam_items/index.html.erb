@@ -74,7 +74,7 @@
             <td><%= pam_item.completed_amount %></td>
             <td><%= pam_item.booking_status %></td>
             <td><%= pam_item.final_cost %></td>
-            <td><%#= pam_item.pam_list.nr %></td>
+            <td><%= pam_item.pam_list.nr %></td>
             <td>
               <%= link_to content_tag(:i, '', :class => 'fa fa-eye'), pam_item, :class => "marco-btn-success", :title => "详情" %>
               <% if current_user.admin? %>

@@ -22,7 +22,7 @@ class InventoryList < ApplicationRecord
                                                 rfid_nr: e.rfid_nr,
                                                 asset_nr: e.asset_nr,
                                                 ts_equipment_nr: e.nr,
-                                                ts_project: e.project,
+                                                ts_project: e.department,
 
                                                 ts_area_id: e.ts_area_id,
                                                 status: e.status,
@@ -35,7 +35,7 @@ class InventoryList < ApplicationRecord
                                 rfid_nr: i.rfid_nr,
                                 asset_nr: i.asset_nr,
                                 ts_equipment_nr: i.nr,
-                                ts_project: i.project,
+                                ts_project: i.department,
 
                                 ts_area_id: i.ts_area_id,
                                 status: i.status,
@@ -102,7 +102,7 @@ class InventoryList < ApplicationRecord
 
       File.open('uploadfiles/data/data.txt', 'w+') do |f|
         inventories.each do |i|
-          ss = i.rfid_nr.to_s + "," + i.ts_project.to_s + "," + i.ts_area_id.to_s + i.ts_nameplate_track.to_s + i.status.to_s + "\n"
+          ss = i.rfid_nr.to_s + "," + i.ts_project.to_s + "," + i.ts_area_id.to_s + "," + i.status.to_s + "\n"
           f.write(ss)
         end
 

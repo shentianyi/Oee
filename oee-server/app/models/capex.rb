@@ -14,11 +14,11 @@ class Capex < ApplicationRecord
   end
 
   def sum_pams_column column
-    self.budgets.map{|b| b.pam_lists.pluck(column).reduce(0){|total, val| total += val.to_f}}.reduce(0){|t,v| t+=v}
+    self.budgets.map { |b| b.pam_lists.pluck(column).reduce(0) { |total, val| total += val.to_f } }.reduce(0) { |t, v| t+=v }
   end
 
   def sum_pam_items_cloumn column
-    self.budgets.map{|b| b.pam_lists.map{|l| l.pam_items.pluck(column).reduce(0){|lt, lv| lt+=lv.to_f}}.reduce(0){|it, iv| it+=iv.to_f} }.reduce(0){|t,v| t+=v.to_f}
+    self.budgets.map { |b| b.pam_lists.map { |l| l.pam_items.pluck(column).reduce(0) { |lt, lv| lt+=lv.to_f } }.reduce(0) { |it, iv| it+=iv.to_f } }.reduce(0) { |t, v| t+=v.to_f }
   end
 
   def self.to_xlsx capexes
@@ -59,6 +59,7 @@ class Capex < ApplicationRecord
               budget.budget_items.each do |budget_item|
                 tmp_row+=[budget_item.qty, budget_item.unit_price, budget_item.total_price]
               end
+              raise '预算子项不应该超过3个，请检查' if tmp_row.size>9
               tmp_row+=Array.new(9-tmp_row.size, '')
               row+=tmp_row
 
@@ -69,7 +70,7 @@ class Capex < ApplicationRecord
                   '', '',
                   budget.pam_lists.pluck(:in_process).reduce(0) { |sum, i| sum+i.to_f },
                   budget.pam_lists.pluck(:approved).reduce(0) { |sum, i| sum+i.to_f },
-                  budget.budget_items.last.blank? ? '' : budget.budget_items.last.total_price-budget.pam_lists.pluck(:approved).reduce(0) { |sum, i| sum+i.to_f },
+                  budget.latest_budget_item.blank? ? '' : budget.latest_budget_item.total_price-budget.pam_lists.pluck(:approved).reduce(0) { |sum, i| sum+i.to_f },
                   '', '', '',
                   budget.pam_items.pluck(:total_cost).reduce(0) { |sum, i| sum+i.to_f },
                   '', '', '', '', '', '', '',
@@ -132,6 +133,103 @@ class Capex < ApplicationRecord
 
           end
         end
+      end
+    end
+
+    # budget.capex.bu.name,
+    #     budget.capex.project,
+    #     budget.code,
+    # BudgetType.display(budget.type),
+    #     budget.desc,
+    #     (budget.budget_items[0].blank? ? '' : budget.budget_items[0].total_price),
+    #     (budget.budget_items[1].blank? ? '' : budget.budget_items[1].total_price),
+    #
+    #     (budget.budget_items[2].blank? ? '' : budget.budget_items[2].total_price),
+    #     budget.sum_pams_column(:approved),
+    #     budget.sum_pams_column(:in_process),
+    #     budget.sum_pams_column(:budget_not_applied),
+    #
+    #     budget.sum_pam_items_cloumn(:total_cost),
+    #     budget.sum_pam_items_cloumn(:po_cost),
+    #     budget.sum_pam_items_cloumn(:completed_amount),
+    #     budget.sum_pam_items_cloumn(:final_cost)
+
+    wb.add_worksheet(:name => "all code") do |sheet|
+      sheet.add_row [
+                        'BU', 'Project', 'Budget Code', 'Type', 'Item', 'Budget', 'FC1', 'FC2', 'PAM Final approved', 'PAM approval in process', 'PAM not start to approve', 'PA Cost',
+                        'PO Cost', 'Fix assets complated cost', 'Booking Cost'
+                    ]
+
+      Budget.joins(:capex).order("capexes.bu_code, budgets.code").each do |budget|
+        sheet.add_row [
+                          budget.capex.bu.name,
+                          budget.capex.project,
+                          budget.code,
+                          BudgetType.display(budget.type),
+                          budget.desc,
+                          (budget.budget_items[0].blank? ? '' : budget.budget_items[0].total_price),
+                          (budget.budget_items[1].blank? ? '' : budget.budget_items[1].total_price),
+
+                          (budget.budget_items[2].blank? ? '' : budget.budget_items[2].total_price),
+                          budget.sum_pams_column(:approved),
+                          budget.sum_pams_column(:in_process),
+                          budget.sum_pams_column(:budget_not_applied),
+
+                          budget.sum_pam_items_cloumn(:total_cost),
+                          budget.sum_pam_items_cloumn(:po_cost),
+                          budget.sum_pam_items_cloumn(:completed_amount),
+                          budget.sum_pam_items_cloumn(:final_cost)
+                      ]
+      end
+    end
+
+    wb.add_worksheet(:name => "detail by project") do |sheet|
+      sheet.add_row [
+                        'BU', 'Project', 'Budget', 'FC1', 'FC2', 'Budget in process', 'PAM Final approved', 'PAM not applied', 'Approved budget spent',
+                        'Approved budget not spent', 'Fix assets complated', 'Booking in Fin', 'Budget spent/Budget', 'Assets complated/Budget spent',
+                        'Booked/Budget', 'Approved budget spent', 'Approved budget not spent', 'Fix assets complated', 'Booked in Fin'
+                    ]
+
+      Capex.all.order(:bu_code, :project).each do |capex|
+        sheet.add_row [
+                          capex.bu.name,
+                          capex.project,
+
+                          capex.sum_budget(0),
+                          capex.sum_budget(1),
+
+                          capex.sum_budget(2),
+                          capex.sum_pams_column(:in_process),
+                          capex.sum_pams_column(:approved),
+                          capex.sum_pams_column(:budget_not_applied),
+
+                          capex.sum_pam_items_cloumn(:total_cost),
+                          capex.sum_pams_column(:approved) - capex.sum_pam_items_cloumn(:total_cost),
+                          capex.sum_pam_items_cloumn(:completed_amount),
+                          capex.sum_pam_items_cloumn(:final_cost),
+
+                          capex.calc_percent(capex.sum_pam_items_cloumn(:total_cost), capex.sum_budget(0)),
+                          capex.calc_percent(capex.sum_pam_items_cloumn(:completed_amount), capex.sum_pam_items_cloumn(:total_cost)),
+                          capex.calc_percent(capex.sum_pam_items_cloumn(:final_cost), capex.sum_budget(0)),
+
+                          capex.calc_percent(capex.sum_pam_items_cloumn(:total_cost), capex.sum_budget(1)),
+                          capex.calc_percent(capex.sum_pam_items_cloumn(:final_cost), capex.sum_budget(1)),
+                          capex.calc_percent(capex.sum_pam_items_cloumn(:total_cost), capex.sum_budget(2)),
+                          capex.calc_percent(capex.sum_pam_items_cloumn(:final_cost), capex.sum_budget(2))
+                      ]
+      end
+    end
+
+    wb.add_worksheet(:name => "over view") do |sheet|
+
+      sheet.add_row (['Version']+BuManger.all.pluck(:nr)+['Sum'])
+
+      CapexService.generate_report_data(2017).each do |capex|
+        row=[]
+        capex.keys.each do |key|
+          row<<capex[key]
+        end
+        sheet.add_row row
       end
     end
 

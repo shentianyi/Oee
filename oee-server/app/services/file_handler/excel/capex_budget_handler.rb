@@ -29,7 +29,7 @@ module FileHandler
                 row = {}
                 CAPEX_HEADERS.each_with_index do |k, i|
                   row[k] = book.cell(line, i+1).to_s.strip
-                  # row[k] = row[k].sub(/\.0/, '') if k==:sap_no
+                  row[k] = row[k].sub(/\.0/, '') if k==:type
                 end
 
                 bu = BuManger.find_by_nr(row[:bu])
@@ -139,7 +139,7 @@ module FileHandler
             row = {}
             CAPEX_HEADERS.each_with_index do |k, i|
               row[k] = book.cell(line, i+1).to_s.strip
-              # row[k] = row[k].sub(/\.0/, '') if k==:sap_no
+              row[k] = row[k].sub(/\.0/, '') if k==:type
             end
 
             mssg = validate_row(row, line)

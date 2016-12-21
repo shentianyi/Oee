@@ -31,4 +31,13 @@ class Budget < ApplicationRecord
     self.pam_lists.map{|l| l.pam_items.pluck(column).reduce(0){|lt, lv| lt+=lv.to_f}}.reduce(0){|it, iv| it+=iv.to_f}
   end
 
+  def latest_budget_item
+    self.budget_items.where("total_price > 0").order(created_at: :desc).first
+  end
+
 end
+
+
+
+
+

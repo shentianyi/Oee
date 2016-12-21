@@ -50,12 +50,13 @@
   <hr class="hr-success">
 
   <div class="row" style="margin:0;">
-    <%= f.link_to_add content_tag(:i, content_tag(:span, "添加PAM子项"), :class => 'fa fa-plus'), :pam_items, :class => "pull-right", :style => "margin-top:5px;", :title => "添加 pam子项" %>
 
     <span>PAM 子项</span>
 
     <%= f.fields_for :pam_items do |builder| %>
         <%= render "pam_item_fields", :f => builder %>
     <% end %>
+
+    <%= f.link_to_add "Add PAM 子项", :pam_items %><br/>
   </div>
 </div>

@@ -46,7 +46,8 @@
           <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
             <div class="marco-igroup-oee">
               <span>部门</span>
-              <%= select_tag('capex[bu_code]', options_for_select(BuCodeEnum.menu, @bu_code), {include_blank: true}) %>
+              <%= select_tag('capex[bu_code]', options_from_collection_for_select(BuManger.all, :id, :nr, @bu_code), {include_blank: true}) %>
+
             </div>
           </div>
 

@@ -138,15 +138,21 @@ module FileHandler
 
                 count += 1
 
-                asset = FixAssetTrack.find_by_procurment_id(row[:pa_no])
+                # asset = FixAssetTrack.find_by_procurment_id(row[:pa_no])
                 items = PamItem.where(pa_no: row[:pa_no])
                 items.each do |i|
                   i.update_attributes({
                                           completed_date: row[:completed_date],
-                                          completed_id: asset.blank? ? row[:completed_id] : asset.completed_id,
-                                          completed_status: asset.blank? ? row[:completed_status] : FixAssetStatus.display(asset.status),
+                                          completed_id: row[:completed_id],
+                                          completed_status: row[:completed_status],
                                           completed_amount: row[:completed_amount]
                                       })
+                  # i.update_attributes({
+                  #                         completed_date: row[:completed_date],
+                  #                         completed_id: asset.blank? ? row[:completed_id] : asset.completed_id,
+                  #                         completed_status: asset.blank? ? row[:completed_status] : FixAssetStatus.display(asset.status),
+                  #                         completed_amount: row[:completed_amount]
+                  #                     })
                 end
               end
             end

@@ -11,6 +11,9 @@ class InventoryItem < ApplicationRecord
   belongs_to :ts_status, class_name: 'EquipmentStatus', foreign_key: :status
   belongs_to :curr_status, class_name: 'EquipmentStatus', foreign_key: :current_status
 
+  belongs_to :project, class_name: "BuManger", foreign_key: :ts_project
+  belongs_to :curr_project, class_name: "BuManger", foreign_key: :current_project
+
   def cover_item
     message = Message.new
 

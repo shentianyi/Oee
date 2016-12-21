@@ -182,6 +182,7 @@
         <!--<th>放行提醒</th>-->
         <!--<th>负责的工程师</th>-->
         <!--<th>新设备</th>-->
+        <th>盘点负责人</th>
         <th>备注</th>
         <th>操作</th>
       </tr>
@@ -222,6 +223,7 @@
             <!--<td><%= equipment_track.asset_bu_id %></td>-->
 
             <!--<td><%= equipment_track.is_top ? '是' : '否' %></td>-->
+            <td><%= equipment_track.inventory_user.blank? ? '' : equipment_track.inventory_user.name %></td>
             <td><%= equipment_track.remark %></td>
             <td>
               <%= link_to content_tag(:i, '', :class => 'fa fa-eye'), equipment_track, :class => "marco-btn-success", :title => "详情" %>

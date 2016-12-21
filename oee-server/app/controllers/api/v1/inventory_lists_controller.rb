@@ -18,12 +18,12 @@ module Api
         inventory_list = InventoryList.find_by_id(params[:inventory_list_id])
         if inventory_list
           render json: {
-                     result: 1,
+                     result: '1',
                      inventory_items: inventory_list.inventory_items
           }
         else
           render json: {
-                     result: 0,
+                     result: '0',
                      content: '盘点单没有找到'
                  }
         end
@@ -31,15 +31,15 @@ module Api
 
       def generate_download_file
         user = User.find_by_id(params[:user_id])
-        return render json: {result: 0, content: '用户没有找到，请重新登陆'} if user.blank?
+        return render json: {result: '0', content: '用户没有找到，请重新登陆'} if user.blank?
 
         inventory_list = InventoryList.find_by_id(params[:id])
-        return render json: {result: 0, content: '当前无数据'} if inventory_list.blank?
+        return render json: {result: '0', content: '当前无数据'} if inventory_list.blank?
 
         if file=inventory_list.generate_download_file(user, params[:type].to_i)
-          render json: {result: 1, content: request.base_url + file.path.url}
+          render json: {result: '1', content: request.base_url + file.path.url}
         else
-          render json: {result: 0, content: '当前无数据'}
+          render json: {result: '0', content: '当前无数据'}
         end
       end
 
@@ -56,25 +56,25 @@ module Api
         # parse_params = JSON.parse(params)
 
         user = User.find_by_id(params[:user_id])
-        return render json: {result: 0, content: '用户没有找到，请重新登陆'} if user.blank?
+        return render json: {result: '0', content: '用户没有找到，请重新登陆'} if user.blank?
 
         unless list = InventoryList.find_by_id(params[:inventory_list_id])
-          return render json: {result: 0, content: "盘点单#{params[:inventory_list_id]}不存在"}
+          return render json: {result: '0', content: "盘点单#{params[:inventory_list_id]}不存在"}
         end
 
         unless [FileUploadType::OVERALL, FileUploadType::RECOVERY].include?(params[:type].to_i)
-          return render json: {result: 0, content: "盘点类型#{params[:type]}不正确"}
+          return render json: {result: '0', content: "盘点类型#{params[:type]}不正确"}
         end
 
         if params[:data].length<1
-          return render json: {result: 0, content: "数据为空"}
+          return render json: {result: '0', content: "数据为空"}
         end
 
         # user = User.find_by_email "admin@ts.com"
         if UserInventoryTaskService.create params, user, list
-          render json: {result: 1, content: '数据上传成功'}
+          render json: {result: '1', content: '数据上传成功'}
         else
-          render json: {result: 0, content: '数据上传失败'}
+          render json: {result: '0', content: '数据上传失败'}
         end
       end
 

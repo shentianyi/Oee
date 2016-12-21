@@ -36,7 +36,7 @@
             <td><%= budget.capex.project %></td>
             <td><%= budget.code %></td>
 
-            <td><%= budget.type %></td>
+            <td><%= BudgetType.display budget.type %></td>
             <td><%= budget.desc %></td>
             <td><%= budget.budget_items[0].blank? ? '' : budget.budget_items[0].total_price %></td>
             <td><%= budget.budget_items[1].blank? ? '' : budget.budget_items[1].total_price %></td>

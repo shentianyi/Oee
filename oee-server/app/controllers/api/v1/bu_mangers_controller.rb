@@ -4,7 +4,12 @@ module Api
       # guard_all!
 
       def index
-        render json: BuManger.all.to_json
+        data =[]
+        BuManger.all.each do |i|
+          data<<{id: i.id.to_s, name: i.nr}
+        end
+
+        render json: data.to_json
       end
     end
 

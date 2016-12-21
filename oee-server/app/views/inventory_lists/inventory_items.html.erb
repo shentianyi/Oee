@@ -66,6 +66,7 @@
 
         <th>资产创建方式</th>
         <th>设备类型</th>
+        <th>盘点负责人</th>
 
         <th>使用状态</th>
         <th>使用项目</th>
@@ -107,14 +108,15 @@
 
             <td><%= inventory_item.equipment_track.blank? ? '' : EquipmentAddEnum.display(inventory_item.equipment_track.equip_create_way) %></td>
             <td><%= inventory_item.equipment_track.blank? ? '' : EquipmentType.display(inventory_item.equipment_track.type) %></td>
+            <td><%= inventory_item.ts_inventory_user.blank? ? '' : inventory_item.ts_inventory_user.name %></td>
 
             <td><%= inventory_item.ts_status.blank? ? '' : inventory_item.ts_status.name %></td>
-            <td><%= inventory_item.ts_project %></td>
+            <td><%= inventory_item.project.blank? ? '' : inventory_item.project.nr %></td>
             <td><%= inventory_item.ts_area.blank? ? '' : inventory_item.ts_area.name %></td>
             <td><%= inventory_item.ts_nameplate_track %></td>
 
             <td><%= inventory_item.curr_status.blank? ? '' : inventory_item.curr_status.name %></td>
-            <td><%= inventory_item.current_project %></td>
+            <td><%= inventory_item.curr_project.blank? ? '' : inventory_item.curr_project.nr %></td>
             <td><%= inventory_item.current_area.blank? ? '' : inventory_item.current_area.name %></td>
             <td><%= inventory_item.current_nameplate %></td>
 

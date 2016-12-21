@@ -4,7 +4,12 @@ module Api
       # guard_all!
 
       def index
-        render json: EquipmentStatus.all.to_json
+        data =[]
+        EquipmentStatus.all.each do |i|
+          data<<{id: i.id.to_s, name: i.name}
+        end
+
+        render json: data.to_json
       end
     end
 
