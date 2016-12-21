@@ -805,7 +805,7 @@ body {
   @include card-box($alizarin, $clouds);
 }
 
-@mixin marco-tabs($marco-bg: $midnight-blue, $marco-font: #777, $marco-active-bg: $midnight-blue, $marco-active-font: $dark-white) {
+@mixin marco-tabs($marco-bg: $midnight-blue, $marco-font: $midnight-blue, $marco-active-bg: $midnight-blue, $marco-active-font: $dark-white) {
   ul {
     border-color: $midnight-blue;
     li {

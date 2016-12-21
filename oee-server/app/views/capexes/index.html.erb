@@ -13,7 +13,7 @@
       <%#= link_to content_tag(:i, content_tag(:span, "CAPEX"), :class => "fa fa-plus"), capexes_path %>
       <a href="#capexes" role="tab" data-toggle="tab">CAPEX</a>
     </li>
-    <li role="presentation" >
+    <li role="presentation">
       <%#= link_to content_tag(:i, content_tag(:span, "Over View"), :class => "fa fa-plus-square"), overview_capexes_path %>
       <a href="#over_view" role="tab" data-toggle="tab">Over View</a>
     </li>
@@ -31,11 +31,37 @@
 
   <div class="tab-content" style="margin: -20px 20px 0 20px;">
     <div role="tabpanel" class="tab-pane active" id="capexes">
+      <div class="all-search row" style="margin: 5px;">
+        <form method="get" action="<%= send("search_#{@model.pluralize}_path") %>">
+          <input type="hidden" name="http_host" value="<%= @http_host %>"/>
+
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>项目</span>
+              <input type="text" name="capex[project]" value="<%= @project %>"/>
+              <input type="hidden" name="capex[project_fuzzy]"/>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>部门</span>
+              <%= select_tag('capex[bu_code]', options_for_select(BuCodeEnum.menu, @bu_code), {include_blank: true}) %>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
+            <button type="submit" class="marco-btn-default" style="width: 100px; height: 40px; line-height: 40px;" name="search">查找</button>
+            <button type="submit" class="marco-btn-success" style="width: 100px; height: 40px; line-height: 40px;" name="download">导出</button>
+          </div>
+        </form>
+      </div>
+
       <div class="marco-npanel-default">
         <div class="marco-nheading">
           CAPEX列表
           <div class="pull-right">
-          <% if current_user.admin? %>
+            <% if current_user.admin? %>
                 <%= link_to content_tag(:i, content_tag(:span, "导入"), :class => "fa fa-plus-square"), import_capexes_path %>
                 <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_capex_path %>
             <% end %>
