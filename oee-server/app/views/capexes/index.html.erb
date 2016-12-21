@@ -31,7 +31,7 @@
 
   <div class="tab-content" style="margin: -20px 20px 0 20px;">
     <div role="tabpanel" class="tab-pane active" id="capexes">
-      <div class="all-search row" style="margin: 5px;">
+      <div class="all-search row">
         <form method="get" action="<%= send("search_#{@model.pluralize}_path") %>">
           <input type="hidden" name="http_host" value="<%= @http_host %>"/>
 

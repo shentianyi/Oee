@@ -1,58 +1,63 @@
-<div style="overflow: auto">
-  <table class="marco-nbody table table-bordered">
-    <thead>
-    <tr>
-      <th>NO.</th>
-      <th>BU</th>
-      <th>Project</th>
-      <th>Budget Code</th>
+<div class="marco-npanel-default">
+  <div class="marco-nheading">
+    All Code 列表
+  </div>
+  <div class="marco-nbody" style="overflow: auto;">
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>NO.</th>
+        <th>BU</th>
+        <th>Project</th>
+        <th>Budget Code</th>
 
-      <th>Type</th>
-      <th>Item</th>
-      <th>Budget</th>
-      <th>FC1</th>
+        <th>Type</th>
+        <th>Item</th>
+        <th>Budget</th>
+        <th>FC1</th>
 
-      <th>FC2</th>
-      <th>PAM Final approved</th>
-      <th>PAM approval in process</th>
-      <th>PAM not start to approve</th>
+        <th>FC2</th>
+        <th>PAM Final approved</th>
+        <th>PAM approval in process</th>
+        <th>PAM not start to approve</th>
 
-      <th>PA Cost</th>
-      <th>PO Cost</th>
-      <th>Fix assets complated cost</th>
-      <th>Booking Cost</th>
-    </tr>
-    </thead>
+        <th>PA Cost</th>
+        <th>PO Cost</th>
+        <th>Fix assets complated cost</th>
+        <th>Booking Cost</th>
+      </tr>
+      </thead>
 
-    <tbody>
-    <% @all_code.each_with_index do |budget, i| %>
-        <tr>
-          <td><%= i+1 %></td>
-          <td><%= budget.capex.bu.name %></td>
-          <td><%= budget.capex.project %></td>
-          <td><%= budget.code %></td>
+      <tbody>
+      <% @all_code.each_with_index do |budget, i| %>
+          <tr>
+            <td><%= i+1 %></td>
+            <td><%= budget.capex.bu.name %></td>
+            <td><%= budget.capex.project %></td>
+            <td><%= budget.code %></td>
 
-          <td><%= budget.type %></td>
-          <td><%= budget.desc %></td>
-          <td><%= budget.budget_items[0].blank? ? '' : budget.budget_items[0].total_price %></td>
-          <td><%= budget.budget_items[1].blank? ? '' : budget.budget_items[1].total_price %></td>
+            <td><%= budget.type %></td>
+            <td><%= budget.desc %></td>
+            <td><%= budget.budget_items[0].blank? ? '' : budget.budget_items[0].total_price %></td>
+            <td><%= budget.budget_items[1].blank? ? '' : budget.budget_items[1].total_price %></td>
 
-          <td><%= budget.budget_items[2].blank? ? '' : budget.budget_items[2].total_price %></td>
-          <td><%= budget.sum_pams_column(:approved) %></td>
-          <td><%= budget.sum_pams_column(:in_process) %></td>
-          <td><%= budget.sum_pams_column(:budget_not_applied) %></td>
+            <td><%= budget.budget_items[2].blank? ? '' : budget.budget_items[2].total_price %></td>
+            <td><%= budget.sum_pams_column(:approved) %></td>
+            <td><%= budget.sum_pams_column(:in_process) %></td>
+            <td><%= budget.sum_pams_column(:budget_not_applied) %></td>
 
-          <td><%= budget.sum_pam_items_cloumn(:total_cost) %></td>
-          <td><%= budget.sum_pam_items_cloumn(:po_cost) %></td>
-          <td><%= budget.sum_pam_items_cloumn(:completed_amount) %></td>
-          <td><%= budget.sum_pam_items_cloumn(:final_cost) %></td>
-        </tr>
-    <% end %>
-    </tbody>
-  </table>
-</div>
+            <td><%= budget.sum_pam_items_cloumn(:total_cost) %></td>
+            <td><%= budget.sum_pam_items_cloumn(:po_cost) %></td>
+            <td><%= budget.sum_pam_items_cloumn(:completed_amount) %></td>
+            <td><%= budget.sum_pam_items_cloumn(:final_cost) %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
 
-<div class="digg_pagination">
-  <%= will_paginate @budgets, :container => false, params: params.to_unsafe_h %>
+  <div class="digg_pagination">
+    <%= will_paginate @budgets, :container => false, params: params.to_unsafe_h %>
+  </div>
 </div>
 
