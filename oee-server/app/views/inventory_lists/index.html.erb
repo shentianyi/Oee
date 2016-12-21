@@ -26,10 +26,10 @@
     </div>
 
     <!--<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">-->
-      <!--<div class="marco-igroup-oee">-->
-        <!--<span>月资产平衡单</span>-->
-        <!--<%= select_tag('inventory_list[asset_balance_list_id]', options_from_collection_for_select(AssetBalanceList.all, :id, :id, @asset_balance_list_id), {include_blank: true}) %>-->
-      <!--</div>-->
+    <!--<div class="marco-igroup-oee">-->
+    <!--<span>月资产平衡单</span>-->
+    <!--<%= select_tag('inventory_list[asset_balance_list_id]', options_from_collection_for_select(AssetBalanceList.all, :id, :id, @asset_balance_list_id), {include_blank: true}) %>-->
+    <!--</div>-->
     <!--</div>-->
 
     <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
@@ -52,7 +52,9 @@
   <div class="marco-nheading">
     资产盘点列表
     <div class="pull-right">
-      <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_inventory_list_path %>
+      <% if current_user.admin? %>
+          <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_inventory_list_path %>
+      <% end %>
     </div>
   </div>
 
@@ -82,15 +84,17 @@
           <td><%= link_to '盘点清单', inventory_items_inventory_list_path(inventory_list) %>
             <span class="badge pull-right"><%= inventory_list.inventory_items.count %></td>
           <!--<td>-->
-            <!--<%= link_to "重置", reset_inventory_inventory_lists_path({id: inventory_list.id, do: 'disable'}), :class => "marco-btn-danger", data: {confirm: "确定盘点?"} %>-->
+          <!--<%= link_to "重置", reset_inventory_inventory_lists_path({id: inventory_list.id, do: 'disable'}), :class => "marco-btn-danger", data: {confirm: "确定盘点?"} %>-->
 
-            <!--<%= link_to "取消重置", reset_inventory_inventory_lists_path({id: inventory_list.id, do: 'enable'}), :class => "marco-btn-danger", data: {confirm: "确定取消盘点重置?"} %>-->
+          <!--<%= link_to "取消重置", reset_inventory_inventory_lists_path({id: inventory_list.id, do: 'enable'}), :class => "marco-btn-danger", data: {confirm: "确定取消盘点重置?"} %>-->
           <!--</td>-->
 
           <td>
             <!--<%= link_to content_tag(:i, '', :class => "fa fa-cloud-upload"), import_inventory_lists_path(id: inventory_list.id), :class => "marco-btn-success", :title => "上传盘点数据" %>-->
-            <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_inventory_list_path(inventory_list), :class => "marco-btn-primary", :title => "编辑" %>
-            <%= link_to content_tag(:i, '', :class => 'fa fa-close'), inventory_list, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+            <% if current_user.admin? %>
+                <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_inventory_list_path(inventory_list), :class => "marco-btn-primary", :title => "编辑" %>
+                <%= link_to content_tag(:i, '', :class => 'fa fa-close'), inventory_list, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+            <% end %>
           </td>
         </tr>
     <% end %>

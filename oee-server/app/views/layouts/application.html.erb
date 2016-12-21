@@ -160,18 +160,18 @@
           </li>
 
           <!--<li class="nav-asset_balance_lists">-->
-            <!--<a href="#">-->
-              <!--<i class="fa fa-hdd-o"></i>-->
-            <!--</a>-->
-            <!--<span>固定资产</span>-->
-            <!--<ul>-->
-              <!--<li class="nav-inventory_lists">-->
-                <!--<i class="fa fa-tasks"></i>-->
-                <!--<%= link_to content_tag(:span, '月资产平衡表'), asset_balance_lists_path, :title => '月固定资产平衡表' %>-->
-              <!--</li>-->
+          <!--<a href="#">-->
+          <!--<i class="fa fa-hdd-o"></i>-->
+          <!--</a>-->
+          <!--<span>固定资产</span>-->
+          <!--<ul>-->
+          <!--<li class="nav-inventory_lists">-->
+          <!--<i class="fa fa-tasks"></i>-->
+          <!--<%= link_to content_tag(:span, '月资产平衡表'), asset_balance_lists_path, :title => '月固定资产平衡表' %>-->
+          <!--</li>-->
 
 
-            <!--</ul>-->
+          <!--</ul>-->
           <!--</li>-->
 
           <li class="nav-inventory">
@@ -186,8 +186,8 @@
               </li>
 
               <!--<li class="nav-user_area_items">-->
-                <!--<i class="fa fa-calendar-plus-o"></i>-->
-                <!--<%= link_to content_tag(:span, '盘点任务分配'), user_area_items_path, :title => '盘点任务' %>-->
+              <!--<i class="fa fa-calendar-plus-o"></i>-->
+              <!--<%= link_to content_tag(:span, '盘点任务分配'), user_area_items_path, :title => '盘点任务' %>-->
               <!--</li>-->
 
               <li class="nav-user_inventory_tasks">
@@ -208,20 +208,22 @@
                 <%= link_to content_tag(:span, 'CAPEX'), capexes_path, :title => 'CAPEX' %>
               </li>
 
-              <li class="nav-budgets">
-                <i class="fa fa-credit-card"></i>
-                <%= link_to content_tag(:span, 'BUDGET'), budgets_path, :title => 'BUDGET' %>
-              </li>
+              <% if current_user.admin? %>
+                  <li class="nav-budgets">
+                    <i class="fa fa-credit-card"></i>
+                    <%= link_to content_tag(:span, 'BUDGET'), budgets_path, :title => 'BUDGET' %>
+                  </li>
 
-              <li class="nav-budget_items">
-                <i class="fa fa-bars"></i>
-                <%= link_to content_tag(:span, 'BUDGET ITEM'), budget_items_path, :title => 'BUDGET ITEM' %>
-              </li>
+                  <li class="nav-budget_items">
+                    <i class="fa fa-bars"></i>
+                    <%= link_to content_tag(:span, 'BUDGET ITEM'), budget_items_path, :title => 'BUDGET ITEM' %>
+                  </li>
 
-              <li class="nav-pam_lists">
-                <i class="fa fa-cube"></i>
-                <%= link_to content_tag(:span, 'PAM'), pam_lists_path, :title => 'PAM' %>
-              </li>
+                  <li class="nav-pam_lists">
+                    <i class="fa fa-cube"></i>
+                    <%= link_to content_tag(:span, 'PAM'), pam_lists_path, :title => 'PAM' %>
+                  </li>
+              <% end %>
 
               <li class="nav-pam_items">
                 <i class="fa fa-cubes"></i>
