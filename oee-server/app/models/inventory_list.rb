@@ -102,7 +102,7 @@ class InventoryList < ApplicationRecord
 
       File.open('uploadfiles/data/data.txt', 'w+') do |f|
         inventories.each do |i|
-          ss = i.id.to_s + "," + i.fix_asset_track.nr.to_s + "," + i.ts_area_id.to_s + "\n"
+          ss = i.rfid_nr.to_s + "," + i.ts_project.to_s + "," + i.ts_area_id.to_s + i.ts_nameplate_track.to_s + i.status.to_s + "\n"
           f.write(ss)
         end
 

@@ -14,7 +14,9 @@
       <%= link_to content_tag(:i, content_tag(:span, "采购导入数据 "), :class => "fa fa-cloud-upload"), purchase_import_pam_items_path %>
       <%= link_to content_tag(:i, content_tag(:span, "TS导入数据 "), :class => "fa fa-cloud-upload"), ts_import_pam_items_path %>
       <%= link_to content_tag(:i, content_tag(:span, "财务导入数据 "), :class => "fa fa-cloud-upload"), finance_import_pam_items_path %>
-      <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_pam_item_path %>
+      <% if current_user.admin? %>
+          <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_pam_item_path %>
+      <% end %>
     </div>
   </div>
 
@@ -75,8 +77,10 @@
             <td><%#= pam_item.pam_list.nr %></td>
             <td>
               <%= link_to content_tag(:i, '', :class => 'fa fa-eye'), pam_item, :class => "marco-btn-success", :title => "详情" %>
-              <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_pam_item_path(pam_item), :class => "marco-btn-primary", :title => "编辑" %>
-              <%= link_to content_tag(:i, '', :class => 'fa fa-close'), pam_item, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+              <% if current_user.admin? %>
+                  <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_pam_item_path(pam_item), :class => "marco-btn-primary", :title => "编辑" %>
+                  <%= link_to content_tag(:i, '', :class => 'fa fa-close'), pam_item, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+              <% end %>
             </td>
           </tr>
       <% end %>
