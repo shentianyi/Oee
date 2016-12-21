@@ -1,0 +1,26 @@
+<div style="overflow: auto">
+  <table class="marco-nbody table table-bordered">
+    <thead>
+    <tr>
+      <th>NO.</th>
+      <th>Version</th>
+      <% BuManger.all.each do |bu| %>
+          <th><%= bu.nr %></th>
+      <% end %>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @capexes_over_view.each_with_index do |capex, i| %>
+        <tr>
+          <td><%= i+1 %></td>
+          <% capex.keys.each do |key| %>
+              <td><%= capex[key] %></td>
+          <% end %>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
+
