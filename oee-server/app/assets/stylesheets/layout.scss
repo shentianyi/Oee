@@ -813,7 +813,7 @@ body {
       a {
         border-radius: 0;
         padding: 8px;
-        color: $marco-font;
+        color: $marco-font !important;
         background-color: $marco-bg;
         text-align: center;
         &:hover, &:link, &:active {
@@ -849,7 +849,7 @@ body {
         border-left: 1px solid $midnight-blue;
         border-top: 1px solid $midnight-blue;
         background-color: $marco-active-bg;
-        color: $dark-white;
+        color: $dark-white !important;
         &:hover, &:link, &:active {
           border: none;
           border-top: 1px solid $midnight-blue;
