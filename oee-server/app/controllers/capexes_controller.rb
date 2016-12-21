@@ -5,6 +5,12 @@ class CapexesController < ApplicationController
   # GET /capexes.json
   def index
     @capexes = Capex.all.paginate(page: params[:page])
+
+    @capexes_over_view = CapexService.generate_report_data 2017
+
+    @all_code = Budget.joins(:capex).order("capexes.bu_code, budgets.code").paginate(page: params[:page])
+
+    @detail_by_project = Capex.all.order(:bu_code, :project).paginate(page: params[:page])
   end
 
   # GET /capexes/1

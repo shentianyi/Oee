@@ -1,0 +1,70 @@
+<div style="overflow: auto">
+  <table class="marco-nbody table table-bordered">
+    <thead>
+    <tr>
+      <th>NO.</th>
+      <th>BU</th>
+      <th>Project</th>
+
+      <th>Budget</th>
+      <th>FC1</th>
+
+      <th>FC2</th>
+      <th>Budget in process</th>
+      <th>PAM Final approved</th>
+      <th>PAM not applied</th>
+
+      <th>Approved budget spent</th>
+      <th>Approved budget not spent</th>
+      <th>Fix assets complated</th>
+      <th>Booking in Fin</th>
+
+      <th>Budget spent/Budget</th>
+      <th>Assets complated/Budget spent</th>
+      <th>Booked/Budget</th>
+
+      <th>Approved budget spent</th>
+      <th>Approved budget not spent</th>
+      <th>Fix assets complated</th>
+      <th>Booked in Fin</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @detail_by_project.each_with_index do |capex, i| %>
+        <tr>
+          <td><%= i+1 %></td>
+          <td><%= capex.bu.name %></td>
+          <td><%= capex.project %></td>
+
+          <td><%= capex.sum_budget(0) %></td>
+          <td><%= capex.sum_budget(1) %></td>
+
+          <td><%= capex.sum_budget(2) %></td>
+          <td><%= capex.sum_pams_column(:in_process) %></td>
+          <td><%= capex.sum_pams_column(:approved) %></td>
+          <td><%= capex.sum_pams_column(:budget_not_applied) %></td>
+
+          <td><%= capex.sum_pam_items_cloumn(:total_cost) %></td>
+          <td><%= capex.sum_pams_column(:approved) - capex.sum_pam_items_cloumn(:total_cost) %></td>
+          <td><%= capex.sum_pam_items_cloumn(:completed_amount) %></td>
+          <td><%= capex.sum_pam_items_cloumn(:final_cost) %></td>
+
+          <td><%= capex.calc_percent(capex.sum_pam_items_cloumn(:total_cost), capex.sum_budget(0)) %></td>
+          <td><%= capex.calc_percent(capex.sum_pam_items_cloumn(:completed_amount), capex.sum_pam_items_cloumn(:total_cost)) %></td>
+          <td><%= capex.calc_percent(capex.sum_pam_items_cloumn(:final_cost), capex.sum_budget(0)) %></td>
+
+          <td><%= capex.calc_percent(capex.sum_pam_items_cloumn(:total_cost), capex.sum_budget(1)) %></td>
+          <td><%= capex.calc_percent(capex.sum_pam_items_cloumn(:final_cost), capex.sum_budget(1)) %></td>
+          <td><%= capex.calc_percent(capex.sum_pam_items_cloumn(:total_cost), capex.sum_budget(2)) %></td>
+          <td><%= capex.calc_percent(capex.sum_pam_items_cloumn(:final_cost), capex.sum_budget(2)) %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="digg_pagination">
+  <%= will_paginate @detail_by_project, :container => false, params: params.to_unsafe_h %>
+</div>
+

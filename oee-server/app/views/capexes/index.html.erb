@@ -7,76 +7,108 @@
 
 <hr class="hr-grey"/>
 
-<div class="all-search row">
-  <form method="get" action="<%= send("search_#{@model.pluralize}_path") %>">
+<div class="marco-tabs-default">
+  <ul class="nav nav-tabs" role="tablist" style="margin: 20px;">
+    <li role="presentation" class="active">
+      <%#= link_to content_tag(:i, content_tag(:span, "CAPEX"), :class => "fa fa-plus"), capexes_path %>
+      <a href="#capexes" role="tab" data-toggle="tab">CAPEX</a>
+    </li>
+    <li role="presentation" >
+      <%#= link_to content_tag(:i, content_tag(:span, "Over View"), :class => "fa fa-plus-square"), overview_capexes_path %>
+      <a href="#over_view" role="tab" data-toggle="tab">Over View</a>
+    </li>
+    <li role="presentation">
+      <%#= link_to content_tag(:i, content_tag(:span, "Detail By Project"), :class => "fa fa-plus-square"), detail_by_project_capexes_path %>
+      <a href="#detail_by_project_capex" role="tab" data-toggle="tab">Detail CAPEX</a>
+    </li>
+    <li role="presentation">
+      <%#= link_to content_tag(:i, content_tag(:span, "All Code"), :class => "fa fa-plus-square"), all_code_capexes_path %>
+      <a href="#all_code" role="tab" data-toggle="tab">
+        All Code
+      </a>
+    </li>
+  </ul>
 
-    <input type="hidden" name="http_host" value="<%= @http_host %>"/>
+  <div class="tab-content" style="margin: -20px 20px 0 20px;">
 
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-      <div class="marco-igroup-oee">
-        <span>项目</span>
-        <input type="text" name="capex[project]" value="<%= @project %>"/>
-        <input type="hidden" name="capex[project_fuzzy]"/>
+    <div role="tabpanel" class="tab-pane active" id="capexes">
+      <div class="all-search row" style="margin: 5px;">
+        <form method="get" action="<%= send("search_#{@model.pluralize}_path") %>">
+          <input type="hidden" name="http_host" value="<%= @http_host %>"/>
+
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>项目</span>
+              <input type="text" name="capex[project]" value="<%= @project %>"/>
+              <input type="hidden" name="capex[project_fuzzy]"/>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="marco-igroup-oee">
+              <span>部门</span>
+              <%= select_tag('capex[bu_code]', options_for_select(BuCodeEnum.menu, @bu_code), {include_blank: true}) %>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
+            <button type="submit" class="marco-btn-default" style="width: 100px; height: 40px; line-height: 40px;" name="search">查找</button>
+            <button type="submit" class="marco-btn-success" style="width: 100px; height: 40px; line-height: 40px;" name="download">导出</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="marco-npanel-default" style="margin: 20px;">
+        <div class="marco-nheading">
+          CAPEX列表
+          <div class="pull-right">
+            <%= link_to content_tag(:i, content_tag(:span, "导入"), :class => "fa fa-plus-square"), import_capexes_path %>
+            <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_capex_path %>
+          </div>
+        </div>
+        <div style="overflow: auto; padding: 0;">
+          <table class="marco-nbody table table-bordered">
+            <thead>
+            <tr>
+              <th>NO.</th>
+              <th>项目</th>
+              <th>部门</th>
+              <th>描述</th>
+              <th>操作</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <% @capexes.each_with_index do |capex, i| %>
+                <tr>
+                  <td><%= i+1 %></td>
+                  <td><%= capex.project %></td>
+                  <td><%= capex.bu.blank? ? '' : capex.bu.nr %></td>
+                  <td><%= capex.desc %></td>
+                  <td>
+                    <%= link_to content_tag(:i, '', :class => 'fa fa-eye'), capex, :class => "marco-btn-success", :title => "详情" %>
+                    <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_capex_path(capex), :class => "marco-btn-primary", :title => "编辑" %>
+                    <%= link_to content_tag(:i, '', :class => 'fa fa-close'), capex, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+                  </td>
+                </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="digg_pagination">
+        <%= will_paginate @capexes, :container => false, params: params.to_unsafe_h %>
       </div>
     </div>
 
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-      <div class="marco-igroup-oee">
-        <span>部门</span>
-        <%= select_tag('capex[bu_code]', options_for_select(BuCodeEnum.menu, @bu_code), {include_blank: true}) %>
-      </div>
+    <div class="tab-pane" role="tabpanel" id="over_view">
+      <%= render 'overview', capexes_over_view: @capexes_over_view %>
     </div>
-
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
-      <button type="submit" class="marco-btn-default" style="width: 100px; height: 40px; line-height: 40px;" name="search">查找</button>
-      <button type="submit" class="marco-btn-success" style="width: 100px; height: 40px; line-height: 40px;" name="download">导出</button>
+    <div class="tab-pane" role="tabpanel" id="detail_by_project_capex">
+      <%= render 'detail_by_project', detail_by_project: @detail_by_project %>
     </div>
-  </form>
-</div>
-
-<div class="marco-npanel-default">
-  <div class="marco-nheading">
-    CAPEX列表
-    <div class="pull-right">
-      <%= link_to content_tag(:i, content_tag(:span, "Over View"), :class => "fa fa-plus-square"), overview_capexes_path %>
-      <%= link_to content_tag(:i, content_tag(:span, "Detail By Project"), :class => "fa fa-plus-square"), detail_by_project_capexes_path %>
-      <%= link_to content_tag(:i, content_tag(:span, "All Code"), :class => "fa fa-plus-square"), all_code_capexes_path %>
-      <%= link_to content_tag(:i, content_tag(:span, "导入"), :class => "fa fa-plus-square"), import_capexes_path %>
-      <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_capex_path %>
+    <div class="tab-pane" role="tabpanel" id="all_code">
+      <%= render 'capexes/all_code', all_code: @all_code %>
     </div>
   </div>
-  <div style="overflow: auto; padding: 0;">
-
-    <table class="marco-nbody table table-bordered">
-      <thead>
-      <tr>
-        <th>NO.</th>
-        <th>项目</th>
-        <th>部门</th>
-        <th>描述</th>
-        <th>操作</th>
-      </tr>
-      </thead>
-
-      <tbody>
-      <% @capexes.each_with_index do |capex, i| %>
-          <tr>
-            <td><%= i+1 %></td>
-            <td><%= capex.project %></td>
-            <td><%= capex.bu.blank? ? '' : capex.bu.nr %></td>
-            <td><%= capex.desc %></td>
-            <td>
-              <%= link_to content_tag(:i, '', :class => 'fa fa-eye'), capex, :class => "marco-btn-success", :title => "详情" %>
-              <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_capex_path(capex), :class => "marco-btn-primary", :title => "编辑" %>
-              <%= link_to content_tag(:i, '', :class => 'fa fa-close'), capex, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
-            </td>
-          </tr>
-      <% end %>
-      </tbody>
-    </table>
-  </div>
 </div>
-<div class="digg_pagination">
-  <%= will_paginate @capexes, :container => false, params: params.to_unsafe_h %>
-</div>
-<br>
