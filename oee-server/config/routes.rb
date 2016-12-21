@@ -39,9 +39,17 @@ Rails.application.routes.draw do
     collection do
       get :search
       match :import, to: :import, via: [:get, :post]
+      get :all_code
+      get :detail_by_project
+      get :collect_report
+      get :overview
     end
   end
   resources :user_inventory_tasks do
+    member do
+      get :update_inventory_result
+    end
+
     collection do
       get :search
       match :import, to: :import, via: [:get, :post]
@@ -137,6 +145,7 @@ Rails.application.routes.draw do
 
   resources :equipment_tracks do
     collection do
+      get :download
       get :search
       match :import, to: :import, via: [:get, :post]
     end
@@ -230,6 +239,13 @@ Rails.application.routes.draw do
       end
 
       resources :areas
+      resources :equipment_statuses
+      resources :bu_mangers
+      resources :equipment_tracks do
+        collection do
+          get :nameplate_list
+        end
+      end
     end
   end
 

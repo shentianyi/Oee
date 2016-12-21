@@ -79,10 +79,11 @@ class FixAssetTracksController < ApplicationController
   end
 
   def search
+    to_do_query=FixAssetTrack.all
     super{|query|
-      query=FixAssetTrack.to_do_list
+      to_do_query=to_do_query.to_do_list
     }
-    query
+    to_do_query
   end
 
   private

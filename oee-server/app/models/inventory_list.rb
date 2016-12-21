@@ -5,8 +5,14 @@ class InventoryList < ApplicationRecord
   # has_many :user_area_items, dependent: :destroy
   has_many :user_inventory_tasks, dependent: :destroy
 
+  before_validation :check_inventory_user
   after_create :init_inventory_items
 
+
+  def check_inventory_user
+    errors.add(:inventory_user_id, "尚有未分配盘点员的设备记录") if (EquipmentTrack.where("inventory_user_id is NULL").count > 0)
+    errors.add(:rfid_nr, "尚有未贴RFID标签的设备记录") if (EquipmentTrack.where("rfid_nr is NULL").count > 0)
+  end
 
   def init_inventory_items
     InventoryItem.transaction do
@@ -20,10 +26,11 @@ class InventoryList < ApplicationRecord
 
                                                 ts_area_id: e.ts_area_id,
                                                 status: e.status,
-                                                ts_nameplate_track: e.nameplate_track
+                                                ts_nameplate_track: e.nameplate_track,
+                                                ts_inventory_user_id: e.inventory_user_id
                                             })
         e.children.each do |i|
-          item.children.create({
+          child_itrm = item.children.create({
                                 equipment_track_id: i.id,
                                 rfid_nr: i.rfid_nr,
                                 asset_nr: i.asset_nr,
@@ -32,8 +39,10 @@ class InventoryList < ApplicationRecord
 
                                 ts_area_id: i.ts_area_id,
                                 status: i.status,
-                                ts_nameplate_track: i.nameplate_track
+                                ts_nameplate_track: i.nameplate_track,
+                                ts_inventory_user_id: i.inventory_user_id
                             })
+          self.inventory_items<<child_itrm
         end
 
       end
@@ -83,7 +92,7 @@ class InventoryList < ApplicationRecord
     inventories=[]
     case type
       when FileUploadType::OVERALL
-        inventories=self.inventory_items.where(ts_area_id: user.user_area_items.pluck(:area_id))
+        inventories=self.inventory_items.where(ts_inventory_user_id: user.id)
       when FileUploadType::RECOVERY
         inventories=self.inventory_items.where.not('ts_area_id <=> current_area_id')
     end

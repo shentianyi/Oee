@@ -30,8 +30,4 @@ class UserInventoryTaskService
     end
   end
 
-  def self.update_inventory_data
-
-  end
-
 end

@@ -89,6 +89,12 @@ class EquipmentTracksController < ApplicationController
     }
   end
 
+  def download
+    send_data(EquipmentTrack.download_to_xlsx,
+              :type => "application/vnd.openxmlformates-officedocument.spreadsheetml.sheet",
+              :filename => @model.pluralize+".xlsx")
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_equipment_track

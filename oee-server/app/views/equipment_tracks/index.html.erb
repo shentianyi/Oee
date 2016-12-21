@@ -127,11 +127,14 @@
     </div>
 
     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
-      <button type="submit" class="marco-btn-default" style="width: 100px; height: 38px; line-height: 35px;" name="normal">账上设备</button>
-
-      <button type="submit" class="marco-btn-default pull-right" style="width: 100px; height: 38px; line-height: 35px;" name="scrap">非账上设备</button>
-
+      <%= link_to "下载数据", send("download_#{@model.pluralize}_path"),data: { confirm: 'Are you sure?' },:class=>'btn btn-default', :style=> "width: 100px; height: 38px; line-height: 35px;" %>
     </div>
+    <!--<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">-->
+    <!--<button type="submit" class="marco-btn-default" style="width: 100px; height: 38px; line-height: 35px;" name="normal">账上设备</button>-->
+
+    <!--<button type="submit" class="marco-btn-default pull-right" style="width: 100px; height: 38px; line-height: 35px;" name="scrap">非账上设备</button>-->
+
+    <!--</div>-->
   </form>
 </div>
 
@@ -151,6 +154,7 @@
       <thead>
       <tr>
         <th>NO.</th>
+        <th>资产创建方式</th>
         <!--<th>设备分级</th>-->
         <th>RFID编号</th>
         <th>设备名称</th>
@@ -185,6 +189,7 @@
       <% @equipment_tracks.each_with_index do |equipment_track, i| %>
           <tr>
             <td><%= i+1 %></td>
+            <td><%= EquipmentAddEnum.display equipment_track.equip_create_way %></td>
             <!--<td><%= equipment_track.level %></td>-->
             <td><%= equipment_track.rfid_nr %></td>
             <td><%= equipment_track.name %></td>
@@ -233,6 +238,6 @@
 </div>
 
 <script type="text/javascript">
-  layout.date_picker('.datepicker');
+    layout.date_picker('.datepicker');
 </script>
 

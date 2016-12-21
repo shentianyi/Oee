@@ -72,8 +72,8 @@
           <td><%= i+1 %></td>
           <td><%= user_inventory_task.user.name %></td>
           <td><%= user_inventory_task.inventory_list.name %></td>
-          <td><%= user_inventory_task.start_time.localtime.strftime('%Y/%m/%d %H:%M') %></td>
-          <td><%= user_inventory_task.end_time.localtime.strftime('%Y/%m/%d %H:%M') %></td>
+          <td><%= user_inventory_task.start_time.blank? ? '' : user_inventory_task.start_time.localtime.strftime('%Y/%m/%d %H:%M') %></td>
+          <td><%= user_inventory_task.end_time.blank? ? '' : user_inventory_task.end_time.localtime.strftime('%Y/%m/%d %H:%M') %></td>
           <td><%= FileUploadType.display user_inventory_task.type %></td>
           <td><%= user_inventory_task.target_qty %></td>
           <td><%= user_inventory_task.real_qty %></td>
@@ -83,9 +83,12 @@
           </td>
           <td></td>
           <td>
+            <% if user_inventory_task.status != UserInventoryTaskStatus::CLOSE %>
+                <%= link_to content_tag(:i, '', :class => 'fa fa-upload'), update_inventory_result_user_inventory_task_path(user_inventory_task), :class => "marco-btn-primary", :title => "更新盘点数据" %>
+            <% end %>
             <%#= link_to content_tag(:i, '', :class => 'fa fa-eye'), user_inventory_task, :class => "marco-btn-primary", :title => "详情" %>
-            <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_user_inventory_task_path(user_inventory_task), :class => "marco-btn-primary", :title => "编辑" %>
-            <%= link_to content_tag(:i, '', :class => 'fa fa-close'), user_inventory_task, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+            <%#= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_user_inventory_task_path(user_inventory_task), :class => "marco-btn-primary", :title => "编辑" %>
+            <%#= link_to content_tag(:i, '', :class => 'fa fa-close'), user_inventory_task, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
           </td>
         </tr>
     <% end %>
