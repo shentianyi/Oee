@@ -11,36 +11,40 @@
   <div class="marco-nheading">
     BUDGET列表
     <div class="pull-right">
-      <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_budget_item_path %>
+      <% if current_user.admin? || current_user.capex_manager? || current_user.assistant? || current_user.manager? || current_user.planning_charge? || current_user.planning_engineer? %>
+          <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_budget_item_path %>
+      <% end %>
     </div>
   </div>
   <div style="overflow: auto; padding: 0;">
-  <table class="marco-nbody table table-bordered">
-    <thead>
-    <tr>
-      <th>数量</th>
-      <th>单价</th>
-      <th>总价</th>
-      <th>Budget</th>
-      <th>操作</th>
-    </tr>
-    </thead>
+    <table class="marco-nbody table table-bordered">
+      <thead>
+      <tr>
+        <th>数量</th>
+        <th>单价</th>
+        <th>总价</th>
+        <th>Budget Code</th>
+        <th>操作</th>
+      </tr>
+      </thead>
 
-    <tbody>
-    <% @budget_items.each do |budget_item| %>
-        <tr>
-          <td><%= budget_item.qty %></td>
-          <td><%= budget_item.unit_price %></td>
-          <td><%= budget_item.total_price %></td>
-          <td><%= budget_item.budget.budget_id %></td>
-          <td>
-            <%#= link_to content_tag(:i, '', :class => 'fa fa-eye'), budget_item, :class => "marco-btn-success", :title => "详情" %>
-            <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_budget_item_path(budget_item), :class => "marco-btn-primary", :title => "编辑" %>
-            <%= link_to content_tag(:i, '', :class => 'fa fa-close'), budget_item, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
-          </td>
-        </tr>
-    <% end %>
-    </tbody>
-  </table>
-</div>
+      <tbody>
+      <% @budget_items.each do |budget_item| %>
+          <tr>
+            <td><%= budget_item.qty %></td>
+            <td><%= budget_item.unit_price %></td>
+            <td><%= budget_item.total_price %></td>
+            <td><%= budget_item.budget.code %></td>
+            <td>
+              <% if current_user.admin? || current_user.capex_manager? || current_user.assistant? || current_user.manager? || current_user.planning_charge? || current_user.planning_engineer? %>
+                  <%#= link_to content_tag(:i, '', :class => 'fa fa-eye'), budget_item, :class => "marco-btn-success", :title => "详情" %>
+                  <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_budget_item_path(budget_item), :class => "marco-btn-primary", :title => "编辑" %>
+                  <%= link_to content_tag(:i, '', :class => 'fa fa-close'), budget_item, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
+              <% end %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>

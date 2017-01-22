@@ -11,10 +11,17 @@
   <div class="marco-nheading">
     PAM ITEM列表
     <div class="pull-right">
-      <%= link_to content_tag(:i, content_tag(:span, "采购导入数据 "), :class => "fa fa-cloud-upload"), purchase_import_pam_items_path %>
-      <%= link_to content_tag(:i, content_tag(:span, "TS导入数据 "), :class => "fa fa-cloud-upload"), ts_import_pam_items_path %>
-      <%= link_to content_tag(:i, content_tag(:span, "财务导入数据 "), :class => "fa fa-cloud-upload"), finance_import_pam_items_path %>
-      <% if current_user.admin? %>
+      <% if current_user.admin? || current_user.capex_manager? || current_user.purchase_manager? %>
+          <%= link_to content_tag(:i, content_tag(:span, "采购导入数据 "), :class => "fa fa-cloud-upload"), purchase_import_pam_items_path %>
+      <% end %>
+      <% if current_user.admin? || current_user.capex_manager? || current_user.equipment_manager? %>
+          <%= link_to content_tag(:i, content_tag(:span, "TS导入数据 "), :class => "fa fa-cloud-upload"), ts_import_pam_items_path %>
+      <% end %>
+      <% if current_user.admin? || current_user.capex_manager? || current_user.finance_manager? %>
+          <%= link_to content_tag(:i, content_tag(:span, "财务导入数据 "), :class => "fa fa-cloud-upload"), finance_import_pam_items_path %>
+      <% end %>
+      <% if current_user.admin? || current_user.capex_manager? || current_user.assistant? || current_user.manager? || current_user.planning_charge? || current_user.planning_engineer? ||
+              current_user.purchase_manager? || current_user.equipment_manager? || current_user.finance_manager? %>
           <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_pam_item_path %>
       <% end %>
     </div>
@@ -35,17 +42,24 @@
         <th>Sap no</th>
         <th>Arrive date</th>
         <th>Final release</th>
-        <th>Po no</th>
-        <th>Po cost</th>
-        <th>Invoice prepared</th>
-        <th>Invoice amount</th>
-        <th>Completed date</th>
-        <th>Completed</th>
-        <th>Completed status</th>
-        <th>Completed amount</th>
-        <th>Booking status</th>
-        <th>Final cost</th>
+        <% if current_user.admin? || current_user.capex_manager? || current_user.purchase_manager? %>
+            <th>Po no</th>
+            <th>Po cost</th>
+            <th>Invoice prepared</th>
+            <th>Invoice amount</th>
+        <% end %>
+        <% if current_user.admin? || current_user.capex_manager? || current_user.equipment_manager? %>
+            <th>Completed date</th>
+            <th>Completed</th>
+            <th>Completed status</th>
+            <th>Completed amount</th>
+        <% end %>
+        <% if current_user.admin? || current_user.capex_manager? || current_user.finance_manager? %>
+            <th>Booking status</th>
+            <th>Final cost</th>
+        <% end %>
         <th>Pam list</th>
+
         <th>操作</th>
       </tr>
       </thead>
@@ -64,20 +78,27 @@
             <td><%= pam_item.sap_no %></td>
             <td><%= pam_item.arrive_date %></td>
             <td><%= pam_item.final_release %></td>
-            <td><%= pam_item.po_no %></td>
-            <td><%= pam_item.po_cost %></td>
-            <td><%= pam_item.invoice_prepared %></td>
-            <td><%= pam_item.invoice_amount %></td>
-            <td><%= pam_item.completed_date %></td>
-            <td><%= pam_item.completed_id %></td>
-            <td><%= pam_item.completed_status %></td>
-            <td><%= pam_item.completed_amount %></td>
-            <td><%= pam_item.booking_status %></td>
-            <td><%= pam_item.final_cost %></td>
+            <% if current_user.admin? || current_user.capex_manager? || current_user.purchase_manager? %>
+                <td><%= pam_item.po_no %></td>
+                <td><%= pam_item.po_cost %></td>
+                <td><%= pam_item.invoice_prepared %></td>
+                <td><%= pam_item.invoice_amount %></td>
+            <% end %>
+            <% if current_user.admin? || current_user.capex_manager? || current_user.equipment_manager? %>
+                <td><%= pam_item.completed_date %></td>
+                <td><%= pam_item.completed_id %></td>
+                <td><%= pam_item.completed_status %></td>
+                <td><%= pam_item.completed_amount %></td>
+            <% end %>
+            <% if current_user.admin? || current_user.capex_manager? || current_user.finance_manager? %>
+                <td><%= pam_item.booking_status %></td>
+                <td><%= pam_item.final_cost %></td>
+            <% end %>
             <td><%= pam_item.pam_list.nr %></td>
             <td>
               <%= link_to content_tag(:i, '', :class => 'fa fa-eye'), pam_item, :class => "marco-btn-success", :title => "详情" %>
-              <% if current_user.admin? %>
+              <% if current_user.admin? || current_user.capex_manager? || current_user.assistant? || current_user.manager? || current_user.planning_charge? || current_user.planning_engineer? ||
+                      current_user.purchase_manager? || current_user.equipment_manager? || current_user.finance_manager? %>
                   <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_pam_item_path(pam_item), :class => "marco-btn-primary", :title => "编辑" %>
                   <%= link_to content_tag(:i, '', :class => 'fa fa-close'), pam_item, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
               <% end %>

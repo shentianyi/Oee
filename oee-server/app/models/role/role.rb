@@ -1,12 +1,21 @@
 #encoding: utf-8
 require 'base_class'
 class Role
-  RoleMethods=[:admin?, :user]
+  RoleMethods=[:admin?, :user?, :manager?, :equipment_manager?, :capex_manager?, :purchase_manager?, :finance_manager?, :assistant?, :planning_charge?, :ts_charge?, :planning_engineer?, :ts_engineer?, :technician?]
   @@roles={
       :'100' => {:name => 'admin', :display => (I18n.t 'manage.user.role.admin')},
-      :'200' => {:name => 'user', :display => (I18n.t 'manage.user.role.user')},
-      :'300' => {:name => 'engineer', :display => (I18n.t 'manage.user.role.engineer')},
-      :'400' => {:name => 'technician', :display => (I18n.t 'manage.user.role.technician')}
+      :'200' => {:name => 'manager', :display => (I18n.t 'manage.user.role.manager')},
+      :'300' => {:name => 'equipment_manager', :display => (I18n.t 'manage.user.role.equipment_manager')},
+      :'400' => {:name => 'purchase_manager', :display => (I18n.t 'manage.user.role.purchase_manager')},
+      :'500' => {:name => 'finance_manager', :display => (I18n.t 'manage.user.role.finance_manager')},
+      :'600' => {:name => 'assistant', :display => (I18n.t 'manage.user.role.assistant')},
+      :'700' => {:name => 'planning_charge', :display => (I18n.t 'manage.user.role.planning_charge')},
+      :'800' => {:name => 'ts_charge', :display => (I18n.t 'manage.user.role.ts_charge')},
+      :'900' => {:name => 'planning_engineer', :display => (I18n.t 'manage.user.role.planning_engineer')},
+      :'1000' => {:name => 'ts_engineer', :display => (I18n.t 'manage.user.role.ts_engineer')},
+      :'1100' => {:name => 'technician', :display => (I18n.t 'manage.user.role.technician')},
+      :'1200' => {:name => 'user', :display => (I18n.t 'manage.user.role.user')},
+      :'1300' => {:name => 'capex_manager', :display => (I18n.t 'manage.user.role.capex_manager')}
   }
 
   class<<self

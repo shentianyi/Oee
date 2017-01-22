@@ -124,7 +124,7 @@
             <!--<td><%= inventory_item.ts_inventory_result %></td>-->
             <td><%= inventory_item.remark %></td>
             <td>
-              <% if current_user.admin? %>
+              <% if current_user.admin? || current_user.equipment_manager? %>
                   <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_inventory_item_path(inventory_item), :class => "marco-btn-primary", :title => "编辑" %>
                   <%= link_to content_tag(:i, '', :class => 'fa fa-close'), inventory_item, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
               <% end %>

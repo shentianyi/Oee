@@ -3,9 +3,18 @@ zh:
      user:
         role:
           admin: 管理员
-          user: 普通成员
+          manager: 经理
+          equipment_manager: 设备管理员
+          capex_manager: Capex管理员
+          purchase_manager: 采购管理员
+          finance_manager: 财务管理员
+          assistant: 助理
+          planning_charge: Planning主管
+          ts_charge: TS主管
+          planning_engineer: Planning工程师
+          ts_engineer: TS工程师
           technician: 技术员
-          engineer: 工程师
+          user: 普通成员
   activerecord:
       attributes:
         node:

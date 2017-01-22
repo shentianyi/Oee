@@ -44,7 +44,7 @@
   <div class="marco-nheading">
     设备放行表
     <div class="pull-right">
-      <% if current_user.admin? %>
+      <% if current_user.admin? || current_user.equipment_manager? %>
           <%= link_to content_tag(:i, content_tag(:span, "导入数据 "), :class => "fa fa-cloud-upload"), import_equipment_releases_path %>
 
           <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_equipment_release_path %>
@@ -81,7 +81,7 @@
           <td><%= equipment_release.remark %></td>
           <td>
             <!--<%#= link_to content_tag(:i, '', :class => 'fa fa-eye'), equipment_release, :class => "marco-btn-success", :title => "详情" %>-->
-            <% if current_user.admin? %>
+            <% if current_user.admin? || current_user.equipment_manager? %>
                 <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_equipment_release_path(equipment_release), :class => "marco-btn-primary", :title => "编辑" %>
                 <%= link_to content_tag(:i, '', :class => 'fa fa-close'), equipment_release, method: :delete, data: {confirm: 'Are you sure?'}, :class => "marco-btn-danger", :title => "删除" %>
             <% end %>

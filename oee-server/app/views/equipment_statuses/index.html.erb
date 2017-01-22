@@ -11,7 +11,7 @@
   <div class="marco-nheading">
     停机类型
     <div class="pull-right">
-      <% if current_user.admin? %>
+      <% if current_user.admin? || current_user.equipment_manager? %>
           <%= link_to content_tag(:i, content_tag(:span, "新建"), :class => "fa fa-plus-square"), new_equipment_status_path %>
       <% end %>
     </div>
@@ -35,7 +35,7 @@
             <td><%= EquipmentStatusGroupEnum.display equipment_status.group_id %></td>
             <td>
               <%= link_to content_tag(:i, '', :class => 'fa fa-eye'), equipment_status, :class => "marco-btn-success", :title => "详情" %>
-              <% if current_user.admin? %>
+              <% if current_user.admin? || current_user.equipment_manager? %>
 
                   <%= link_to content_tag(:i, '', :class => 'fa fa-pencil'), edit_equipment_status_path(equipment_status), :class => "marco-btn-primary", :title => "编辑" %>
 
