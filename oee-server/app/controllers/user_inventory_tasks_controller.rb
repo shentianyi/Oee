@@ -74,7 +74,7 @@ class UserInventoryTasksController < ApplicationController
     if @user_inventory_task.data_file.blank?
       flash[:notice] = '盘点数据没有存文件，请重新上传'
     else
-      msg=UserInventoryTaskService.update_inventory_data(JSON.parse(File.read("public" + @user_inventory_task.data_file.path.url)), @user_inventory_task.type)
+      msg=@user_inventory_task.update_inventory_data(JSON.parse(File.read("public" + @user_inventory_task.data_file.path.url)), @user_inventory_task.type)
 
       if msg.result
         @user_inventory_task.update_attributes(status: UserInventoryTaskStatus::CLOSE)
