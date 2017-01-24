@@ -2,7 +2,11 @@ module FileHandler
   module Excel
     class PamItemHandler<Base
       PURCHASE_HEADERS=[
-          :sap_no, :po_no, :po_cost, :invoice_prepared, :invoice_amount
+          :pa_no, :po_no, :po_cost, :invoice_prepared
+      ]
+
+      PURCHASE_ZH_HEADERS=[
+          'PA NO', 'PO NO', 'PO Cost', 'Invoice Prepare(Y/N)'
       ]
 
       TS_HEADERS=[
@@ -10,15 +14,15 @@ module FileHandler
       ]
 
       TS_ZH_HEADERS=[
-          '请购单号', '预计竣工日期', '固定资产竣工单号', '竣工状态', '竣工金额'
+          '请购单号', '固定资产号', '预计竣工日期', '固定资产竣工单号', '竣工状态', '竣工金额'
       ]
 
       FINANCE_HEADERS=[
-          :sap_no, :booking_status, :final_cost
+          :pa_no, :booking_status, :final_cost
       ]
 
       FINANCE_ZH_HEADERS=[
-          '采购订单号', 'Booking Status(Y/N)', 'Fin Cost'
+          '请购单号', 'Booking Status(Y/N)', 'Fin Cost'
       ]
 
       def self.finance_import(file)
@@ -36,13 +40,13 @@ module FileHandler
                 row = {}
                 FINANCE_HEADERS.each_with_index do |k, i|
                   row[k] = book.cell(line, i+1).to_s.strip
-                  row[k] = row[k].sub(/\.0/, '') if k==:sap_no
+                  row[k] = row[k].sub(/\.0/, '') if k==:pa_no
                 end
                 row[:booking_status]=row[:booking_status]=='Y' ? true : false
 
                 count += 1
 
-                items = PamItem.where(sap_no: row[:sap_no])
+                items = PamItem.where(pa_no: row[:pa_no])
                 items.each do |i|
                   i.update_attributes({
                                           booking_status: row[:booking_status],
@@ -79,7 +83,7 @@ module FileHandler
             row = {}
             FINANCE_HEADERS.each_with_index do |k, i|
               row[k] = book.cell(line, i+1).to_s.strip
-              row[k] = row[k].sub(/\.0/, '') if k==:sap_no
+              row[k] = row[k].sub(/\.0/, '') if k==:pa_no
             end
 
             mssg = validate_finance_row(row, line)
@@ -102,11 +106,11 @@ module FileHandler
       def self.validate_finance_row(row, line)
         msg = Message.new(contents: [])
 
-        if row[:sap_no].blank?
-          msg.contents<<"SAP NO 不可为空"
+        if row[:pa_no].blank?
+          msg.contents<<"PA NO 不可为空"
         else
-          if (pi=PamItem.find_by_sap_no(row[:sap_no])).blank?
-            msg.contents<<"SAP NO :#{row[:sap_no]} 不存在"
+          if (pi=PamItem.find_by_pa_no(row[:pa_no])).blank?
+            msg.contents<<"PA NO :#{row[:pa_no]} 不存在"
           end
         end
 
@@ -142,6 +146,7 @@ module FileHandler
                 items = PamItem.where(pa_no: row[:pa_no])
                 items.each do |i|
                   i.update_attributes({
+
                                           completed_date: row[:completed_date],
                                           completed_id: row[:completed_id],
                                           completed_status: row[:completed_status],
@@ -238,19 +243,18 @@ module FileHandler
                 row = {}
                 PURCHASE_HEADERS.each_with_index do |k, i|
                   row[k] = book.cell(line, i+1).to_s.strip
-                  row[k] = row[k].sub(/\.0/, '') if k==:sap_no
+                  row[k] = row[k].sub(/\.0/, '') if k==:pa_no
                 end
                 row[:invoice_prepared] = row[:invoice_prepared]=='Y' ? true : false
 
                 count += 1
 
-                items = PamItem.where(sap_no: row[:sap_no])
+                items = PamItem.where(pa_no: row[:pa_no])
                 items.each do |i|
                   i.update_attributes({
                                           po_no: row[:po_no],
                                           po_cost: row[:po_cost],
-                                          invoice_prepared: row[:invoice_prepared],
-                                          invoice_amount: row[:invoice_amount]
+                                          invoice_prepared: row[:invoice_prepared]
                                       })
                 end
               end
@@ -283,7 +287,7 @@ module FileHandler
             row = {}
             PURCHASE_HEADERS.each_with_index do |k, i|
               row[k] = book.cell(line, i+1).to_s.strip
-              row[k] = row[k].sub(/\.0/, '') if k==:sap_no
+              row[k] = row[k].sub(/\.0/, '') if k==:pa_no
             end
 
             mssg = validate_purchase_row(row, line)
@@ -306,11 +310,11 @@ module FileHandler
       def self.validate_purchase_row(row, line)
         msg = Message.new(contents: [])
 
-        if row[:sap_no].blank?
-          msg.contents<<"SAP NO 不可为空"
+        if row[:pa_no].blank?
+          msg.contents<<"PA NO 不可为空"
         else
-          if (pi=PamItem.find_by_sap_no(row[:sap_no])).blank?
-            msg.contents<<"SAP NO :#{row[:sap_no]} 不存在"
+          if (pi=PamItem.find_by_pa_no(row[:pa_no])).blank?
+            msg.contents<<"PA NO :#{row[:pa_no]} 不存在"
           end
         end
 

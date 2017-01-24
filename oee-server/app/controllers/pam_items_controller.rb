@@ -117,6 +117,9 @@ class PamItemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pam_item_params
-      params.require(:pam_item).permit(:pa_no, :description, :qty, :total_cost, :applicant, :applicant_date, :supplier, :sap_no, :arrive_date, :final_release, :po_no, :po_cost, :invoice_prepared, :invoice_amount, :completed_date, :completed_id, :completed_status, :completed_amount, :booking_status, :final_cost, :pam_list_id)
+      params.require(:pam_item).permit(:pa_no, :description, :qty, :total_cost, :applicant, :applicant_date, :supplier, :sap_no,
+                                       :arrive_date, :final_release, :po_no, :po_cost, :invoice_prepared, :invoice_amount,
+                                       :asset_nrs, :remark, :asset_status, :completed_date, :completed_id, :completed_status,
+                                       :completed_amount, :booking_status, :final_cost, :pam_list_id)
     end
 end

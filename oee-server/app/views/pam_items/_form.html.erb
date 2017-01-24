@@ -31,7 +31,7 @@
           <% if current_user.admin? || current_user.capex_manager? || current_user.assistant? || current_user.manager? || current_user.planning_charge? || current_user.planning_engineer? %>
               <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                 <div class="marco-igroup-oee">
-                  <%= f.label :pa_no %>
+                  <%= f.label :pa_no, 'PA NO' %>
                   <%= f.text_field :pa_no %>
                 </div>
               </div>
@@ -47,45 +47,54 @@
                   <%= f.text_field :qty %>
                 </div>
               </div>
+
               <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                 <div class="marco-igroup-oee">
-                  <%= f.label :total_cost %>
+                  <%= f.label :asset_nrs, '固定资产号' %>
+                  <%= f.text_field :asset_nrs %>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                <div class="marco-igroup-oee">
+                  <%= f.label :remark, '备注' %>
+                  <%= f.text_field :remark %>
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                <div class="marco-igroup-oee">
+                  <%= f.label :total_cost, '总价' %>
                   <%= f.text_field :total_cost %>
                 </div>
               </div>
               <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                 <div class="marco-igroup-oee">
-                  <%= f.label :applicant %>
+                  <%= f.label :applicant, '申请人' %>
                   <%= f.text_field :applicant %>
                 </div>
               </div>
               <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                 <div class="marco-igroup-oee">
-                  <%= f.label :applicant_date %>
+                  <%= f.label :applicant_date, '申请日期' %>
                   <%= f.date_field :applicant_date %>
                 </div>
               </div>
               <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                 <div class="marco-igroup-oee">
-                  <%= f.label :supplier %>
+                  <%= f.label :supplier, '供应商' %>
                   <%= f.text_field :supplier %>
                 </div>
               </div>
+
               <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                 <div class="marco-igroup-oee">
-                  <%= f.label :sap_no %>
-                  <%= f.text_field :sap_no %>
-                </div>
-              </div>
-              <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                <div class="marco-igroup-oee">
-                  <%= f.label :arrive_date %>
+                  <%= f.label :arrive_date, '到达日期' %>
                   <%= f.text_field :arrive_date %>
                 </div>
               </div>
               <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                 <div class="marco-igroup-oee">
-                  <%= f.label :final_release %>
+                  <%= f.label :final_release, '请购单签字' %>
                   <%= f.check_box :final_release %>
                 </div>
               </div>
@@ -93,52 +102,47 @@
           <% if current_user.admin? || current_user.capex_manager? || current_user.purchase_manager? %>
               <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                 <div class="marco-igroup-oee">
-                  <%= f.label :po_no %>
+                  <%= f.label :po_no, 'PO NO' %>
                   <%= f.text_field :po_no %>
                 </div>
               </div>
               <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                 <div class="marco-igroup-oee">
-                  <%= f.label :po_cost %>
+                  <%= f.label :po_cost, '采购单金额' %>
                   <%= f.text_field :po_cost %>
                 </div>
               </div>
               <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                 <div class="marco-igroup-oee">
-                  <%= f.label :invoice_prepared %>
+                  <%= f.label :invoice_prepared, '发票准备状态' %>
                   <%= f.check_box :invoice_prepared %>
-                </div>
-              </div>
-              <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                <div class="marco-igroup-oee">
-                  <%= f.label :invoice_amount %>
-                  <%= f.text_field :invoice_amount %>
                 </div>
               </div>
           <% end %>
 
           <% if current_user.admin? || current_user.capex_manager? || current_user.equipment_manager? %>
+
               <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                 <div class="marco-igroup-oee">
-                  <%= f.label :completed_date %>
+                  <%= f.label :completed_date, '竣工日期' %>
                   <%= f.text_field :completed_date %>
                 </div>
               </div>
               <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                 <div class="marco-igroup-oee">
-                  <%= f.label :completed_id %>
+                  <%= f.label :completed_id, '竣工单号' %>
                   <%= f.text_field :completed_id %>
                 </div>
               </div>
               <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                 <div class="marco-igroup-oee">
-                  <%= f.label :completed_status %>
+                  <%= f.label :completed_status, '竣工状态' %>
                   <%= f.text_field :completed_status %>
                 </div>
               </div>
               <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                 <div class="marco-igroup-oee">
-                  <%= f.label :completed_amount %>
+                  <%= f.label :completed_amount, '竣工金额' %>
                   <%= f.text_field :completed_amount %>
                 </div>
               </div>
@@ -162,7 +166,7 @@
 
           <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
             <div class="marco-igroup-oee">
-              <%= f.label :pam_list_id %>
+              <%= f.label :pam_list_id, 'PAM ID' %>
               <%= f.select(:pam_list_id, PamList.all.collect { |p| [p.nr, p.id] }, {include_blank: false}) %>
             </div>
           </div>

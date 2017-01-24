@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161220082816) do
+ActiveRecord::Schema.define(version: 20170123062827) do
 
   create_table "areas", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
@@ -103,6 +103,15 @@ ActiveRecord::Schema.define(version: 20161220082816) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["capex_id"], name: "index_budgets_on_capex_id", using: :btree
+  end
+
+  create_table "bus", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "nr"
+    t.string   "name"
+    t.string   "finance_nr"
+    t.string   "desc"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "capexes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -286,7 +295,7 @@ ActiveRecord::Schema.define(version: 20161220082816) do
     t.string   "instruction"
     t.string   "replacement_list"
     t.string   "ancestry"
-    t.integer  "equip_create_way",               default: 100
+    t.integer  "equip_create_way"
     t.string   "rfid_nr"
     t.index ["ancestry"], name: "index_equipment_tracks_on_ancestry", using: :btree
   end
@@ -471,6 +480,9 @@ ActiveRecord::Schema.define(version: 20161220082816) do
     t.integer  "pam_list_id"
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
+    t.string   "asset_nrs"
+    t.integer  "asset_status",                default: 100
+    t.string   "remark"
     t.index ["pam_list_id"], name: "index_pam_items_on_pam_list_id", using: :btree
   end
 

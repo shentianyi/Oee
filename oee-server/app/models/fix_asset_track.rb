@@ -7,11 +7,12 @@ class FixAssetTrack < ApplicationRecord
   validates_uniqueness_of :equipment_nr, scope: :equip_create_way, if: :new_equipment_and_asset
   validates_uniqueness_of :nr, scope: :equip_create_way, if: :new_equipment_and_asset
   validate :exist_equipment_and_asset, if: :add_equipment_and_asset
+  after_update :sync_ts_pam_item
 
   scope :to_do_list, -> { where(status: FixAssetStatus.to_do_list) }
 
   def new_equipment_and_asset
-    equip_create_way==EquipmentAddEnum::CREATE_EQUIPMENT
+    (equip_create_way==EquipmentAddEnum::CREATE_EQUIPMENT) && (equipment_nr!=nil)
   end
 
   def add_equipment_and_asset
@@ -21,6 +22,18 @@ class FixAssetTrack < ApplicationRecord
   def exist_equipment_and_asset
     if FixAssetTrack.where(nr: self.nr, equipment_nr: self.equipment_nr, equip_create_way: EquipmentAddEnum::CREATE_EQUIPMENT).first.blank?
       errors.add(:nr, "资产号：#{self.nr}且设备号：#{self.equipment_nr}不存在，不可追加")
+    end
+  end
+
+  def sync_ts_pam_item
+    if self.status_changed? && self.status==FixAssetStatus::DONE
+      pam_item = PamItem.find_by_pa_no(self.apply_id)
+      pam_item.update_attributes({
+                                     completed_id: self.completed_id,
+                                     completed_amount: (pam_item.completed_amount + self.price),
+                                     completed_date: Time.now.localtime.strftime('%Y/%m/%d'),
+                                     completed_status: FixAssetStatus.display(self.status)
+                                 }) if pam_item
     end
   end
 

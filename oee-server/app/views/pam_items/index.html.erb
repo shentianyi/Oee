@@ -2,14 +2,14 @@
 
 <ol class="breadcrumb">
   <li>CAPEX</li>
-  <li>PAM ITEM列表</li>
+  <li>Order Informations 列表</li>
 </ol>
 
 <hr class="hr-grey"/>
 
 <div class="marco-npanel-default">
   <div class="marco-nheading">
-    PAM ITEM列表
+    Order Informations 列表
     <div class="pull-right">
       <% if current_user.admin? || current_user.capex_manager? || current_user.purchase_manager? %>
           <%= link_to content_tag(:i, content_tag(:span, "采购导入数据 "), :class => "fa fa-cloud-upload"), purchase_import_pam_items_path %>
@@ -28,27 +28,92 @@
   </div>
 
   <div class="marco-nbody" style="overflow: auto; padding: 0;">
+    <div class="all-search row">
+      <form method="get" action="<%= send("search_#{@model.pluralize}_path") %>">
+        <input type="hidden" name="http_host" value="<%= @http_host %>"/>
+
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+          <div class="marco-igroup-oee">
+            <span>PA NO</span>
+            <input type="text" name="pam_item[pa_no]" value="<%= @pa_no %>"/>
+            <input type="hidden" name="pam_item[pa_no_fuzzy]"/>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+          <div class="marco-igroup-oee">
+            <span>固定资产号</span>
+            <input type="text" name="pam_item[asset_nrs]" value="<%= @asset_nrs %>"/>
+            <input type="hidden" name="pam_item[asset_nrs_fuzzy]"/>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
+          <button type="submit" class="marco-btn-default" style="width: 100px; height: 40px; line-height: 40px;" name="search">查找</button>
+        </div>
+      </form>
+    </div>
+
+
     <table class="marco-nbody table table-bordered">
       <thead>
       <tr>
         <th>NO.</th>
-        <th>Pa no</th>
+        <th>PA NO</th>
+        <th>描述</th>
+        <th>数量</th>
+        <th>固定资产号</th>
+        <th>备注</th>
+        <th>总价</th>
+        <th>申请人</th>
+        <th>申请日期</th>
+        <th>供应商</th>
+        <!--<th>Sap no</th>-->
+        <th>到达日期</th>
+        <th>请购单签字</th>
+        <% if current_user.admin? || current_user.capex_manager? || current_user.purchase_manager? %>
+            <th>PO NO</th>
+            <th>采购单金额</th>
+            <th>发票准备状态</th>
+            <!--<th>Invoice amount</th>-->
+        <% end %>
+        <% if current_user.admin? || current_user.capex_manager? || current_user.equipment_manager? %>
+
+            <th>竣工日期</th>
+            <th>竣工单号</th>
+            <th>竣工状态</th>
+            <th>竣工金额</th>
+        <% end %>
+        <% if current_user.admin? || current_user.capex_manager? || current_user.finance_manager? %>
+            <th>Booking status</th>
+            <th>Final cost</th>
+        <% end %>
+        <th>PAM ID</th>
+
+        <th>操作</th>
+      </tr>
+      <tr>
+        <th></th>
+        <th>PA NO</th>
         <th>Description</th>
         <th>Qty</th>
+        <th>Asset Nrs</th>
+        <th>Remark</th>
         <th>Total cost</th>
         <th>Applicant</th>
         <th>Applicant date</th>
         <th>Supplier</th>
-        <th>Sap no</th>
+        <!--<th>Sap no</th>-->
         <th>Arrive date</th>
         <th>Final release</th>
         <% if current_user.admin? || current_user.capex_manager? || current_user.purchase_manager? %>
-            <th>Po no</th>
-            <th>Po cost</th>
+            <th>PO NO</th>
+            <th>PO cost</th>
             <th>Invoice prepared</th>
-            <th>Invoice amount</th>
+            <!--<th>Invoice amount</th>-->
         <% end %>
         <% if current_user.admin? || current_user.capex_manager? || current_user.equipment_manager? %>
+
             <th>Completed date</th>
             <th>Completed</th>
             <th>Completed status</th>
@@ -58,9 +123,9 @@
             <th>Booking status</th>
             <th>Final cost</th>
         <% end %>
-        <th>Pam list</th>
+        <th></th>
 
-        <th>操作</th>
+        <th></th>
       </tr>
       </thead>
 
@@ -71,20 +136,23 @@
             <td><%= pam_item.pa_no %></td>
             <td><%= pam_item.description %></td>
             <td><%= pam_item.qty %></td>
+            <td><%= pam_item.asset_nrs %></td>
+            <td><%= pam_item.remark %></td>
             <td><%= pam_item.total_cost %></td>
             <td><%= pam_item.applicant %></td>
             <td><%= pam_item.applicant_date %></td>
             <td><%= pam_item.supplier %></td>
-            <td><%= pam_item.sap_no %></td>
+            <!--<td><%= pam_item.sap_no %></td>-->
             <td><%= pam_item.arrive_date %></td>
             <td><%= pam_item.final_release %></td>
             <% if current_user.admin? || current_user.capex_manager? || current_user.purchase_manager? %>
                 <td><%= pam_item.po_no %></td>
                 <td><%= pam_item.po_cost %></td>
                 <td><%= pam_item.invoice_prepared %></td>
-                <td><%= pam_item.invoice_amount %></td>
+                <!--<td><%= pam_item.invoice_amount %></td>-->
             <% end %>
             <% if current_user.admin? || current_user.capex_manager? || current_user.equipment_manager? %>
+
                 <td><%= pam_item.completed_date %></td>
                 <td><%= pam_item.completed_id %></td>
                 <td><%= pam_item.completed_status %></td>
